@@ -1,0 +1,41 @@
+<p></p>
+<div class="col-sm-12 col-md-12">
+  <div class="row">
+    <div class="col-sm-3 col-md-3 col-lg-3">
+      <div class="panel-group">
+        <div class="panel panel-default">
+          <div class="panel-heading clearfix">
+            <h3 class="panel-title">Index Tree</h3>
+          </div>
+          <div class="panel-body">
+            <tree [tree]="treeH" [settings]="checkboxSettings" (nodeSelected)="seleNode($event)" #treeList (change)="setCheckList()"></tree>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="templflg!='0'" class="col-sm-9 col-md-9 col-lg-9">
+      <div class="panel-group">
+        <div class="panel panel-default">
+          <div class="panel-heading clearfix">
+            <h3 class="panel-title">
+              <!-- インデックス指定 -->
+              DESIGNATE INDEX
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div id="selected_indexs">
+              <ul class="list-group">
+                <li *ngFor="let d of checkedList" class="list-group-item">{{d.value}}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <button class="btn btn-default" (click)="sending()">
+              <!-- 送信 -->
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

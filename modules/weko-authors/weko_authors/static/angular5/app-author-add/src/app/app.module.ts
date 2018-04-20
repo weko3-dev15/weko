@@ -1,0 +1,24 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule }   from '@angular/forms';
+import { TreeModule } from 'ng2-tree'; 
+import { HttpModule }    from '@angular/http';
+import { AppComponent } from './app.component';
+import { Route } from '@angular/compiler/src/core';
+
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    TreeModule,
+    HttpModule
+  ],
+  exports:[],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule { }

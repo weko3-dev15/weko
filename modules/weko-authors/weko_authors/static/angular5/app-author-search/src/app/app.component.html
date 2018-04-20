@@ -1,0 +1,143 @@
+<p>
+<!-- <div class="container"> -->
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-md-12">
+      <div class="row">
+        <div class="row">
+          <div class="col-sm-12 col-md-12 textRight">
+              <button type="button" class="btn btn-info" (click)="groupAdd()">
+                  <!-- 組織追加 -->
+                  Add organization
+              </button>
+              &nbsp;&nbsp;
+              <button type="button" class="btn btn-info" (click)="authorAdd()">
+                  <!-- 著者追加 -->
+                  Add author
+              </button>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 col-md-4">
+                <input type="text" class="form-control" placeholder="" [(ngModel)]="searchKey">
+            </div>
+            <div class="col-sm-1 col-md-1">
+                <button type="button" class="btn btn-info" (click)="searchButton()">&nbsp;&nbsp;
+                    <!-- 検索 -->
+                    Search
+                &nbsp;&nbsp;</button>
+            </div>
+          </div>
+          <div>
+              <table class="table table-striped">
+                  <caption></caption>
+                  <thead>
+                    <tr class="success">
+                      <th *ngIf="total ==0" class="thWidth">
+                          <!-- 氏名 -->
+                          Name
+                      </th>
+                      <!-- <th class="thWidth">メールアドレス</th> -->
+                      <th *ngIf="sortNameFlg == 'noSort' && total !=0" class="thWidth">
+                          <button class="btn btn-link" (click)="clickSort('asc','name')">
+                              <!-- 氏名 -->
+                              Name
+                        </button>
+                      </th>
+                      <th *ngIf="sortNameFlg != 'noSort'&& total !=0" class="thWidth">
+                          <button *ngIf="sortNameFlg == 'asc'" class="btn btn-link" (click)="clickSort('desc','name')">
+                              <!-- 氏名 -->
+                              Name
+                              <span class="glyphicon glyphicon-triangle-top"></span>
+                        </button>
+                          <button *ngIf="sortNameFlg == 'desc'" class="btn btn-link" (click)="clickSort('asc','name')">
+                              <!-- 氏名 -->
+                              Name
+                            <span class="glyphicon glyphicon-triangle-bottom"></span>
+                        </button>
+                      </th>
+                      <th *ngIf="total ==0" class="thWidth">
+                          <!-- メールアドレス -->
+                          Mail Address
+                      </th>
+                      <th *ngIf="sortEmailFlg == 'noSort'&& total !=0" class="thWidth">
+                          <button class="btn btn-link" (click)="clickSort('asc','email')">
+                              <!-- メールアドレス -->
+                              Mail Address
+                          </button>
+                      </th>
+                      <th *ngIf="sortEmailFlg != 'noSort'&& total !=0" class="thWidth">
+                          <button *ngIf="sortEmailFlg == 'asc'" class="btn btn-link" (click)="clickSort('desc','email')">
+                              <!-- メールアドレス -->
+                              Mail Address
+                              <span class="glyphicon glyphicon-triangle-top"></span></button>
+                          <button *ngIf="sortEmailFlg == 'desc'" class="btn btn-link" (click)="clickSort('asc','email')">
+                              <!-- メールアドレス -->
+                              Mail Address
+                              <span class="glyphicon glyphicon-triangle-bottom"></span></button>
+                      </th>
+                      <th class="alignCenter"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let data of displayData;let i=index">
+                    <tr class="">
+                      <td [innerHTML]="data.authorNameInfo.authorName">
+                      </td>
+                      <td [innerHTML]="data.emailInfo.email">
+                      </td>
+                      <td class="textRight">
+                        <button type="button" class="btn btn-info" (click)="update(i)">
+                            <!-- 編集 -->
+                           Edit
+                        </button>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  </tbody>
+                </table>
+          </div>
+          <div *ngIf="searchZero" class="alert alert-danger">
+              <!-- 検索結果は0件です。 -->
+            Sorry，No results.
+          </div>
+          <div class="">
+            <div class="row">
+                <div class="col-sm-3 col-md-3">
+              <ul class="pagination">
+                  <li><a href="#">
+                      <!-- 前 -->
+                      Previous
+                    </a></li>
+                  <li id="pageLink_1"><a href="#" (click)="clickPage(1)">1</a></li>
+                  <ng-container *ngFor="let index of pageList;let i=index">
+                  <li id="{{'pageLink_'+index}}"><a href="#" (click)="clickPage(index)">{{index}}</a></li>
+                  </ng-container>
+                  <li><a href="#">
+                      <!-- 次 -->
+                      Next
+                  </a></li>
+              </ul>
+            </div>
+            <div class="col-sm-9 col-md-9">
+                <ul class="pagination">
+                    <li>({{numberFrom}}-{{numberTo}}/{{total}})</li>
+                    <li>On 1 Page:
+                        <!-- 1ページに: -->
+                      <button *ngIf="numberOfpage==25" disabled class="btn btn-link" (click)="setNumber(25)">25</button>
+                      <button *ngIf="numberOfpage!=25" class="btn btn-link" (click)="setNumber(25)">25</button>
+                      /
+                      <button *ngIf="numberOfpage==50" disabled class="btn btn-link" (click)="setNumber(50)">50</button>
+                      <button *ngIf="numberOfpage!=50" class="btn btn-link" (click)="setNumber(50)">50</button>
+                      /
+                      <button *ngIf="numberOfpage==100" disabled class="btn btn-link" (click)="setNumber(100)">100</button>
+                      <button *ngIf="numberOfpage!=100" class="btn btn-link" (click)="setNumber(100)">100</button>
+                    </li>
+                </ul>
+
+            </div>
+            </div>
+              </div>
+          </div>
+      </div>
+    </div>
+<!-- </div> -->
