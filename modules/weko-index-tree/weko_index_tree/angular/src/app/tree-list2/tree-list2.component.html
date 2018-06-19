@@ -1,0 +1,336 @@
+<p></p>
+<div class="col-sm-12 col-md-12">
+  <div class="row">
+    <div class="col-sm-3 col-md-3 col-lg-3">
+      <p>
+        <button id="add" value="新規" class="btn btn-info button-create" (click)="addNode()">
+          <!-- 新規 -->
+          <!-- Add -->
+          {{langJson.Add[1]}}
+        </button>
+        <button id="del" value="削除" class="btn btn-info button-delete" (click)="deleNode()">
+          <!-- 削除 -->
+          <!-- Delete -->
+          {{langJson.Delete[1]}}
+        </button>
+      </p>
+      <div>
+        <tree [tree]="treeH" [settings]="checkboxSettings" (nodeSelected)="seleNode($event)" #treeList></tree>
+      </div>
+    </div>
+    <div *ngIf="templflg=='0'" class="col-sm-8 col-md-8 col-lg-8">
+      <fieldset *ngIf="!inputFlg" disabled>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <!-- インデックス編集 -->
+              <!-- INDEX EDIT -->
+              {{langJson.Index_Edit[1]}}
+            </h3>
+          </div>
+          <div class="panel-body">
+            <div class="panel-group">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      <!-- インデックス -->
+                      <!-- Index -->
+                      {{langJson.Index[1]}}
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <!-- 日本語 -->
+                          <!-- Janpanese -->
+                          {{langJson.Janpanese[1]}}
+                        </span>
+                        <input type="text" class="form-control" id="inputTitle_ja" placeholder="" [(ngModel)]="nodeValueJa">
+                      </div>
+                      <div class="row-line-space"></div>
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <!-- 英語 -->
+                          <!-- English -->
+                          {{langJson.English[1]}}
+                        </span>
+                        <input type="text" class="form-control" id="inputTitle_en" placeholder="" [(ngModel)]="nodeValueEn">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      <!-- コメント -->
+                      <!-- Comment -->
+                      {{langJson.Comment[1]}}
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <textarea class="form-control" rows="3" id="inputComment" [(ngModel)]="inputCommentVal"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      <!-- Display range -->
+                      {{langJson.Display_Range[1]}}
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" id="rss_display" [(ngModel)]="rssDisplayVal">
+                          <!-- more表示機能 -->
+                          <!-- More display -->
+                          {{langJson.More_Display[1]}}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 0611 add start -->
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      <!-- Display range -->
+                      <!-- {{langJson.Display_Range[1]}} -->
+                      閲覧権限
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="col-sm-5 col-md-5">
+                        <select multiple name="allow_item_type" id="allow_item_type_name" class="form-control">
+                          <option>管理者</option>
+                          <option>普通ユーザー</option>
+                          <option>事務所</option>
+                          <option>ゲスト</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-2 col-md-2">
+                        <button type="button" class="btn btn-default" ng-click="setAllowToDeny(denyId)">
+                          <span class="glyphicon glyphicon-arrow-right"></span>
+                        </button>
+                        <p></p>
+                        <button type="button" class="btn btn-default" ng-click="setDenyToAllow(alowId)">
+                          <span class="glyphicon glyphicon-arrow-left"></span>
+                        </button>
+                      </div>
+                      <div class="col-sm-5 col-md-5">
+                        <select multiple name="allow_item_type" id="allow_item_type_name" class="form-control">
+                          <option>管理者</option>
+                          <option>普通ユーザー</option>
+                          <option>事務所</option>
+                          <option>ゲスト</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 0611 add end -->
+
+            </div>
+          </div>
+          <div class="panel-footer">
+            <button id="index-detail-submit" class="btn btn-info" (click)="sendingdetail()">
+              <!-- 送信 -->
+              <!-- Send -->
+              {{langJson.Send[1]}}
+            </button>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset *ngIf="inputFlg">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{langJson.Index_Edit[1]}}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="panel-group">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">{{langJson.Index[1]}}</div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="input-group">
+                        <span class="input-group-addon">{{langJson.Janpanese[1]}}</span>
+                        <input type="text" class="form-control" id="inputTitle_ja" placeholder="" [(ngModel)]="nodeValueJa">
+                      </div>
+                      <div class="row-line-space"></div>
+                      <div class="input-group">
+                        <span class="input-group-addon">{{langJson.English[1]}}</span>
+                        <input type="text" class="form-control" id="inputTitle_en" placeholder="" [(ngModel)]="nodeValueEn">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">{{langJson.Comment[1]}}</div>
+                    <div class="col-sm-10 col-md-10">
+                      <textarea class="form-control" rows="3" id="inputComment" [(ngModel)]="inputCommentVal"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">{{langJson.Display_Range[1]}}</div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" id="rss_display" [(ngModel)]="rssDisplayVal">{{langJson.More_Display[1]}}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 0611 add start -->
+              <!-- 公開 -->
+              <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-sm-2 col-md-2">
+                        <!-- Display range -->
+                        <!-- {{langJson.Display_Range[1]}} -->
+                        公開
+                      </div>
+                      <div class="col-sm-10 col-md-10">
+                          <input type="checkbox" id="rss_display" [(ngModel)]="rssDisplayVal">公開する
+                          <p>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <!-- {{langJson.Janpanese[1]}} -->
+                                  公開日：
+                                </span>
+                                <input type="text" class="form-control" id="inputTitle_ja" placeholder="">
+                            </div>
+                          <p>
+                            <input type="checkbox" id="rss_display" [(ngModel)]="rssDisplayVal">子インデックスのペース権限にも再帰的に反映させる
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              <!-- 閲覧権限設定 -->
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      <!-- Display range -->
+                      <!-- {{langJson.Display_Range[1]}} -->
+                      閲覧権限
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="col-sm-5 col-md-5">
+                          閲覧権限あり
+                          <p>
+                        <select multiple name="allow_item_type" id="allow_item_type_name" class="form-control">
+                          <option>管理者</option>
+                          <option>普通ユーザー</option>
+                          <option>事務所</option>
+                          <option>ゲスト</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-2 col-md-2">
+                        &nbsp;&nbsp;
+                        <p></p>
+                        <button type="button" class="btn btn-default" ng-click="setAllowToDeny(denyId)">
+                          <span class="glyphicon glyphicon-arrow-right"></span>
+                        </button>
+                        <p></p>
+                        <button type="button" class="btn btn-default" ng-click="setDenyToAllow(alowId)">
+                          <span class="glyphicon glyphicon-arrow-left"></span>
+                        </button>
+                      </div>
+                      <div class="col-sm-5 col-md-5">
+                          閲覧権限なし
+                          <p>
+                        <select multiple name="allow_item_type" id="allow_item_type_name" class="form-control">
+                          <option>管理者</option>
+                          <option>普通ユーザー</option>
+                          <option>事務所</option>
+                          <option>ゲスト</option>
+                        </select>
+                      </div>
+                      <p>
+                        
+                            <input type="checkbox" id="rss_display" [(ngModel)]="rssDisplayVal">子インデックスのペース権限にも再帰的に反映させる
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 投稿権限設定 -->
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-sm-2 col-md-2">
+                      <!-- Display range -->
+                      <!-- {{langJson.Display_Range[1]}} -->
+                      投稿権限
+                    </div>
+                    <div class="col-sm-10 col-md-10">
+                      <div class="col-sm-5 col-md-5">
+                        投稿権限あり
+                        <p>
+                        <select multiple name="allow_item_type" id="allow_item_type_name" class="form-control">
+                          <option>管理者</option>
+                          <option>普通ユーザー</option>
+                          <option>事務所</option>
+                          <option>ゲスト</option>
+                        </select>
+                        <p>
+
+                        </p>
+                      </div>
+                      <div class="col-sm-2 col-md-2">
+                          &nbsp;&nbsp;
+                          <p></p>
+                        <button type="button" class="btn btn-default" ng-click="setAllowToDeny(denyId)">
+                          <span class="glyphicon glyphicon-arrow-right"></span>
+                        </button>
+                        <p></p>
+                        <button type="button" class="btn btn-default" ng-click="setDenyToAllow(alowId)">
+                          <span class="glyphicon glyphicon-arrow-left"></span>
+                        </button>
+                      </div>
+                      <div class="col-sm-5 col-md-5">
+                          投稿権限なし
+                          <p>
+                        <select multiple name="allow_item_type" id="allow_item_type_name" class="form-control">
+                          <option>管理者</option>
+                          <option>普通ユーザー</option>
+                          <option>事務所</option>
+                          <option>ゲスト</option>
+                        </select>
+                      </div>
+                      <p>
+                      
+                     <input type="checkbox" id="rss_display" [(ngModel)]="rssDisplayVal">子インデックスのペース権限にも再帰的に反映させる
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 0611 add end -->
+            </div>
+          </div>
+          <div class="panel-footer">
+            <button id="index-detail-submit" class="btn btn-info" (click)="sendingdetail()">{{langJson.Send[1]}}</button>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <app-cofirm-modal [modalAberto]="modalStatus" [parentIsRoot]="parentIsRoot" (buttonClickEvent)="deleteNode($event)"></app-cofirm-modal>
+  </div>
