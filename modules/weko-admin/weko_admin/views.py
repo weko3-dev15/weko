@@ -18,14 +18,13 @@
 # Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307, USA.
 
-"""Data views for weko-admin."""
+"""Views for weko-admin."""
 
 from datetime import timedelta
 
-from flask import Blueprint, current_app, flash, jsonify, render_template, \
-    request, session, Flask
+from flask import Blueprint, Flask, current_app, flash, jsonify, \
+    render_template, request, session
 from flask_babelex import lazy_gettext as _
-from flask_babelex import Babel
 from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
 from flask_login import current_user, login_required
 from flask_menu import register_menu
@@ -44,19 +43,11 @@ blueprint = Blueprint(
     url_prefix='/accounts/settings',
 )
 
-app = Flask(__name__)
-babel = Babel(app)
-
-
-@babel.localeselector
-def get_locale():
-    return request.accept_languages.best_match(['ja', 'ja_JP', 'en'])
-
 
 @blueprint.route('/session/lifetime/<int:minutes>', methods=['GET'])
 def set_lifetime(minutes):
     """
-    Update session lifetime to db.
+    Update session lifetime in db.
 
     :param minutes:
     :return: Session lifetime updated message.

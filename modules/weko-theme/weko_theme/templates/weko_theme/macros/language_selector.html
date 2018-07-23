@@ -1,0 +1,34 @@
+{#
+# This file is part of WEKO3.
+# Copyright (C) 2017 National Institute of Informatics.
+#
+# WEKO3 is free software; you can redistribute it
+# and/or modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# WEKO3 is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WEKO3; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+#}
+
+{% macro language_selector_dropdown() %}
+  <form id="language-code-form" class="form form-inline lang-select"
+        action="{{ url_for('invenio_i18n.set_lang')}}"
+        method="POST">
+    <div class="form-group">
+      <span for="lang-code">{{ _('Language:') }}</span>
+      <select class="form-control" id="lang-code" name="lang_code">
+        {% for l in current_i18n.get_locales() %}
+          <option {% if current_i18n.language == l.language %}selected {% endif %}value="{{ l.language }}">{{ l.get_display_name() }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </form>
+{% endmacro %}

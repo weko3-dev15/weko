@@ -92,6 +92,9 @@ setup(
         'invenio_base.apps': [
             'weko_search_ui = weko_search_ui:WekoSearchUI',
         ],
+        'invenio_base.api_apps': [
+            'weko_search_rest = weko_search_ui:WekoSearchREST',
+        ],
         'invenio_i18n.translations': [
             'messages = weko_search_ui',
         ],
@@ -104,6 +107,9 @@ setup(
             'weko_search_ui_dependencies_js = weko_search_ui.bundles:'
             'js_dependecies',
         ],
+        # 'invenio_access.actions': [
+        #     'search_access = weko_search_ui.permissions:search_permission',
+        # ],
     },
     extras_require=extras_require,
     install_requires=install_requires,

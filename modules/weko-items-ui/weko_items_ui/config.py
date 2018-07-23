@@ -23,11 +23,16 @@
 WEKO_ITEMS_UI_BASE_TEMPLATE = 'weko_items_ui/base.html'
 """Default base template for the item page."""
 
+WEKO_ITEMS_UI_INDEX_TEMPLATE = 'weko_items_ui/item_index.html'
+"""Edit template with file upload for the item page."""
+
 WEKO_ITEMS_UI_FORM_TEMPLATE = 'weko_items_ui/edit.html'
 """Edit template with file upload for the item page."""
 
-WEKO_ITEMS_UI_FORM_NOFILE_TEMPLATE = 'weko_items_ui/edit_nofile.html'
-"""Edit template without file upload for the item page."""
-
 WEKO_ITEMS_UI_ERROR_TEMPLATE = 'weko_items_ui/error.html'
 """Error template for the item page."""
+
+WEKO_ITEMS_UI_DEMO_TEMPLATE = 'weko_items_ui/demo.html'
+"""Demo template for the item page post test data."""
+
+WEKO_ITEMS_UI_INDEX_URL = '/items/index/{pid_value}'

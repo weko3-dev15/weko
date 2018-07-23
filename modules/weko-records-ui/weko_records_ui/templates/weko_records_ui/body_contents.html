@@ -1,0 +1,282 @@
+{# -*- coding: utf-8 -*-
+#
+# This file is part of WEKO3.
+# Copyright (C) 2017 National Institute of Informatics.
+#
+# WEKO3 is free software; you can redistribute it
+# and/or modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# WEKO3 is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WEKO3; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+#}
+
+<div class="panel-group">
+<div class="panel panel-default">
+  <div class="panel-heading clearfix">
+    <h3 class="panel-title">{{_('Index')}}</h3>
+  </div>
+  <div class="panel-body">
+    <pre class="hide">{{record|tojson}}</pre>
+    <div class="panel_bread" id="panel_bread">
+      {%- if record.navi -%}
+        {%- for nav in record.navi -%}
+        <ol class="breadcrumb">
+          {%- set name = nav.name.split('/') -%}
+          {%- set p = nav.path.split('/') -%}
+          {%- for n in name -%}
+            <li><a href={{url_for("invenio_search_ui.search")+"?search_type=2&q="+p[loop.index-1]}}>{{n}}</a></li>
+          {%- endfor -%}
+        </ol>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading clearfix">
+    <h3 class="panel-title">{{_('Item')}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="form-inline">
+          <a href="#"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> {{ record.get('item_title', _('No title')) }}</a>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-9 col-md-9">
+            {%- block record_author %}
+              {%- set files = record.files -%}
+              {%- set ignore_meta = ('_buckets', '_deposit', '_oai', 'path', 'filemeta', 'item_title', 'item_type_id') -%}
+              {%- if files -%}
+              <table class="table table-bordered table-striped">
+                <thead>
+                <tr class="">
+                  <th>{{_('Name')}} / {{_('File')}}</th>
+                  <th class="license">{{_('License')}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {%- for file in files|sort(attribute='key') -%}
+                {%- set img = file.mimetype | get_image_src -%}
+                {%- set file_url = url_for('invenio_records_ui.recid_files', pid_value=pid.pid_value,
+                filename=file.key) %}
+                <tr class="">
+                  <td class="">{{file.filename}}</td>
+                  <td class="" rowspan="2">
+                    {%- if not 'simple' in file.displaytype -%}
+                    {%- if 'license_free' == file.licensetype -%}
+                      <span class="break-word">{{ file.licensefree }}</span>
+                    {%- else %}
+                      {% set lst = file.licensetype | get_license_icon %}
+                      <img src="{{lst[0]}}"/><br>
+                      {{ lst[1] }}
+                      {%- endif %}
+                    {%- endif -%}
+                  </td>
+                </tr>
+                <tr class="">
+                  <td>
+                      <span class="filename">
+                        <img src="{{img}}"/>
+                        <a class="forcewrap"
+                           href="{{file_url}}">{{ file.filename }} ({{ file.size|filesizeformat }})</a>
+                        <span>[ 0 downloads ]</span><br>
+                        <span>{{file.checksum.split(':')[0]}}</span>
+                        <span class="break-word">{{file.checksum.split(':')[1]}}</span>
+                      </span>
+                  </td>
+                </tr>
+                {%- if 'detail' in file.displaytype and 'pdf' in file.mimetype -%}
+                <tr class="">
+                  <td colspan="2">
+                    <div class="panel panel-default" id="preview_de">
+                      <div class="panel-heading">
+                        <a class="panel-toggle" data-toggle="collapse" href="#{{loop.index}}">
+                          {{_('Preview')}}
+                          <span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>
+                          <span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>
+                        </a>
+                      </div>
+                      <div id="{{loop.index}}" class="collapse">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="preview-iframe" id="preview-iframe_de" width="100%" height="400"
+                                  src="{{ url_for('invenio_records_ui.recid_preview', pid_value=pid.pid_value, filename=file.key) }}">
+                            </iframe>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                {%- endif -%}
+                {%- if 'preview' in file.displaytype -%}
+                <tr class="">
+                  <td colspan="2">
+                    <div class="panel panel-default" id="preview">
+                      <div class="panel-heading">
+                        <a class="panel-toggle" data-toggle="collapse" href="#{{loop.index}}">
+                          {{_('Preview')}}
+                          <span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>
+                          <span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>
+                        </a>
+                      </div>
+                      <div id="{{loop.index}}" class="collapse">
+                        <div class="embed-responsive embed-responsive-16by9">
+                          {%- if 'audio' in file.mimetype -%}
+                            <audio controls preload="auto">
+                              <source src="{{file_url}}" type="{{file.mimetype}}">
+                            </audio>
+                          {%- elif 'video' in file.mimetype -%}
+                            <video controls>
+                              <source src="{{file_url}}" type="{{file.mimetype}}">
+                            </video>
+                          {%- elif 'text' in file.mimetype -%}
+                            <object data="{{file_url}}" type="{{file.mimetype}}"/>
+                          {%- else -%}
+                            <iframe class="preview-iframe" id="preview-iframe" width="100%" height="400"
+                                  src="{{ url_for('invenio_records_ui.recid_preview', pid_value=pid.pid_value, filename=file.key) }}">
+                            </iframe>
+                          {%- endif -%}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+                {%- endif -%}
+                {%- endfor -%}
+                </tbody>
+              </table>
+              {%- endif %}
+              <table class="table table-bordered table-striped">
+              {% if record.item_type_info %}
+                <tr>
+                  <th>{{_('item type')}}</th>
+                  <td>{{ record.item_type_info }}</td>
+                </tr>
+              {% endif %}
+                {%- for lst in record.items_show_list %}
+                  <tr>
+                    <th>{{ lst['attribute_name'] }}</th>
+                    <td>
+                      {% if lst['attribute_value'] is string %}
+                        {{ lst['attribute_value'] }}
+                      {% else %}
+                        {%- for key in lst['attribute_value'] %}
+                          {{ key }}
+                        {% endfor %}
+                      {% endif %}
+                      {%- for l in lst['attribute_value_mlt'] %}
+                        {%- for k, v in l.items() %}
+                          {% if k is none or '' in k %}
+                            {{ v }}<br>
+                          {% else %}
+                            {{ k }} : {{ v }}<br>
+                          {% endif %}
+                        {% endfor %}
+                      {% endfor %}
+                    </td>
+                  </tr>
+                {% endfor %}
+                {% if record.pubdate %}
+                  <tr>
+                    <th>{{_('Publish Status')}}</th>
+                    {%- set pubs = record.get('publish_status','1') -%}
+                    {% if record.editable %}
+                    {%- set dis = '' -%}
+                    {% else %}
+                    {%- set dis = 'disabled' -%}
+                    {% endif %}
+                    <td>
+                      <div>
+                        <form class="form form-inline"
+                              action="{{ url_for('invenio_records_ui.recid_publish',
+                              pid_value=pid.pid_value) }}"
+                              method="POST">
+                          {% if record.editable %}
+                             {% if '0' in pubs %}
+                              <button class="btn btn-default" type="submit" name="status" value="1">
+                                {{_('Private')}}
+                              </button>  {{_('Publish')}}
+                             {% else %}
+                              <button class="btn btn-default" type="submit" name="status" value="0">
+                                {{_('Publish')}}
+                              </button>  {{_('Private')}}
+                             {% endif %}
+                          {% else %}
+                              {% if '0' in pubs %}{{_('Publish')}}{% else %}{{_('Private')}}
+                          {% endif %}
+                          {% endif %}
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                {% endif %}
+              </table>
+              {%- if 'main_entry_personal_name' in record %}
+              <p class="record_authors">
+                <i>{{ record['main_entry_personal_name']['personal_name'] }}</i>
+                {%- for author in record.get('added_entry_personal_name', []) %}
+                , <i>{{ author['personal_name'] }}</i>
+                {% endfor %}
+              </p>
+              {% endif %}
+            {%- endblock %}
+
+            <div class="text-center">
+              <a class="btn btn-default" id="btn_back" href="#" >
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>{{_('Back')}}</a>
+              {% if record.editable %}
+              <a class="btn btn-default" id="btn_edit" href="{{ '/item/edit/'+pid.pid_value }}">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>{{_('Edit')}}</a>
+              <a class="btn btn-danger btn-sm" id="btn_delete" href="#">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>{{_('Delete')}}</a>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-sm-3 col-md-3">
+            {%- block record_extra_info %}
+            <div class="extra-info">
+              <dl>
+                {%- if pid %}
+                {%- block record_control_number %}
+                <dt>{{ _('Control number') }}</dt>
+                <dd>{{ record.get('control_number', pid.value) }}</dd>
+                {%- endblock %}
+                {% endif %}
+                {%- if 'publication_distribution_imprint' in record %}
+                {%- block record_publication_date %}
+                <dt>{{ _('Publication date') }}</dt>
+                <dd>{{ record['publication_distribution_imprint'][0]['date_of_publication_distribution'][0] }}</dd>
+                {%- endblock %}
+                {% endif %}
+                {%- if '$schema' in record %}
+                {%- block record_schema %}
+                <dt>{{ _('Schema') }}</dt>
+                <dd>
+                  <a target="_blank" href="{{ record['$schema'] }}">
+                    {{ record['$schema'] }}
+                  </a>
+                </dd>
+                {%- endblock %}
+                {% endif %}
+                {%- include "weko_records_ui/export_well.html" %}
+              </dl>
+            </div><!-- /.extra-info -->
+            {%- endblock record_extra_info %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

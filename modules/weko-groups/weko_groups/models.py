@@ -314,7 +314,7 @@ class Group(db.Model):
         grouplist = Group.query.all()
         obj = {}
         for k in grouplist:
-            obj[k.id] = k.name
+            obj[str(k.id)] = k.name
         return obj
 
     @classmethod
@@ -684,7 +684,8 @@ class Membership(db.Model):
         Get a group's members.
 
         :param group_or_id:
-        :param bool with_invitations: Verify if group has invitations. Default False.
+        :param bool with_invitations:
+                    Verify if group has invitations. Default False.
         :returns: Group members.
         """
         if isinstance(group_or_id, Group):
@@ -937,7 +938,10 @@ class Timestamp(object):
 
 
 def resolve_admin_type(admin):
-    """Determine admin type."""
+    """Determine admin type.
+
+    :param admin:
+    """
     if admin is current_user or isinstance(admin, UserMixin):
         return 'User'
     else:

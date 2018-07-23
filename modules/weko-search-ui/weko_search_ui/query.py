@@ -20,23 +20,38 @@
 
 """Query factories for REST API."""
 
+import json
 from datetime import datetime
-from functools import partial
+from werkzeug.datastructures import MultiDict
 
 from elasticsearch_dsl.query import Q
 from flask import current_app, request
 from invenio_records_rest.errors import InvalidQueryRESTError
+from weko_index_tree.api import Indexes
+from .permissions import search_permission
 
 
 def default_search_factory(self, search, query_parser=None):
-    """Parse query using Weko-Query-Parser.
+    """Parse query using Weko-Query-Parser. MetaData Search.
 
     :param self: REST view.
     :param search: Elastic search DSL search instance.
     :param query_parser: Query parser. (Default: ``None``)
     :returns: Tuple with search instance and URL arguments.
     """
-    def _get_dsearch_query():
+
+    # check permission
+    is_perm = search_permission.can()
+
+    def _get_permission_filter():
+        mut = []
+        if not is_perm:
+            mut.append(Q('match', publish_status='0'))
+            mut.append(Q('range', date={'lte': 'now/d'}))
+        return mut
+
+    def _get_dsearch_query(qs=None):
+        """for detail search"""
         kw = ['search_title', 'search_creator', 'subject', 'search_sh',
               'description', 'search_publisher', 'search_contributor',
               'itemtype', 'NIItype', 'format', 'search_id', 'jtitle',
@@ -52,7 +67,7 @@ def default_search_factory(self, search, query_parser=None):
         for k in kw:
             kv = request.values.get(k)
             if kv:
-                mut.append(dict(match={k: kv}))
+                mut.append(Q('query_string', query=kv, default_operator='and', default_field=k))
 
         i = 0
         while i < 6:
@@ -72,51 +87,70 @@ def default_search_factory(self, search, query_parser=None):
             qd["range"] = qd1
             mut.append(qd)
 
-        qs = request.values.get('q')
+        # add  Permission filter by publish date and status
+        mt = _get_permission_filter()
+        if mt:
+            mut.extend(mt)
+
         if qs:
-            for s in qs.split(" "):
-                mut.append({"query_string": dict(query=s)})
+            mut.append(Q('query_string', query=qs, default_operator='and', fields=['search_*', 'search_*.ja']))
 
         del qv, qd, qd1
 
-        return Q('bool', must=mut)
+        return Q('bool', must=mut) if mut else Q(), mut
 
     def _default_parser(qstr=None):
-        """Default parser that uses the Q() from elasticsearch_dsl.
+        """Default parser that uses the Q() from elasticsearch_dsl. Full text Search.
 
         :param qstr: Query string.
         :returns: Query parser.
         """
-        nd = datetime.today().strftime('%Y-%m-%d')
-        if qstr:
-            return Q(
-                'filtered',
-                query=Q(
-                    'bool',
-                    should=[
-                        Q('has_child', type='content', query=Q('bool', must=[
-                            Q('multi_match', query=qstr,
-                              fields=['file.content.en*^1.5',
-                                      'file.content.jp'], type='most_fields',
-                              minimum_should_match='75%')]),
-                          inner_hits={'fields': ['file.content']}),
-                        Q('query_string', query=qstr)
-                    ]
-                ),
-                # filter=Q('range', date={'lte': nd})
-            )
+        # add  Permission filter by publish date and status
+        mt = _get_permission_filter()
+        # multi keyword search filter
+        kmt = _get_dsearch_query()[1]
+        if kmt:
+            mt.extend(kmt)
 
-        return Q()
+        if qstr:
+            q_s = Q('multi_match', query=qstr, operator='and',
+                    fields=['content.file.content^1.5',
+                            'content.file.content.ja^1.2',
+                            '_all'],
+                    type='most_fields', minimum_should_match='75%')
+            mt.append(q_s)
+            qur = Q('bool', must=mt)
+        else:
+            if mt:
+                mt.append(Q())
+                qur = Q('bool', must=mt)
+            else:
+                qur = Q()
+        return qur
 
     from invenio_records_rest.facets import default_facets_factory
     from invenio_records_rest.sorter import default_sorter_factory
 
     query_parser = query_parser or _default_parser
 
+    search_type = request.values.get('search_type')
     qs = request.values.get('q')
-    query_q = _get_dsearch_query()
-    if (len(query_q.must) == 1 and qs) or (len(query_q.must) < 1 and not qs):
-        query_q = query_parser(qs)
+
+    # full text search
+    if search_type and '0' in search_type:
+        if qs:
+            query_q = query_parser(qs)
+        else:
+            # detail search
+            query_q = _get_dsearch_query()[0]
+    else:
+        # simple search
+        query_q = _get_dsearch_query(qs)[0]
+
+    src = {'_source': {'exclude': ['content']}}
+    # extr = search._extra.copy()
+    # search.update_from_dict(src)
+    search._extra.update(src)
 
     try:
         search = search.query(query_q)
@@ -137,17 +171,94 @@ def default_search_factory(self, search, query_parser=None):
     return search, urlkwargs
 
 
-es_search_factory = default_search_factory
+def item_path_search_factory(self, search):
+    """Parse query using Weko-Query-Parser.
 
-
-def weko_search_parser(search_factory):
-    """Set the default search factory to use Weko-query-parser.
-
-    :param search_factory: Search factory.
-    :returns: Partial function.
+    :param self: REST view.
+    :param search: Elastic search DSL search instance.
+    :returns: Tuple with search instance and URL arguments.
     """
-    from invenio_query_parser.contrib.elasticsearch import IQ
-    return partial(default_search_factory, query_parser=IQ)
+
+    # check permission
+    is_perm = search_permission.can()
+
+    query_q = {
+        "query": {
+            "match": {
+                "path.tree": "@index"
+            }
+        },
+        "aggs": {
+            "path": {
+                "terms": {
+                    "field": "path.tree",
+                    "include": "@index|@index/[^/]+"
+                },
+                "aggs": {
+                    "date_range": {
+                        "range": {
+                            "field": "date",
+                            "format": "YYYY-MM-DD",
+                            "ranges": [
+                                {
+                                    "from": "now/d"
+                                },
+                                {
+                                    "to": "now/d"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "post_filter": {
+            "term": {
+                "path": "@index"
+            }
+        }
+    }
+
+    if not is_perm:
+        mut = []
+        mut.append({'match': {'publish_status': '0'}})
+        mut.append({'range': {'date': {'lte': 'now/d'}}})
+        mut.append({'term': query_q['post_filter'].pop('term')})
+        query_q['post_filter']['bool'] = {'must': mut}
+
+    # create search query
+    q = request.values.get('q')
+    if q:
+        try:
+            fp = Indexes.get_self_path(q)
+            if fp:
+                query_q = json.dumps(query_q).replace("@index", fp.path)
+                query_q = json.loads(query_q)
+        except:
+            pass
+
+    urlkwargs = MultiDict()
+    try:
+        # Aggregations.
+        extr = search._extra.copy()
+        search.update_from_dict(query_q)
+        search._extra.update(extr)
+    except SyntaxError:
+        current_app.logger.debug(
+            "Failed parsing query: {0}".format(
+                request.values.get('q', '')),
+            exc_info=True)
+        raise InvalidQueryRESTError()
+
+    from invenio_records_rest.sorter import default_sorter_factory
+    search_index = search._index[0]
+    search, sortkwargs = default_sorter_factory(search, search_index)
+    for key, value in sortkwargs.items():
+        urlkwargs.add(key, value)
+
+    urlkwargs.add('q', query_q)
+    return search, urlkwargs
 
 
-weko_search_factory = weko_search_parser(default_search_factory)
+weko_search_factory = item_path_search_factory
+es_search_factory = default_search_factory

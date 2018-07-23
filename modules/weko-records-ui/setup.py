@@ -56,6 +56,8 @@ setup_requires = [
 
 install_requires = [
     'Flask-BabelEx>=0.9.2',
+    'invenio-previewer>=1.0.0a11',
+    'PyPDF2>=1.26.0',
 ]
 
 packages = find_packages()
@@ -90,6 +92,12 @@ setup(
         ],
         'invenio_config.module': [
             'weko_records_ui = weko_records_ui.config',
+        ],
+        'invenio_assets.bundles': [
+            'weko_records_ui_js = weko_records_ui.bundles:js',
+        ],
+        'invenio_access.actions': [
+            'detail_page_access = weko_records_ui.permissions:detail_page_access',
         ],
     },
     extras_require=extras_require,

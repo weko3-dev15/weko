@@ -1,3 +1,5 @@
+-e /code/modules/invenio-files-rest
+-e /code/modules/weko-theme
 -e /code/modules/weko-itemtypes-ui
 -e /code/modules/weko-items-ui
 -e /code/modules/weko-accounts
@@ -7,4 +9,8 @@
 -e /code/modules/weko-search-ui
 -e /code/modules/weko-records
 -e /code/modules/weko-records-ui
--e /code/modules/weko-items-rest
+-e /code/modules/weko-schema-ui
+-e /code/modules/weko-index-tree
+-e /code/modules/weko-user-profiles
+-e /code/modules/weko-deposit
+-e /code/modules/weko-authors

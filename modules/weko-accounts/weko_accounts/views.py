@@ -18,14 +18,18 @@
 # Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA 02111-1307, USA.
 
-"""Data views for weko-accounts."""
+"""
+Views for weko-accounts.
 
-# the templates and static folders as well as the test case.
+Set the templates and static folders as well as the test case by
+flask Blueprint.
+"""
 
-from flask import Blueprint, render_template, request, Flask
+from flask import Blueprint, current_app, render_template, redirect, request, \
+    session
 from flask_babelex import gettext as _
-from flask_babelex import Babel
 
+from .api import ShibUser
 
 blueprint = Blueprint(
     'weko_accounts',
@@ -35,14 +39,6 @@ blueprint = Blueprint(
     url_prefix="/weko",
 )
 
-app = Flask(__name__)
-babel = Babel(app)
-
-
-@babel.localeselector
-def get_locale():
-    return request.accept_languages.best_match(['ja', 'ja_JP', 'en'])
-
 
 @blueprint.route("/")
 def index():
@@ -50,3 +46,39 @@ def index():
     return render_template(
         "weko_accounts/index.html",
         module_name=_('WEKO-Accounts'))
+
+
+@blueprint.route("/shib/login", methods=['GET', 'POST'])
+def shib_login():
+    """temp uri for test shibboleth user login"""
+    shib_attr, error = parse_attributes()
+    if error:
+        return "login failed"
+    shib_user = ShibUser(shib_attr)
+    shib_user.get_relation_info()
+    if shib_user.shib_user is not None:
+        session['user_id'] = shib_user.user.id
+        session['user_src'] = 'Shib'
+        shib_user.shib_user_login()
+    return redirect('/')
+
+
+@blueprint.route("/shib/logout")
+def shib_logout():
+    ShibUser.shib_user_logout()
+    return "logout success"
+
+
+def parse_attributes():
+    """Parse arguments from environment variables."""
+    attrs = {}
+    error = False
+    for header, attr in current_app.config['SSO_ATTRIBUTE_MAP'].items():
+        required, name = attr
+        value = request.form.get(header, None)
+
+        attrs[name] = value
+        if not value or value == '':
+            if required:
+                error = True
+    return attrs, error

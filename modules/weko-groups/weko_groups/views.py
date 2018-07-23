@@ -21,10 +21,9 @@
 
 """Groups Settings Blueprint."""
 
-from flask import Blueprint, current_app, flash, jsonify, redirect, \
-    render_template, request, url_for, Flask
+from flask import Blueprint, Flask, current_app, flash, jsonify, redirect, \
+    render_template, request, url_for
 from flask_babelex import gettext as _
-from flask_babelex import Babel
 from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
 from flask_login import current_user, login_required
 from flask_menu import register_menu
@@ -44,8 +43,6 @@ blueprint = Blueprint(
     url_prefix='/accounts/settings/groups',
 )
 
-app = Flask(__name__)
-babel = Babel(app)
 
 # default_breadcrumb_root(blueprint, '.settings.groups')
 
@@ -60,11 +57,6 @@ def get_group_name(id_group):
     group = Group.query.get(id_group)
     if group is not None:
         return group.name
-
-
-@babel.localeselector
-def get_locale():
-    return request.accept_languages.best_match(['ja', 'ja_JP', 'en'])
 
 
 @blueprint.route('/groupcount', methods=['GET'])
@@ -106,7 +98,6 @@ def _has_admin_access():
 @register_menu(
     blueprint, 'settings.groups',
     _('%(icon)s Groups', icon='<i class="fa fa-users fa-fw"></i>'),
-    visible_when=_has_admin_access,
     order=13,
     active_when=lambda: request.endpoint.startswith("groups_settings.")
 )
@@ -125,6 +116,7 @@ def index():
 
     requests = Membership.query_requests(current_user).count()
     invitations = Membership.query_invitations(current_user).count()
+    is_admin = _has_admin_access()
 
     return render_template(
         'weko_groups/index.html',
@@ -133,7 +125,8 @@ def index():
         invitations=invitations,
         page=page,
         per_page=per_page,
-        q=q
+        q=q,
+        is_admin=is_admin
     )
 
 
@@ -392,9 +385,9 @@ def approve(group_id, user_id):
             flash(str(e), 'error')
             return redirect(url_for('.requests', group_id=membership.group.id))
 
-        flash(_('%(user)s accepted to %(name)s group.',
+        flash(_('%(user)s accepted to %(group_name)s group.',
                 user=membership.user.email,
-                name=membership.group.name), 'success')
+                group_name=membership.group.name), 'success')
         return redirect(url_for('.requests', group_id=membership.group.id))
 
     flash(
@@ -462,9 +455,9 @@ def accept(group_id):
         flash(str(e), 'error')
         return redirect(url_for('.invitations', group_id=membership.group.id))
 
-    flash(_('You are now part of %(name)s group.',
+    flash(_('You are now part of %(group_name)s group.',
             user=membership.user.email,
-            name=membership.group.name), 'success')
+            group_name=membership.group.name), 'success')
     return redirect(url_for('.invitations', group_id=membership.group.id))
 
 
@@ -490,9 +483,9 @@ def reject(group_id):
         flash(str(e), 'error')
         return redirect(url_for('.invitations', group_id=membership.group.id))
 
-    flash(_('You have rejected invitation to %(name)s group.',
+    flash(_('You have rejected invitation to %(group_name)s group.',
             user=user.email,
-            name=group.name), 'success')
+            group_name=group.name), 'success')
     return redirect(url_for('.invitations', group_id=membership.group.id))
 
 

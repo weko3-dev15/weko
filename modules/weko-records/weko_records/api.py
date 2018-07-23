@@ -35,8 +35,8 @@ from sqlalchemy.orm.attributes import flag_modified
 from sqlalchemy.sql.expression import asc, desc
 from werkzeug.local import LocalProxy
 
-from .models import FileMetadata, ItemMetadata, ItemType, ItemTypeMapping,\
-    ItemTypeName
+from .models import FileMetadata, ItemMetadata, ItemType, ItemTypeMapping, \
+    ItemTypeName, ItemTypeProperty
 
 _records_state = LocalProxy(
     lambda: current_app.extensions['invenio-records'])
@@ -706,6 +706,95 @@ class Mapping(RecordBase):
         return RevisionsIterator(self.model)
 
 
+class ItemTypeProps(RecordBase):
+    """Define API for Itemtype Property creation and manipulation."""
+
+    @classmethod
+    def create(cls, property_id=None, name=None, schema=None, form_single=None,
+               form_array=None):
+        r"""Create a new ItemTypeProperty instance and store it in the database.
+
+        :param property_id: ID of Itemtype property.
+        :param name: Property name.
+        :param schema: Property in JSON format.
+        :param form_single: form (single) in JSON format.
+        :param form_array: form (array) in JSON format.
+        :returns: A new :class:`Record` instance.
+        """
+        with db.session.begin_nested():
+            record = cls(schema)
+
+            before_record_insert.send(
+                current_app._get_current_object(),
+                record=record
+            )
+
+            record.model = None
+            if property_id > 0:
+                obj = ItemTypeProperty.query.filter_by(id=property_id,
+                                                       delflg=False).first()
+                if obj is not None:
+                    obj.name = name
+                    obj.schema = schema
+                    obj.form = form_single
+                    obj.forms = form_array
+                    record.model = obj
+            if record.model is None:
+                record.model = ItemTypeProperty(name=name,
+                                                schema=schema,
+                                                form=form_single,
+                                                forms=form_array)
+
+            db.session.add(record.model)
+
+        after_record_insert.send(
+            current_app._get_current_object(),
+            record=record
+        )
+        return record
+
+    @classmethod
+    def get_record(cls, property_id):
+        """Retrieve the record by id.
+
+        Raise a database exception if the record does not exist.
+
+        :param property_id: ID of item type property.
+        :returns: The :class:`Record` instance.
+        """
+        with db.session.no_autoflush:
+            obj = ItemTypeProperty.query.filter_by(id=property_id,
+                                                   delflg=False).first()
+            if obj is None:
+                return None
+            return obj
+
+    @classmethod
+    def get_records(cls, ids):
+        """Retrieve multiple records by id.
+
+        :param ids: List of record IDs.
+        :returns: A list of :class:`Record` instances.
+        """
+        with db.session.no_autoflush:
+            query = None
+            if len(ids) > 0:
+                query = ItemTypeProperty.query.filter_by(
+                    ItemTypeMapping.id.in_(ids))
+                query = query.filter_by(delflg=False)  # noqa
+            else:
+                query = ItemTypeProperty.query.filter_by(delflg=False)
+            return query.all()
+
+    @property
+    def revisions(self):
+        """Get revisions iterator."""
+        if self.model is None:
+            raise MissingModelError()
+
+        return RevisionsIterator(self.model)
+
+
 class ItemsMetadata(RecordBase):
     """Define API for ItemsMetadata creation and manipulation."""
 
@@ -839,7 +928,7 @@ class ItemsMetadata(RecordBase):
                 record=self
             )
 
-            self.validate(**kwargs)
+            # self.validate(**kwargs)
 
             self.model.json = dict(self)
             flag_modified(self.model, 'json')
@@ -1034,7 +1123,7 @@ class FilesMetadata(RecordBase):
         data = apply_patch(dict(self), patch)
         return self.__class__(data, model=self.model)
 
-    def update_data(id, con):
+    def update_data(id, jsn):
         """Patch record metadata.
 
         :params patch: Dictionary of record metadata.
@@ -1043,7 +1132,7 @@ class FilesMetadata(RecordBase):
         from sqlalchemy import update
         with db.session.begin_nested():
             stmt = update(FileMetadata).where(
-                FileMetadata.id == id).values(contents=con)
+                FileMetadata.id == id).values(json=jsn)
             db.session.execute(stmt)
 
     def commit(self, **kwargs):

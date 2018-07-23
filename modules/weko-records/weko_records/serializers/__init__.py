@@ -22,22 +22,17 @@
 
 from pkg_resources import resource_filename
 
-from .wekoxml import WEKOXMLSerializer
+from .depositschema import DepositSchemaV1
+from invenio_records_rest.serializers.response import record_responsify, search_responsify
+from invenio_records_rest.serializers.schemas.json import RecordSchemaJSONV1
+from invenio_records_rest.serializers.json import JSONSerializer
+from .searchserializer import SearchSerializer
 
-xslt_dublincore_oai = resource_filename(
-    'weko_records', 'xslts/toDc_oai_v2.xsl')
-xslt_junii2 = resource_filename(
-    'weko_records', 'xslts/toJunii2_v2.xsl')
-xslt_jpcoar = resource_filename(
-    'weko_records', 'xslts/toJpcoar_v1.xsl')
+deposit_json_v1 = JSONSerializer(DepositSchemaV1, replace_refs=True)
+#: JSON record serializer for individual records.
+deposit_json_v1_response = record_responsify(
+    deposit_json_v1, 'application/json')
 
-#: Junii2 serializer.
-Junii2_v2 = WEKOXMLSerializer(xslt_filename=xslt_junii2)
-
-#: Jpcoar serializer.
-Jpcoar_v1 = WEKOXMLSerializer(xslt_filename=xslt_jpcoar)
-
-# OAI-PMH record serializers.
-# ===========================
-oaipmh_junii2_v2 = Junii2_v2.serialize_oaipmh
-oaipmh_jpcoar_v1 = Jpcoar_v1.serialize_oaipmh
+# for search result list
+json_v1 = SearchSerializer(RecordSchemaJSONV1)
+json_v1_search = search_responsify(json_v1, 'application/json')

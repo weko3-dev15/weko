@@ -21,23 +21,97 @@
 """Configuration for weko-records-ui."""
 
 WEKO_RECORDS_UI_DETAIL_TEMPLATE = 'weko_records_ui/detail.html'
+WEKO_RECORDS_UI_BASE_TEMPLATE = 'weko_theme/page.html'
 
 RECORDS_UI_ENDPOINTS = dict(
     recid=dict(
         pid_type='recid',
         route="/records/<pid_value>",
-        view_imp="weko_records.fd.weko_view_method",
-        template="weko_records_ui/detail.html",
+        # view_imp='weko_records.fd.weko_view_method',
+        template='weko_records_ui/detail.html',
+        record_class='weko_deposit.api:WekoRecord',
+        permission_factory_imp='weko_records_ui.permissions:page_permission_factory',
     ),
     recid_export=dict(
         pid_type='recid',
         route="/records/<pid_value>/export/<format>",
-        view_imp="invenio_records_ui.views.export",
-        template="weko_records_ui/export.html",
+        view_imp='weko_records_ui.views.export',
+        template='weko_records_ui/export.html',
+        record_class='weko_deposit.api:WekoRecord',
     ),
     recid_files=dict(
         pid_type='recid',
         route='/record/<pid_value>/files/<path:filename>',
         view_imp='weko_records.fd.file_download_ui',
+        record_class='weko_deposit.api:WekoRecord',
+    ),
+    recid_preview=dict(
+        pid_type='recid',
+        route='/record/<pid_value>/preview/<path:filename>',
+        view_imp='weko_records_ui.preview.preview',
+        record_class='weko_deposit.api:WekoRecord',
+    ),
+    recid_publish=dict(
+        pid_type='recid',
+        route='/record/<pid_value>/publish',
+        view_imp='weko_records_ui.views.publish',
+        template='weko_records_ui/detail.html',
+        record_class='weko_deposit.api:WekoRecord',
+        methods=['POST'],
     ),
 )
+
+RECORDS_UI_EXPORT_FORMATS = {
+    'recid': {
+        'junii2': dict(
+            title='JUNII2',
+            serializer='weko_schema_ui.serializers.WekoCommonSchema',
+            order=1,
+        ),
+        'jpcoar': dict(
+            title='JPCOAR',
+            serializer='weko_schema_ui.serializers.WekoCommonSchema',
+            order=2,
+        ),
+        'dc': dict(
+            title='DublinCore',
+            serializer='weko_schema_ui.serializers.WekoCommonSchema',
+            order=3,
+        ),
+        'json': dict(
+            title='JSON',
+            serializer='invenio_records_rest.serializers.json_v1',
+            order=4,
+        ),
+    }
+}
+
+OAISERVER_METADATA_FORMATS = {
+    'junii2': {
+        'serializer': (
+            'weko_schema_ui.utils:dumps_oai_etree', {
+                'schema_type': "junii2",
+            }
+        ),
+        'schema': 'http://irdb.nii.ac.jp/oai/junii2-3-1.xsd',
+        'namespace': 'http://irdb.nii.ac.jp/oai',
+    },
+    'jpcoar': {
+        'serializer': (
+            'weko_schema_ui.utils:dumps_oai_etree', {
+                'schema_type': "jpcoar",
+            }
+        ),
+        'namespace': 'https://irdb.nii.ac.jp/schema/jpcoar/1.0/',
+        'schema': 'https://irdb.nii.ac.jp/schema/jpcoar/1.0/jpcoar_scm.xsd',
+    },
+    'oai_dc': {
+        'serializer': (
+            'weko_schema_ui.utils:dumps_oai_etree', {
+                'schema_type': "oai_dc",
+            }
+        ),
+        'namespace': 'http://www.openarchives.org/OAI/2.0/oai_dc/',
+        'schema': 'http://www.openarchives.org/OAI/2.0/oai_dc.xsd',
+    }
+}

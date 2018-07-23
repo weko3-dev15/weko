@@ -20,9 +20,7 @@
 
 """Blueprint for weko-search-ui."""
 
-
-from flask import Blueprint, request, Flask
-from flask_babelex import Babel
+from flask import Blueprint, current_app, request, render_template
 
 blueprint = Blueprint(
     'weko_search_ui',
@@ -31,10 +29,11 @@ blueprint = Blueprint(
     static_folder='static',
 )
 
-app = Flask(__name__)
-babel = Babel(app)
 
-
-@babel.localeselector
-def get_locale():
-    return request.accept_languages.best_match(['ja', 'ja_JP', 'en'])
+@blueprint.route("/search/index")
+def search():
+    """ Index Search page ui."""
+    search_type = request.args.get('search_type', '0')
+    cur_index_id = search_type if search_type not in ('0', '1', ) else None
+    return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
+                           index_id=cur_index_id)

@@ -1,0 +1,11 @@
+[
+  "file_name",
+  "name",
+  "root_name",
+  "xsd_file",
+  {
+    "key": "comment",
+    "type": "textarea",
+    "placeholder": "Make a comment"
+  }
+]

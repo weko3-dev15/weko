@@ -21,12 +21,15 @@
 """Utilities for download file."""
 
 import unicodedata
+import mimetypes
 
 from flask import abort, current_app, render_template, request
 from flask_security import current_user
 from weko_groups.api import Group, Membership, MembershipState
 from werkzeug.datastructures import Headers
 from werkzeug.urls import url_quote
+from invenio_files_rest.views import ObjectResource
+from invenio_records_files.utils import record_file_factory
 
 from .api import FilesMetadata, ItemTypes
 
@@ -61,23 +64,22 @@ def weko_view_method(pid, record, template=None, **kwargs):
     )
 
 
-def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
-    r"""Dowload file.
-
-    :param pid: PID object.
-    :param record: Record object.
-    :param _record_file_factory: record file factory object
-    :param \*\*kwargs: Additional view arguments based on URL rule.
+def prepare_response(pid_value, fd=True):
     """
+     prepare response data and header
+    :param pid_value:
+    :param full:
+    :return:
+    """
+
     fn = request.view_args.get("filename")
 
-    # Check permissions
-    check_download_permission(record, fn)
-
-    flst = FilesMetadata.get_records(pid.pid_value)
+    flst = FilesMetadata.get_records(pid_value)
     for fj in flst:
         if fj.dumps().get("display_name") == fn:
             stream = fj.model.contents[:]
+            displaytype = fj.model.json.get("displaytype")
+            file_name = fj.model.json.get("file_name")
             break
 
     headers = Headers()
@@ -91,10 +93,27 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
         if encoded_filename:
             filenames['filename'] = encoded_filename
 
-    headers.add('Content-Disposition', 'attachment', **filenames)
+    if fd:
+        headers.add('Content-Disposition', 'attachment', **filenames)
+        mimetype = 'application/octet-stream'
+    else:
+        headers['Content-Type'] = 'text/plain; charset=utf-8'
+        headers.add('Content-Disposition', 'inline')
+        mimetype = mimetypes.guess_type(request.view_args.get("filename"))[0]
+        # if 'detail' in displaytype and '.pdf' in file_name:
+        #     from PyPDF2.pdf import PdfFileWriter, PdfFileReader
+        #     import io
+        #     source = PdfFileReader(io.BytesIO(stream), strict=True)
+        #     fp = source.getPage(0)
+        #     writer = PdfFileWriter()
+        #     writer.addPage(fp)
+        #     f = io.BytesIO()
+        #     writer.write(f)
+        #     stream = f.getvalue()
+
     rv = current_app.response_class(
         stream,
-        mimetype='application/octet-stream',
+        mimetype=mimetype,
         headers=headers,
         direct_passthrough=True,
     )
@@ -102,39 +121,78 @@ def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
     return rv
 
 
-def check_download_permission(record, fn):
-    """Check download permission.
+def file_preview_ui(pid, record, _record_file_factory=None, **kwargs):
+    """
 
-    :param record: Record object.
-    :param fn: File name
+    :param pid:
+    :param record:
+    :param _record_file_factory:
+    :param kwargs:
+    :return:
+    """
+
+    return prepare_response(pid.pid_value, False)
+
+
+def file_download_ui(pid, record, _record_file_factory=None, **kwargs):
+    """File download view for a given record.
+
+    Plug this method into your ``RECORDS_UI_ENDPOINTS`` configuration:
+
+    .. code-block:: python
+
+        RECORDS_UI_ENDPOINTS = dict(
+            recid=dict(
+                # ...
+                route='/records/<pid_value/files/<filename>',
+                view_imp='invenio_records_files.utils:file_download_ui',
+                record_class='invenio_records_files.api:Record',
+            )
+        )
+
+    :param pid: The :class:`invenio_pidstore.models.PersistentIdentifier`
+        instance.
+    :param record: The record metadata.
+    """
+    _record_file_factory = _record_file_factory or record_file_factory
+    # Extract file from record.
+    fileobj = _record_file_factory(
+        pid, record, kwargs.get('filename')
+    )
+
+    if not fileobj:
+        abort(404)
+
+    obj = fileobj.obj
+
+    # Check group permission
+    check_download_permission(fileobj.get('groups'))
+
+    # Check permissions
+    ObjectResource.check_object_permission(obj)
+
+    # Send file.
+    return ObjectResource.send_object(
+        obj.bucket, obj,
+        expected_chksum=fileobj.get('checksum'),
+        logger_data={
+            'bucket_id': obj.bucket_id,
+            'pid_type': pid.pid_type,
+            'pid_value': pid.pid_value,
+        },
+    )
+
+
+def check_download_permission(group_id):
+    """Check download permission.
+    :param group_id: Group_id
     """
     user_id = current_user.get_id()
-    grn = get_groups(record, fn)
-    if grn is not None:
+    if group_id:
         if user_id:
-            query = Group.query.filter_by(name=grn).join(Membership)\
+            query = Group.query.filter_by(id=group_id).join(Membership)\
                 .filter_by(user_id=user_id, state=MembershipState.ACTIVE)
             if query.count() < 1:
                 abort(403)
         else:
             abort(403)
-
-
-def get_groups(record, fn):
-    """Get file groups name.
-
-    :param record: Record object.
-    :param fn: file name
-    :return grn: group name
-    """
-    fm = record.get("filemeta")
-    grn = None
-    if isinstance(fm, dict):
-        avm = fm.get("attribute_value_mlt")
-        if isinstance(avm, list):
-            for mlt in avm:
-                if isinstance(mlt, dict):
-                    if fn == mlt.get("filename"):
-                        grn = mlt.get("group")
-                        break
-    return grn

@@ -1,18 +1,18 @@
-.. This file is part of Invenio
-   Copyright (C) 2015 CERN.
+.. This file is part of WEKO3
+   Copyright (C) 2017 National Institute of Informatics
 
-   Invenio is free software; you can redistribute it and/or
+   WEKO3 is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License as
    published by the Free Software Foundation; either version 2 of the
    License, or (at your option) any later version.
 
-   Invenio is distributed in the hope that it will be useful, but
+   WEKO3 is distributed in the hope that it will be useful, but
    WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with Invenio; if not, write to the Free Software Foundation, Inc.,
+   along with WEKO3; if not, write to the Free Software Foundation, Inc.,
    59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
 .. _code-of-conduct:
@@ -23,15 +23,15 @@ Code of Conduct
 We endorse the `Python Community Code of Conduct
 <https://www.python.org/psf/codeofconduct/>`_:
 
-   The Invenio community is made up of members from around the globe
+   The WEKO3 community is made up of members from around the globe
    with a diverse set of skills, personalities, and experiences.  It is
    through these differences that our community experiences great
    successes and continued growth.  When you're working with members of
    the community, we encourage you to follow these guidelines which
-   help steer our interactions and strive to keep Invenio a positive,
+   help steer our interactions and strive to keep WEKO3 a positive,
    successful, and growing community.
 
-   A member of the Invenio community is:
+   A member of the WEKO3 community is:
 
    1. **Open.** Members of the community are open to collaboration,
    whether it's on RFCs, patches, problems, or otherwise.  We're
@@ -42,7 +42,7 @@ We endorse the `Python Community Code of Conduct
    and everyone can make a difference.
 
    2. **Considerate.** Members of the community are considerate of
-   their peers -- other Invenio users.  We're thoughtful when
+   their peers -- other WEKO3 users.  We're thoughtful when
    addressing the efforts of others, keeping in mind that often times
    the labor was completed simply for the good of the community.
    We're attentive in our communications, whether in person or online,
@@ -51,7 +51,7 @@ We endorse the `Python Community Code of Conduct
    3. **Respectful.** Members of the community are respectful.  We're
    respectful of others, their positions, their skills, their
    commitments, and their efforts.  We're respectful of the volunteer
-   efforts that permeate the Invenio community.  We're respectful of
+   efforts that permeate the WEKO3 community.  We're respectful of
    the processes set forth in the community, and we work within them.
    When we disagree, we are courteous in raising our issues.
 

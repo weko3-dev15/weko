@@ -3,25 +3,31 @@
     "bootstrap"
   ],function() {
     page_global = {
-      table_row: [],        // 追加した行番号を保存する(元々順番)
+      upload_file: false,
+      table_row: [],        // 追加した行番号を保存する元々順番()
       table_row_map: {},    // 生成したschemaとformの情報を保存する
       meta_list: {},        // 追加した行の情報を保存する(セットした詳細情報)
+      /////add by ryuu.0313 start
+      meta_fix: {},
+      /////add by ryuu.0313 end
       schemaeditor: {       // objectの場合
         schema:{}           //   生成したschemaの情報を保存する
       }
     }
+    properties_obj = {}     // 作成したメタデータ項目タイプ
+    select_option = '';
     page_json_editor = {}   //   一時的editorオブジェクトの保存
     url_update_schema = '/itemtypes/register';
+    // デフォルトマッピングのテンプレート
     mapping_value = {
       "display_lang_type": "",
-      "dublin_core_mapping": "",
+      "oai_dc_mapping": "",
       "jpcoar_mapping": "",
-      "junii2_mapping": "",
+      "junii2_mapping": {"source":""},
       "lido_mapping": "",
       "lom_mapping": "",
       "spase_mapping": ""
     }
-
 
     $('#myModal').modal({
       show: false
@@ -39,7 +45,6 @@
 
     $('.radio_versionup').on('click', function(){
       if($(this).val() == 'upt') {
-        //$('#itemtype_name').val($('#item-type-lists').find("option:selected").text());
         url_update_schema = '/itemtypes/'+$('#item-type-lists').val()+'/register';
       } else {
         url_update_schema = '/itemtypes/register';
@@ -49,7 +54,6 @@
     $('#item-type-lists').on('change', function(){
       window.location.href = '/itemtypes/' + $('#item-type-lists').val();
     });
-
     $('#btn_create_itemtype_schema').on('click', function(){
       if($('#itemtype_name').val() == "") {
         $('#itemtype_name_warning').removeClass('hide');
@@ -81,33 +85,275 @@
         required: []
       };
 
+      // コンテンツ本体
+      if(page_global.upload_file) {
+        page_global.table_row_map.schema.properties["filemeta"] = {
+          type:"array",
+          title:"コンテンツ本体",
+          items:{
+            type: "object",
+            properties: {
+              filename: {
+                type: "string",
+                title: "表示名"
+              },
+              displaytype: {
+                type: "string",
+                title: "表示形式",
+                enum: ["detail","simple","preview"]
+              },
+              licensetype: {
+                type: "string",
+                title: "ライセンス",
+                enum: ["license_free","license_0","license_1","license_2","license_3","license_4","license_5"]
+              },
+              licensefree: {
+                type: "string"
+              },
+              accessrole: {
+                type: "string",
+                title: "アクセス",
+                enum: ["open_access","open_date","open_login","open_no"]
+              },
+              accessdate: {
+                type: "string",
+                title: "公開日"
+              },
+              groups: {
+                type: "string",
+                title: "グループ名"
+              }
+            }
+          }
+        }
+        page_global.table_row_map.form.push({
+          key:"filemeta",
+          title:"コンテンツ本体",
+          add: "New",
+          style: {
+            add: "btn-success"
+          },
+          items: [
+            {
+              key: "filemeta[].filename",
+              type: "text",
+              title: "表示名",
+              title_i18n:{ja:"表示名",en:"FileName"}
+            },
+            {
+              key: "filemeta[].displaytype",
+              type: "select",
+              title: "表示形式",
+              title_i18n:{ja:"表示形式",en:"Preview"},
+              titleMap: [
+                {value: "detail", name: "詳細表示"},
+                {value: "simple", name: "簡易表示"},
+                {value: "preview", name: "プレビュー"}
+              ]
+            },
+            {
+              key: "filemeta[].licensetype",
+              type: "select",
+              title: "ライセンス",
+              title_i18n:{ja:"ライセンス",en:"License"},
+              titleMap: [
+                {value: "license_free", name: "自由入力"},
+                {value: "license_0", name: "Creative Commons : 表示"},
+                {value: "license_1", name: "Creative Commons : 表示 - 継承"},
+                {value: "license_2", name: "Creative Commons : 表示 - 改変禁止"},
+                {value: "license_3", name: "Creative Commons : 表示 - 非営利"},
+                {value: "license_4", name: "Creative Commons : 表示 - 非営利 - 継承"},
+                {value: "license_5", name: "Creative Commons : 表示 - 非営利 - 改変禁止"}
+              ]
+            },
+            {
+              key: "filemeta[].licensefree",
+              type: "textarea",
+              notitle: true,
+              condition: "model.filemeta[arrayIndex].licensetype == 'license_free'"
+            },
+            {
+              key: "filemeta[].accessrole",
+              type: "radios",
+              title: "アクセス",
+              title_i18n:{ja:"アクセス",en:"Access"},
+              titleMap: [
+                {value: "open_access", name: "オープンアクセス"},
+                {value: "open_date", name: "オープンアクセス日を指定する"},
+                {value: "open_login", name: "ログインユーザのみ"},
+                {value: "open_no", name: "公開しない"}
+              ]
+            },
+            {
+              key: "filemeta[].accessdate",
+              title: "公開日",
+              title_i18n:{ja:"公開日",en:"Opendate"},
+              type: "template",
+              format: "yyyy-MM-dd",
+              templateUrl: "/static/templates/weko_deposit/datepicker.html",
+              condition: "model.filemeta[arrayIndex].accessrole == 'open_date'"
+            },
+            {
+              key: "filemeta[].groups",
+              title: "グループ",
+              title_i18n:{ja:"グループ",en:"Group"},
+              type: "text",
+              condition: "model.filemeta[arrayIndex].accessrole == 'open_date' || model.filemeta[arrayIndex].accessrole == 'open_login'"
+            }
+          ]
+        });
+        page_global.table_row_map.mapping['filemeta'] = {
+                                                            "oai_dc_mapping": {
+                                                                "subject": {"@value":"filename"}
+                                                            },
+                                                            "lom_mapping": "",
+                                                            "jpcoar_mapping": {
+                                                                "file": {
+                                                                    "URI": {"@value":"filename"}
+                                                                }
+                                                            },
+                                                            "lido_mapping": "",
+                                                            "spase_mapping": "",
+                                                            "junii2_mapping": {
+                                                                "fullTextURL": {"@value":"filename"}
+                                                            },
+                                                            "display_lang_type": ""
+                                                        };
+      }
       // タイトルなどを追加する
       page_global.table_row_map.schema.properties["title_ja"] = {type:"string",title:"タイトル",format:"text"}
       page_global.table_row_map.schema.properties["title_en"] = {type:"string",title:"タイトル(英)",format:"text"}
-      page_global.table_row_map.form.push({type:"fieldset",title:"タイトル",items:[{type:"text",key:"title_ja",title:"タイトル",required:true},{type:"text",key:"title_en",title:"タイトル(英)",required:true}]});
-      page_global.table_row_map.schema.properties["lang"] = {type:"string",title:"言語",format:"text"}
-      page_global.table_row_map.form.push({key:"lang",type:"text",title:"言語","required": true});
+      page_global.table_row_map.form.push({type:"fieldset",title:"タイトル",title_i18n:{ja:"タイトル",en:"Title"},items:[{type:"text",key:"title_ja",title:"タイトル",title_i18n:{ja:"タイトル",en:"Title"},required:true},{type:"text",key:"title_en",title:"タイトル(英)",title_i18n:{ja:"タイトル(英)",en:"Title"},required:true}]});
+      page_global.table_row_map.schema.properties["lang"] = {type:"string",title:"言語",format:"select",enum:["en","ja"]}
+      page_global.table_row_map.form.push({key:"lang",type:"select",title:"言語",title_i18n:{ja:"言語",en:"Language"},required: true,titleMap:{"en":"英語","ja":"日本語"}});
       page_global.table_row_map.schema.properties["pubdate"] = {type:"string",title:"公開日",format:"datetime"}
-      page_global.table_row_map.form.push({key:"pubdate",type:"template",title:"公開日","required": true,"format": "yyyy-MM-dd","templateUrl": "/static/templates/weko_deposit/datepicker.html"});
+      page_global.table_row_map.form.push({key:"pubdate",type:"template",title:"公開日",title_i18n:{ja:"公開日",en:"PubDate"},required: true,format: "yyyy-MM-dd",templateUrl: "/static/templates/weko_deposit/datepicker.html"});
       page_global.table_row_map.schema.properties["keywords"] = {type:"string",title:"キーワード",format:"text"}
       page_global.table_row_map.schema.properties["keywords_en"] = {type:"string",title:"キーワード(英)",format:"text"}
-      page_global.table_row_map.form.push({type:"fieldset",title:"キーワード",items:[{type:"text",key:"keywords",title:"キーワード"},{type:"text",key:"keywords_en",title:"キーワード(英)"}]});
+      page_global.table_row_map.form.push({type:"fieldset",title:"キーワード",title_i18n:{ja:"キーワード",en:"keywords"},items:[{type:"text",key:"keywords",title:"キーワード",title_i18n:{ja:"キーワード",en:"keywords"},required:true},{type:"text",key:"keywords_en",title:"キーワード(英)",title_i18n:{ja:"タイトル(英)",en:"keywords"},required:true}]});
       page_global.table_row_map.schema.required.push("title_ja");
       page_global.table_row_map.schema.required.push("title_en");
       page_global.table_row_map.schema.required.push("lang");
       page_global.table_row_map.schema.required.push("pubdate");
-      page_global.table_row_map.mapping['title_ja'] = mapping_value;
-      page_global.table_row_map.mapping['title_en'] = mapping_value;
-      page_global.table_row_map.mapping['lang'] = mapping_value;
-      page_global.table_row_map.mapping['pubdate'] = mapping_value;
-      page_global.table_row_map.mapping['keywords'] = mapping_value;
-      page_global.table_row_map.mapping['keywords_en'] = mapping_value;
+      page_global.table_row_map.mapping['title_ja'] = {
+                                                          "oai_dc_mapping": {
+                                                              "title": ""
+                                                          },
+                                                          "lom_mapping": "",
+                                                          "jpcoar_mapping": {
+                                                              "title": ""
+                                                          },
+                                                          "lido_mapping": "",
+                                                          "spase_mapping": "",
+                                                          "junii2_mapping": {
+                                                              "title": ""
+                                                          },
+                                                          "display_lang_type": ""
+                                                      };
+      page_global.table_row_map.mapping['title_en'] = {
+                                                          "oai_dc_mapping": {
+                                                              "alternative": ""
+                                                          },
+                                                          "lom_mapping": "",
+                                                          "jpcoar_mapping": {
+                                                              "alternative": {
+                                                                  "@attributes": {
+                                                                      "xml:lang": "ja"
+                                                                  }
+                                                              }
+                                                          },
+                                                          "lido_mapping": "",
+                                                          "spase_mapping": "",
+                                                          "junii2_mapping": {
+                                                              "alternative": ""
+                                                          },
+                                                          "display_lang_type": ""
+                                                      };
+      page_global.table_row_map.mapping['lang'] = {
+                                                "oai_dc_mapping": {
+                                                    "language": ""
+                                                },
+                                                "lom_mapping": "",
+                                                "jpcoar_mapping": {
+                                                    "language": ""
+                                                },
+                                                "lido_mapping": "",
+                                                "spase_mapping": "",
+                                                "junii2_mapping": {
+                                                    "language": ""
+                                                },
+                                                "display_lang_type": ""
+                                            };
+      page_global.table_row_map.mapping['pubdate'] = {
+                                                "oai_dc_mapping": {
+                                                    "date": ""
+                                                },
+                                                "lom_mapping": "",
+                                                "jpcoar_mapping": {
+                                                    "date": {
+                                                        "@attributes": {
+                                                            "dateType": "Accepted"
+                                                        }
+                                                    }
+                                                },
+                                                "lido_mapping": "",
+                                                "spase_mapping": "",
+                                                "junii2_mapping": {
+                                                    "date": ""
+                                                },
+                                                "display_lang_type": ""
+                                            };
+      page_global.table_row_map.mapping['keywords'] = {
+                                                "oai_dc_mapping": {
+                                                    "subject": ""
+                                                },
+                                                "lom_mapping": "",
+                                                "jpcoar_mapping": {
+                                                    "subject": {
+                                                        "@attributes": {
+                                                            "jpcoar:subjectScheme": "LCC",
+                                                            "jpcoar:subjectURI": "http://localhost"
+                                                        }
+                                                    }
+                                                },
+                                                "lido_mapping": "",
+                                                "spase_mapping": "",
+                                                "junii2_mapping": {
+                                                    "subject": ""
+                                                },
+                                                "display_lang_type": ""
+                                            };
+      page_global.table_row_map.mapping['keywords_en'] = {
+                                                "oai_dc_mapping": {
+                                                    "subject": {}
+                                                },
+                                                "lom_mapping": "",
+                                                "jpcoar_mapping": {
+                                                    "rightsHolder": {
+                                                        "@attributes": {
+                                                            "xml:lang": "haha"
+                                                        },
+                                                        "rightsHolderName": {}
+                                                    }
+                                                },
+                                                "lido_mapping": "",
+                                                "spase_mapping": "",
+                                                "junii2_mapping": {
+                                                    "subject": ""
+                                                },
+                                                "display_lang_type": ""
+                                            };
 
       // テーブルの行をトラバースし、マップに追加する
       err_input_id = []
       $.each(page_global.table_row, function(idx, row_id){
         var tmp = {}
         tmp.title = $('#txt_title_'+row_id).val();
+        //add by ryuu. start
+        tmp.title_i18n ={}
+        tmp.title_i18n.ja = $('#txt_title_ja_'+row_id).val();
+        tmp.title_i18n.en = $('#txt_title_en_'+row_id).val();
+        //add by ryuu. end
         tmp.input_type = $('#select_input_type_'+row_id).val();
         tmp.input_value = "";
         tmp.input_minItems = $('#minItems_'+row_id).val();
@@ -115,9 +361,9 @@
         tmp.option = {}
         tmp.option.required = $('#chk_'+row_id+'_0').is(':checked')?true:false;
         tmp.option.multiple = $('#chk_'+row_id+'_1').is(':checked')?true:false;
-        tmp.option.showlist = $('#chk_'+row_id+'_2').is(':checked')?true:false;
-        tmp.option.crtf = $('#chk_'+row_id+'_3').is(':checked')?true:false;
         tmp.option.hidden = $('#chk_'+row_id+'_4').is(':checked')?true:false;
+        tmp.option.showlist = tmp.option.hidden?false:($('#chk_'+row_id+'_2').is(':checked')?true:false);
+        tmp.option.crtf = tmp.option.hidden?false:($('#chk_'+row_id+'_3').is(':checked')?true:false);
         page_global.table_row_map.mapping[row_id] = mapping_value;
         if(tmp.option.required) {
           page_global.table_row_map.schema.required.push(row_id);
@@ -139,6 +385,7 @@
             page_global.table_row_map.form.push({
               key: row_id,
               add: "New",
+              title_i18n: tmp.title_i18n,
               style: {add:"btn-success"},
               items: [{
                 key: row_id+'[].interim',
@@ -155,6 +402,7 @@
             page_global.table_row_map.form.push({
               key: row_id,
               title: tmp.title,
+              title_i18n: tmp.title_i18n,
               type: tmp.input_type    // text|textarea
             });
           }
@@ -174,6 +422,7 @@
             }
             page_global.table_row_map.form.push({
               key: row_id,
+              title_i18n: tmp.title_i18n,
               add: "New",
               style: {add:"btn-success"},
               items: [{
@@ -192,6 +441,7 @@
             }
             page_global.table_row_map.form.push({
               key: row_id,
+              title_i18n: tmp.title_i18n,
               type: "template",
               title: tmp.title,
               format: "yyyy-MM-dd",
@@ -229,6 +479,7 @@
             }
             page_global.table_row_map.form.push({
               key: row_id,
+              title_i18n: tmp.title_i18n,
               add: "New",
               style: {add:"btn-success"},
               items: [{
@@ -250,6 +501,7 @@
             }
             page_global.table_row_map.form.push({
               key: row_id,
+              title_i18n: tmp.title_i18n,
               type: tmp.input_type,         // checkboxes
               titleMap: titleMap_tmp
             });
@@ -281,6 +533,7 @@
             }
             page_global.table_row_map.form.push({
               key: row_id,
+              title_i18n: tmp.title_i18n,
               add: "New",
               style: {add:"btn-success"},
               items: [{
@@ -298,11 +551,12 @@
             }
             page_global.table_row_map.form.push({
               key: row_id,
+              title_i18n: tmp.title_i18n,
               type: tmp.input_type,    // radios|select
               titleMap: titleMap_tmp
             });
           }
-        } else if(tmp.input_type == 'object') {
+        } else if(tmp.input_type.indexOf('cus_') != -1) {
           editor = page_json_editor['schema_'+row_id];
           page_global.schemaeditor.schema[row_id] = editor.getValue();
           if(tmp.option.multiple) {
@@ -317,6 +571,21 @@
                 required: page_global.schemaeditor.schema[row_id].required
               }
             }
+            //add by ryuu. start
+            properties_obj[tmp.input_type.substr(4)].forms.title = tmp.title;
+            properties_obj[tmp.input_type.substr(4)].forms.title_i18n = tmp.title_i18n;
+            //add by ryuu. end
+            if(Array.isArray(properties_obj[tmp.input_type.substr(4)].forms)) {
+              properties_obj[tmp.input_type.substr(4)].forms.forEach(function(element){
+                page_global.table_row_map.form.push(
+                  JSON.parse(JSON.stringify(element).replace(/parentkey/gi, row_id))
+                );
+              });
+            } else {
+              page_global.table_row_map.form.push(
+                JSON.parse(JSON.stringify(properties_obj[tmp.input_type.substr(4)].forms).replace(/parentkey/gi, row_id))
+              );
+            }
           } else {
             page_global.table_row_map.schema.properties[row_id] = {
               type: "object",
@@ -324,12 +593,139 @@
               properties: page_global.schemaeditor.schema[row_id].properties,
               required: page_global.schemaeditor.schema[row_id].required
             }
+            //add by ryuu. start
+            properties_obj[tmp.input_type.substr(4)].form.title = tmp.title;
+            properties_obj[tmp.input_type.substr(4)].form.title_i18n = tmp.title_i18n;
+            //add by ryuu. end
+            page_global.table_row_map.form.push(
+              JSON.parse(JSON.stringify(properties_obj[tmp.input_type.substr(4)].form).replace(/parentkey/gi, row_id)));
           }
-          page_global.table_row_map.form.push({key: row_id});
         }
 
         page_global.meta_list[row_id] = tmp;
       });
+      //////add by ryuu. 0313 start
+      //タイトル
+      var tmp_title_ja = {}
+        tmp_title_ja.title = "タイトル";
+        //add by ryuu. start
+        tmp_title_ja.title_i18n ={}
+        tmp_title_ja.title_i18n.ja = "タイトル";
+        tmp_title_ja.title_i18n.en = "Title";
+        //add by ryuu. end
+        tmp_title_ja.input_type = "text";
+        tmp_title_ja.input_value = "";
+//        tmp_title_ja.input_minItems = $('#minItems_'+row_id).val();
+//        tmp_title_ja.input_maxItems = $('#maxItems_'+row_id).val();
+        tmp_title_ja.option = {}
+        tmp_title_ja.option.required = $('#chk_title_0').is(':checked')?true:false;
+        tmp_title_ja.option.multiple = $('#chk_title_1').is(':checked')?true:false;
+        tmp_title_ja.option.hidden = $('#chk_title_4').is(':checked')?true:false;
+        tmp_title_ja.option.showlist = tmp_title_ja.option.hidden?false:($('#chk_title_2').is(':checked')?true:false);
+        tmp_title_ja.option.crtf = tmp_title_ja.option.hidden?false:($('#chk_title_3').is(':checked')?true:false);
+        //タイトル(英)
+        var tmp_title_en = {}
+        tmp_title_en.title = "タイトル(英)";
+        //add by ryuu. start
+        tmp_title_en.title_i18n ={}
+        tmp_title_en.title_i18n.ja = "タイトル(英)";
+        tmp_title_en.title_i18n.en = "Title";
+        //add by ryuu. end
+        tmp_title_en.input_type = "text";
+        tmp_title_en.input_value = "";
+//        tmp_title_en.input_minItems = $('#minItems_'+row_id).val();
+//        tmp_title_en.input_maxItems = $('#maxItems_'+row_id).val();
+        tmp_title_en.option = {}
+        tmp_title_en.option.required = $('#chk_title_en_0').is(':checked')?true:false;
+        tmp_title_en.option.multiple = $('#chk_title_en_1').is(':checked')?true:false;
+        tmp_title_en.option.hidden = $('#chk_title_en_4').is(':checked')?true:false;
+        tmp_title_en.option.showlist = tmp_title_en.option.hidden?false:($('#chk_title_en_2').is(':checked')?true:false);
+        tmp_title_en.option.crtf = tmp_title_en.option.hidden?false:($('#chk_title_en_3').is(':checked')?true:false);
+
+        //言語
+        var tmp_lang = {}
+        tmp_lang.title = "言語";
+        //add by ryuu. start
+        tmp_lang.title_i18n ={}
+        tmp_lang.title_i18n.ja = "言語";
+        tmp_lang.title_i18n.en = "Language";
+        //add by ryuu. end
+        tmp_lang.input_type = "text";
+        tmp_lang.input_value = "";
+//        tmp_lang.input_minItems = $('#minItems_'+row_id).val();
+//        tmp_lang.input_maxItems = $('#maxItems_'+row_id).val();
+        tmp_lang.option = {}
+        tmp_lang.option.required = $('#chk_lang_0').is(':checked')?true:false;
+        tmp_lang.option.multiple = $('#chk_lang_1').is(':checked')?true:false;
+        tmp_lang.option.hidden = $('#chk_lang_4').is(':checked')?true:false;
+        tmp_lang.option.showlist = tmp_lang.option.hidden?false:($('#chk_lang_2').is(':checked')?true:false);
+        tmp_lang.option.crtf = tmp_lang.option.hidden?false:($('#chk_lang_3').is(':checked')?true:false);
+
+        //公開日
+        var tmp_pubdate = {}
+        tmp_pubdate.title = "公開日";
+        //add by ryuu. start
+        tmp_pubdate.title_i18n ={}
+        tmp_pubdate.title_i18n.ja = "公開日";
+        tmp_pubdate.title_i18n.en = "PubDate";
+        //add by ryuu. end
+        tmp_pubdate.input_type = "datetime";
+        tmp_pubdate.input_value = "";
+//        tmp_title_ja.input_minItems = $('#minItems_'+row_id).val();
+//        tmp_title_ja.input_maxItems = $('#maxItems_'+row_id).val();
+        tmp_pubdate.option = {}
+        tmp_pubdate.option.required = $('#chk_pubdate_0').is(':checked')?true:false;
+        tmp_pubdate.option.multiple = $('#chk_pubdate_1').is(':checked')?true:false;
+        tmp_pubdate.option.hidden = $('#chk_pubdate_4').is(':checked')?true:false;
+        tmp_pubdate.option.showlist = tmp_pubdate.option.hidden?false:($('#chk_pubdate_2').is(':checked')?true:false);
+        tmp_pubdate.option.crtf = tmp_pubdate.option.hidden?false:($('#chk_pubdate_3').is(':checked')?true:false);
+
+        //キーワード
+        var tmp_keywords_ja = {}
+        tmp_keywords_ja.title = "キーワード";
+        //add by ryuu. start
+        tmp_keywords_ja.title_i18n ={}
+        tmp_keywords_ja.title_i18n.ja = "キーワード";
+        tmp_keywords_ja.title_i18n.en = "keywords";
+        //add by ryuu. end
+        tmp_keywords_ja.input_type = "text";
+        tmp_keywords_ja.input_value = "";
+//        tmp_keywords_ja.input_minItems = $('#minItems_'+row_id).val();
+//        tmp_keywords_ja.input_maxItems = $('#maxItems_'+row_id).val();
+        tmp_keywords_ja.option = {}
+        tmp_keywords_ja.option.required = $('#chk_keyword_0').is(':checked')?true:false;
+        tmp_keywords_ja.option.multiple = $('#chk_keyword_1').is(':checked')?true:false;
+        tmp_keywords_ja.option.hidden = $('#chk_keyword_4').is(':checked')?true:false;
+        tmp_keywords_ja.option.showlist = tmp_keywords_ja.option.hidden?false:($('#chk_keyword_2').is(':checked')?true:false);
+        tmp_keywords_ja.option.crtf = tmp_keywords_ja.option.hidden?false:($('#chk_keyword_3').is(':checked')?true:false);
+
+        //キーワード(英)
+        var tmp_keywords_en = {}
+        tmp_keywords_en.title = "キーワード(英)";
+        //add by ryuu. start
+        tmp_keywords_en.title_i18n ={}
+        tmp_keywords_en.title_i18n.ja = "キーワード(英)";
+        tmp_keywords_en.title_i18n.en = "keywords";
+        //add by ryuu. end
+        tmp_keywords_en.input_type = "text";
+        tmp_keywords_en.input_value = "";
+//        tmp_keywords_en.input_minItems = $('#minItems_'+row_id).val();
+//        tmp_keywords_en.input_maxItems = $('#maxItems_'+row_id).val();
+        tmp_keywords_en.option = {}
+        tmp_keywords_en.option.required = $('#chk_keyword_en_0').is(':checked')?true:false;
+        tmp_keywords_en.option.multiple = $('#chk_keyword_en_1').is(':checked')?true:false;
+        tmp_keywords_en.option.hidden = $('#chk_keyword_en_4').is(':checked')?true:false;
+        tmp_keywords_en.option.showlist = tmp_keywords_en.option.hidden?false:($('#chk_keyword_en_2').is(':checked')?true:false);
+        tmp_keywords_en.option.crtf = tmp_keywords_en.option.hidden?false:($('#chk_keyword_en_3').is(':checked')?true:false);
+        //設定
+        page_global.meta_fix["title_ja"] = tmp_title_ja;
+        page_global.meta_fix["title_en"] = tmp_title_en;
+        page_global.meta_fix["lang"] = tmp_lang;
+        page_global.meta_fix["pubdate"] = tmp_pubdate;
+        page_global.meta_fix["keywords"] = tmp_keywords_ja;
+        page_global.meta_fix["keywords_en"] = tmp_keywords_en;
+
+      //////add by ryuu. 0313 end
     }
 
     // add new meta table row
@@ -338,17 +734,19 @@
     });
     function new_meta_row(row_id) {
       var row_template = '<tr id="tr_' + row_id + '">'
-          + '<td><input type="text" class="form-control" id="txt_title_' + row_id + '" value=""></td>'
+          + '<td><input type="text" class="form-control" id="txt_title_' + row_id + '" value="">'
+          + '  <div class="hide" id="text_title_JaEn_' + row_id + '">'
+          +'     <p>日本語：</p>'
+          +'     <input type="text" class="form-control" id="txt_title_ja_' + row_id + '" value="">'
+          +'     <p>英語：</p>'
+          +'     <input type="text" class="form-control" id="txt_title_en_' + row_id + '" value="">'
+          + '  </div>'
+          +'   <button type="button" class="btn btn-link" id="btn_link_' + row_id + '">多言語設定</button>'
+          +'</td>'
           + '<td><div class="form-inline"><div class="form-group">'
           + '  <label class="sr-only" for="select_input_type_'+row_id+'">select_input_type</label>'
           + '  <select class="form-control change_input_type" id="select_input_type_' + row_id + '" metaid="' + row_id + '">'
-          + '    <option value="text" selected>テキスト</option>'
-          + '    <option value="textarea">テキストエリア</option>'
-          + '    <option value="checkboxes">チェックボックス</option>'
-          + '    <option value="radios">選択式(ラジオ)</option>'
-          + '    <option value="select">選択式(プルダウン)</option>'
-          + '    <option value="datetime">日付</option>'
-          + '    <option value="object">オブジェクト</option>'
+          + select_option
           + '  </select>'
           + '  </div></div>'
           + '  <div class="hide" id="arr_size_' + row_id + '">'
@@ -360,7 +758,7 @@
           + '      </div>'
           + '      <div class="form-group">'
           + '        <label for="maxItems_'+row_id+'">maxItems</label>'
-          + '        <input type="number" class="form-control" id="maxItems_'+row_id+'" placeholder="" value="2">'
+          + '        <input type="number" class="form-control" id="maxItems_'+row_id+'" placeholder="" value="9999">'
           + '      </div>'
           + '    </form>'
           + '    </div></div>'
@@ -398,6 +796,17 @@
       page_global.table_row.push(row_id);
       initSortedBtn();
 
+       //add by ryuu. start
+       //多言語linkをクリック
+       $('#tbody_itemtype').on('click', 'tr td #btn_link_'+row_id, function(){
+        if($('#text_title_JaEn_' + row_id).hasClass('hide')) {
+          $('#text_title_JaEn_' + row_id).removeClass('hide');
+        } else {
+          $('#text_title_JaEn_' + row_id).addClass('hide');
+        }
+      });
+      //add by ryuu. end
+
       // Dynamic additional click event
       // メタ項目の削除関数をダイナミックに登録する
       $('#tbody_itemtype').on('click', 'tr td #btn_del_'+row_id, function(){
@@ -411,6 +820,20 @@
           $('#arr_size_' + row_id).removeClass('hide');
         } else {
           $('#arr_size_' + row_id).addClass('hide');
+        }
+      });
+      // チェックボックス「非表示」が選択状態になると、
+      $('#tbody_itemtype').on('click', 'tr td #chk_'+row_id+'_4', function(){
+        if($('#chk_'+row_id+'_4').is(':checked')) {
+          $('#chk_prev_' + row_id + '_2').addClass('disabled');
+          $('#chk_' + row_id + '_2').attr('disabled', true);
+          $('#chk_prev_' + row_id + '_3').addClass('disabled');
+          $('#chk_' + row_id + '_3').attr('disabled', true);
+        } else {
+          $('#chk_prev_' + row_id + '_2').removeClass('disabled');
+          $('#chk_' + row_id + '_2').attr('disabled', false);
+          $('#chk_prev_' + row_id + '_3').removeClass('disabled');
+          $('#chk_' + row_id + '_3').attr('disabled', false);
         }
       });
     }
@@ -458,23 +881,27 @@
       $('#btn_down_'+page_global.table_row[page_global.table_row.length-1]).addClass('disabled');
     }
 
+    $('#chk_upload_file').on('change', function(){
+      if($('#chk_upload_file').is(':checked')) {
+        page_global.upload_file = true;
+      } else {
+        page_global.upload_file = false;
+      }
+    });
+
     // itemtype select input change
     $('#tbody_itemtype').on('change', '.change_input_type', function(){
       var meta_id = $(this).attr('metaid');
-      if('object' == $(this).val()) {
-        product = {
-          type: "object",
-          properties: {},
-          required: []
-        }
-        product.properties['sub'+meta_id] = {"type": "string","format": "text"}
-        $('#chk_prev_' + meta_id + '_1').addClass('disabled');
-        $('#chk_' + meta_id + '_1').attr('disabled', true);
+      if($(this).val().indexOf('cus_') != -1) {
+        product = properties_obj[$(this).val().substr(4)].schema;
+        $('#chk_prev_' + meta_id + '_1').removeClass('disabled');
+        $('#chk_' + meta_id + '_1').attr('disabled', false);
         render_object('schema_'+meta_id, product);
       } else if('checkboxes' == $(this).val() || 'radios' == $(this).val()
               || 'select' == $(this).val()){
-        $('#chk_prev_' + meta_id + '_1').removeClass('disabled');
-        $('#chk_' + meta_id + '_1').attr('disabled', false);
+        $('#chk_prev_' + meta_id + '_1').addClass('disabled');
+        $('#chk_' + meta_id + '_1').attr('disabled', true);
+        $('#chk_' + meta_id + '_1').attr('checked', false);
         render_select('schema_'+meta_id, '');
       } else {
         $('#chk_prev_' + meta_id + '_1').removeClass('disabled');
@@ -502,7 +929,8 @@
     function render_object(elementId, initschema) {
       element = document.getElementById(elementId);
       var editor = new JSONSchemaEditor(element, {
-        startval: initschema
+        startval: initschema,
+        editor: false
       });
       page_json_editor[elementId] = editor;
     }
@@ -526,11 +954,39 @@
       });
     }
 
+    select_option = '<option value="text" selected>テキスト</option>'
+                  + '<option value="textarea">テキストエリア</option>'
+                  + '<option value="checkboxes">チェックボックス</option>'
+                  + '<option value="radios">選択式(ラジオ)</option>'
+                  + '<option value="select">選択式(プルダウン)</option>'
+                  + '<option value="datetime">日付</option>';
+    // 作成したメタデータ項目タイプの取得
+    $.ajax({
+      method: 'GET',
+      url: '/itemtypes/property/list',
+      async: false,
+      success: function(data, status){
+        properties_obj = data;
+        Object.keys(data).forEach(function(key) {
+          select_option = select_option + '<option value="cus_'+key+'">'+data[key].name+'</option>'
+        });
+      },
+      error: function(status, error){
+        console.log(error);
+      }
+    });
+
     if($('#item-type-lists').val().length > 0) {
       $.get('/itemtypes/' + $('#item-type-lists').val() + '/render', function(data, status){
+        page_global.upload_file = data.upload_file;
+        $('#chk_upload_file').attr('checked', data.upload_file);
         $.each(data.table_row, function(idx, row_id){
           new_meta_row(row_id);
           $('#txt_title_'+row_id).val(data.meta_list[row_id].title);
+          //add by ryuu. start
+          $('#txt_title_ja_'+row_id).val(data.meta_list[row_id].title_i18n.ja);
+          $('#txt_title_en_'+row_id).val(data.meta_list[row_id].title_i18n.en);
+          //add by ryuu. end
           $('#select_input_type_'+row_id).val(data.meta_list[row_id].input_type);
           $('#minItems_'+row_id).val(data.meta_list[row_id].input_minItems);
           $('#maxItems_'+row_id).val(data.meta_list[row_id].input_maxItems);
@@ -539,17 +995,23 @@
           $('#chk_'+row_id+'_2').attr('checked', data.meta_list[row_id].option.showlist);
           $('#chk_'+row_id+'_3').attr('checked', data.meta_list[row_id].option.crtf);
           $('#chk_'+row_id+'_4').attr('checked', data.meta_list[row_id].option.hidden);
+          if(data.meta_list[row_id].option.hidden) {
+            $('#chk_prev_' + row_id + '_2').addClass('disabled');
+            $('#chk_' + row_id + '_2').attr('disabled', true);
+            $('#chk_prev_' + row_id + '_3').addClass('disabled');
+            $('#chk_' + row_id + '_3').attr('disabled', true);
+          }
 
           if(data.meta_list[row_id].option.multiple) {
             $('#arr_size_' + row_id).removeClass('hide');
           }
 
-          if('object' == data.meta_list[row_id].input_type) {
-            $('#chk_prev_' + row_id + '_1').addClass('disabled');
-            $('#chk_' + row_id + '_1').attr('disabled', true);
-            render_object('schema_'+row_id, data.schemaeditor.schema[row_id]);
+          if(data.meta_list[row_id].input_type.indexOf('cus_') != -1) {
+            render_object('schema_'+row_id, properties_obj[data.meta_list[row_id].input_type.substr(4)].schema);
           } else if('checkboxes' == data.meta_list[row_id].input_type || 'radios' == data.meta_list[row_id].input_type
                   || 'select' == data.meta_list[row_id].input_type){
+            $('#chk_prev_' + row_id + '_1').addClass('disabled');
+            $('#chk_' + row_id + '_1').attr('disabled', true);
             render_select('schema_'+row_id, data.meta_list[row_id].input_value);
           } else {
             render_empty('schema_'+row_id);

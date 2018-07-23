@@ -24,6 +24,9 @@ import copy
 
 from invenio_records_rest.config import RECORDS_REST_ENDPOINTS
 from invenio_records_rest.facets import terms_filter
+from invenio_search import RecordsSearch
+
+WEKO_SEARCH_UI_SEARCH_INDEX_API = '/api/index/'
 
 WEKO_SEARCH_UI_BASE_TEMPLATE = 'weko_search_ui/base.html'
 """Default base template for the demo page."""
@@ -35,13 +38,27 @@ WEKO_SEARCH_UI_THEME_FRONTPAGE_TEMPLATE = \
 WEKO_SEARCH_UI_SEARCH_TEMPLATE = 'weko_search_ui/search.html'
 """Reset search_ui_search config"""
 
-WEKO_SEARCH_UI_JSTEMPLATE_RESULTS = 'templates/weko_search_ui/weko.html'
+WEKO_SEARCH_UI_JSTEMPLATE_RESULTS = 'templates/weko_search_ui/itemlist.html'
+
+WEKO_SEARCH_UI_JSTEMPLATE_INDEX = 'templates/weko_search_ui/indexlist.html'
+
+WEKO_SEARCH_UI_JSTEMPLATE_BREAD = 'templates/weko_search_ui/breadcrumb.html'
 
 WEKO_SEARCH_UI_JSTEMPLATE_COUNT = 'templates/weko_search_ui/count.html'
+
+SEARCH_UI_JSTEMPLATE_PAGINATION = 'templates/weko_search_ui/pagination.html'
+
+SEARCH_UI_JSTEMPLATE_SELECT_BOX = 'templates/weko_search_ui/selectbox.html'
+
+SEARCH_UI_JSTEMPLATE_SORT_ORDER = 'templates/weko_search_ui/togglebutton.html'
 
 RECORDS_REST_ENDPOINTS = copy.deepcopy(RECORDS_REST_ENDPOINTS)
 RECORDS_REST_ENDPOINTS['recid']['search_factory_imp'] = \
     'weko_search_ui.query.es_search_factory'
+RECORDS_REST_ENDPOINTS['recid']['search_serializers'] = {
+    'application/json': ('weko_records.serializers'
+                         ':json_v1_search'),
+}
 
 RECORDS_REST_ENDPOINTS['recid']['search_index'] = 'weko'
 RECORDS_REST_ENDPOINTS['recid']['search_type'] = 'item'
@@ -49,6 +66,7 @@ RECORDS_REST_ENDPOINTS['recid']['search_type'] = 'item'
 INDEXER_DEFAULT_INDEX = 'weko'
 INDEXER_DEFAULT_DOCTYPE = 'item'
 INDEXER_DEFAULT_DOC_TYPE = 'item'
+INDEXER_FILE_DOC_TYPE = 'content'
 
 SEARCH_UI_SEARCH_INDEX = 'weko'
 
@@ -92,13 +110,13 @@ RECORDS_REST_SORT_OPTIONS = dict(
         ),
         upd=dict(
             title='Update date',
-            fields=['update_date'],
+            fields=['_updated'],
             default_order='asc',
             order=5,
         ),
         createdate=dict(
             title='Create date',
-            fields=['create_date'],
+            fields=['_created'],
             default_order='asc',
             order=6,
         ),
@@ -110,37 +128,34 @@ RECORDS_REST_SORT_OPTIONS = dict(
         ),
         publish_date=dict(
             title='Publish date',
-            fields=['publish_date'],
+            fields=['date'],
             default_order='asc',
             order=8,
         )
     )
 )
 
-RECORDS_UI_EXPORT_FORMATS = {
-    'recid': {
-        'junii2': dict(
-            title='JUNII2',
-            serializer='weko_records.serializers.Junii2_v2',
-            order=1,
-        ),
-        'jpcoar': dict(
-            title='JPCOAR',
-            serializer='weko_records.serializers.Jpcoar_v1',
-            order=2,
-        ),
-        'json': dict(
-            title='JSON',
-            serializer='invenio_records_rest.serializers.json_v1',
-            order=4,
-        ),
-        # Deprecated names
-        'hx': False,
-        'hm': False,
-        'xm': False,
-        'xd': False,
-        'xe': False,
-        'xn': False,
-        'xw': False,
-    }
-}
+WEKO_SEARCH_REST_ENDPOINTS = dict(
+    recid=dict(
+        pid_type='recid',
+        pid_minter='recid',
+        pid_fetcher='recid',
+        search_class=RecordsSearch,
+        search_index='weko',
+        search_type='item',
+        search_factory_imp='weko_search_ui.query.weko_search_factory',
+        # record_class='',
+        record_serializers={
+            'application/json': ('invenio_records_rest.serializers'
+                                 ':json_v1_response'),
+        },
+        search_serializers={
+            'application/json': ('weko_records.serializers'
+                                 ':json_v1_search'),
+        },
+        index_route='/index/',
+        links_factory_imp='weko_search_ui.links:default_links_factory',
+        default_media_type='application/json',
+        max_result_window=10000,
+    ),
+)
