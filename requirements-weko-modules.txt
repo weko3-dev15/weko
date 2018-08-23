@@ -1,3 +1,4 @@
+-e /code/modules/invenio-previewer
 -e /code/modules/invenio-files-rest
 -e /code/modules/invenio-oaiserver
 -e /code/modules/weko-theme
@@ -16,4 +17,3 @@
 -e /code/modules/weko-deposit
 -e /code/modules/weko-authors
 -e /code/modules/weko-plugins
--e /code/modules/invenio-previewer
