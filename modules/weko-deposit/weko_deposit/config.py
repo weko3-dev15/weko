@@ -25,7 +25,7 @@
 
 import copy
 
-WEKO_BUCKET_QUOTA_SIZE = 50 * 1000 * 1000 * 1000  # 50 GB
+WEKO_BUCKET_QUOTA_SIZE = 500 * 1000 * 1000 * 1000  # 500 GB
 """Maximum quota per bucket."""
 
 WEKO_MAX_FILE_SIZE = WEKO_BUCKET_QUOTA_SIZE

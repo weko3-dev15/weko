@@ -60,8 +60,10 @@ class WekoFileStorage(PyFSFileStorage):
                 except BaseException:
                     pass
             strb = base64.b64encode(s).decode("utf-8")
-        else:
+        elif 'pdf' in mime:
             strb = base64.b64encode(fp.read()).decode("utf-8")
+        else:
+            strb = "" 
         fp.close()
 
         fjson.update({"file": strb})
