@@ -578,4 +578,5 @@ class WekoRecord(Record):
         harvest_public_state = True
         if path:
             harvest_public_state = Indexes.get_harvest_public_state(path)
+        current_app.logger.debug("AAAAAAA")
         return harvest_public_state, record
