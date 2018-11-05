@@ -568,6 +568,7 @@ class WekoRecord(Record):
     def get_record_by_pid(cls, pid):
         """"""
         pid = PersistentIdentifier.get('depid', pid)
+        current_app.logger.debug("AAAAAAA")
         return cls.get_record(id_=pid.object_uuid)
 
     @classmethod
@@ -578,5 +579,4 @@ class WekoRecord(Record):
         harvest_public_state = True
         if path:
             harvest_public_state = Indexes.get_harvest_public_state(path)
-        current_app.logger.debug("AAAAAAA")
         return harvest_public_state, record
