@@ -567,6 +567,7 @@ class WekoRecord(Record):
     @classmethod
     def get_record_by_pid(cls, pid):
         """"""
+        current_app.logger.debug("AAAAAAAAAA")
         pid = PersistentIdentifier.get('depid', pid)
         return cls.get_record(id_=pid.object_uuid)
 
