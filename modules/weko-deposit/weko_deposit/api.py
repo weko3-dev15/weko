@@ -504,7 +504,7 @@ class WekoDeposit(Deposit):
 
 class WekoRecord(Record):
     """Extend Record obj for record ui."""
-    current_app.logger.debug("AAAAAAA")
+
     file_cls = WekoFileObject
 
     # files_iter_cls = WekoFilesIterator
