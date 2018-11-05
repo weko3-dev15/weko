@@ -504,7 +504,7 @@ class WekoDeposit(Deposit):
 
 class WekoRecord(Record):
     """Extend Record obj for record ui."""
-
+    current_app.logger.debug("AAAAAAA")
     file_cls = WekoFileObject
 
     # files_iter_cls = WekoFilesIterator
@@ -568,7 +568,6 @@ class WekoRecord(Record):
     def get_record_by_pid(cls, pid):
         """"""
         pid = PersistentIdentifier.get('depid', pid)
-        current_app.logger.debug("AAAAAAA")
         return cls.get_record(id_=pid.object_uuid)
 
     @classmethod
