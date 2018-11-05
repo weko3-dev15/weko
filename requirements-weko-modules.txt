@@ -1,4 +1,5 @@
 -e git+https://github.com/RCOSDP/invenio-files-rest.git@feature/weko#egg=invenio-files-rest
+-e git+https://github.com/RCOSDP/invenio-s3.git@feature/weko#egg=invenio-s3
 -e /code/modules/invenio-oaiserver
 -e git+https://github.com/RCOSDP/invenio-records-rest.git@feature/weko#egg=invenio-records-rest
 -e git+https://github.com/RCOSDP/invenio-communities.git@feature/weko#egg=invenio-communities
