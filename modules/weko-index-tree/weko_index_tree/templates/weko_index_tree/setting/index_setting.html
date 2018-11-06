@@ -34,7 +34,12 @@
     <div class="controls col-sm-2">
       <select class="form-control" id="width" name="width">
         {%- for level in levels if level %}
-        <option value={{level}}>{{level}}</option>
+          <!--{%- if selected == level -%}-->
+        <option value={{level}} selected="{{selected == level}}">{{level}}</option>
+
+          <!--{%- else %}-->
+          <!--{%- endif %}-->
+
         <!--<option value="2" selected="selected">2</option>-->
         <!--<option value="3">3</option>-->
         {%- endfor %}
