@@ -155,7 +155,7 @@ class ItemResource(ContentNegotiatedMethodView):
         from weko_deposit.links import base_factory
         response = self.make_response(pid, record, 201,
                                       links_factory=base_factory)
-
+        current_app.logger.debug("AAAAA")
         return response
 
     def put(self, **kwargs):
