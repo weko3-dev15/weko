@@ -29,14 +29,15 @@
 {%- set cur_lifetime = current_lifetime %}
 {%- set lifetime_map = map_lifetime %}
 <form class="form-horizontal" method="POST" name="shib_form" action={{url_for('indextree.index')}}>
-  <!--<h1>{{shib_flg}}</h1>-->
   <div class="form-group">
     <label for="width" class="control-label col-sm-1">Width</label>
     <div class="controls col-sm-2">
       <select class="form-control" id="width" name="width">
-        <option value="1" selected="selected">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
+        {%- for level in levels if level %}
+        <option value={{level}}>{{level}}</option>
+        <!--<option value="2" selected="selected">2</option>-->
+        <!--<option value="3">3</option>-->
+        {%- endfor %}
       </select>
     </div>
   </div>
