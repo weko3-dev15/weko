@@ -33,8 +33,8 @@ class IndexSettingView(BaseView):
     @expose('/', methods=['GET', 'POST'])
     def index(self):
         try:
-            width = 1
-            height = 2
+            width = '1'
+            height = '2'
             if request.method == 'POST':
                 # Process forms
                 form = request.form.get('submit', None)
@@ -51,11 +51,13 @@ class IndexSettingView(BaseView):
 
             if request.method == 'GET':
                 return self.render(config.WEKO_INDEX_TREE_ADMIN_TEMPLATE,
-                                   widths=[1, 2, 3, 4, 5], heights=[1, 2, 3],
+                                   widths=['1', '2', '3', '4', '5'],
+                                   heights=['1', '2', '3'],
                                    width_selected=width, height_selected=height)
             elif request.method == 'POST':
                 return self.render(config.WEKO_INDEX_TREE_ADMIN_TEMPLATE,
-                                   widths=[1, 2, 3, 4, 5], heights=[1, 2, 3],
+                                   widths=['1', '2', '3', '4', '5'],
+                                   heights=['1', '2', '3'],
                                    width_selected=width,  height_selected=height)
 
         except:
