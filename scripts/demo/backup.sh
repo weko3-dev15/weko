@@ -27,7 +27,8 @@ mkdir -p ./scripts/demo/contents ./scripts/demo/elasticsearch ./scripts/demo/pos
 # delete-old-backup-end
 
 # postgresql-backup-begin
-docker-compose exec postgresql pg_dump -U invenio -a -f weko.sql -T alembic_version
+# docker-compose exec postgresql pg_dump -U invenio -a -f weko.sql -T alembic_version
+docker-compose exec postgresql pg_dump -U invenio -a -f weko.sql 
 docker cp $(docker-compose ps -q postgresql):/weko.sql ./scripts/demo/postgresql/
 # postgresql-restore-end
 
@@ -53,6 +54,6 @@ docker cp $(docker-compose ps -q elasticsearch):/usr/share/elasticsearch/backups
 # elasticsearch-restore-end
 
 # contents-backup-begin
-chown -R 1000:1000 ./scripts/demo/contents
+# chown -R 1000:1000 ./scripts/demo/contents
 docker-compose exec web cp -r /var/tmp /code/scripts/demo/contents/
 # contents-restore-end
