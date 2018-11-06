@@ -33,8 +33,8 @@
     <label for="width" class="control-label col-sm-1">Width</label>
     <div class="controls col-sm-2">
       <select class="form-control" id="width" name="width">
-        {%- for level in levels if level %}
-          <option value={{ level }} selected="{{ width == level }}">{{ level }}</option>
+        {%- for width in widths if width %}
+          <option value={{ width }} selected="{{ width == width_selected }}">{{ width }}</option>
         {%- endfor %}
       </select>
     </div>
@@ -43,8 +43,8 @@
     <label for="height" class="control-label col-sm-1">Height</label>
     <div class="controls col-sm-2">
       <select class="form-control" id="height" name="height">
-        {%- for level in levels if level %}
-          <option value={{ level }} selected="{{ height == level }}">{{ level }}</option>
+        {%- for height in heights if height %}
+          <option value={{ height }} selected="{{ height == height_selected }}">{{ height }}</option>
         {%- endfor %}
       </select>
     </div>
