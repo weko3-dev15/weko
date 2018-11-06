@@ -35,24 +35,24 @@ class IndexSettingView(BaseView):
         try:
             width = 1
             height = 1
-            if request.method == 'POST':
-                # Process forms
-                form = request.form.get('submit', None)
-                if form == 'index_form':
-                    width = request.form.get('width', '1')
-                    height = request.form.get('height', '1')
-                    # if shib_flg == '1':
-                    #     _app.config['SHIB_ACCOUNTS_LOGIN_ENABLED'] = True
-                    # else:
-                    #     _app.config['SHIB_ACCOUNTS_LOGIN_ENABLED'] = False
-                    flash(_('The information was updated.'), category='success')
-                    flash(width)
-                    flash(height)
+            # if request.method == 'POST':
+            #     # Process forms
+            #     form = request.form.get('submit', None)
+            #     if form == 'index_form':
+            #         width = request.form.get('width', '1')
+            #         height = request.form.get('height', '1')
+            #         # if shib_flg == '1':
+            #         #     _app.config['SHIB_ACCOUNTS_LOGIN_ENABLED'] = True
+            #         # else:
+            #         #     _app.config['SHIB_ACCOUNTS_LOGIN_ENABLED'] = False
+            #         flash(_('The information was updated.'), category='success')
+            #         flash(width)
+            #         flash(height)
 
             if request.method == 'GET':
                 return self.render(config.WEKO_INDEX_TREE_ADMIN_TEMPLATE,
                                    widths=[1, 2, 3, 4, 5], heights=[1, 2, 3],
-                                   width_selected=2,  height_selected=3)
+                                   width_selected=3,  height_selected=2)
             elif request.method == 'POST':
                 return self.render(config.WEKO_INDEX_TREE_ADMIN_TEMPLATE,
                                    widths=[1, 2, 3, 4, 5], heights=[1, 2, 3],
