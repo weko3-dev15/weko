@@ -33,6 +33,8 @@ class IndexSettingView(BaseView):
     @expose('/', methods=['GET', 'POST'])
     def index(self):
         try:
+            width = 1
+            height = 1
             if request.method == 'POST':
                 # Process forms
                 form = request.form.get('submit', None)
