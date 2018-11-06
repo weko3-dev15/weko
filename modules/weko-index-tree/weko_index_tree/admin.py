@@ -25,7 +25,7 @@ import sys
 from flask import abort, current_app, flash, request
 from flask_admin import BaseView, expose
 from flask_babelex import gettext as _
-from werkzeug.local import LocalProxy
+from .models import IndexStyle
 
 from . import config
 
@@ -41,13 +41,12 @@ class IndexSettingView(BaseView):
                 if form == 'index_form':
                     width = request.form.get('width', '1')
                     height = request.form.get('height', '1')
-                    # if shib_flg == '1':
-                    #     _app.config['SHIB_ACCOUNTS_LOGIN_ENABLED'] = True
-                    # else:
-                    #     _app.config['SHIB_ACCOUNTS_LOGIN_ENABLED'] = False
-                    flash(_('The information was updated.'), category='success')
-                    flash(width)
-                    flash(height)
+
+                    data={'width':width, 'height':height}
+                    IndexStyle.create('weko', data)
+
+
+                    flash(_('The information was created.'), category='success')
 
             if request.method == 'GET':
                 return self.render(config.WEKO_INDEX_TREE_ADMIN_TEMPLATE,
