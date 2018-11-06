@@ -35,8 +35,7 @@ class IndexSettingView(BaseView):
         try:
             if request.method == 'GET':
                 return self.render(config.WEKO_INDEX_TREE_ADMIN_TEMPLATE,
-                                   levels=[1, 2, 3],
-                                   selected=3)
+                                   levels=[1, 2, 3], width=3,  height=2)
             elif request.method == 'POST':
                 return self.render(config.WEKO_INDEX_TREE_ADMIN_TEMPLATE,
                                    shib_flg='POST')
