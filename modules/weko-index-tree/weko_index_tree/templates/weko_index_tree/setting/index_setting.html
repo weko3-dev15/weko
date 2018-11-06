@@ -30,9 +30,9 @@
 {%- set lifetime_map = map_lifetime %}
 <form class="form-horizontal" method="POST" name="shib_form" action={{url_for('indextree.index')}}>
   <!--<h1>{{shib_flg}}</h1>-->
-  <div class="control-group">
-    <label for="width" class="control-label col-xs-2">Width</label>
-    <div class="controls col-xs-2">
+  <div class="form-group">
+    <label for="width" class="control-label col-sm-2">Width</label>
+    <div class="controls col-sm-10">
       <select class="form-control" id="width" name="width">
         <option value="1">1</option>
         <option value="2" selected="selected">2</option>
@@ -40,9 +40,9 @@
       </select>
     </div>
   </div>
-  <div class="control-group">
-    <label for="height" class="control-label col-xs-2">Height</label>
-    <div class="controls col-xs-2">
+  <div class="form-group">
+    <label for="height" class="control-label col-sm-2">Height</label>
+    <div class="controls col-sm-10">
       <select class="form-control" id="height" name="height">
         <option value="1">1</option>
         <option value="2" selected="selected">2</option>
@@ -51,7 +51,9 @@
     </div>
   </div>
   <div class="form-actions">
-    <button type="submit" name="submit" value="shib_form" class="btn btn-primary"><i class="fa fa-check"></i> {{ _('Update') }}</button>
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" name="submit" value="shib_form" class="btn btn-primary"><i class="fa fa-check"></i> {{ _('Update') }}</button>
+    </div>
   </div>
 </form>
 {%- endblock body %}
