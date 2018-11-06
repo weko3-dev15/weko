@@ -43,4 +43,7 @@
         return str;
       }
     });
+    $('#onlyTest').on('click',function(){
+        alert("aaaa")
+    })
 })
