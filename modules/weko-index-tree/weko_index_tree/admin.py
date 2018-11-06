@@ -56,7 +56,7 @@ class IndexSettingView(BaseView):
             elif request.method == 'POST':
                 return self.render(config.WEKO_INDEX_TREE_ADMIN_TEMPLATE,
                                    widths=[1, 2, 3, 4, 5], heights=[1, 2, 3],
-                                   width_selected=width,  height_selected=height)
+                                   width_selected=int(width),  height_selected=int(height))
 
         except:
             current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
