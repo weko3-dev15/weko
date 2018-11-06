@@ -43,7 +43,7 @@ class IndexSettingView(BaseView):
                     height = request.form.get('height', '1')
 
                     data={'width':width, 'height':height}
-                    IndexStyle.create('weko')
+                    IndexStyle.create('weko', width=width, height=height)
 
 
                     flash(_('The information was created.'), category='success')
