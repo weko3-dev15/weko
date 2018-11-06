@@ -34,7 +34,11 @@
     <div class="controls col-sm-2">
       <select class="form-control" id="width" name="width">
         {%- for width in widths if width %}
-          <option value={{ width }} selected="{{ width == width_selected }}">{{ width }}</option>
+          {%- if width == width_selected %}
+            <option value={{ width }} selected="selected">{{ width }}</option>
+          {%- else %}
+            <option value={{ width }}>{{ width }}</option>
+          {%- endif %}
         {%- endfor %}
       </select>
     </div>
