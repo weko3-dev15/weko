@@ -211,7 +211,7 @@ class IndexSearchResource(ContentNegotiatedMethodView):
         # aggs result identify
         rd = search_result.to_dict()
         q = request.values.get('q')
-        current_app.logger.debug("AAAAA")
+
         if q:
             try:
                 paths = Indexes.get_self_list(q)
