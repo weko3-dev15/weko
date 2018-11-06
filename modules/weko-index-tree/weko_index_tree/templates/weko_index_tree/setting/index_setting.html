@@ -48,7 +48,11 @@
     <div class="controls col-sm-2">
       <select class="form-control" id="height" name="height">
         {%- for height in heights if height %}
-          <option value={{ height }} selected="{{ height == height_selected }}">{{ height }}</option>
+          {%- if height == height_selected %}
+            <option value={{ height }} selected="selected">{{ height }}</option>
+          {%- else %}
+            <option value={{ height }}>{{ height }}</option>
+          {%- endif %}
         {%- endfor %}
       </select>
     </div>
