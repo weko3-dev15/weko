@@ -34,7 +34,7 @@ WEKO_INDEX_TREE_ADMIN_TEMPLATE = 'weko_index_tree/setting/index_setting.html'
 
 INDEXTREE_STYLE_OPTIONS = {
     'widths': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-    'heights': ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+    'heights': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
 }
 
 WEKO_INDEX_TREE_API = "/api/tree/index/"
