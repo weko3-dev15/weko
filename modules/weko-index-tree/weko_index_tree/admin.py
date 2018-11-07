@@ -34,20 +34,13 @@ class IndexSettingView(BaseView):
     @expose('/', methods=['GET', 'POST'])
     def index(self):
         try:
-            # Default
-            width = '3'
-            height = '1'
-
             # Get record
             style = IndexStyle.get(config.INDEXTREE_STYLE_OPTIONS['id'])
+            width = style.width if style else '3'
+            height = style.height if style else '1'
 
-            # Get
-            if request.method == 'GET':
-                if style:
-                    width = style.width
-                    height = style.height
             # Post
-            else:
+            if request.method == 'POST':
                 # Get form
                 form = request.form.get('submit', None)
                 if form == 'index_form':
@@ -55,9 +48,11 @@ class IndexSettingView(BaseView):
                     height = request.form.get('height', '1')
 
                     if style:
-                        IndexStyle.update('weko', width=width, height=height)
+                        IndexStyle.update(config.INDEXTREE_STYLE_OPTIONS['id'],
+                                          width=width, height=height)
                     else:
-                        IndexStyle.create('weko', width=width, height=height)
+                        IndexStyle.create(config.INDEXTREE_STYLE_OPTIONS['id'],
+                                          width=width, height=height)
 
                     flash(_('The information was updated.'), category='success')
 
