@@ -49,7 +49,7 @@
       <select class="form-control" id="height" name="height">
         {%- for height in heights if height %}
           {%- if height == height_selected %}
-            <option value={{ height }} selected="selected">{{ height }}</option>
+            <option value={{ height }} selected="selected">{{ height }}×100px</option>
           {%- else %}
             <option value={{ height }}>{{ height }}</option>
           {%- endif %}
