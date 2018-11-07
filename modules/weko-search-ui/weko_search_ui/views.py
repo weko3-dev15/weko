@@ -59,7 +59,7 @@ def search():
     # Get index style
     style = IndexStyle.get('weko')
     width = style.width if style else '3'
-    height = style.height if style else '1'
+    height = str(int(style.height) * 100) if style else str(100)
 
     return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
                            index_id=cur_index_id, community_id=community_id,
