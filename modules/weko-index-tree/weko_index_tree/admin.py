@@ -33,31 +33,35 @@ class IndexSettingView(BaseView):
     @expose('/', methods=['GET', 'POST'])
     def index(self):
         try:
-            width = '1'
-            height = '2'
-            if request.method == 'POST':
-                # Process forms
+            width = '3'
+            height = '0'
+
+            style = IndexStyle.get('weko')
+
+            # Get
+            if request.method == 'GET':
+                if style:
+                    width = style.width
+                    height = style.height
+            # Post
+            else:
+                # Get form
                 form = request.form.get('submit', None)
                 if form == 'index_form':
-                    width = request.form.get('width', '1')
-                    height = request.form.get('height', '1')
+                    width = request.form.get('width', '3')
+                    height = request.form.get('height', '0')
 
-                    data={'width':width, 'height':height}
-                    IndexStyle.create('weko', width=width, height=height)
+                    if style:
+                        IndexStyle.update('weko', width=width, height=height)
+                    else:
+                        IndexStyle.create('weko', width=width, height=height)
 
+                    flash(_('The information was updated.'), category='success')
 
-                    flash(_('The information was created.'), category='success')
-
-            if request.method == 'GET':
-                return self.render(config.WEKO_INDEX_TREE_ADMIN_TEMPLATE,
-                                   widths=['1', '2', '3', '4', '5'],
-                                   heights=['1', '2', '3'],
-                                   width_selected=width, height_selected=height)
-            elif request.method == 'POST':
-                return self.render(config.WEKO_INDEX_TREE_ADMIN_TEMPLATE,
-                                   widths=['1', '2', '3', '4', '5'],
-                                   heights=['1', '2', '3'],
-                                   width_selected=width,  height_selected=height)
+            return self.render(config.WEKO_INDEX_TREE_ADMIN_TEMPLATE,
+                               widths=['1', '2', '3', '4', '5'],
+                               heights=['0', '1', '2', '3'],
+                               width_selected=width, height_selected=height)
 
         except:
             current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
