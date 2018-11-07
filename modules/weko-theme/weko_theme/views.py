@@ -46,12 +46,8 @@ def index():
 
     # Get index style
     style = IndexStyle.get('weko')
-
-    width = '3'
-    height = '1'
-    if style:
-        width = style.width
-        height = style.height
+    width = style.width if style else '3'
+    height = str(style.height*100) if style else str(100)
 
     return render_template(
         current_app.config['THEME_FRONTPAGE_TEMPLATE'],
