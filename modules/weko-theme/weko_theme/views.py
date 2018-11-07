@@ -22,6 +22,7 @@
 
 
 from flask import Blueprint, current_app, render_template, request
+from weko_index_tree.models import IndexStyle
 
 blueprint = Blueprint(
     'weko_theme',
@@ -42,9 +43,19 @@ def index():
         comm = GetCommunity.get_community_by_id(request.args.get('community'))
         ctx = {'community': comm}
         community_id = comm.id
+
+    # Get index style
+    style = IndexStyle.get('weko')
+
+    width = '3'
+    height = '1'
+    if style:
+        width = style.width
+        height = style.height
+
     return render_template(
         current_app.config['THEME_FRONTPAGE_TEMPLATE'],
-        community_id =community_id, **ctx
+        community_id =community_id, width=width, height=height, **ctx
     )
 
 
