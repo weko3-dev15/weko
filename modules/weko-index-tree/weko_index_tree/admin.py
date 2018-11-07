@@ -36,7 +36,7 @@ class IndexSettingView(BaseView):
         try:
             # Default
             width = '3'
-            height = '0'
+            height = '1'
 
             # Get record
             style = IndexStyle.get('weko')
@@ -52,7 +52,7 @@ class IndexSettingView(BaseView):
                 form = request.form.get('submit', None)
                 if form == 'index_form':
                     width = request.form.get('width', '3')
-                    height = request.form.get('height', '0')
+                    height = request.form.get('height', '1')
 
                     if style:
                         IndexStyle.update('weko', width=width, height=height)
