@@ -44,12 +44,12 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="height" class="control-label col-sm-1">Height</label>
+    <label for="height" class="control-label col-sm-1">Height (× 100px)</label>
     <div class="controls col-sm-2">
       <select class="form-control" id="height" name="height">
         {%- for height in heights if height %}
           {%- if height == height_selected %}
-            <option value={{ height }} selected="selected">{{ height }}×100px</option>
+            <option value={{ height }} selected="selected">{{ height }}</option>
           {%- else %}
             <option value={{ height }}>{{ height }}</option>
           {%- endif %}
