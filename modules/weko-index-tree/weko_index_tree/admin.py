@@ -30,12 +30,15 @@ from .models import IndexStyle
 from . import config
 
 class IndexSettingView(BaseView):
+
     @expose('/', methods=['GET', 'POST'])
     def index(self):
         try:
+            # Default
             width = '3'
             height = '0'
 
+            # Get record
             style = IndexStyle.get('weko')
 
             # Get
@@ -59,8 +62,8 @@ class IndexSettingView(BaseView):
                     flash(_('The information was updated.'), category='success')
 
             return self.render(config.WEKO_INDEX_TREE_ADMIN_TEMPLATE,
-                               widths=['1', '2', '3', '4', '5'],
-                               heights=['0', '1', '2', '3'],
+                               widths=config.INDEXTREE_STYLE_OPTIONS['widths'],
+                               heights=config.INDEXTREE_STYLE_OPTIONS['heights'],
                                width_selected=width, height_selected=height)
 
         except:
