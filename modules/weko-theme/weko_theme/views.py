@@ -21,7 +21,7 @@
 """Blueprint for weko-theme."""
 
 
-from flask import Blueprint, current_app, render_template, request
+from flask import Blueprint, current_app, render_template, request, flash
 from weko_index_tree.models import IndexStyle
 
 blueprint = Blueprint(
@@ -48,6 +48,8 @@ def index():
     style = IndexStyle.get('weko')
     width = style.width if style else '3'
     height = str(style.height*100)+'px' if style else str(100)+'px'
+
+    flash(height)
 
     return render_template(
         current_app.config['THEME_FRONTPAGE_TEMPLATE'],
