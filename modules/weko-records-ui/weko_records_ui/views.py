@@ -26,6 +26,7 @@ from flask import Blueprint, abort, current_app, \
 from invenio_records_ui.utils import obj_or_import_string
 from invenio_records_ui.signals import record_viewed
 from weko_index_tree.models import IndexStyle
+from weko_index_tree.config import INDEXTREE_STYLE_OPTIONS
 from .permissions import check_created_id
 
 blueprint = Blueprint(
@@ -231,6 +232,7 @@ def check_permission(record):
     """
     return check_created_id(record)
 
+
 def default_view_method(pid, record, template=None, **kwargs):
     r"""Display default view.
 
@@ -249,7 +251,7 @@ def default_view_method(pid, record, template=None, **kwargs):
     )
 
     # Get index style
-    style = IndexStyle.get('weko')
+    style = IndexStyle.get(INDEXTREE_STYLE_OPTIONS['id'])
     width = style.width if style else '3'
     height = str(int(style.height) * 100) if style else str(100)
 

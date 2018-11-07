@@ -23,6 +23,7 @@
 from flask import Blueprint, current_app, render_template, request
 from xml.etree import ElementTree as ET
 from weko_index_tree.models import IndexStyle
+from weko_index_tree.config import INDEXTREE_STYLE_OPTIONS
 
 
 blueprint = Blueprint(
@@ -57,7 +58,7 @@ def search():
         community_id = comm.id
 
     # Get index style
-    style = IndexStyle.get('weko')
+    style = IndexStyle.get(INDEXTREE_STYLE_OPTIONS['id'])
     width = style.width if style else '3'
     height = str(int(style.height) * 100) if style else str(100)
 

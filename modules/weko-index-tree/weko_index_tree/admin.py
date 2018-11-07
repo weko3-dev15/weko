@@ -39,7 +39,7 @@ class IndexSettingView(BaseView):
             height = '1'
 
             # Get record
-            style = IndexStyle.get('weko')
+            style = IndexStyle.get(config.INDEXTREE_STYLE_OPTIONS['id'])
 
             # Get
             if request.method == 'GET':
