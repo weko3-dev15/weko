@@ -15,6 +15,7 @@ require([
     $(window).on('resize', function(){
       if (timer > 0) {clearTimeout(timer);}
       timer = setTimeout(function () {
+        $('.index-body').css('height','300');
 
         alert('Browser Resized!!!')
         alert(window.innerHeight)
