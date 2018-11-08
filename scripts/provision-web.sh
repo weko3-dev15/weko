@@ -81,6 +81,7 @@ provision_web_common_ubuntu14 () {
          nodejs \
          python-dev \
          python-pip
+    $sudo apt-get -y install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
     # sphinxdoc-install-web-common-ubuntu14-end
 }
 
@@ -127,6 +128,7 @@ provision_web_common_centos7 () {
          python-pip
     $sudo yum install -y --disablerepo=epel \
          nodejs
+    $sudo yum install -y gcc-c++ ccairo-devel libjpeg-turbo-devel pango-devel giflib-devel
     # sphinxdoc-install-web-common-centos7-end
 
 }

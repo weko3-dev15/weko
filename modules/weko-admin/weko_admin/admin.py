@@ -37,7 +37,7 @@ class StyleSettingView(BaseView):
     def index(self):
         """Block style setting page."""
         wysiwyg_editor_default = [
-            '<div class="ql-editor ql-blank" data-gramm="false" '
+            '<div class="ql-editor ql-blank navbar-left" data-gramm="false" '
             'contenteditable="true"><p><br></p></div>']
 
         body_bg = '#fff'
