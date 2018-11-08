@@ -213,7 +213,7 @@ class IndexSearchResource(ContentNegotiatedMethodView):
         rd = search_result.to_dict()
         q = request.values.get('q')
         lang = current_i18n.language
-        current_app.logger.debug(lang)
+
         if q:
             try:
                 paths = Indexes.get_self_list(q)
@@ -227,7 +227,7 @@ class IndexSearchResource(ContentNegotiatedMethodView):
                 m = 0
                 for k in range(len(agp)):
                     if p.path == agp[k].get("key"):
-                        agp[k]["name"] = p.name
+                        agp[k]["name"] = p.name if lang == "ja" else p.name_en
                         date_range = agp[k].pop("date_range")
                         no_available = agp[k].pop("no_available")
                         pub = dict()
@@ -242,7 +242,7 @@ class IndexSearchResource(ContentNegotiatedMethodView):
                             m = 1
                         break
                 if m == 0:
-                    nd = {'doc_count': 0, 'key': p.path, 'name': p.name,
+                    nd = {'doc_count': 0, 'key': p.path, 'name': p.name if lang == "ja" else p.name_en,
                           'date_range': {'pub_cnt': 0, 'un_pub_cnt': 0}}
                     nlst.append(nd)
             agp.clear()
