@@ -213,6 +213,7 @@ class Indexes(object):
                     union_all(db.session.query(Index.parent, Index.id,
                                                literal_column("''", db.Text).label("path"),
                                                literal_column("''", db.Text).label("name"),
+                                               literal_column("''", db.Text).label("name_en"),
                                                literal_column("0", db.Integer).label("lev")).
                               filter(Index.id == index_id)).all()
 
