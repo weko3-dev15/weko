@@ -13,6 +13,7 @@ require([
 
     $(window).on('load resize', function(){
       alert('Browser Resized!!!')
+      alert(window.innerHeight)
 
 
 
