@@ -61,8 +61,8 @@ def search():
     style = IndexStyle.get(INDEXTREE_STYLE_OPTIONS['id'])
     width = style.width if style else '3'
     height = style.height if style else 'Unspecified'
-    if height != 'Unspecified':
-        height = str(int(height) * 100)
+    # if height != 'Unspecified':
+    #     height = str(int(height) * 100)
 
     return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
                            index_id=cur_index_id, community_id=community_id,
