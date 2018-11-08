@@ -11,7 +11,7 @@ require([
       });
     });
 
-    $(window).on('load resize', function(){
+    $(window).on('resize', function(){
       alert('Browser Resized!!!')
       alert(window.innerHeight)
 
