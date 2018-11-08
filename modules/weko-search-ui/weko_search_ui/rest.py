@@ -49,6 +49,7 @@ from webargs import fields
 from webargs.flaskparser import use_kwargs
 from weko_index_tree.api import Indexes
 from werkzeug.utils import secure_filename
+from invenio_i18n.ext import current_i18n
 
 
 def create_blueprint(app, endpoints):
@@ -211,7 +212,8 @@ class IndexSearchResource(ContentNegotiatedMethodView):
         # aggs result identify
         rd = search_result.to_dict()
         q = request.values.get('q')
-
+        lang = current_i18n.language
+        current_app.logger.debug(lang)
         if q:
             try:
                 paths = Indexes.get_self_list(q)
@@ -254,7 +256,7 @@ class IndexSearchResource(ContentNegotiatedMethodView):
                     and len(index_info.image_name) > 0:
                     nlst[0]['img'] = index_info.image_name
             agp.append(nlst)
-        current_app.logger.debug("AAAA")
+
         return self.make_response(
             pid_fetcher=self.pid_fetcher,
             search_result=rd,
