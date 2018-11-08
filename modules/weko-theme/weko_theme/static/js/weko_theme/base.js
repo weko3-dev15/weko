@@ -12,7 +12,7 @@ require([
     });
 
     var timer = 0;
-    $(window).on('resize', function(){
+    $(window).on('load resize', function(){
       if (timer > 0) {clearTimeout(timer);}
       timer = setTimeout(function () {
         browserHeight = window.innerHeight;
