@@ -15,12 +15,17 @@ require([
     $(window).on('resize', function(){
       if (timer > 0) {clearTimeout(timer);}
       timer = setTimeout(function () {
-        $('.index-body').css('height','300');
+        browserHeight = window.innerHeight;
+
+        height = $('#index-height').text()
+        if (height !== 'Unspecified') {
+          indexHeight = ((parseFloat(browserHeight) / 12) * parseFloat(height)).toFixed();
+          $('.index-body').css('height',indexHeight.toString());
+
+
+        }
 
         alert('Browser Resized!!!')
-        alert(window.innerHeight)
-
-        console.log('window resized'); //ここに処理の内容が入る
       }, 200);
 
     });
