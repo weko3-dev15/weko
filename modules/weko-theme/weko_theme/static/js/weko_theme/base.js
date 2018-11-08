@@ -26,6 +26,7 @@ require([
         }
 
         alert('Browser Resized!!!')
+        alert(browserHeight)
       }, 200);
 
     });
