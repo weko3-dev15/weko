@@ -11,13 +11,16 @@ require([
       });
     });
 
+    var timer = 0;
     $(window).on('resize', function(){
-      alert('Browser Resized!!!')
-      alert(window.innerHeight)
+      if (timer > 0) {clearTimeout(timer);}
+      timer = setTimeout(function () {
 
+        alert('Browser Resized!!!')
+        alert(window.innerHeight)
 
-
-
+        console.log('window resized'); //ここに処理の内容が入る
+      }, 200);
 
     });
 
