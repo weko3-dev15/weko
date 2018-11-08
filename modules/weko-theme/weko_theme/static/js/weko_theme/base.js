@@ -21,16 +21,9 @@ require([
         if (height !== 'Unspecified') {
           indexHeight = ((parseFloat(browserHeight) / 12) * parseFloat(height)).toFixed();
           $('.index-body').css('height',indexHeight.toString());
-
-
         }
-
-        alert('Browser Resized!!!')
-        alert(browserHeight)
+//        alert('Browser Resized!!!')
+//        alert(browserHeight)
       }, 200);
-
     });
-
-
-
 });

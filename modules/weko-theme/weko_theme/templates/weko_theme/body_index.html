@@ -37,14 +37,18 @@
         <h3 class="panel-title">{{_('Index Tree')}}</h3>
     </div>
     <div id="index-height" name="index-height" hidden>{{ height }}</div>
-    {%- if height == 'Unspecified' %}
-      <div class="panel-body index-body" style="overflow: auto;">
-        <app-tree-items></app-tree-items>
-      </div>
-    {%- else %}
-      <div class="panel-body index-body" style="height: 300px; overflow: auto;">
-        <app-tree-items></app-tree-items>
-      </div>
-    {%- endif %}
+    <div class="panel-body index-body" style="overflow: auto;">
+      <app-tree-items></app-tree-items>
+    </div>
+
+    <!--{%- if height == 'Unspecified' %}-->
+      <!--<div class="panel-body index-body" style="overflow: auto;">-->
+        <!--<app-tree-items></app-tree-items>-->
+      <!--</div>-->
+    <!--{%- else %}-->
+      <!--<div class="panel-body index-body" style="height: 300px; overflow: auto;">-->
+        <!--<app-tree-items></app-tree-items>-->
+      <!--</div>-->
+    <!--{%- endif %}-->
   </div>
 </div>
