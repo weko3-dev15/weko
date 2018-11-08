@@ -28,4 +28,19 @@ require([
       $('#public_status ').text('Public');
     };
   });
+
+  var timer = 0;
+  $(window).on('load resize', function(){
+    if (timer > 0) {clearTimeout(timer);}
+    timer = setTimeout(function () {
+      browserHeight = window.innerHeight;
+
+      height = $('#index-height').text()
+      if (height !== 'Unspecified') {
+        indexHeight = ((parseFloat(browserHeight) / 12) * parseFloat(height)).toFixed();
+        $('.index-body').css('height',indexHeight.toString());
+      }
+    }, 200);
+  });
+
 });
