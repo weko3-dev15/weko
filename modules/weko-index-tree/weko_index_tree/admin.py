@@ -37,7 +37,7 @@ class IndexSettingView(BaseView):
             # Get record
             style = IndexStyle.get(config.INDEXTREE_STYLE_OPTIONS['id'])
             width = style.width if style else '3'
-            height = style.height if style else '1'
+            height = style.height if style else 'unspecified'
 
             # Post
             if request.method == 'POST':

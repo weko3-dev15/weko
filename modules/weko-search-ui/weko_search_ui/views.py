@@ -60,8 +60,8 @@ def search():
     # Get index style
     style = IndexStyle.get(INDEXTREE_STYLE_OPTIONS['id'])
     width = style.width if style else '3'
-    height = style.height if style else 'Unspecified'
-    # if height != 'Unspecified':
+    height = style.height if style else 'unspecified'
+    # if height != 'unspecified':
     #     height = str(int(height) * 100)
 
     return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],

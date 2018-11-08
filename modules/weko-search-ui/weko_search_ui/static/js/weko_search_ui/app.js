@@ -51,7 +51,7 @@
         browserHeight = window.innerHeight;
 
         height = $('#index-height').text()
-        if (height !== 'Unspecified') {
+        if (height !== 'unspecified') {
           indexHeight = ((parseFloat(browserHeight) / 12) * parseFloat(height)).toFixed();
           $('.index-body').css('height',indexHeight.toString());
         }

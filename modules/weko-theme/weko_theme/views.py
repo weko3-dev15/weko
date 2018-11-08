@@ -47,8 +47,8 @@ def index():
     # Get index style
     style = IndexStyle.get('weko')
     width = style.width if style else '3'
-    height = style.height if style else 'Unspecified'
-    # if height != 'Unspecified':
+    height = style.height if style else 'unspecified'
+    # if height != 'unspecified':
     #     height = str(int(height) * 100)
 
     return render_template(
