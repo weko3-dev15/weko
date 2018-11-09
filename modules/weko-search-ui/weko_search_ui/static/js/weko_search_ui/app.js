@@ -43,7 +43,7 @@
         return str;
       }
     });
-    $('#onlyTest').on('click',function(){
-        alert("aaaa")
-    })
+    $('#justForTest').on('click', function(){
+        alert("just for test")
+     });
 })
