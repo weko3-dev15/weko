@@ -567,6 +567,7 @@ class WekoRecord(Record):
     @classmethod
     def get_record_by_pid(cls, pid):
         """"""
+        current_app.logger.debug("CCC")
         pid = PersistentIdentifier.get('depid', pid)
         return cls.get_record(id_=pid.object_uuid)
 
@@ -576,7 +577,6 @@ class WekoRecord(Record):
         path = []
         path.extend(record.get('path'))
         harvest_public_state = True
-        current_app.logger.debug("CCCC")
         if path:
             harvest_public_state = Indexes.get_harvest_public_state(path)
         return harvest_public_state, record
