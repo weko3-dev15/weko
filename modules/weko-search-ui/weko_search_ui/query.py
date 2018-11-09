@@ -419,7 +419,6 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
 
     try:
         search = search.query(query_q)
-        current_app.logger.debug(search)
     except SyntaxError:
         current_app.logger.debug(
             "Failed parsing query: {0}".format(
