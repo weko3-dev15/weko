@@ -44,6 +44,6 @@
       }
     });
     $('#justForTest').on('click', function(){
-        alert("just for test")
+        console.log("AAAA")
      });
 })
