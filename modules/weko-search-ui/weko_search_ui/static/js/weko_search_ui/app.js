@@ -55,7 +55,7 @@
         // add by ryuu. start 20180410
        alert("AAAA")
       }
-    });
+    };
     // Inject depedencies
     WekoRecordsCtrl.$inject = [
       '$scope',
