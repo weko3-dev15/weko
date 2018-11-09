@@ -208,6 +208,7 @@ class WekoIndexer(RecordIndexer):
         ind, doc_type = self.record_to_index({})
         search_result = self.client.search(index=ind, doc_type=doc_type,
                                            body=search_query, scroll='1m')
+        current_app.logger.debug("CCCCC")
         if search_result:
             res = get_result(search_result)
             scroll_id = search_result['_scroll_id']
@@ -532,7 +533,7 @@ class WekoRecord(Record):
     def items_show_list(self):
         """Return the item show list."""
         try:
-            current_app.logger.debug("CCCCC")
+
             items = []
             solst, meta_options = get_options_and_order_list(self.get('item_type_id'))
 
