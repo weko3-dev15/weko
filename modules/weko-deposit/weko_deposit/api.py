@@ -532,7 +532,7 @@ class WekoRecord(Record):
     def items_show_list(self):
         """Return the item show list."""
         try:
-
+            current_app.logger.debug("CCCCC")
             items = []
             solst, meta_options = get_options_and_order_list(self.get('item_type_id'))
 
