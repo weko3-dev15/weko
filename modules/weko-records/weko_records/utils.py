@@ -153,6 +153,7 @@ def set_timestamp(jrc, created, updated):
 
 
 def make_itemlist_desc(es_record):
+    current_app.logger.debug("CCCCCC")
     rlt = ""
     src = es_record
     op = src.pop("_options", {})
