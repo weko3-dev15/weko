@@ -208,7 +208,6 @@ class WekoIndexer(RecordIndexer):
         ind, doc_type = self.record_to_index({})
         search_result = self.client.search(index=ind, doc_type=doc_type,
                                            body=search_query, scroll='1m')
-        current_app.logger.debug("CCCCC")
         if search_result:
             res = get_result(search_result)
             scroll_id = search_result['_scroll_id']
@@ -577,6 +576,7 @@ class WekoRecord(Record):
         path = []
         path.extend(record.get('path'))
         harvest_public_state = True
+        current_app.logger.debug("CCCC")
         if path:
             harvest_public_state = Indexes.get_harvest_public_state(path)
         return harvest_public_state, record
