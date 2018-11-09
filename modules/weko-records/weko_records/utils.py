@@ -153,7 +153,6 @@ def set_timestamp(jrc, created, updated):
 
 
 def make_itemlist_desc(es_record):
-    current_app.logger.debug("CCCCCC")
     rlt = ""
     src = es_record
     op = src.pop("_options", {})
@@ -290,7 +289,7 @@ def get_all_items(nlst, klst):
     #         k = lst[0].split('.')[-1]
     #         if key == k:
     #             return lst[1]
-
+    current_app.logger.debug("AAAAAA")
     def get_items(nlst):
         if isinstance(nlst, dict):
             for k, v in nlst.items():
