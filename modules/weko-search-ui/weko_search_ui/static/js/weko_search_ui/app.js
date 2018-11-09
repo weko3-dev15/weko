@@ -43,7 +43,4 @@
         return str;
       }
     });
-    $('#justForTest').on('click', function(){
-        console.log("AAAA")
-     });
 })

@@ -381,6 +381,7 @@ def default_view_method(pid, record, template=None):
     # if 'filemeta' in json.dumps(item_type.schema):
     if 'filename' in json.dumps(item_type.schema):
         need_file = True
+    current_app.logger.debug("AAAA")
     return render_template(
         template,
         need_file=need_file,
