@@ -44,3 +44,39 @@
       }
     });
 })
+
+(function (angular) {
+  // Bootstrap it!
+  angular.element(document).ready(function() {
+    angular.module('wekoSearchResults.controllers', []);
+    function wekoSearchResultsCtrl($scope, $rootScope, $modal, InvenioRecordsAPI){
+
+      $rootScope.getDetail = function(p_id) {
+        // add by ryuu. start 20180410
+       alert("AAAA")
+      }
+    }
+    // Inject depedencies
+    WekoRecordsCtrl.$inject = [
+      '$scope',
+      '$rootScope',
+      '$modal',
+    ];
+    angular.module('wekoSearchResults.controllers')
+      .controller('wekoSearchResultsCtrl', wekoSearchResultsCtrl);
+
+    angular.module('wekoSearchResults', [
+      'wekoSearchResults.controllers',
+    ]);
+
+    angular.bootstrap(
+      document.getElementById('invenio-search'), [
+        'wekoRecords', 'invenioRecords', 'schemaForm', 'mgcrea.ngStrap',
+        'mgcrea.ngStrap.modal', 'pascalprecht.translate', 'ui.sortable',
+        'ui.select', 'mgcrea.ngStrap.select', 'mgcrea.ngStrap.datepicker',
+        'mgcrea.ngStrap.helpers.dateParser', 'mgcrea.ngStrap.tooltip',
+        'invenioFiles'
+      ]
+    );
+  });
+})(angular);
