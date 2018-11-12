@@ -236,7 +236,7 @@ def detail_view(pid, record, template, **kwargs):
     current_app.logger.debug("AAAA")
     return render_template(
         template,
-        pid,
-        record,
+        pid=pid,
+        record=record,
         **kwargs
     )
