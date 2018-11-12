@@ -234,6 +234,9 @@ def check_permission(record):
 def detail_view(pid, record, template, **kwargs):
     """"""
     current_app.logger.debug("AAAA")
+    getargs = request.args
+    str = request.args.get('community')
+    current_app.logger.debug(str)
     return render_template(
         template,
         pid=pid,
