@@ -23,7 +23,7 @@
    {%- if index_id %}
      search-endpoint="{{ config.WEKO_SEARCH_UI_SEARCH_INDEX_API }}"
    {%- else %}
-     search-endpoint="{{ config.SEARCH_UI_SEARCH_API }}"
+     search-endpoint="{{ config.SEARCH_UI_SEARCH_API }}?community=kawasaki"
    {%- endif %}
    search-extra-params='{% if search_extra_params %}{{search_extra_params|tojson}}{% endif %}'
    search-hidden-params='{% if search_hidden_params %}{{search_hidden_params|tojson}}{% endif %}'
