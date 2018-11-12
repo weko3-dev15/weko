@@ -145,11 +145,9 @@
                     </invenio-search-loading>
                     {%- endblock search_loading %}
                     {%- block search_results %}
-                    <div ng-controller="wekoSearchResultsCtrl">
                     <invenio-search-results
                      template="{{ url_for('static', filename=config.SEARCH_UI_JSTEMPLATE_RESULTS) }}">
                     </invenio-search-results>
-                    </div>
                     {%- endblock search_results %}
                   </div>
                 {%- endblock search_item_result %}
