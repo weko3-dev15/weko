@@ -235,11 +235,19 @@ def detail_view(pid, record, template, **kwargs):
     """"""
     current_app.logger.debug("AAAA")
     getargs = request.args
-    str = request.args.get('community')
-    current_app.logger.debug(str)
+    community_id = ""
+    ctx = {'community': None}
+    if 'community' in getargs:
+        from weko_workflow.api import GetCommunity
+        comm = GetCommunity.get_community_by_id(request.args.get('community'))
+        ctx = {'community': comm}
+        community_id = comm.id
+
     return render_template(
         template,
         pid=pid,
         record=record,
+        community_id=community_id,
+        **ctx,
         **kwargs
     )
