@@ -145,7 +145,7 @@
                     </invenio-search-loading>
                     {%- endblock search_loading %}
                     {%- block search_results %}
-                    <div ng-controller="searchResCtrl">
+                    <div id="search_res" ng-controller="searchResCtrl">
                     <invenio-search-results
                      template="{{ url_for('static', filename=config.SEARCH_UI_JSTEMPLATE_RESULTS) }}">
                     </invenio-search-results>

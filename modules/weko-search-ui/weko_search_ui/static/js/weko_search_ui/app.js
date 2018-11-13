@@ -71,7 +71,7 @@
     ]);
 
     angular.bootstrap(
-      document.getElementById('invenio-search'), [
+      document.getElementById('search_res'), [
         'searchResult',
       ]
     );
