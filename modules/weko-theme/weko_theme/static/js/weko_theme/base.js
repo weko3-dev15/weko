@@ -19,7 +19,8 @@ require([
 
         height = $('#index-height').text()
         if (height !== 'unspecified') {
-          indexHeight = ((parseFloat(browserHeight) / 12) * parseFloat(height)).toFixed();
+          indexHeight = browserHeight
+//          indexHeight = ((parseFloat(browserHeight) / 12) * parseFloat(height)).toFixed();
           $('.index-body').css('height',indexHeight.toString());
         }
       }, 200);
