@@ -49,7 +49,7 @@
   // Bootstrap it!
   angular.element(document).ready(function() {
     angular.module('searchResult.controllers', []);
-    function searchResCtrl($scope, $rootScope, $modal){
+    function searchResCtrl($scope, $rootScope, $modal, invenioSearchAPI, invenioSearchHandler){
       alert("123")
     }
     // Inject depedencies
@@ -57,6 +57,8 @@
       '$scope',
       '$rootScope',
       '$modal',
+      'invenioSearchAPI',
+      'invenioSearchHandler'
     ];
     angular.module('searchResult.controllers')
       .controller('searchResCtrl', searchResCtrl);
