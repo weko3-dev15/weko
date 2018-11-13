@@ -50,7 +50,7 @@
   angular.element(document).ready(function() {
     angular.module('searchResult.controllers', []);
     function searchResCtrl($scope, $rootScope){
-      $rootScope.commInfo="?community=kawasaki"
+      $rootScope.commInfo="?community=kawasaki2222"
     }
     // Inject depedencies
     searchResCtrl.$inject = [
