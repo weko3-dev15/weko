@@ -47,13 +47,10 @@ def index():
     # Get index style
     style = IndexStyle.get('weko')
     width = style.width if style else '3'
-    height = style.height if style else 'unspecified'
-    # if height != 'unspecified':
-    #     height = str(int(height) * 100)
 
     return render_template(
         current_app.config['THEME_FRONTPAGE_TEMPLATE'],
-        community_id =community_id, width=width, height=height, **ctx
+        community_id =community_id, width=width, **ctx
     )
 
 

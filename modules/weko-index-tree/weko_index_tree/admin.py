@@ -37,7 +37,6 @@ class IndexSettingView(BaseView):
             # Get record
             style = IndexStyle.get(config.INDEXTREE_STYLE_OPTIONS['id'])
             width = style.width if style else '3'
-            height = style.height if style else 'unspecified'
 
             # Post
             if request.method == 'POST':
@@ -45,21 +44,19 @@ class IndexSettingView(BaseView):
                 form = request.form.get('submit', None)
                 if form == 'index_form':
                     width = request.form.get('width', '3')
-                    height = request.form.get('height', '1')
 
                     if style:
                         IndexStyle.update(config.INDEXTREE_STYLE_OPTIONS['id'],
-                                          width=width, height=height)
+                                          width=width)
                     else:
                         IndexStyle.create(config.INDEXTREE_STYLE_OPTIONS['id'],
-                                          width=width, height=height)
+                                          width=width)
 
                     flash(_('The information was updated.'), category='success')
 
             return self.render(config.WEKO_INDEX_TREE_ADMIN_TEMPLATE,
                                widths=config.INDEXTREE_STYLE_OPTIONS['widths'],
-                               heights=config.INDEXTREE_STYLE_OPTIONS['heights'],
-                               width_selected=width, height_selected=height)
+                               width_selected=width)
 
         except:
             current_app.logger.error('Unexpected error: ', sys.exc_info()[0])

@@ -253,14 +253,10 @@ def default_view_method(pid, record, template=None, **kwargs):
     # Get index style
     style = IndexStyle.get(INDEXTREE_STYLE_OPTIONS['id'])
     width = style.width if style else '3'
-    height = style.height if style else 'unspecified'
-    # if height != 'unspecified':
-    #     height = str(int(height) * 100)
 
     return render_template(
         template,
         pid=pid,
         record=record,
-        width=width,
-        height=height
+        width=width
     )
