@@ -52,13 +52,7 @@
     function searchResCtrl($scope, $rootScope, $modal){
       alert("123")
     }
-    // Inject depedencies
-    searchResCtrl.$inject = [
-      '$scope',
-      '$rootScope',
-      '$modal',
-      '$modalProvider',
-    ];
+    
     angular.module('searchResult.controllers')
       .controller('searchResCtrl', searchResCtrl);
 
