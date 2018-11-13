@@ -44,3 +44,33 @@
       }
     });
 })
+
+(function (angular) {
+  // Bootstrap it!
+  angular.element(document).ready(function() {
+    angular.module('searchResult.controllers', []);
+    function searchResCtrl($scope, $rootScope, $modal){
+      alert("123")
+    }
+    // Inject depedencies
+    searchResCtrl.$inject = [
+      '$scope',
+      '$rootScope',
+      '$modal'
+    ];
+    angular.module('searchResult.controllers')
+      .controller('searchResCtrl', searchResCtrl);
+
+    angular.module('searchResult', [
+      'invenioSearch',
+      'searchResult.controllers',
+    ]);
+
+    angular.bootstrap(
+      document.getElementById('invenio-search'), [
+        'searchResult', 'invenioSearch',
+      ]
+    );
+  });
+})(angular);
+
