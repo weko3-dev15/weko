@@ -43,25 +43,23 @@
         return str;
       }
     });
-})
+});
 
 (function (angular) {
   // Bootstrap it!
   angular.element(document).ready(function() {
     angular.module('searchResult.controllers', []);
-    var searchResCtrlaa = function($scope, $rootScope, $modal){
+    function searchResCtrl($scope, $rootScope, $modal){
       alert("123")
     }
-
-    angular.module('searchResult.controllers')
-      .controller('searchResCtrl', searchResCtrlaa);
-
-      // Inject depedencies
+    // Inject depedencies
     searchResCtrl.$inject = [
       '$scope',
       '$rootScope',
       '$modal'
     ];
+    angular.module('searchResult.controllers')
+      .controller('searchResCtrl', searchResCtrl);
 
     angular.module('searchResult', [
       'invenioSearch',
