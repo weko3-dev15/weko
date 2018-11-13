@@ -49,17 +49,19 @@
   // Bootstrap it!
   angular.element(document).ready(function() {
     angular.module('searchResult.controllers', []);
-    var searchResCtrl = function($scope, $rootScope, $modal){
+    var searchResCtrlaa = function($scope, $rootScope, $modal){
       alert("123")
     }
-    // Inject depedencies
+
+    angular.module('searchResult.controllers')
+      .controller('searchResCtrl', searchResCtrlaa);
+
+      // Inject depedencies
     searchResCtrl.$inject = [
       '$scope',
       '$rootScope',
       '$modal'
     ];
-    angular.module('searchResult.controllers')
-      .controller('searchResCtrl', searchResCtrl);
 
     angular.module('searchResult', [
       'invenioSearch',
