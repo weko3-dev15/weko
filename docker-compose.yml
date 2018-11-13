@@ -65,6 +65,8 @@ postgresql:
     - POSTGRES_PASSWORD=dbpass123
   ports:
     - "25401:5432"
+  volumes:
+    - db-data:/var/lib/postgresql/data
 
 redis:
   restart: "always"
@@ -79,6 +81,8 @@ elasticsearch:
   ports:
     - "29201:9200"
     - "29301:9300"
+  volumes:
+    - es-data:/usr/share/elasticsearch/data
 
 rabbitmq:
   restart: "always"
