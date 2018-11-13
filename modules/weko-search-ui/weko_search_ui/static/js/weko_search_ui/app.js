@@ -72,7 +72,7 @@
 
     angular.bootstrap(
       document.getElementById('invenio-search'), [
-        'searchResult', 'invenioSearch',
+        'searchResult',
       ]
     );
   });
