@@ -49,7 +49,7 @@
   // Bootstrap it!
   angular.element(document).ready(function() {
     angular.module('searchResult.controllers', []);
-    function searchResCtrl($scope, $rootScope, $modal){
+    var searchResCtrl = function($scope, $rootScope, $modal){
       alert("123")
     }
     // Inject depedencies
