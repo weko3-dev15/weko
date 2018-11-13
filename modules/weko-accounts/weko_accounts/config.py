@@ -60,3 +60,5 @@ SSO_ATTRIBUTE_MAP = {
     'SHIB_ATTR_MAIL': (False, 'shib_mail'),
     'SHIB_ATTR_USER_NAME': (False, 'shib_user_name'),
 }
+
+

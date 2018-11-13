@@ -27,7 +27,6 @@ from . import config
 from .sessions import login_listener, logout_listener
 from .views import blueprint
 
-
 class WekoAccounts(object):
     """WEKO-Accounts extension."""
 
@@ -55,6 +54,7 @@ class WekoAccounts(object):
 
         app.register_blueprint(blueprint)
         app.extensions['weko-accounts'] = self
+
 
     def init_config(self, app):
         """
