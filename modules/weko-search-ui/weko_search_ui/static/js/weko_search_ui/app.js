@@ -56,7 +56,8 @@
     searchResCtrl.$inject = [
       '$scope',
       '$rootScope',
-      '$modal'
+      '$modal',
+      '$modalProvider',
     ];
     angular.module('searchResult.controllers')
       .controller('searchResCtrl', searchResCtrl);
