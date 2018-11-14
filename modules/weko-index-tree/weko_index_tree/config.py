@@ -37,6 +37,8 @@ INDEXTREE_STYLE_OPTIONS = {
     'widths': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
 }
 
+WEKO_INDEX_TREE_DEFAULT_DISPLAY_NUMBER = 5
+
 WEKO_INDEX_TREE_API = "/api/tree/index/"
 
 WEKO_INDEX_TREE_LIST_API = "/api/tree"
