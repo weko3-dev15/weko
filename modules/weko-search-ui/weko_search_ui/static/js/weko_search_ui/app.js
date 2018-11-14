@@ -53,8 +53,10 @@
      var commInfo=$("#community").val();
      if(commInfo != ""){
         $rootScope.commInfo="?community="+commInfo;
+        $rootScope.commInfoIndex="&community="+commInfo;
      }else{
         $rootScope.commInfo="";
+        $rootScope.commInfoIndex="";;
      }
     }
     // Inject depedencies
