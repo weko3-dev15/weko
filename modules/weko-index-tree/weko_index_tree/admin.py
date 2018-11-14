@@ -27,15 +27,13 @@ from flask_admin import BaseView, expose
 from flask_babelex import gettext as _
 from .models import IndexStyle
 
-from . import config
-
 class IndexSettingView(BaseView):
 
     @expose('/', methods=['GET', 'POST'])
     def index(self):
         try:
             # Get record
-            style = IndexStyle.get(config.INDEXTREE_STYLE_OPTIONS['id'])
+            style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
             width = style.width if style else '3'
 
             # Post
@@ -46,16 +44,16 @@ class IndexSettingView(BaseView):
                     width = request.form.get('width', '3')
 
                     if style:
-                        IndexStyle.update(config.INDEXTREE_STYLE_OPTIONS['id'],
+                        IndexStyle.update(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'],
                                           width=width)
                     else:
-                        IndexStyle.create(config.INDEXTREE_STYLE_OPTIONS['id'],
+                        IndexStyle.create(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'],
                                           width=width)
 
                     flash(_('The information was updated.'), category='success')
 
-            return self.render(config.WEKO_INDEX_TREE_ADMIN_TEMPLATE,
-                               widths=config.INDEXTREE_STYLE_OPTIONS['widths'],
+            return self.render(current_app.config['WEKO_INDEX_TREE_ADMIN_TEMPLATE'],
+                               widths=current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['widths'],
                                width_selected=width)
 
         except:

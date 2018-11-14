@@ -45,7 +45,7 @@ def index():
         community_id = comm.id
 
     # Get index style
-    style = IndexStyle.get('weko')
+    style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
     width = style.width if style else '3'
 
     return render_template(
