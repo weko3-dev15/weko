@@ -54,12 +54,16 @@ msgid "Comment"
 msgstr "Comment"
 
 #: tree-list2.component.html:82
-msgid "Display_Range"
-msgstr "Display Range"
+msgid "More_Function"
+msgstr "More Function"
 
 #: tree-list2.component.html:90
-msgid "More_Display"
-msgstr "More Display"
+msgid "More_Check"
+msgstr "Limit the number of child index to show."
+
+#: tree-list2.component.html:90
+msgid "More_Msg"
+msgstr "Set display index number."
 
 #: tree-list2.component.html:9
 msgid "Send"

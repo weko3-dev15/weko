@@ -61,12 +61,16 @@ msgid "Comment"
 msgstr "コメント"
 
 #: weko_index_tree/views.py:245
-msgid "Display_Range"
+msgid "More_Function"
 msgstr "表示範囲"
 
 #: weko_index_tree/views.py:245
-msgid "More_Display"
-msgstr "もっと表示"
+msgid "More_Check"
+msgstr "more表示機能"
+
+#: weko_index_tree/views.py:245
+msgid "More_Msg"
+msgstr "初期表示する子インデクスの数を指定してください"
 
 #: weko_index_tree/views.py:245
 msgid "Send"
