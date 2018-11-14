@@ -72,11 +72,11 @@
       'searchResult.controllers',
     ]);
 
-//    angular.bootstrap(
-//      document.getElementById('invenio-search'), [
-//        'searchResult',
-//      ]
-//    );
+    angular.bootstrap(
+      document.getElementById('invenio-search'), [
+        'searchResult',
+      ]
+    );
   });
 })(angular);
 
