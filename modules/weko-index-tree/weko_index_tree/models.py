@@ -63,6 +63,13 @@ class Index(db.Model, Timestamp):
     comment = db.Column(db.Text, nullable=True, default='')
     """Comment of the index."""
 
+    more_check = db.Column(db.Boolean(name='more_check'), nullable=False,
+                             default=False)
+    """More Status of the index."""
+
+    display_no = db.Column(db.Integer, nullable=False, default=0)
+    """Display number of the index."""
+
     harvest_public_state = db.Column(db.Boolean(name='harvest_public_state'),
                                      nullable=False, default=True)
     """Harvest public State of the index."""
