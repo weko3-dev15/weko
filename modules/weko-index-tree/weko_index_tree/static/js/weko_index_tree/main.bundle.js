@@ -463,14 +463,12 @@ var TreeList2Component = /** @class */ (function () {
         this.checkboxSettings = {};
         //Tree　json
         this.treeH = {
-            value: "Root Index",
+            value: "RootNode",
             id: "0",
             children: [],
             settings: {
-                'static': true,
+                'static': false,
                 'isCollapsedOnInit': false,
-                'rightMenu': false,
-                'leftMenu': false,
             }
         };
         //ツリー詳細
@@ -647,14 +645,12 @@ var TreeList2Component = /** @class */ (function () {
             if (String(e) == "delAndMove") {
                 this.treeList2Service.delOrMoveNodeInfo(this.selNodeId, "move").then(function (res) {
                     _this.setIndexTree();
-                    _this.setRootDetailInit();
                 });
             }
             else {
                 //削除サービスを呼び出し
                 this.treeList2Service.delOrMoveNodeInfo(this.selNodeId, "all").then(function (res) {
                     _this.setIndexTree();
-                    _this.setRootDetailInit();
                 });
             }
         }
@@ -668,14 +664,14 @@ var TreeList2Component = /** @class */ (function () {
         var oopNodeController = this.treeList.getControllerByNodeId(this.selNodeId);
         var newNodeId = this.setNodeID();
         var newNode = {
-            value: 'New Index',
+            value: 'this a new Node',
             id: newNodeId,
             children: [],
             settings: {
-                'static': true,
+                'static': false,
                 'rightMenu': false,
                 'leftMenu': false,
-                'isCollapsedOnInit': false,
+                'isCollapsedOnInit': true,
             }
         };
         oopNodeController.addChild(newNode);
@@ -712,17 +708,11 @@ var TreeList2Component = /** @class */ (function () {
             });
         }
         else {
-            this.setRootDetailInit();
+            this.inputFlg = false;
+            this.detailData.index_name = "ルートノード";
+            this.detailData.index_name_english = "RootNode";
+            this.detailData.comment = "";
         }
-    };
-    /**
-     * root index detail
-     */
-    TreeList2Component.prototype.setRootDetailInit = function () {
-        this.inputFlg = false;
-        this.detailData.index_name = "Root Index";
-        this.detailData.index_name_english = "Root Index";
-        this.detailData.comment = "";
     };
     /**
      * 日付でNodeIDを設定する
