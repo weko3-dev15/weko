@@ -244,6 +244,9 @@ def get_index_id_list(indexes, id_list = []):
     if isinstance(indexes, list):
         for index in indexes:
             if isinstance(index, dict):
+                if index.get('id', '') == 'more':
+                    continue
+                    
                 id_list.append(index.get('id', ''))
 
                 children = index.get('children')
