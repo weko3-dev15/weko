@@ -256,7 +256,7 @@ def reduce_index_by_more(tree):
     if isinstance(tree, list):
         lst = tree[0]
         if isinstance(lst, dict):
-            children = lst.get('children')
+            children = lst.pop('children')
 
             more_node = {"children": [], "emitLoadNextLevel": False,
                          "id": "more", "position": 10,
@@ -272,4 +272,4 @@ def reduce_index_by_more(tree):
                         position = lst.get('position')
                         new.append(children[i]) if position != 10 else new.append(more_node)
 
-            children = new
+                tree[0]['children'] = new
