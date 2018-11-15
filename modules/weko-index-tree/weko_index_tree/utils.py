@@ -259,7 +259,7 @@ def reduce_index_by_more(tree):
             children = lst.get('children')
 
             more_node = {"children": [], "emitLoadNextLevel": False,
-                         "id": "more", "position": 12,
+                         "id": "more", "position": 10,
                          "settings": {"checked": False, "isCollapsedOnInit": True},
                          "value": "more..."}
 
