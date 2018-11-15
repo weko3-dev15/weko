@@ -252,4 +252,15 @@ def get_index_id_list(indexes, id_list = []):
     return id_list
 
 def reduce_index_by_more(tree):
-    flash(tree)
+    # flash(tree)
+    if isinstance(tree, list):
+        lst = tree[0]
+        if isinstance(lst, dict):
+            children = lst.get('children')
+
+            more_node = {"children": [], "emitLoadNextLevel": False,
+                         "id": "more", "position": 12,
+                         "settings": {"checked": False, "isCollapsedOnInit": True},
+                         "value": "more..."}
+
+            children.append(more_node)
