@@ -272,12 +272,12 @@ def reduce_index_by_more(tree):
                     if isinstance(child, dict):
                         position = child.get('position')
                         flash(position)
-                        if position != '10':
-                            flash('if')
-                            new.append(child)
-                        else:
-                            flash('else')
-                            new.append(more_node)
+                        # if position != '10':
+                        #     flash('if')
+                        #     new.append(child)
+                        # else:
+                        #     flash('else')
+                        #     new.append(more_node)
 
             flash('Before Set!!')
             tree[0]['children'] = new
