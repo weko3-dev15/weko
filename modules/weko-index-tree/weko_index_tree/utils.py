@@ -82,8 +82,6 @@ def get_tree_json(obj, pid=0):
     :param obj:
     :return:
     """
-    flash(obj)
-
     def get_settings():
         return dict(emitLoadNextLevel=False,
                     settings=dict(isCollapsedOnInit=False, checked=False))
@@ -287,4 +285,4 @@ def reduce_index_by_more(tree):
     #         flash('Before Set!!')
     #         tree[0]['children'] = new
     #
-    # flash(tree)
+    flash(tree)
