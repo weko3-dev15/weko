@@ -263,6 +263,8 @@ def reduce_index_by_more(tree):
                          "settings": {"checked": False, "isCollapsedOnInit": True},
                          "value": "more..."}
 
+            flash(tree)
+
             new = []
             if isinstance(children, list):
                 i = 0
