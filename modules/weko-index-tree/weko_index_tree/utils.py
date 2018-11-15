@@ -23,7 +23,7 @@
 from functools import wraps
 from datetime import date, datetime
 
-from flask import current_app
+from flask import current_app, flash
 from flask_login import current_user
 from invenio_cache import current_cache
 from invenio_i18n.ext import current_i18n
@@ -73,6 +73,7 @@ def reset_tree(tree, path=None):
     else:
         # for browsing role check
         reduce_index_by_role(tree, roles, groups)
+        reduce_index_by_more(tree)
 
 
 def get_tree_json(obj, pid=0):
@@ -249,3 +250,6 @@ def get_index_id_list(indexes, id_list = []):
                 get_index_id_list(children, id_list)
 
     return id_list
+
+def reduce_index_by_more(tree):
+    flash(tree)
