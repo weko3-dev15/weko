@@ -262,7 +262,7 @@ def reduce_index_by_more(tree):
                          "id": "more", "position": 10,
                          "settings": {"checked": False, "isCollapsedOnInit": True},
                          "value": "more..."}
-            children.append(more_node)
+            children.insert(10, more_node)
 
     #         new = []
     #         if isinstance(children, list):
