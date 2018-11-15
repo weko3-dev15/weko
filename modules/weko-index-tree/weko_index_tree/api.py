@@ -430,7 +430,8 @@ class Indexes(object):
                     recursive_t.c.position, recursive_t.c.name,
                     recursive_t.c.public_state, recursive_t.c.public_date,
                     recursive_t.c.browsing_role, recursive_t.c.contribute_role,
-                    recursive_t.c.browsing_group, recursive_t.c.contribute_group
+                    recursive_t.c.browsing_group, recursive_t.c.contribute_group,
+                    recursive_t.c.more_check, recursive_t.c.display_no
                     ]
             obj = db.session.query(*qlst). \
                 order_by(recursive_t.c.lev,
@@ -705,6 +706,8 @@ class Indexes(object):
                 Index.contribute_role,
                 Index.browsing_group,
                 Index.contribute_group,
+                Index.more_check,
+                Index.display_no,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.parent == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -724,6 +727,8 @@ class Indexes(object):
                     test_alias.contribute_role,
                     test_alias.browsing_group,
                     test_alias.contribute_group,
+                    test_alias.more_check,
+                    test_alias.display_no,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )
@@ -740,6 +745,8 @@ class Indexes(object):
                 Index.contribute_role,
                 Index.browsing_group,
                 Index.contribute_group,
+                Index.more_check,
+                Index.display_no,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.parent == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -759,6 +766,8 @@ class Indexes(object):
                     test_alias.contribute_role,
                     test_alias.browsing_group,
                     test_alias.contribute_group,
+                    test_alias.more_check,
+                    test_alias.display_no,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )
