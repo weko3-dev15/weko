@@ -263,4 +263,11 @@ def reduce_index_by_more(tree):
                          "settings": {"checked": False, "isCollapsedOnInit": True},
                          "value": "more..."}
 
-            children.append(more_node)
+            new = []
+            if isinstance(children, list):
+                i = 0
+                while i < len(children):
+                    child = children[i]
+                    if isinstance(child, dict):
+                        position = lst.get('position')
+                        new.append(children[i]) if position != 10 else new.append(more_node)
