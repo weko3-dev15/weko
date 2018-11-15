@@ -239,14 +239,14 @@ def reduce_index_by_role(tree, roles, groups, browsing_role=True, plst=None):
                         children.clear()
                         tree.pop(i)
 
-
+# TODO
 def get_index_id_list(indexes, id_list = []):
     if isinstance(indexes, list):
         for index in indexes:
             if isinstance(index, dict):
                 if index.get('id', '') == 'more':
                     continue
-                    
+
                 id_list.append(index.get('id', ''))
 
                 children = index.get('children')
@@ -286,4 +286,4 @@ def reduce_index_by_more(tree):
     #         flash('Before Set!!')
     #         tree[0]['children'] = new
     #
-    # flash(tree)
+    flash(tree)
