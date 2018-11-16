@@ -280,3 +280,4 @@ def reduce_index_by_more(tree, more_id=None):
 
             else:
                 reduce_index_by_more(tree=children, more_id=more_id)
+    flash(tree)
