@@ -263,7 +263,7 @@ def reduce_index_by_more(tree, more_id=None):
             more_check = node.get('more_check')
             display_no = node.get('display_no')
 
-            if more_check and (more_id is not None and id != int(more_id)):
+            if more_check and (more_id is not None and int(id) != int(more_id)):
                 # Delete child node
                 i = display_no
                 while i < len(children):

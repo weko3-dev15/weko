@@ -274,7 +274,7 @@ class IndexTreeActionResource(ContentNegotiatedMethodView):
                 else:
                     tree = self.record_class.get_more_browsing_tree(
                         more_id=more_id)
-                    
+
             elif action and 'browsing' in action and not comm_id is None:
                 comm = Community.get(comm_id)
 
