@@ -273,7 +273,7 @@ def reduce_index_by_more(tree, more_ids=[]):
                 # Add more node
                 more_node = {"children": [],
                              "emitLoadNextLevel": False,
-                             "id": id + "_more",
+                             "id": "more",
                              "settings": {"checked": False, "isCollapsedOnInit": True},
                              "value": "more..."}
                 children.insert(len(children), more_node)
