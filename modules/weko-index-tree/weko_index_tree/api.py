@@ -397,9 +397,9 @@ class Indexes(object):
         return tree
 
     @classmethod
-    def get_more_browsing_tree(cls, more_id=0):
+    def get_more_browsing_tree(cls, more_ids=[]):
         tree = cls.get_index_tree()
-        reset_tree(tree=tree, more_id=more_id)
+        reset_tree(tree=tree, more_ids=more_ids)
         return tree
 
     @classmethod
