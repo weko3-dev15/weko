@@ -434,6 +434,8 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
 
     urlkwargs.add('q', query_q)
 
+    current_app.logger.debug(urlkwargs)
+
     return search, urlkwargs
 
 
