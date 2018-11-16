@@ -29,6 +29,7 @@ from flask_babelex import gettext as _
 from flask_login import login_required
 
 from .permissions import index_tree_permission
+from .api import Indexes
 
 blueprint = Blueprint(
     'weko_index_tree',
@@ -71,3 +72,17 @@ def upload_image():
     file_uri = url_for('static', filename='indextree/'+fp.filename)
     fp.save(filename)
     return jsonify({'code': 0, 'msg': 'file upload success', 'data': {'path': file_uri}})
+
+
+@blueprint.route('/more/<int:index_id>', methods=['PUT'])
+def update_more(index_id=0):
+
+    if index_id is None or index_id == 0:
+        current_app.logger.debug('Invalid index id.')
+        flash(_('Invalid index id.'))
+        return abort(400)
+
+    # Update more_check
+    Indexes.update(index_id, more_check=False)
+
+    return jsonify({'code': 0, 'msg': 'More info is updated.'})
