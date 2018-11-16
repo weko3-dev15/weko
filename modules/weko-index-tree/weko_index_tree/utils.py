@@ -256,16 +256,42 @@ def get_index_id_list(indexes, id_list = []):
 
 def reduce_index_by_more(tree):
 
-    if isinstance(tree, list):
-        lst = tree[0]
-        if isinstance(lst, dict):
-            children = lst.get('children')
+    for node in tree:
+        if isinstance(node, dict):
+            children = node.get('children')
+            more_check = node.get('more_check')
+            display_no = node.get('display_no')
 
-            more_node = {"children": [], "emitLoadNextLevel": False,
-                         "id": "more", "position": 10,
-                         "settings": {"checked": False, "isCollapsedOnInit": True},
-                         "value": "more..."}
-            children.insert(10, more_node)
+            if more_check:
+                # Delete child node
+                i = display_no
+                while i < len(children):
+                    children.pop(i)
+                reduce_index_by_more(children)
+
+                # Add more node
+                more_node = {"children": [],
+                             "emitLoadNextLevel": False,
+                             "id": "more",
+                             "settings": {"checked": False, "isCollapsedOnInit": True},
+                             "value": "more..."}
+                children.insert(len(children), more_node)
+
+            else:
+                reduce_index_by_more(children)
+
+
+    # if isinstance(tree, list):
+    #     lst = tree[0]
+    #     if isinstance(lst, dict):
+    #         children = lst.get('children')
+    #         more_check = lst.get('more_check')
+    #
+    #         more_node = {"children": [], "emitLoadNextLevel": False,
+    #                      "id": "more", "position": 10,
+    #                      "settings": {"checked": False, "isCollapsedOnInit": True},
+    #                      "value": "more..."}
+    #         children.insert(10, more_node)
 
     #         new = []
     #         if isinstance(children, list):
@@ -286,4 +312,4 @@ def reduce_index_by_more(tree):
     #         flash('Before Set!!')
     #         tree[0]['children'] = new
     #
-    flash(tree)
+    # flash(tree)
