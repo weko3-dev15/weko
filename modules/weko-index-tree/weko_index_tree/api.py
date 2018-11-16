@@ -394,6 +394,7 @@ class Indexes(object):
     def get_browsing_tree(cls,pid=0):
         tree = cls.get_index_tree(pid)
         reset_tree(tree=tree)
+        flash(tree)
         return tree
 
     @classmethod
