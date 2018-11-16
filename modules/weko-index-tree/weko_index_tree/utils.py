@@ -255,7 +255,6 @@ def get_index_id_list(indexes, id_list = []):
     return id_list
 
 def reduce_index_by_more(tree, more_id=None):
-    flash(more_id)
 
     for node in tree:
         if isinstance(node, dict):
@@ -269,7 +268,7 @@ def reduce_index_by_more(tree, more_id=None):
                 i = display_no
                 while i < len(children):
                     children.pop(i)
-                reduce_index_by_more(children)
+                reduce_index_by_more(tree=children, more_id=more_id)
 
                 # Add more node
                 more_node = {"children": [],
@@ -280,4 +279,4 @@ def reduce_index_by_more(tree, more_id=None):
                 children.insert(len(children), more_node)
 
             else:
-                reduce_index_by_more(children)
+                reduce_index_by_more(tree=children, more_id=more_id)
