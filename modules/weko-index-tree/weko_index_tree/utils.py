@@ -279,37 +279,3 @@ def reduce_index_by_more(tree):
 
             else:
                 reduce_index_by_more(children)
-
-
-    # if isinstance(tree, list):
-    #     lst = tree[0]
-    #     if isinstance(lst, dict):
-    #         children = lst.get('children')
-    #         more_check = lst.get('more_check')
-    #
-    #         more_node = {"children": [], "emitLoadNextLevel": False,
-    #                      "id": "more", "position": 10,
-    #                      "settings": {"checked": False, "isCollapsedOnInit": True},
-    #                      "value": "more..."}
-    #         children.insert(10, more_node)
-
-    #         new = []
-    #         if isinstance(children, list):
-    #             flash('isinstance(children, list)')
-    #             i = 0
-    #             while i < len(children):
-    #                 child = children[i]
-    #                 if isinstance(child, dict):
-    #                     position = child.get('position')
-    #                     flash(position)
-    #                     # if position != '10':
-    #                     #     flash('if')
-    #                     #     new.append(child)
-    #                     # else:
-    #                     #     flash('else')
-    #                     #     new.append(more_node)
-    #
-    #         flash('Before Set!!')
-    #         tree[0]['children'] = new
-    #
-    # flash(tree)
