@@ -185,6 +185,7 @@ class IndexSearchResource(ContentNegotiatedMethodView):
         search = search[(page - 1) * size:page * size]
 
         search, qs_kwargs = self.search_factory(self, search)
+        current_app.logger.debug(qs_kwargs);
         urlkwargs.update(qs_kwargs)
 
         # Execute search
@@ -211,7 +212,6 @@ class IndexSearchResource(ContentNegotiatedMethodView):
         # aggs result identify
         rd = search_result.to_dict()
         q = request.values.get('q')
-        current_app.logger.debug(q)
         lang = current_i18n.language
 
         if q:
