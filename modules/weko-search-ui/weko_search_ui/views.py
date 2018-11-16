@@ -65,7 +65,7 @@ def search():
 
     return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
                            index_id=cur_index_id, community_id=community_id,
-                           width=width, more_ids=more_id_list, **ctx)
+                           width=width, **ctx)
 
 
 @blueprint_api.route('/opensearch/description.xml', methods=['GET'])
