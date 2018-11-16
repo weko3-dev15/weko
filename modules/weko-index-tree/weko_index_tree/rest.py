@@ -263,7 +263,6 @@ class IndexTreeActionResource(ContentNegotiatedMethodView):
             more_ids = []
             if more_id_list is not None:
                 more_ids = more_id_list.split('/')
-            flash(more_ids)
 
             pid = kwargs.get('pid_value')
 
