@@ -434,8 +434,6 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
 
     urlkwargs.add('q', query_q)
 
-    current_app.logger.debug(urlkwargs)
-
     return search, urlkwargs
 
 
@@ -560,6 +558,7 @@ def item_path_search_factory(self, search, index_id=None):
         urlkwargs.add(key, value)
 
     urlkwargs.add('q', query_q)
+    current_app.logger.debug(urlkwargs)
     return search, urlkwargs
 
 
