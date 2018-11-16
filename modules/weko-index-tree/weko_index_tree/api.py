@@ -393,7 +393,13 @@ class Indexes(object):
     @classmethod
     def get_browsing_tree(cls,pid=0):
         tree = cls.get_index_tree(pid)
-        reset_tree(tree)
+        reset_tree(tree=tree)
+        return tree
+
+    @classmethod
+    def get_more_browsing_tree(cls, more_id=0):
+        tree = cls.get_index_tree()
+        reset_tree(tree=tree, more_id=more_id)
         return tree
 
     @classmethod
@@ -413,9 +419,9 @@ class Indexes(object):
         record = WekoRecord.get_record_by_pid(pid)
         tree = cls.get_index_tree(root_node_id)
         if record.get('_oai'):
-            reset_tree(tree, record.get('path'))
+            reset_tree(tree=tree, path=record.get('path'))
         else:
-            reset_tree(tree, [])
+            reset_tree(tree=tree, path=[])
 
         return tree
 

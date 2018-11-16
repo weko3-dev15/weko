@@ -258,6 +258,7 @@ class IndexTreeActionResource(ContentNegotiatedMethodView):
         try:
             action = request.values.get('action')
             comm_id = request.values.get('community')
+            more_id = request.values.get('more_id')
 
             pid = kwargs.get('pid_value')
 
@@ -268,7 +269,12 @@ class IndexTreeActionResource(ContentNegotiatedMethodView):
                 else:
                     tree = self.record_class.get_contribute_tree(pid)
             elif action and 'browsing' in action and comm_id is None:
-                tree = self.record_class.get_browsing_tree()
+                if more_id is None:
+                    tree = self.record_class.get_browsing_tree()
+                else:
+                    tree = self.record_class.get_more_browsing_tree(
+                        more_id=more_id)
+                    
             elif action and 'browsing' in action and not comm_id is None:
                 comm = Community.get(comm_id)
 

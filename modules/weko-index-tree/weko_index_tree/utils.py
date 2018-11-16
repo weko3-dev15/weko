@@ -49,7 +49,7 @@ def cached_index_tree_json(timeout=50, key_prefix='index_tree_json'):
     return caching
 
 
-def reset_tree(tree, path=None):
+def reset_tree(tree, path=None, more_id=None):
     """
     Reset the state of checked.
 
@@ -73,7 +73,7 @@ def reset_tree(tree, path=None):
     else:
         # for browsing role check
         reduce_index_by_role(tree, roles, groups)
-        reduce_index_by_more(tree)
+        reduce_index_by_more(tree=tree, more_id=more_id)
 
 
 def get_tree_json(obj, pid=0):
@@ -254,15 +254,16 @@ def get_index_id_list(indexes, id_list = []):
 
     return id_list
 
-def reduce_index_by_more(tree):
+def reduce_index_by_more(tree, more_id=None):
 
     for node in tree:
         if isinstance(node, dict):
+            id = node.get('id')
             children = node.get('children')
             more_check = node.get('more_check')
             display_no = node.get('display_no')
 
-            if more_check:
+            if more_check and (more_id is not None and id != int(more_id)):
                 # Delete child node
                 i = display_no
                 while i < len(children):
