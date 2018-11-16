@@ -554,6 +554,7 @@ def item_path_search_factory(self, search, index_id=None):
     from invenio_records_rest.sorter import default_sorter_factory
     search_index = search._index[0]
     search, sortkwargs = default_sorter_factory(search, search_index)
+    current_app.logger.debug(sortkwargs)
     for key, value in sortkwargs.items():
         urlkwargs.add(key, value)
 
