@@ -258,7 +258,7 @@ class IndexTreeActionResource(ContentNegotiatedMethodView):
         try:
             action = request.values.get('action')
             comm_id = request.values.get('community')
-            more_id = request.values.get('more_id[]')
+            more_id = request.args.getlist('more_id[]')
             flash(isinstance(more_id, list))
 
             pid = kwargs.get('pid_value')
