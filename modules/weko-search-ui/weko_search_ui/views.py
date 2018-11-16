@@ -54,11 +54,6 @@ def search():
         ctx = {'community': comm}
         community_id = comm.id
 
-    more_id_list = request.args.get('more_ids')
-    if more_id_list is not None:
-        flash('@@@@@@@')
-        ctx['more_ids'] = more_id_list
-
     # Get index style
     style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
     width = style.width if style else '3'
