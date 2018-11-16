@@ -23,7 +23,7 @@
 from datetime import datetime
 from copy import deepcopy
 
-from flask import current_app
+from flask import current_app, flash
 from flask_login import current_user
 from invenio_db import db
 from invenio_accounts.models import Role
@@ -400,6 +400,7 @@ class Indexes(object):
     def get_more_browsing_tree(cls, more_id=0):
         tree = cls.get_index_tree()
         reset_tree(tree=tree, more_id=more_id)
+        flash(tree)
         return tree
 
     @classmethod
