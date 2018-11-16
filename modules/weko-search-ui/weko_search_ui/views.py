@@ -20,7 +20,7 @@
 
 """Blueprint for weko-search-ui."""
 
-from flask import Blueprint, current_app, render_template, request
+from flask import Blueprint, current_app, render_template, request, flash
 from xml.etree import ElementTree as ET
 from weko_index_tree.models import IndexStyle
 
@@ -56,6 +56,7 @@ def search():
 
     more_id_list = request.args.get('more_ids')
     if more_id_list is not None:
+        flash('@@@@@@@')
         ctx['more_ids'] = more_id_list
 
     # Get index style
@@ -64,7 +65,7 @@ def search():
 
     return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
                            index_id=cur_index_id, community_id=community_id,
-                           width=width, **ctx)
+                           width=width, more_ids=more_id_list, **ctx)
 
 
 @blueprint_api.route('/opensearch/description.xml', methods=['GET'])
