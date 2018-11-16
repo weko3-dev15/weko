@@ -190,7 +190,7 @@ class IndexSearchResource(ContentNegotiatedMethodView):
         current_app.logger.debug(urlkwargs);
         # Execute search
         search_result = search.execute()
-
+        current_app.logger.debug(search_result);
         # Generate links for prev/next
         urlkwargs.update(
             size=size,
