@@ -255,6 +255,7 @@ def get_index_id_list(indexes, id_list = []):
     return id_list
 
 def reduce_index_by_more(tree, more_id=None):
+    flash(more_id)
 
     for node in tree:
         if isinstance(node, dict):
