@@ -22,7 +22,7 @@
 
 from functools import wraps
 
-from flask import Blueprint, abort, current_app, jsonify, make_response, request
+from flask import Blueprint, abort, current_app, jsonify, make_response, request, flash
 from invenio_records_rest.utils import obj_or_import_string
 from invenio_rest import ContentNegotiatedMethodView
 from invenio_communities.models import Community
@@ -259,6 +259,7 @@ class IndexTreeActionResource(ContentNegotiatedMethodView):
             action = request.values.get('action')
             comm_id = request.values.get('community')
             more_id = request.values.get('more_id')
+            flash(more_id)
 
             pid = kwargs.get('pid_value')
 
