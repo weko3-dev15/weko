@@ -33,11 +33,7 @@
   <div class="panel panel-default">
     <div class="panel-heading clearfix">
       <span class="panel-title">
-        {%- if index_id %}
-        {{_('Item Lists')}}
-        {%- else %}
-        {{_('Search Results')}}
-        {%- endif %}
+        {{_('Target Index')}}
       </span>
     </div>
     <div class="panel-body">
@@ -66,11 +62,9 @@
                     </invenio-search-loading>
                     {%- endblock search_loading %}
                     {%- block search_results %}
-
                     <invenio-search-results
                      template="{{ url_for('static', filename=config.SEARCH_UI_JSTEMPLATE_RESULTS) }}">
                     </invenio-search-results>
-
                     {%- endblock search_results %}
                   </div>
                 {%- endblock search_item_result %}
