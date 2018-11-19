@@ -1,8 +1,9 @@
 <div class="panel_bread"
      ng-if="vm.invenioSearchResults.aggregations.hasOwnProperty('path') && vm.invenioSearchResults.aggregations.path.buckets[0].length > 0">
-  <ol class="" ng-repeat="index_path in vm.invenioSearchResults.aggregations.path.buckets[0][0].key.split('/') track by $index">
+  <ol class="breadcrumb" ng-repeat="index_path in vm.invenioSearchResults.aggregations.path.buckets[0][0].key.split('/') track by $index">
     <li ng-if="$last">
       <span>{{vm.invenioSearchResults.aggregations.path.buckets[0][0].name.split('/')[$index]}}</span>
     </li>
+    {{index_path}}
   </ol>
 </div>
