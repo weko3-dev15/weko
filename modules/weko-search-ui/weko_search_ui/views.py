@@ -113,28 +113,3 @@ def opensearch_description():
     # update headers
     response.headers['Content-Type'] = 'application/xml'
     return response
-
-@blueprint.route("/api/index")
-def search_index():
-    """ Index Search page ui."""
-    search_type = request.args.get('search_type', '0')
-    getArgs= request.args
-    community_id = ""
-    ctx = {'community': None}
-    cur_index_id = search_type if search_type not in ('0', '1', ) else None
-    if 'community' in getArgs:
-        from weko_workflow.api import GetCommunity
-        comm = GetCommunity.get_community_by_id(request.args.get('community'))
-        ctx = {'community': comm}
-        community_id = comm.id
-
-    # Get index style
-    style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
-    width = style.width if style else '3'
-    current_app.logger.debug("AAAA")
-    return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
-                           index_id=cur_index_id, community_id=community_id,
-                           width=width, **ctx)
-    # return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
-    #                        index_id=cur_index_id, community_id=community_id,
-    #                        width=width, **ctx)
