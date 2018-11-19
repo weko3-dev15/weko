@@ -239,7 +239,6 @@ def reduce_index_by_role(tree, roles, groups, browsing_role=True, plst=None):
                         children.clear()
                         tree.pop(i)
 
-# TODO
 def get_index_id_list(indexes, id_list = []):
     if isinstance(indexes, list):
         for index in indexes:
