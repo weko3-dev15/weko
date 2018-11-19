@@ -273,7 +273,8 @@ def reduce_index_by_more(tree, more_ids=[]):
                 more_node = {"children": [],
                              "emitLoadNextLevel": False,
                              "id": "more",
-                             "settings": {"checked": False, "isCollapsedOnInit": True},
+                             # "settings": {"checked": False, "isCollapsedOnInit": True},
+                             "settings": {'cssClass': 'fa fa-arrow-down'},
                              "value": "more..."}
                 children.insert(len(children), more_node)
 
