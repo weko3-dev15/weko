@@ -69,3 +69,6 @@ THEME_SEARCHBAR = True
 
 THEME_FRONTPAGE_TEMPLATE = 'weko_theme/frontpage.html'
 """Template for front page."""
+
+WEKO_ITEM_MANAGEMENT_TEMPLATE = 'weko_theme/item_management.html'
+"""Template for Item Management."""
