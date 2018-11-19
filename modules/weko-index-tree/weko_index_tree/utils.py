@@ -274,7 +274,7 @@ def reduce_index_by_more(tree, more_ids=[]):
                              "emitLoadNextLevel": False,
                              "id": "more",
                              "settings": {"checked": False},
-                             "value": "more...",
+                             "value": '<a href="#" id="" class="more">more...</a>',
                              "href": "#"}
                 children.insert(len(children), more_node)
 
