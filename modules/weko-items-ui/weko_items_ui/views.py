@@ -444,3 +444,10 @@ def index_upload():
     return render_template(
         current_app.config['WEKO_ITEMS_UI_UPLOAD_TEMPLATE']
     )
+
+@blueprint.route("/item_management")
+@login_required
+def index():
+    """Render a basic view."""
+    return render_template(
+        current_app.config['WEKO_AUTHORS_LIST_TEMPLATE'])
