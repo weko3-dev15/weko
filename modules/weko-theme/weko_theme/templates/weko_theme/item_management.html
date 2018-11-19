@@ -20,6 +20,12 @@
 
 {%- extends "weko_theme/base.html" %}
 
+{%- block page_body_tabs %}
+  {% from "weko_theme/macros/tabs_selector.html" import tabs_selector %}
+  {{ tabs_selector('author') }}
+{%- endblock page_body_tabs%}
+
+
 {%- block page_body %}
 this is test template
 {%- endblock page_body %}
