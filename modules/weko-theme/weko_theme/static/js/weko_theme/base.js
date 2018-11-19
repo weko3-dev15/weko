@@ -9,7 +9,7 @@ require([
       $('#btn_edit_stop').on('click', function(){
         window.location.href = '/';
       });
-      $( ".more" ).load(function() {
+      $( "tree-internal" ).load(function() {
         alert("Load test!!!");
       });
     });
