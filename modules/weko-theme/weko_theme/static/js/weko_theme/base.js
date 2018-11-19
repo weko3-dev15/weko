@@ -9,5 +9,8 @@ require([
       $('#btn_edit_stop').on('click', function(){
         window.location.href = '/';
       });
+      function test99(){
+        alert('Test!!!')
+      }
     });
 });
