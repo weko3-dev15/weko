@@ -1,0 +1,93 @@
+{#
+# This file is part of WEKO3.
+# Copyright (C) 2017 National Institute of Informatics.
+#
+# WEKO3 is free software; you can redistribute it
+# and/or modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# WEKO3 is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WEKO3; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+#}
+
+<div id="invenio-search">
+  <invenio-search
+   {%- if index_id %}
+     search-endpoint="{{ config.WEKO_SEARCH_UI_SEARCH_INDEX_API }}"
+   {%- else %}
+     search-endpoint="{{ config.SEARCH_UI_SEARCH_API }}"
+   {%- endif %}
+   search-extra-params='{% if search_extra_params %}{{search_extra_params|tojson}}{% endif %}'
+   search-hidden-params='{% if search_hidden_params %}{{search_hidden_params|tojson}}{% endif %}'
+   search-headers='{"Accept": "{{ config.SEARCH_UI_SEARCH_MIMETYPE|default('application/json')}}"}'
+  >
+  <div id="search_res" ng-controller="searchResCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading clearfix">
+      <span class="panel-title">
+        {%- if index_id %}
+        {{_('Item Lists')}}
+        {%- else %}
+        {{_('Search Results')}}
+        {%- endif %}
+      </span>
+    </div>
+    <div class="panel-body">
+      <div id="index_item_list">
+        {%- if index_id %}
+          <invenio-search-results
+           template="{{ url_for('static', filename=config.WEKO_SEARCH_UI_JSTEMPLATE_BREAD) }}">
+          </invenio-search-results>
+        {%- endif %}
+        <div class="panel-group m-top-5">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="row">
+                {%- block search_item_result %}
+                  <div class="col-xs-12 col-md-12">
+                    {%- block search_error %}
+                    <invenio-search-error
+                     template="{{ url_for('static', filename=config.SEARCH_UI_JSTEMPLATE_ERROR) }}"
+                     message="{{ _('Search failed.') }}">
+                    </invenio-search-error>
+                    {%- endblock search_error %}
+                    {%- block search_loading %}
+                    <invenio-search-loading
+                     template="{{ url_for('static', filename=config.SEARCH_UI_JSTEMPLATE_LOADING) }}"
+                     message="{{ _('Loading...') }}">
+                    </invenio-search-loading>
+                    {%- endblock search_loading %}
+                    {%- block search_results %}
+
+                    <invenio-search-results
+                     template="{{ url_for('static', filename=config.SEARCH_UI_JSTEMPLATE_RESULTS) }}">
+                    </invenio-search-results>
+
+                    {%- endblock search_results %}
+                  </div>
+                {%- endblock search_item_result %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        {%- block search_pagination_top %}
+        <invenio-search-pagination
+         template="{{ url_for('static', filename=config.SEARCH_UI_JSTEMPLATE_PAGINATION) }}">
+        </invenio-search-pagination>
+        {%- endblock search_pagination_top %}
+      </div>
+    </div>
+  </div>
+  </div>
+  </invenio-search>
+</div>
