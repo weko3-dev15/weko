@@ -18,14 +18,38 @@
 # MA 02111-1307, USA.
 #}
 
-{%- extends "weko_theme/base.html" %}
+{%- extends config.BASE_PAGE_TEMPLATE %}
+
+{%- from "invenio_communities/macros.html" import community_header, community_footer %}
+
+{%- block css %}
+  {{ super() }}
+  {% assets "invenio_search_ui_search_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
+  {% assets "weko_search_ui_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
+{%- endblock css %}
+
+{%- block javascript %}
+  {{ super() }}
+  {% assets "weko_theme_js_treeview" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+  {% assets "weko_theme_js_top_page" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+  {% assets "invenio_search_ui_search_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+  {% assets "weko_search_ui_dependencies_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+  {% assets "weko_search_ui_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+{%- endblock javascript %}
 
 {%- block page_body_tabs %}
   {% from "weko_theme/macros/tabs_selector.html" import tabs_selector %}
-  {{ tabs_selector('author') }}
+  {{ tabs_selector('top',community_id) }}
 {%- endblock page_body_tabs%}
 
 
-{%- block page_body %}
-this is test template
-{%- endblock page_body %}
+{%- block page_body_main %}
+  <div class="hide" id="cur_index_id">{{index_id}}</div>
+  <div class="row">
+    <div class="col-sm-{{width}} col-md-{{width}} col-lg-{{width}}">
+      {% include "weko_theme/body_index.html" %}
+    </div>
+
+  </div>
+{%- endblock page_body_main %}
+
