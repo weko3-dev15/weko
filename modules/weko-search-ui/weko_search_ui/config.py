@@ -47,6 +47,8 @@ WEKO_SEARCH_UI_JSTEMPLATE_INDEX = 'templates/weko_search_ui/indexlist.html'
 
 WEKO_SEARCH_UI_JSTEMPLATE_BREAD = 'templates/weko_search_ui/breadcrumb.html'
 
+WEKO_ITEM_MANAGEMENT_JSTEMPLATE_BREAD = 'templates/weko_search_ui/itemManagementIndex.html'
+
 WEKO_SEARCH_UI_JSTEMPLATE_COUNT = 'templates/weko_search_ui/count.html'
 
 SEARCH_UI_JSTEMPLATE_PAGINATION = 'templates/weko_search_ui/pagination.html'
