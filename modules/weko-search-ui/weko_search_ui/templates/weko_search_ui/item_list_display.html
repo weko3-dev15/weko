@@ -74,14 +74,18 @@
           </div>
         </div>
       </div>
-      <div class="text-center">
-        {%- block search_pagination_top %}
-        <invenio-search-pagination
-         template="{{ url_for('static', filename=config.SEARCH_UI_JSTEMPLATE_PAGINATION) }}">
-        </invenio-search-pagination>
-        {%- endblock search_pagination_top %}
+      <div class="row">
+        <div class="text-center">
+          {%- block search_pagination_top %}
+          <invenio-search-pagination
+           template="{{ url_for('static', filename=config.SEARCH_UI_JSTEMPLATE_PAGINATION) }}">
+          </invenio-search-pagination>
+          {%- endblock search_pagination_top %}
+        </div>
+        <div>
+          <button type="submit" name="submit" value="lifetime" class="btn btn-primary"><i class="fa fa-check"></i> {{ _('Update') }}</button>
+        </div>
       </div>
-      <button type="submit" name="submit" value="lifetime" class="btn btn-primary"><i class="fa fa-check"></i> {{ _('Update') }}</button>
     </div>
   </div>
   </div>
