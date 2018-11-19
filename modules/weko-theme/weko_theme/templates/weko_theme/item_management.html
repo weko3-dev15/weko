@@ -51,14 +51,7 @@
     </div>
     <div class="col-sm-9 col-md-9 col-lg-9 m-top-20">
       <div class="row">
-        <div role="navigation">
-          <ul class="nav nav-tabs">
-            <li role="presentation" class="active activity_li">
-              <a href="javascript:void();" class="activity_tab" data-show-tab="edit">{{_('Edit Item')}}</a></li>
-            <li role="presentation" class="activity_li">
-              <a href="javascript:void();" class="activity_tab" data-show-tab="display">{{_('Custom Sort')}}</a></li>
-          </ul>
-        </div>
+       {% include "weko_theme/macros/item_management_seletor.html" %}
       </div>
       <div class="row">
       {% include "weko_search_ui/item_list_display.html" %}
