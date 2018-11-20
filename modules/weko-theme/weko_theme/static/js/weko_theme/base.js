@@ -9,8 +9,5 @@ require([
       $('#btn_edit_stop').on('click', function(){
         window.location.href = '/';
       });
-      $( "tree-internal" ).load(function() {
-        alert("Load test!!!");
-      });
     });
 });
