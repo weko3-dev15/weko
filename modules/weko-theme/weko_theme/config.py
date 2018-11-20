@@ -72,6 +72,3 @@ THEME_FRONTPAGE_TEMPLATE = 'weko_theme/frontpage.html'
 
 WEKO_ITEM_MANAGEMENT_TEMPLATE = 'weko_theme/item_management_display.html'
 """Template for Item Management."""
-
-WEKO_ITEM_MANAGEMENT_EDIT_TEMPLATE = 'weko_theme/item_management_edit.html'
-"""Template for Item Management."""
