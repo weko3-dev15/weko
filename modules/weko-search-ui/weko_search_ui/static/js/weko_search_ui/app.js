@@ -62,6 +62,7 @@
      $rootScope.display_flg = true;
      $scope.itemManagementEdit= function(){
         $rootScope.disable_flg = false;
+        $rootScope.display_flg = false;
      }
     }
     // Inject depedencies
