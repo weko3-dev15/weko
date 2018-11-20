@@ -802,6 +802,8 @@ class Indexes(object):
                 Index.contribute_role,
                 Index.browsing_group,
                 Index.contribute_group,
+                Index.more_check,
+                Index.display_no,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.id == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -821,6 +823,8 @@ class Indexes(object):
                     test_alias.contribute_role,
                     test_alias.browsing_group,
                     test_alias.contribute_group,
+                    test_alias.more_check,
+                    test_alias.display_no,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )
@@ -837,6 +841,8 @@ class Indexes(object):
                 Index.contribute_role,
                 Index.browsing_group,
                 Index.contribute_group,
+                Index.more_check,
+                Index.display_no,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.id == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -856,6 +862,8 @@ class Indexes(object):
                     test_alias.contribute_role,
                     test_alias.browsing_group,
                     test_alias.contribute_group,
+                    test_alias.more_check,
+                    test_alias.display_no,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )
