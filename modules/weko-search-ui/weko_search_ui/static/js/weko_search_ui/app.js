@@ -59,8 +59,8 @@
         $rootScope.commInfoIndex="";
      }
      $rootScope.disable_flg = true;
+     $rootScope.display_flg = true;
      $scope.itemManagementEdit= function(){
-        alert("AAAA")
         $rootScope.disable_flg = false;
      }
     }

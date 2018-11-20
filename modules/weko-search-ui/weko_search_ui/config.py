@@ -41,8 +41,6 @@ WEKO_SEARCH_UI_SEARCH_TEMPLATE = 'weko_search_ui/search.html'
 
 WEKO_SEARCH_UI_JSTEMPLATE_RESULTS = 'templates/weko_search_ui/itemlist.html'
 
-WEKO_ITEM_MANAGEMENT_JSTEMPLATE_RESULTS = 'templates/weko_search_ui/itemListItemManagement.html'
-
 WEKO_ITEM_MANAGEMENT_JSTEMPLATE_RESULTS_EDIT = 'templates/weko_search_ui/itemListItemManagementEdit.html'
 
 WEKO_SEARCH_UI_JSTEMPLATE_RESULTS_BASIC = 'templates/weko_search_ui/itemlistbasic.html'
