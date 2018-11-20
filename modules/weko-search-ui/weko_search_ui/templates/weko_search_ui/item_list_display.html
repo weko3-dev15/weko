@@ -19,6 +19,14 @@
 #}
 
 <div id="invenio-search">
+  <div role="navigation">
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="activity_li">
+      <a href="javascript:void();" class="activity_tab" data-show-tab="edit">{{_('Edit Item')}}</a></li>
+    <li role="presentation" class="active activity_li">
+      <a href="javascript:void();" class="activity_tab" data-show-tab="display">{{_('Custom Sort')}}</a></li>
+  </ul>
+</div>
   <invenio-search
    {%- if index_id %}
      search-endpoint="{{ config.WEKO_SEARCH_UI_SEARCH_INDEX_API }}"
