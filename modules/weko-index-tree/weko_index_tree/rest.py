@@ -283,7 +283,13 @@ class IndexTreeActionResource(ContentNegotiatedMethodView):
                 comm = Community.get(comm_id)
 
                 if not comm is None:
-                    tree = self.record_class.get_browsing_tree(int(comm.root_node_id))
+                    if more_id_list is None:
+                        tree = self.record_class.get_browsing_tree(
+                            int(comm.root_node_id))
+                    else:
+                        tree = self.record_class.get_more_browsing_tree(
+                            pid=int(comm.root_node_id), more_ids=more_ids)
+
             else:
                 tree = self.record_class.get_index_tree()
             return make_response(jsonify(tree), 200)

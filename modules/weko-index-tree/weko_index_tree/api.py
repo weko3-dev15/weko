@@ -398,8 +398,8 @@ class Indexes(object):
         return tree
 
     @classmethod
-    def get_more_browsing_tree(cls, more_ids=[]):
-        tree = cls.get_index_tree()
+    def get_more_browsing_tree(cls, pid=0, more_ids=[]):
+        tree = cls.get_index_tree(pid)
         reset_tree(tree=tree, more_ids=more_ids)
         return tree
 
