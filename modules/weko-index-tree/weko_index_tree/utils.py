@@ -271,7 +271,6 @@ def reduce_index_by_more(tree, more_ids=[]):
 
                 # Add more node
                 more_node = {"id": "more",
-                             "settings": {},
                              "value": '<a href="#" class="more">more...</a>'}
                 children.insert(len(children), more_node)
 
