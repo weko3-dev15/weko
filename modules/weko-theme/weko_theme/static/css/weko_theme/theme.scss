@@ -152,7 +152,7 @@ td .list-group {
 
 tree-internal .tree .folding.node-leaf {display: none;}
 
-tree-internal .tree .folding.node-empty.weko-node-empty:before {
+tree-internal .tree .folding.weko-node-empty:before {
   content: '\25B7';
   color: #757575;
 }
