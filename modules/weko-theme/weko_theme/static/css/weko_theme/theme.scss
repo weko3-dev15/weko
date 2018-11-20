@@ -149,3 +149,10 @@ td .list-group {
     height: 100%;
   }
 }
+
+/* For weko index tree */
+tree-internal .tree .folding.weko-node-leaf {display: none;}
+tree-internal .tree .folding.weko-node-empty:before {
+  content: '\25B7';
+  color: #757575;
+}
