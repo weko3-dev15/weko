@@ -20,11 +20,7 @@
 
 <div id="invenio-search">
   <invenio-search
-   {%- if index_id %}
-     search-endpoint="{{ config.WEKO_SEARCH_UI_SEARCH_INDEX_API }}"
-   {%- else %}
-     search-endpoint="{{ config.SEARCH_UI_SEARCH_API }}"
-   {%- endif %}
+   search-endpoint="{{ config.WEKO_SEARCH_UI_SEARCH_INDEX_API }}"
    search-extra-params='{% if search_extra_params %}{{search_extra_params|tojson}}{% endif %}'
    search-hidden-params='{% if search_hidden_params %}{{search_hidden_params|tojson}}{% endif %}'
    search-headers='{"Accept": "{{ config.SEARCH_UI_SEARCH_MIMETYPE|default('application/json')}}"}'
@@ -82,11 +78,13 @@
         {%- endblock search_pagination_top %}
       </div>
       <div class="row">
-        <div class="col-sm-10 col-md-10">
+        <div class="col-sm-9 col-md-9">
         </div>
-        <div class="col-sm-2 col-md-2">
-          <button type="submit" name="submit" value="lifetime" class="btn btn-primary"> {{ _('Save') }}</button>
-          <button type="submit" name="submit" value="lifetime" class="btn btn-primary"> {{ _('Cancel') }}</button>
+        <div class="col-sm-3 col-md-3">
+          <a class="btn btn-primary btn-sm pull-right" href="{{ url_for('weko_theme.item_management_edit') }}">
+            {{ _('Save') }}</a>
+          <a class="btn btn-primary btn-sm pull-right" href="{{ url_for('weko_theme.item_management_edit') }}">
+            {{ _('Cancel') }}</a>
         </div>
       </div>
     </div>
