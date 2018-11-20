@@ -59,7 +59,7 @@
         $rootScope.commInfoIndex="";;
      }
 
-     $rootScope.itemManagementEdit= function(){
+     $scope.itemManagementEdit= function(){
         alert("AAAA")
      }
     }
