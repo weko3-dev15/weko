@@ -58,6 +58,10 @@
         $rootScope.commInfo="";
         $rootScope.commInfoIndex="";;
      }
+
+     $rootScope.itemManagementEdit= function(){
+        alert("AAAA")
+     }
     }
     // Inject depedencies
     searchResCtrl.$inject = [
