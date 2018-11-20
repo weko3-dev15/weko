@@ -47,6 +47,7 @@
     </div>
     <div class="panel-body">
       <div id="index_item_list">
+        {%- if not page_id %}
         {%- if index_id %}
           <invenio-search-results
            template="{{ url_for('static', filename=config.WEKO_ITEM_MANAGEMENT_JSTEMPLATE_BREAD) }}">
@@ -82,6 +83,7 @@
             </div>
           </div>
         </div>
+        {%- endif %}
       </div>
       <div class="text-center">
         {%- block search_pagination_top %}
