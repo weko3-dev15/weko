@@ -58,7 +58,7 @@
         $rootScope.commInfo="";
         $rootScope.commInfoIndex="";
      }
-
+//   button setting
      $rootScope.disable_flg = true;
      $rootScope.display_flg = true;
 
@@ -67,6 +67,20 @@
         $rootScope.display_flg = false;
         $("#tab_edit").addClass("active")
         $("#tab_display").removeClass("active")
+     }
+
+     $scope.itemManagementSave= function(){
+        $rootScope.disable_flg = true;
+        $rootScope.display_flg = true;
+        $("#tab_edit").removeClass("active")
+        $("#tab_display").addClass("active")
+     }
+
+     $scope.itemManagementCancel= function(){
+        $rootScope.disable_flg = true;
+        $rootScope.display_flg = true;
+        $("#tab_edit").removeClass("active")
+        $("#tab_display").addClass("active")
      }
     }
     // Inject depedencies
