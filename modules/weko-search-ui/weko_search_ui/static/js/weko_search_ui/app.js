@@ -62,6 +62,20 @@
      $rootScope.disable_flg = true;
      $rootScope.display_flg = true;
 
+      $scope.itemManagementTabEdit= function(){
+        $rootScope.disable_flg = false;
+        $rootScope.display_flg = false;
+        $("#tab_edit").addClass("active")
+        $("#tab_display").removeClass("active")
+     }
+
+     $scope.itemManagementTabDisplay= function(){
+        $rootScope.disable_flg = true;
+        $rootScope.display_flg = true;
+        $("#tab_edit").removeClass("active")
+        $("#tab_display").addClass("active")
+     }
+
      $scope.itemManagementEdit= function(){
         $rootScope.disable_flg = false;
         $rootScope.display_flg = false;
@@ -82,6 +96,7 @@
         $("#tab_edit").removeClass("active")
         $("#tab_display").addClass("active")
      }
+
     }
     // Inject depedencies
     searchResCtrl.$inject = [

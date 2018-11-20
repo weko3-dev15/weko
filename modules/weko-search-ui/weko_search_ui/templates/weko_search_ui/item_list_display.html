@@ -23,9 +23,9 @@
   <div role="navigation">
     <ul class="nav nav-tabs">
       <li id="tab_edit" role="presentation" class="activity_li">
-        <a href="javascript:void();" class="activity_li" data-show-tab="edit">{{_('Edit Item')}}</a></li>
+        <a ng-click="itemManagementTabEdit()" class="activity_li" data-show-tab="edit">{{_('Edit Item')}}</a></li>
       <li id="tab_display" role="presentation" class="active activity_li">
-        <a href="javascript:void();" class="active activity_li" data-show-tab="display">{{_('Custom Sort')}}</a></li>
+        <a ng-click="itemManagementTabDisplay()" class="active activity_li" data-show-tab="display">{{_('Custom Sort')}}</a></li>
     </ul>
   </div>
   <br>
