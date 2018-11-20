@@ -64,7 +64,7 @@
                     {%- endblock search_loading %}
                     {%- block search_results %}
                     <invenio-search-results
-                     template="{{ url_for('static', filename=config.WEKO_ITEM_MANAGEMENT_JSTEMPLATE_RESULTS) }}">
+                     template="{{ url_for('static', filename=config.WEKO_ITEM_MANAGEMENT_JSTEMPLATE_RESULTS_EDIT) }}">
                     </invenio-search-results>
                     {%- endblock search_results %}
                   </div>
@@ -85,9 +85,8 @@
         <div class="col-sm-10 col-md-10">
         </div>
         <div class="col-sm-2 col-md-2">
-          <!--<button type="" name="submit" value="lifetime" class="btn btn-primary"> {{ _('Edit') }}</button>-->
-          <a class="btn btn-primary btn-sm pull-right" href="{{ url_for('.item_management_edit') }}">
-            {{ _("Edit") }}</a>
+          <button type="submit" name="submit" value="lifetime" class="btn btn-primary"> {{ _('Save') }}</button>
+          <button type="submit" name="submit" value="lifetime" class="btn btn-primary"> {{ _('Cancel') }}</button>
         </div>
       </div>
     </div>

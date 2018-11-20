@@ -1,0 +1,16 @@
+<table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th style="width:70%">Item List</th>
+        <th>Display Order</th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="record in vm.invenioSearchResults.hits.hits track by $index">
+      <tr>
+        <td>{{ record.metadata.hasOwnProperty('title')?record.metadata.title[0]:record.metadata['dc:title'][0] }}</td>
+        <td>
+          <input type="text" id="cur_order" name="cur_order" class="form-control">
+        </td>
+      </tr>
+    </tbody>
+</table>
