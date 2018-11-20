@@ -9,7 +9,7 @@
       <tr>
         <td>{{ record.metadata.hasOwnProperty('title')?record.metadata.title[0]:record.metadata['dc:title'][0] }}</td>
         <td>
-          <input ng-disabled="disable_flg" type="text" id="cur_order" name="cur_order" class="form-control">
+          <input ng-disabled="disable_flg" type="text" id="cur_order" name="cur_order" class="form-control" value="{{record}}">
         </td>
       </tr>
     </tbody>
