@@ -61,14 +61,12 @@
 
      $rootScope.disable_flg = true;
      $rootScope.display_flg = true;
-     $rootScope.tab_class_edit="activity_li"
-     $rootScope.tab_class_display="active activity_li"
 
      $scope.itemManagementEdit= function(){
         $rootScope.disable_flg = false;
         $rootScope.display_flg = false;
-        $rootScope.tab_class_edit="active activity_li"
-        $rootScope.tab_class_display="activity_li"
+        $("#tab_edit").addClass("active")
+        $("#tab_display").removeClass("active")
      }
     }
     // Inject depedencies
