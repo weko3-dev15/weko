@@ -56,11 +56,12 @@
         $rootScope.commInfoIndex="&community="+commInfo;
      }else{
         $rootScope.commInfo="";
-        $rootScope.commInfoIndex="";;
+        $rootScope.commInfoIndex="";
      }
-
+     $rootScope.disable_flg = true;
      $scope.itemManagementEdit= function(){
         alert("AAAA")
+        $rootScope.disable_flg = false;
      }
     }
     // Inject depedencies
