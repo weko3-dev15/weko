@@ -554,7 +554,7 @@ def item_path_search_factory(self, search, index_id=None):
     from invenio_records_rest.sorter import default_sorter_factory
     search_index = search._index[0]
     search, sortkwargs = default_sorter_factory(search, search_index)
-    current_app.logger.debug(sortkwargs)
+
     script_str={
         "_script": {
             "script":"doc[\"custom_sort\"].value.get(in_id)!=0 ? doc[\"custom_sort\"].value.get(in_id):(doc[\"custom_sort\"].value.get(in_id)+1) * Integer.MAX_VALUE",
@@ -574,6 +574,7 @@ def item_path_search_factory(self, search, index_id=None):
             urlkwargs.add(key, value)
 
     urlkwargs.add('q', query_q)
+    current_app.logger.debug(sortkwargs)
     return search, urlkwargs
 
 
