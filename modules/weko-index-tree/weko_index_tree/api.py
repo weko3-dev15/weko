@@ -476,6 +476,8 @@ class Indexes(object):
 
 
         index = dict(cls.get_index(index_id))
+        flash(index)
+
         role = cls.get_account_role()
         allow = index["browsing_role"].split(',') \
             if len(index["browsing_role"]) else None
