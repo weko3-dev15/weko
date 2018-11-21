@@ -23,7 +23,7 @@
 from datetime import datetime
 from copy import deepcopy
 
-from flask import current_app
+from flask import current_app, flash
 from flask_login import current_user
 from invenio_db import db
 from invenio_accounts.models import Role
@@ -888,3 +888,8 @@ class Indexes(object):
         except Exception as se:
             current_app.logger.debug(se)
             return False
+
+    @classmethod
+    def have_children(cls, index_id):
+        flash(cls.get_recursive_tree(index_id))
+
