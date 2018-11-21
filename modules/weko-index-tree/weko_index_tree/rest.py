@@ -173,7 +173,11 @@ class IndexActionResource(ContentNegotiatedMethodView):
         """Get a tree index record."""
         try:
             index = self.record_class.get_index_with_role(index_id)
-            index['have_children']=Index.have_children(index_id)
+            have_children = Index.have_children(index_id)
+            index['have_children'] = have_children
+            if not have_children:
+                index['more_check'] = False
+
             return make_response(jsonify(index), 200)
         except Exception:
             raise InvalidDataRESTError()
