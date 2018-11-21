@@ -23,7 +23,7 @@
 from datetime import datetime
 from copy import deepcopy
 
-from flask import current_app, flash
+from flask import current_app
 from flask_login import current_user
 from invenio_db import db
 from invenio_accounts.models import Role
@@ -178,7 +178,7 @@ class Indexes(object):
                         else:
                             v = None
                     if "have_children" in k:
-                        flash('have_children!!!')
+                        continue
                     setattr(index, k, v)
                 index.owner_user_id = current_user.get_id()
                 db.session.merge(index)
