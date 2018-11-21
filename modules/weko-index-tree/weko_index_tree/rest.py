@@ -172,6 +172,10 @@ class IndexActionResource(ContentNegotiatedMethodView):
         """Get a tree index record."""
         try:
             index = self.record_class.get_index_with_role(index_id)
+
+            flash(index_id)
+            flash(jsonify(index))
+
             return make_response(jsonify(index), 200)
         except:
             raise InvalidDataRESTError()
