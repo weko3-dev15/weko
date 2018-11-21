@@ -28,6 +28,7 @@ from invenio_rest import ContentNegotiatedMethodView
 from invenio_communities.models import Community
 
 from .api import Indexes
+from .models import Index
 from .errors import IndexAddedRESTError, IndexBaseRESTError, \
     IndexDeletedRESTError, IndexMovedRESTError, IndexNotFoundRESTError, \
     IndexUpdatedRESTError, InvalidDataRESTError
@@ -173,7 +174,7 @@ class IndexActionResource(ContentNegotiatedMethodView):
         try:
             index = self.record_class.get_index_with_role(index_id)
 
-            index['have_children']=Indexes.have_children(index_id)
+            index['have_children']=Index.have_children(index_id)
             return make_response(jsonify(index), 200)
         except:
             raise InvalidDataRESTError()
