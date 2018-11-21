@@ -891,5 +891,5 @@ class Indexes(object):
 
     @classmethod
     def have_children(cls, index_id):
-        flash(cls.get_recursive_tree(index_id))
+        return cls.get_recursive_tree(index_id)
 

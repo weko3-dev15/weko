@@ -174,7 +174,7 @@ class IndexActionResource(ContentNegotiatedMethodView):
         try:
             index = self.record_class.get_index_with_role(index_id)
 
-            index['have_children']=True
+            index['have_children']=Indexes.have_children(index_id)
             return make_response(jsonify(index), 200)
         except:
             raise InvalidDataRESTError()
