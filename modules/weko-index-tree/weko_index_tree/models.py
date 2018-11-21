@@ -145,8 +145,8 @@ class Index(db.Model, Timestamp):
 
     @classmethod
     def have_children(cls, id):
-        child = cls.query.filter_by(parent=id).one_or_none()
-        return False if child is None else True
+        children = cls.query.filter_by(parent=id).all()
+        return False if children is None else True
 
 # class IndexItems(db.Model):
 #     """"""
