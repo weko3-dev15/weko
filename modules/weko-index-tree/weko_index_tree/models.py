@@ -144,9 +144,10 @@ class Index(db.Model, Timestamp):
         return 'Index <id={0.id}, index_name={0.index_name_english}>'.format(self)
 
     @classmethod
-    def get_children(cls, id):
+    def have_children(cls, id):
         """Get child nodes."""
-        return cls.query.filter_by(parent=id)
+        child = cls.query.filter_by(parent=id).one_or_none()
+        return False if child is None else True
 
 # class IndexItems(db.Model):
 #     """"""
