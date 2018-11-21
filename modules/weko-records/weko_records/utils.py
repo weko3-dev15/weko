@@ -62,7 +62,6 @@ def json_loader(data, pid):
     if ojson and mjson:
         mp = mjson.dumps()
         data.get("$schema")
-        current_app.logger.debug(data)
         for k, v in data.items():
             if k != "pubdate":
                 if k == "$schema" or mp.get(k) is None:
@@ -108,6 +107,7 @@ def json_loader(data, pid):
             jpcoar[k] = item.copy()
 
     if dc:
+        current_app.logger.debug(dc)
         # get the tile name to detail page
         title = data.get("title_ja") or data.get("title_en")
 
