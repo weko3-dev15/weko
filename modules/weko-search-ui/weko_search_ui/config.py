@@ -153,6 +153,15 @@ RECORDS_REST_SORT_OPTIONS = dict(
             default_order='asc',
             order=8,
         )
+    #     add at 20181121 start
+        ,
+        custorm_sort=dict(
+                    title='Custom Sort',
+                    fields=['custom_sort'],
+                    default_order='asc',
+                    order=8,
+        )
+    #     add at 20181121 start
     )
 )
 
