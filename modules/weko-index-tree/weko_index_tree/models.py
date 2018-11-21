@@ -143,6 +143,11 @@ class Index(db.Model, Timestamp):
         """Representation."""
         return 'Index <id={0.id}, index_name={0.index_name_english}>'.format(self)
 
+    @classmethod
+    def get_children(cls, id):
+        """Get child nodes."""
+        return cls.query.filter_by(parent=id)
+
 # class IndexItems(db.Model):
 #     """"""
 #     __tablename__ = 'index_item'
