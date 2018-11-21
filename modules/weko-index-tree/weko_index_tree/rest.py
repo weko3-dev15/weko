@@ -175,8 +175,9 @@ class IndexActionResource(ContentNegotiatedMethodView):
             index = self.record_class.get_index_with_role(index_id)
             index['have_children']=Index.have_children(index_id)
             return make_response(jsonify(index), 200)
-        except:
-            raise InvalidDataRESTError()
+        except Exception:
+            return make_response(jsonify({'message': str(Exception)}))
+            # raise InvalidDataRESTError()
 
     # @pass_record
     @need_record_permission('create_permission_factory')
