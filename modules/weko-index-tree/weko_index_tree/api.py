@@ -23,7 +23,7 @@
 from datetime import datetime
 from copy import deepcopy
 
-from flask import current_app, flash
+from flask import current_app
 from flask_login import current_user
 from invenio_db import db
 from invenio_accounts.models import Role

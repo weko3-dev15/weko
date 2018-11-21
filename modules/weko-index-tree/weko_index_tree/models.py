@@ -145,7 +145,6 @@ class Index(db.Model, Timestamp):
 
     @classmethod
     def have_children(cls, id):
-        """Get child nodes."""
         child = cls.query.filter_by(parent=id).one_or_none()
         return False if child is None else True
 

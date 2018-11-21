@@ -173,7 +173,6 @@ class IndexActionResource(ContentNegotiatedMethodView):
         """Get a tree index record."""
         try:
             index = self.record_class.get_index_with_role(index_id)
-
             index['have_children']=Index.have_children(index_id)
             return make_response(jsonify(index), 200)
         except:
