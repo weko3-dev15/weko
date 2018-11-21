@@ -254,6 +254,7 @@ class IndexSearchResource(ContentNegotiatedMethodView):
                     and len(index_info.image_name) > 0:
                     nlst[0]['img'] = index_info.image_name
             agp.append(nlst)
+            current_app.logger.debug(agp)
         return self.make_response(
             pid_fetcher=self.pid_fetcher,
             search_result=rd,
