@@ -447,7 +447,7 @@ class WekoDeposit(Deposit):
         sub_sort={'1':'0'}
         # for pth in index_lst:
         #     sub_sort[pth[-13:]]='0'
-        jrc.update(dict(custom_sort=['1','0']))
+        jrc.update(dict(custom_sort=[{'1':0}]))
         # dc.update(dict(custom_sort=sub_sort))
         current_app.logger.debug(sub_sort)
         # add at 20181121 start
