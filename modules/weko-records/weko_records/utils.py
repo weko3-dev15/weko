@@ -62,6 +62,7 @@ def json_loader(data, pid):
     if ojson and mjson:
         mp = mjson.dumps()
         data.get("$schema")
+        current_app.logger.debug(data)
         for k, v in data.items():
             if k != "pubdate":
                 if k == "$schema" or mp.get(k) is None:
