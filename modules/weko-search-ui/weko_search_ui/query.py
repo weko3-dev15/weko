@@ -555,9 +555,24 @@ def item_path_search_factory(self, search, index_id=None):
     search_index = search._index[0]
     search, sortkwargs = default_sorter_factory(search, search_index)
     current_app.logger.debug(sortkwargs)
+    # script_str={
+    #     "_script": {
+    #         "script":"sortList=doc[''].value",
+    #         "type": "number",
+    #         "params": {
+    #             "factor": {
+    #                 "105": 1,
+    #                 "1": 2,
+    #                 "109": 3,
+    #                 "7": 4
+    #             }
+    #         },
+    #         "order": "asc"
+    #     }
+    # }
     for key, value in sortkwargs.items():
         if value=='custorm_sort':
-           current_app.logger.debug("CCCCCCCCC")
+
         urlkwargs.add(key, value)
 
     urlkwargs.add('q', query_q)
