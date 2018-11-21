@@ -557,20 +557,20 @@ def item_path_search_factory(self, search, index_id=None):
 
     script_str={
         "_script": {
-            "script":"doc[\"custom_sort\"].value.get(in_id)!=0 ? doc[\"custom_sort\"].value.get(in_id):(doc[\"custom_sort\"].value.get(in_id)+1) * Integer.MAX_VALUE",
+            "script":"doc[\"custom_sort\"].value.get('1539652608824')!=0 ? doc[\"custom_sort\"].value.get('1539652608824'):(doc[\"custom_sort\"].value.get('1539652608824')+1) * Integer.MAX_VALUE",
             "type": "number",
             "params": {
-                "in_id": "@in_id"
+                "in_id": "1539652608824"
             },
             "order": "asc"
         }
     }
     for key, value in sortkwargs.items():
         if value=='custorm_sort':
-            ind_id = request.values.get('q', '')
-            current_app.logger.debug(ind_id)
-            json.dumps(script_str).replace("@in_id", ind_id)
-            current_app.logger.debug(script_str)
+            # ind_id = request.values.get('q', '')
+            # current_app.logger.debug(ind_id)
+            # json.dumps(script_str).replace("@in_id", ind_id)
+            # current_app.logger.debug(script_str)
             # script_str = json.loads(script_str)
             urlkwargs.add(key, script_str)
         else:
