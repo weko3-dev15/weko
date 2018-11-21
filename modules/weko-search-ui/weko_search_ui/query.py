@@ -569,6 +569,7 @@ def item_path_search_factory(self, search, index_id=None):
         if value=='custorm_sort':
             ind_id = request.values.get('q', '')
             json.dumps(script_str).replace("@in_id", ind_id)
+            script_str = json.loads(script_str)
             urlkwargs.add(key, script_str)
         else:
             urlkwargs.add(key, value)
