@@ -556,6 +556,8 @@ def item_path_search_factory(self, search, index_id=None):
     search, sortkwargs = default_sorter_factory(search, search_index)
     current_app.logger.debug(sortkwargs)
     for key, value in sortkwargs.items():
+        if value=='custorm_sort':
+            continue
         urlkwargs.add(key, value)
 
     urlkwargs.add('q', query_q)
