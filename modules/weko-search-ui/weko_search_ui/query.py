@@ -571,7 +571,7 @@ def item_path_search_factory(self, search, index_id=None):
     #     }
     # }
     for key, value in sortkwargs.items():
-        if value=='custorm_sort':
+        # if value=='custorm_sort':
 
         urlkwargs.add(key, value)
 
