@@ -568,8 +568,10 @@ def item_path_search_factory(self, search, index_id=None):
     for key, value in sortkwargs.items():
         if value=='custorm_sort':
             ind_id = request.values.get('q', '')
+            current_app.logger.debug(ind_id)
             json.dumps(script_str).replace("@in_id", ind_id)
-            script_str = json.loads(script_str)
+            current_app.logger.debug(script_str)
+            # script_str = json.loads(script_str)
             urlkwargs.add(key, script_str)
         else:
             urlkwargs.add(key, value)
