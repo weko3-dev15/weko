@@ -444,12 +444,11 @@ class WekoDeposit(Deposit):
         # Save Index Path on ES
         jrc.update(dict(path=index_lst))
         # add at 20181121 start
-        # jrc.update(dict(custom_sort=index_lst))
-        current_app.logger.debug(index_lst)
-        sort_list =[]
         sub_sort={}
         for pth in index_lst:
             sub_sort[pth[-13:]]=0
+        jrc.update(dict(custom_sort=sub_sort))
+        dc.update(dict(custom_sort=sub_sort))
         current_app.logger.debug(sub_sort)
         # add at 20181121 start
         dc.update(dict(path=index_lst))
