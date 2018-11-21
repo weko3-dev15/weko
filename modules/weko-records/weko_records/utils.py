@@ -119,7 +119,7 @@ def json_loader(data, pid):
 
         # convert to es jpcoar mapping data
         jrc = SchemaTree.get_jpcoar_json(jpcoar)
-        current_app.logger.debug(jrc)
+
         oai_value = current_app.config.get(
             'OAISERVER_ID_PREFIX', '') + str(pid)
         is_edit = pid_exists(oai_value, 'oai')
@@ -132,12 +132,13 @@ def json_loader(data, pid):
         jrc.update(dict(_item_metadata=dc))
         jrc.update(dict(itemtype=ojson.model.item_type_name.name))
         jrc.update(dict(publish_date=pubdate))
-        # jrc.update(dict(custom_sort={"0":0}))
+        jrc.update(dict(custom_sort={}))
 
         # save items's creator to check permission
         user_id = current_user.get_id()
         if user_id:
             jrc.update(dict(weko_creator_id=user_id))
+        current_app.logger.debug(jrc)
 
     del ojson, mjson, item
     return dc, jrc, is_edit
