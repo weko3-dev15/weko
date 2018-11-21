@@ -450,8 +450,7 @@ class WekoDeposit(Deposit):
         sub_sort={}
         for pth in index_lst:
             sub_sort[pth[-13:]]=0
-            sort_list.append(sub_sort)
-        current_app.logger.debug(sort_list)
+        current_app.logger.debug(sub_sort)
         # add at 20181121 start
         dc.update(dict(path=index_lst))
 
