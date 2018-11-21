@@ -443,7 +443,10 @@ class WekoDeposit(Deposit):
 
         # Save Index Path on ES
         jrc.update(dict(path=index_lst))
-        current_app.logger.debug(jrc)
+        # add at 20181121 start
+        # jrc.update(dict(custom_sort=index_lst))
+        current_app.logger.debug(index_lst)
+        # add at 20181121 start
         dc.update(dict(path=index_lst))
 
         pubs = '1' if 'private' in actions else '0'
