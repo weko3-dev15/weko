@@ -22,7 +22,7 @@
 
 from functools import wraps
 
-from flask import Blueprint, abort, current_app, jsonify, make_response, request, flash
+from flask import Blueprint, abort, current_app, jsonify, make_response, request,flash
 from invenio_records_rest.utils import obj_or_import_string
 from invenio_rest import ContentNegotiatedMethodView
 from invenio_communities.models import Community
@@ -172,6 +172,8 @@ class IndexActionResource(ContentNegotiatedMethodView):
         """Get a tree index record."""
         try:
             index = self.record_class.get_index_with_role(index_id)
+# TODO
+            flash(Indexes.get_recursive_tree(index_id))
             return make_response(jsonify(index), 200)
         except:
             raise InvalidDataRESTError()
