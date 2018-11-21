@@ -448,8 +448,10 @@ class WekoDeposit(Deposit):
         current_app.logger.debug(index_lst)
         sort_list =[]
         sub_sort={}
+        index_id="0"
         for pth in index_lst:
-            sub_sort[pth[-13]]=0
+            index_id = pth[-13]
+            sub_sort[index_id]=0
             sort_list.append(sub_sort)
         current_app.logger.debug(sort_list)
         # add at 20181121 start
