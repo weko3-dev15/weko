@@ -107,7 +107,6 @@ def json_loader(data, pid):
             jpcoar[k] = item.copy()
 
     if dc:
-        current_app.logger.debug(dc)
         # get the tile name to detail page
         title = data.get("title_ja") or data.get("title_en")
 
@@ -120,7 +119,7 @@ def json_loader(data, pid):
 
         # convert to es jpcoar mapping data
         jrc = SchemaTree.get_jpcoar_json(jpcoar)
-
+        current_app.logger.debug(jrc)
         oai_value = current_app.config.get(
             'OAISERVER_ID_PREFIX', '') + str(pid)
         is_edit = pid_exists(oai_value, 'oai')
