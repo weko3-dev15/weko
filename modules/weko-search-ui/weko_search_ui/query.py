@@ -534,7 +534,7 @@ def item_path_search_factory(self, search, index_id=None):
             except BaseException:
                 pass
 
-        current_app.logger.debug("BBBB")
+        current_app.logger.debug(query_q)
         return query_q
 
     # create a index search query
