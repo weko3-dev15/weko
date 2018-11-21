@@ -132,7 +132,6 @@ def json_loader(data, pid):
         jrc.update(dict(_item_metadata=dc))
         jrc.update(dict(itemtype=ojson.model.item_type_name.name))
         jrc.update(dict(publish_date=pubdate))
-        jrc.update(dict(custom_sort={}))
 
         # save items's creator to check permission
         user_id = current_user.get_id()
