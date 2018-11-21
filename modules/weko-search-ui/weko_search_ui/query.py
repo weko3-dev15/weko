@@ -533,13 +533,11 @@ def item_path_search_factory(self, search, index_id=None):
                     query_q = json.loads(query_q)
             except BaseException:
                 pass
-
-        current_app.logger.debug(query_q)
         return query_q
 
     # create a index search query
     query_q = _get_index_earch_query()
-
+    current_app.logger.debug(query_q)
     urlkwargs = MultiDict()
     try:
         # Aggregations.
@@ -560,6 +558,7 @@ def item_path_search_factory(self, search, index_id=None):
         urlkwargs.add(key, value)
 
     urlkwargs.add('q', query_q)
+    current_app.logger.debug(urlkwargs)
     return search, urlkwargs
 
 
