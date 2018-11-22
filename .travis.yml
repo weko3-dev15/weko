@@ -37,6 +37,12 @@ python:
 before_install:
   - docker-compose build
   - docker-compose up -d
+  - "travis_retry pip install --upgrade pip setuptools py"
+  - "travis_retry pip install twine wheel coveralls requirements-builder"
 
 script:
   - docker-compose ps
+
+after_success:
+  - coveralls
+
