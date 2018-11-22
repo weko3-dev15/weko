@@ -585,7 +585,7 @@ def item_path_search_factory(self, search, index_id=None):
 
 
     for key, value in sortkwargs.items():
-        if value=='custorm_sort':
+        if value=='custom_sort':
             # ind_id = request.values.get('q', '')
             # current_app.logger.debug(ind_id)
             # json.dumps(script_str).replace("@in_id", ind_id)
