@@ -22,7 +22,7 @@
 
 import redis
 from datetime import datetime
-from flask import abort, current_app, json, g
+from flask import abort, current_app, json, g, flash
 from invenio_db import db
 from invenio_deposit.api import Deposit, preserve, index
 from invenio_files_rest.models import Bucket, ObjectVersion
@@ -340,7 +340,7 @@ class WekoDeposit(Deposit):
                 if self.jrc.get('content'):
                     for content in self.jrc['content']:
                         del content['file']
-
+# TODO
     def get_content_files(self):
         """Get content file metadata."""
         # fmd = self.data.get('filemeta')
@@ -349,6 +349,8 @@ class WekoDeposit(Deposit):
             for file in self.files:
                 if isinstance(fmd, list):
                     for lst in fmd:
+                        flash(file.obj)
+
                         if file.obj.key == lst.get('filename'):
                             lst.update({'mimetype': file.obj.mimetype})
 
