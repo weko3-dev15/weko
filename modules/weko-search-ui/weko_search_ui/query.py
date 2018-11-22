@@ -433,7 +433,7 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
         urlkwargs.add(key, value)
 
     urlkwargs.add('q', query_q)
-    current_app.logger.debug("AAAAAAAA")
+
     return search, urlkwargs
 
 
@@ -557,7 +557,7 @@ def item_path_search_factory(self, search, index_id=None):
 
     script_str={
         "_script": {
-            "script":"doc['custom_sort'].get('1539652608824').value!=5 ? 1 : 2",
+            "script":"doc['control_number'].value!=34 ? 1 : 2",
             "type": "number",
             "params": {
                 "in_id": "1539652608824"
@@ -567,15 +567,15 @@ def item_path_search_factory(self, search, index_id=None):
     }
 
     for key, value in sortkwargs.items():
-        # if value=='custom_sort':
-        #     # ind_id = request.values.get('q', '')
-        #     # current_app.logger.debug(ind_id)
-        #     # json.dumps(script_str).replace("@in_id", ind_id)
-        #     # current_app.logger.debug(script_str)
-        #     # script_str = json.loads(script_str)
-        #     urlkwargs.add(key, script_str)
-        # else:
-        urlkwargs.add(key, value)
+        if value=='custom_sort':
+            # ind_id = request.values.get('q', '')
+            # current_app.logger.debug(ind_id)
+            # json.dumps(script_str).replace("@in_id", ind_id)
+            # current_app.logger.debug(script_str)
+            # script_str = json.loads(script_str)
+            urlkwargs.add(key, script_str)
+        else:
+            urlkwargs.add(key, value)
 
     urlkwargs.add('q', query_q)
     current_app.logger.debug(urlkwargs)
