@@ -555,32 +555,32 @@ def item_path_search_factory(self, search, index_id=None):
 
     search, sortkwargs = default_sorter_factory(search, search_index)
 
-    # script_str={
-    #     "_script": {
-    #         "script":"doc['control_number'].value!=34 ? 1 : 2",
-    #         "type": "number",
-    #         "params": {
-    #             "in_id": "1539652608824"
-    #         },
-    #         "order": "asc"
-    #     }
-    # }
-
-    script_str = {
+    script_str={
         "_script": {
-          "script": "factor.get(doc[\"control_number\"].value) ? factor.get(doc[\"control_number\"].value):Integer.MAX_VALUE",
-          "type": "number",
-          "params": {
-            "factor": {
-              "34": 3,
-              "35": 4,
-              "36": 1,
-              "37": 2
-            }
-          },
-          "order": "asc"
+            "script":"doc[\"custom_sort\"].get(in_id).value !=0 ? doc[\"custom_sort\"].get(in_id).value : Integer.MAX_VALUE",
+            "type": "number",
+            "params": {
+                "in_id": "1539652608824"
+            },
+            "order": "asc"
         }
     }
+
+    # script_str = {
+    #     "_script": {
+    #       "script": "factor.get(doc[\"control_number\"].value) ? factor.get(doc[\"control_number\"].value):Integer.MAX_VALUE",
+    #       "type": "number",
+    #       "params": {
+    #         "factor": {
+    #           "34": 3,
+    #           "35": 4,
+    #           "36": 1,
+    #           "37": 2
+    #         }
+    #       },
+    #       "order": "asc"
+    #     }
+    # }
 
 
     for key, value in sortkwargs.items():
