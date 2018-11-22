@@ -155,7 +155,7 @@ RECORDS_REST_SORT_OPTIONS = dict(
         )
     #     add at 20181121 start
         ,
-        custorm_sort=dict(
+        custom_sort=dict(
                     title='Custom Sort',
                     fields=['custom_sort'],
                     default_order='asc',
