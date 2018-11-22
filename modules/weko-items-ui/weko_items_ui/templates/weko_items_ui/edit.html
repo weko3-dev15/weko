@@ -31,7 +31,7 @@
   {{ super() }}
   {% assets "invenio_deposit_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_items_ui_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
-  {% assets "weko_items_authors_search_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %};
+  {% assets "weko_items_authors_search_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
 {%- endblock javascript %}
 
 {%- block page_body_tabs %}
@@ -46,7 +46,7 @@
     <div class="col-sm-12 col-md-12 col-lg-10">
       <div class="form-inline h6">
         <div class="form-group">
-          <label for="item-type-lists">{{_('itemtype list')}}</label>
+          <label for="item-type-lists">{{_('Itemtype List')}}</label>
           <select class="form-control" id="item-type-lists">
             {% for list in lists %}
             <option  value="{{ list.item_type.0.id }}" {% if list.item_type.0.id == id %}selected{% endif %}>{{ list.name }}({{ list.item_type.0.tag }})</option>
@@ -76,6 +76,7 @@
           <invenio-records
             {%- if pid %}
               initialization="{{ config.DEPOSIT_RECORDS_EDIT_API.format(pid_value=pid.pid_value) }}"
+              links='{{links|tojson}}'
             {%- else %}
               initialization="{{ config.DEPOSIT_SEARCH_API }}"
             {%- endif %}
@@ -94,7 +95,9 @@
               <div class="col-sm-9" ng-show="true">
                 <ul class="list-inline text-right">
                   <li><button ng-disabled="recordsVM.invenioRecordsLoading" class="btn btn-default" ng-click="recordsVM.actionHandler(['index', 'PUT'], 'r')">{{_('Next')}}</button></li>
-                  <li><button ng-disabled="recordsVM.invenioRecordsLoading" ng-hide="!recordsVM.invenioRecordsEndpoints.initialization" class="btn btn-danger" ng-click="recordsVM.actionHandler(['self', 'DELETE'])">{{_('Delete')}}</button></li>
+                  {%- if pid %}
+                  <li><button ng-disabled="recordsVM.invenioRecordsLoading" ng-hide="!recordsVM.invenioRecordsEndpoints.initialization" class="btn btn-danger" ng-click="recordsVM.actionHandler(['self', 'DELETE'],'ret')">{{_('Delete')}}</button></li>
+                  {%- endif %}
                 </ul>
               </div>
             </div>
@@ -115,6 +118,8 @@
               <div ng-show="false" type="text" id="btn_id" ></div>
               <div ng-show="false" type="text" id="author_info" ></div>
               <div ng-show="false" type="text" id="array_flg" ></div>
+              <div ng-show="false" type="text" id="array_index" ></div>
+              <div ng-show="false" type="text" id="weko_id" ></div>
               <button ng-show="false" id="btn_setAuthorInfo" class="btn btn-default" type="button" ng-click="setAuthorInfo()"></button>
               <!--add by ryuu. end 20180410-->
               <invenio-records-form
@@ -122,13 +127,15 @@
                 form-templates-base="{{ url_for('static', filename=config.DEPOSIT_FORM_TEMPLATES_BASE) }}"
                 template="{{ url_for('static', filename=config.DEPOSIT_UI_JSTEMPLATE_FORM) }}">
               </invenio-records-form>
-            </div>
-            <div class="row" ng-hide="false">
-              <div class="col-sm-9" ng-show="true">
-                <ul class="list-inline text-right">
-                  <li><button ng-disabled="recordsVM.invenioRecordsLoading" class="btn btn-default" ng-click="recordsVM.actionHandler(['index', 'PUT'], 'r')">{{_('Next')}}</button></li>
-                  <li><button ng-disabled="recordsVM.invenioRecordsLoading" ng-hide="!recordsVM.invenioRecordsEndpoints.initialization" class="btn btn-danger" ng-click="recordsVM.actionHandler(['self', 'DELETE'])">{{_('Delete')}}</button></li>
-                </ul>
+              <div class="row" ng-hide="false">
+                <div class="col-sm-9" ng-show="true">
+                  <ul class="list-inline text-right">
+                    <li><button ng-disabled="recordsVM.invenioRecordsLoading" class="btn btn-default" ng-click="updateDataJson();recordsVM.actionHandler(['index', 'PUT'], 'r')">{{_('Next')}}</button></li>
+                    {%- if pid %}
+                    <li><button ng-disabled="recordsVM.invenioRecordsLoading" ng-hide="!recordsVM.invenioRecordsEndpoints.initialization" class="btn btn-danger" ng-click="recordsVM.actionHandler(['self', 'DELETE'], 'ret')">{{_('Delete')}}</button></li>
+                    {%- endif %}
+                  </ul>
+                </div>
               </div>
             </div>
           </invenio-records>
@@ -141,7 +148,7 @@
 {%- endblock page_body_main %}
 {%- block page_body %}
 {{ super() }}
-<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+<div ng-controller="AuthorModalCtrl" class="modal fade" tabindex="-1" role="dialog" id="myModal">
   <div class="modal-dialog modelWidth" role="document">
     <div class="modal-content">
       <div class="modal-body">

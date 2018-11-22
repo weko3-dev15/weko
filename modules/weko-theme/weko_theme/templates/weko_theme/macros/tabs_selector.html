@@ -18,11 +18,14 @@
 # MA 02111-1307, USA.
 #}
 
-{% macro tabs_selector(tab_value='top') %}
-  {% set tabs_list = [('top', 'Top', '/'),
-                      ('item', 'Item Registration', url_for('weko_items_ui.index')),
-                      ('author', 'Author Management', url_for('weko_authors.index'))] %}
-  {% for (value, name, href) in tabs_list %}
-    <li role="presentation" {% if tab_value == value %}class="active"{% endif %}><a href="{{href}}">{{_(name)}}</a></li>
-  {% endfor %}
+{% macro tabs_selector(tab_value='top',community_id='') %}
+    {%-if community_id %}
+    <li role="presentation" {% if tab_value=='top' %}class="active"{% endif %}><a href="/?community={{community_id}}">{{ _('Top') }}</a></li>
+    <li role="presentation" {% if tab_value=='flow' %}class="active"{% endif %}><a href="{{url_for('weko_workflow.index',community=community_id)}}">{{ _('WorkFlow') }}</a></li>
+    {%-else%}
+    <li role="presentation" {% if tab_value=='top' %}class="active"{% endif %}><a href="/">{{ _('Top') }}</a></li>
+    <li role="presentation" {% if tab_value=='author' %}class="active"{% endif %}><a href="{{url_for('weko_authors.index')}}">{{ _('Author Management') }}</a></li>
+    <li role="presentation" {% if tab_value=='flow' %}class="active"{% endif %}><a href="{{url_for('weko_workflow.index')}}">{{ _('WorkFlow') }}</a></li>
+    <li role="presentation" {% if tab_value=='community' %}class="active"{% endif %}><a href="{{url_for('invenio_communities.community_list')}}">{{ _('Communities') }}</a></li>
+    {%-endif%}
 {% endmacro %}

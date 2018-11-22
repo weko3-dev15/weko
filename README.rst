@@ -21,22 +21,14 @@
  WEKO
 ======
 
-.. image:: https://img.shields.io/travis/wekosoftware/weko.svg
-        :target: https://travis-ci.org/wekosoftware/weko
+.. image:: https://travis-ci.org/RCOSDP/weko.svg?branch=master
+        :target: https://travis-ci.org/RCOSDP/weko
 
-.. image:: https://img.shields.io/coveralls/wekosoftware/weko.svg
-        :target: https://coveralls.io/r/wekosoftware/weko
+.. image:: https://coveralls.io/repos/github/RCOSDP/weko/badge.svg?branch=maste
+        :target: https://coveralls.io/github/RCOSDP/weko?branch=master
 
-.. image:: https://img.shields.io/github/tag/wekosoftware/weko.svg
-        :target: https://github.com/wekosoftware/weko/releases
 
-.. image:: https://img.shields.io/pypi/dm/weko.svg
-        :target: https://pypi.python.org/pypi/weko
-
-.. image:: https://img.shields.io/github/license/wekosoftware/weko.svg
-        :target: https://github.com/wekosoftware/weko/blob/master/LICENSE
-
-Weko module platform.
+WEKO3 is invenio based repository platform that aims to support 500 Japanese universities. It's being developed by National Institute of Informatics, Japan.
 
 *This is an experimental developer preview release.*
 

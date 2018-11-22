@@ -2,6 +2,8 @@
     "jquery",
     "bootstrap"
   ],function() {
+    src_render = {};
+    src_mapping = {};
     page_global = {
       upload_file: false,
       table_row: [],        // 追加した行番号を保存する元々順番()
@@ -13,7 +15,7 @@
       schemaeditor: {       // objectの場合
         schema:{}           //   生成したschemaの情報を保存する
       }
-    }
+    };
     properties_obj = {}     // 作成したメタデータ項目タイプ
     select_option = '';
     page_json_editor = {}   //   一時的editorオブジェクトの保存
@@ -23,7 +25,7 @@
       "display_lang_type": "",
       "oai_dc_mapping": "",
       "jpcoar_mapping": "",
-      "junii2_mapping": {"source":""},
+      "junii2_mapping": "",
       "lido_mapping": "",
       "lom_mapping": "",
       "spase_mapping": ""
@@ -136,7 +138,7 @@
           items: [
             {
               key: "filemeta[].filename",
-              type: "text",
+              type: "select",
               title: "表示名",
               title_i18n:{ja:"表示名",en:"FileName"}
             },
@@ -173,6 +175,13 @@
               condition: "model.filemeta[arrayIndex].licensetype == 'license_free'"
             },
             {
+              title: '剽窃チェック',
+              title_i18n:{ja:"剽窃チェック",en:"Check Plagiarism"},
+              type: "template",
+              //template: "<div class='text-center'><a class='btn btn-primary' href='http://ec2-13-230-57-67.ap-northeast-1.compute.amazonaws.com/ezas/pdf-detect-weko.html' target='_blank' role='button'>{{ form.title }}</a></div>"
+             template: "<div class='text-center'><a class='btn btn-primary' href='/ezas/pdf-detect-weko.html' target='_blank' role='button'>{{ form.title }}</a></div>"
+            },
+            {
               key: "filemeta[].accessrole",
               type: "radios",
               title: "アクセス",
@@ -202,147 +211,187 @@
             }
           ]
         });
-        page_global.table_row_map.mapping['filemeta'] = {
-                                                            "oai_dc_mapping": {
-                                                                "subject": {"@value":"filename"}
-                                                            },
-                                                            "lom_mapping": "",
-                                                            "jpcoar_mapping": {
-                                                                "file": {
-                                                                    "URI": {"@value":"filename"}
-                                                                }
-                                                            },
-                                                            "lido_mapping": "",
-                                                            "spase_mapping": "",
-                                                            "junii2_mapping": {
-                                                                "fullTextURL": {"@value":"filename"}
-                                                            },
-                                                            "display_lang_type": ""
-                                                        };
+        if(src_mapping.hasOwnProperty('filemeta')) {
+          page_global.table_row_map.mapping['filemeta'] = src_mapping['filemeta'];
+        } else {
+          page_global.table_row_map.mapping['filemeta'] = mapping_value;
+        }
+//        page_global.table_row_map.mapping['filemeta'] = {
+//                                                            "oai_dc_mapping": {
+//                                                                "subject": {"@value":"filename"}
+//                                                            },
+//                                                            "lom_mapping": "",
+//                                                            "jpcoar_mapping": {
+//                                                                "file": {
+//                                                                    "URI": {
+//                                                                        "@attributes" :{
+//                                                                           "objectType":"fulltext"
+//                                                                           },
+//                                                                        "@value":"filename"
+//                                                                     }
+//                                                                }
+//                                                            },
+//                                                            "lido_mapping": "",
+//                                                            "spase_mapping": "",
+//                                                            "junii2_mapping": {
+//                                                                "fullTextURL": {"@value":"filename"}
+//                                                            },
+//                                                            "display_lang_type": ""
+//                                                        };
       }
       // タイトルなどを追加する
       page_global.table_row_map.schema.properties["title_ja"] = {type:"string",title:"タイトル",format:"text"}
       page_global.table_row_map.schema.properties["title_en"] = {type:"string",title:"タイトル(英)",format:"text"}
-      page_global.table_row_map.form.push({type:"fieldset",title:"タイトル",title_i18n:{ja:"タイトル",en:"Title"},items:[{type:"text",key:"title_ja",title:"タイトル",title_i18n:{ja:"タイトル",en:"Title"},required:true},{type:"text",key:"title_en",title:"タイトル(英)",title_i18n:{ja:"タイトル(英)",en:"Title"},required:true}]});
+      page_global.table_row_map.form.push({type:"fieldset",title:"タイトル",title_i18n:{ja:"タイトル",en:"Title"},items:[{type:"text",key:"title_ja",title:"タイトル",title_i18n:{ja:"タイトル",en:"Title"},required:true},{type:"text",key:"title_en",title:"タイトル(英)",title_i18n:{ja:"タイトル(英)",en:"Title(English)"},required:true}]});
       page_global.table_row_map.schema.properties["lang"] = {type:"string",title:"言語",format:"select",enum:["en","ja"]}
       page_global.table_row_map.form.push({key:"lang",type:"select",title:"言語",title_i18n:{ja:"言語",en:"Language"},required: true,titleMap:{"en":"英語","ja":"日本語"}});
       page_global.table_row_map.schema.properties["pubdate"] = {type:"string",title:"公開日",format:"datetime"}
       page_global.table_row_map.form.push({key:"pubdate",type:"template",title:"公開日",title_i18n:{ja:"公開日",en:"PubDate"},required: true,format: "yyyy-MM-dd",templateUrl: "/static/templates/weko_deposit/datepicker.html"});
       page_global.table_row_map.schema.properties["keywords"] = {type:"string",title:"キーワード",format:"text"}
       page_global.table_row_map.schema.properties["keywords_en"] = {type:"string",title:"キーワード(英)",format:"text"}
-      page_global.table_row_map.form.push({type:"fieldset",title:"キーワード",title_i18n:{ja:"キーワード",en:"keywords"},items:[{type:"text",key:"keywords",title:"キーワード",title_i18n:{ja:"キーワード",en:"keywords"},required:true},{type:"text",key:"keywords_en",title:"キーワード(英)",title_i18n:{ja:"タイトル(英)",en:"keywords"},required:true}]});
+      page_global.table_row_map.form.push({type:"fieldset",title:"キーワード",title_i18n:{ja:"キーワード",en:"keywords"},items:[{type:"text",key:"keywords",title:"キーワード",title_i18n:{ja:"キーワード",en:"keywords"},required:true},{type:"text",key:"keywords_en",title:"キーワード(英)",title_i18n:{ja:"キーワード(英)",en:"keywords(English)"},required:true}]});
       page_global.table_row_map.schema.required.push("title_ja");
       page_global.table_row_map.schema.required.push("title_en");
       page_global.table_row_map.schema.required.push("lang");
       page_global.table_row_map.schema.required.push("pubdate");
-      page_global.table_row_map.mapping['title_ja'] = {
-                                                          "oai_dc_mapping": {
-                                                              "title": ""
-                                                          },
-                                                          "lom_mapping": "",
-                                                          "jpcoar_mapping": {
-                                                              "title": ""
-                                                          },
-                                                          "lido_mapping": "",
-                                                          "spase_mapping": "",
-                                                          "junii2_mapping": {
-                                                              "title": ""
-                                                          },
-                                                          "display_lang_type": ""
-                                                      };
-      page_global.table_row_map.mapping['title_en'] = {
-                                                          "oai_dc_mapping": {
-                                                              "alternative": ""
-                                                          },
-                                                          "lom_mapping": "",
-                                                          "jpcoar_mapping": {
-                                                              "alternative": {
-                                                                  "@attributes": {
-                                                                      "xml:lang": "ja"
-                                                                  }
-                                                              }
-                                                          },
-                                                          "lido_mapping": "",
-                                                          "spase_mapping": "",
-                                                          "junii2_mapping": {
-                                                              "alternative": ""
-                                                          },
-                                                          "display_lang_type": ""
-                                                      };
-      page_global.table_row_map.mapping['lang'] = {
-                                                "oai_dc_mapping": {
-                                                    "language": ""
-                                                },
-                                                "lom_mapping": "",
-                                                "jpcoar_mapping": {
-                                                    "language": ""
-                                                },
-                                                "lido_mapping": "",
-                                                "spase_mapping": "",
-                                                "junii2_mapping": {
-                                                    "language": ""
-                                                },
-                                                "display_lang_type": ""
-                                            };
-      page_global.table_row_map.mapping['pubdate'] = {
-                                                "oai_dc_mapping": {
-                                                    "date": ""
-                                                },
-                                                "lom_mapping": "",
-                                                "jpcoar_mapping": {
-                                                    "date": {
-                                                        "@attributes": {
-                                                            "dateType": "Accepted"
-                                                        }
-                                                    }
-                                                },
-                                                "lido_mapping": "",
-                                                "spase_mapping": "",
-                                                "junii2_mapping": {
-                                                    "date": ""
-                                                },
-                                                "display_lang_type": ""
-                                            };
-      page_global.table_row_map.mapping['keywords'] = {
-                                                "oai_dc_mapping": {
-                                                    "subject": ""
-                                                },
-                                                "lom_mapping": "",
-                                                "jpcoar_mapping": {
-                                                    "subject": {
-                                                        "@attributes": {
-                                                            "jpcoar:subjectScheme": "LCC",
-                                                            "jpcoar:subjectURI": "http://localhost"
-                                                        }
-                                                    }
-                                                },
-                                                "lido_mapping": "",
-                                                "spase_mapping": "",
-                                                "junii2_mapping": {
-                                                    "subject": ""
-                                                },
-                                                "display_lang_type": ""
-                                            };
-      page_global.table_row_map.mapping['keywords_en'] = {
-                                                "oai_dc_mapping": {
-                                                    "subject": {}
-                                                },
-                                                "lom_mapping": "",
-                                                "jpcoar_mapping": {
-                                                    "rightsHolder": {
-                                                        "@attributes": {
-                                                            "xml:lang": "haha"
-                                                        },
-                                                        "rightsHolderName": {}
-                                                    }
-                                                },
-                                                "lido_mapping": "",
-                                                "spase_mapping": "",
-                                                "junii2_mapping": {
-                                                    "subject": ""
-                                                },
-                                                "display_lang_type": ""
-                                            };
+//      page_global.table_row_map.mapping['title_ja'] = {
+//                                                          "oai_dc_mapping": {
+//                                                              "title": ""
+//                                                          },
+//                                                          "lom_mapping": "",
+//                                                          "jpcoar_mapping": {
+//                                                              "title": ""
+//                                                          },
+//                                                          "lido_mapping": "",
+//                                                          "spase_mapping": "",
+//                                                          "junii2_mapping": {
+//                                                              "title": ""
+//                                                          },
+//                                                          "display_lang_type": ""
+//                                                      };
+      if(src_mapping.hasOwnProperty('title_ja')) {
+        page_global.table_row_map.mapping['title_ja'] = src_mapping['title_ja'];
+      } else {
+        page_global.table_row_map.mapping['title_ja'] = mapping_value;
+      }
+//      page_global.table_row_map.mapping['title_en'] = {
+//                                                          "oai_dc_mapping": {
+//                                                              "alternative": ""
+//                                                          },
+//                                                          "lom_mapping": "",
+//                                                          "jpcoar_mapping": {
+//                                                              "alternative": {
+//                                                                  "@attributes": {
+//                                                                      "xml:lang": "ja"
+//                                                                  }
+//                                                              }
+//                                                          },
+//                                                          "lido_mapping": "",
+//                                                          "spase_mapping": "",
+//                                                          "junii2_mapping": {
+//                                                              "alternative": ""
+//                                                          },
+//                                                          "display_lang_type": ""
+//                                                      };
+      if(src_mapping.hasOwnProperty('title_en')) {
+        page_global.table_row_map.mapping['title_en'] = src_mapping['title_en'];
+      } else {
+        page_global.table_row_map.mapping['title_en'] = mapping_value;
+      }
+//      page_global.table_row_map.mapping['lang'] = {
+//                                                "oai_dc_mapping": {
+//                                                    "language": ""
+//                                                },
+//                                                "lom_mapping": "",
+//                                                "jpcoar_mapping": {
+//                                                    "language": ""
+//                                                },
+//                                                "lido_mapping": "",
+//                                                "spase_mapping": "",
+//                                                "junii2_mapping": {
+//                                                    "language": ""
+//                                                },
+//                                                "display_lang_type": ""
+//                                            };
+      if(src_mapping.hasOwnProperty('lang')) {
+        page_global.table_row_map.mapping['lang'] = src_mapping['lang'];
+      } else {
+        page_global.table_row_map.mapping['lang'] = mapping_value;
+      }
+//      page_global.table_row_map.mapping['pubdate'] = {
+//                                                "oai_dc_mapping": {
+//                                                    "date": ""
+//                                                },
+//                                                "lom_mapping": "",
+//                                                "jpcoar_mapping": {
+//                                                    "date": {
+//                                                        "@attributes": {
+//                                                            "dateType": "Available"
+//                                                        }
+//                                                    }
+//                                                },
+//                                                "lido_mapping": "",
+//                                                "spase_mapping": "",
+//                                                "junii2_mapping": {
+//                                                    "date": ""
+//                                                },
+//                                                "display_lang_type": ""
+//                                            };
+      if(src_mapping.hasOwnProperty('pubdate')) {
+        page_global.table_row_map.mapping['pubdate'] = src_mapping['pubdate'];
+      } else {
+        page_global.table_row_map.mapping['pubdate'] = mapping_value;
+      }
+//      page_global.table_row_map.mapping['keywords'] = {
+//                                                "oai_dc_mapping": {
+//                                                    "subject": ""
+//                                                },
+//                                                "lom_mapping": "",
+//                                                "jpcoar_mapping": {
+//                                                    "subject": {
+//                                                        "@attributes": {
+//                                                            "jpcoar:subjectScheme": "LCC",
+//                                                            "jpcoar:subjectURI": "http://localhost"
+//                                                        }
+//                                                    }
+//                                                },
+//                                                "lido_mapping": "",
+//                                                "spase_mapping": "",
+//                                                "junii2_mapping": {
+//                                                    "subject": ""
+//                                                },
+//                                                "display_lang_type": ""
+//                                            };
+      if(src_mapping.hasOwnProperty('keywords')) {
+        page_global.table_row_map.mapping['keywords'] = src_mapping['keywords'];
+      } else {
+        page_global.table_row_map.mapping['keywords'] = mapping_value;
+      }
+//      page_global.table_row_map.mapping['keywords_en'] = {
+//                                                "oai_dc_mapping": {
+//                                                    "subject": {}
+//                                                },
+//                                                "lom_mapping": "",
+//                                                "jpcoar_mapping": {
+//                                                    "rightsHolder": {
+//                                                        "@attributes": {
+//                                                            "xml:lang": "haha"
+//                                                        },
+//                                                        "rightsHolderName": {}
+//                                                    }
+//                                                },
+//                                                "lido_mapping": "",
+//                                                "spase_mapping": "",
+//                                                "junii2_mapping": {
+//                                                    "subject": ""
+//                                                },
+//                                                "display_lang_type": ""
+//                                            };
+      if(src_mapping.hasOwnProperty('keywords_en')) {
+        page_global.table_row_map.mapping['keywords_en'] = src_mapping['keywords_en'];
+      } else {
+        page_global.table_row_map.mapping['keywords_en'] = mapping_value;
+      }
 
       // テーブルの行をトラバースし、マップに追加する
       err_input_id = []
@@ -364,7 +413,22 @@
         tmp.option.hidden = $('#chk_'+row_id+'_4').is(':checked')?true:false;
         tmp.option.showlist = tmp.option.hidden?false:($('#chk_'+row_id+'_2').is(':checked')?true:false);
         tmp.option.crtf = tmp.option.hidden?false:($('#chk_'+row_id+'_3').is(':checked')?true:false);
-        page_global.table_row_map.mapping[row_id] = mapping_value;
+
+        if(src_render.hasOwnProperty('meta_list')
+            && src_render['meta_list'].hasOwnProperty(row_id)) {
+          if(tmp.input_type == src_render['meta_list'][row_id]['input_type']) {
+            if(src_mapping.hasOwnProperty('keywords_en')) {
+              page_global.table_row_map.mapping[row_id] = src_mapping[row_id];
+            } else {
+              page_global.table_row_map.mapping[row_id] = mapping_value;
+            }
+          } else {
+            page_global.table_row_map.mapping[row_id] = mapping_value;
+          }
+        } else {
+          page_global.table_row_map.mapping[row_id] = mapping_value;
+        }
+
         if(tmp.option.required) {
           page_global.table_row_map.schema.required.push(row_id);
         }
@@ -629,7 +693,7 @@
         //add by ryuu. start
         tmp_title_en.title_i18n ={}
         tmp_title_en.title_i18n.ja = "タイトル(英)";
-        tmp_title_en.title_i18n.en = "Title";
+        tmp_title_en.title_i18n.en = "Title(English)";
         //add by ryuu. end
         tmp_title_en.input_type = "text";
         tmp_title_en.input_value = "";
@@ -705,7 +769,7 @@
         //add by ryuu. start
         tmp_keywords_en.title_i18n ={}
         tmp_keywords_en.title_i18n.ja = "キーワード(英)";
-        tmp_keywords_en.title_i18n.en = "keywords";
+        tmp_keywords_en.title_i18n.en = "keywords(English)";
         //add by ryuu. end
         tmp_keywords_en.input_type = "text";
         tmp_keywords_en.input_value = "";
@@ -883,7 +947,8 @@
 
     $('#chk_upload_file').on('change', function(){
       if($('#chk_upload_file').is(':checked')) {
-        page_global.upload_file = true;
+        // page_global.upload_file = true;
+        page_global.upload_file = false;
       } else {
         page_global.upload_file = false;
       }
@@ -978,7 +1043,8 @@
 
     if($('#item-type-lists').val().length > 0) {
       $.get('/itemtypes/' + $('#item-type-lists').val() + '/render', function(data, status){
-        page_global.upload_file = data.upload_file;
+        Object.assign(src_render ,data);
+        page_global.upload_file = false;    // data.upload_file;
         $('#chk_upload_file').attr('checked', data.upload_file);
         $.each(data.table_row, function(idx, row_id){
           new_meta_row(row_id);
@@ -1017,6 +1083,9 @@
             render_empty('schema_'+row_id);
           }
         });
+      });
+      $.get('/api/itemtypes/' + $('#item-type-lists').val() + '/mapping', function(data, status){
+        Object.assign(src_mapping, data);
       });
     }
 });

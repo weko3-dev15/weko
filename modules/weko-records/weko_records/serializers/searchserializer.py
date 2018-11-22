@@ -19,10 +19,14 @@
 # MA 02111-1307, USA.
 
 """WEKO Search Serializer."""
-
-from flask import current_app
 from invenio_records_rest.serializers.json import JSONSerializer
+from weko_records.utils import sort_meta_data_by_options
 
+from flask import json, flash
+
+from weko_index_tree.utils import get_user_roles, get_user_groups, \
+    check_roles, check_groups
+from weko_index_tree.api import Indexes
 
 class SearchSerializer(JSONSerializer):
     """
@@ -30,57 +34,79 @@ class SearchSerializer(JSONSerializer):
     """
 
     def transform_search_hit(self, pid, record_hit, links_factory=None):
-        self.reset_metadata(record_hit)
-        return super(SearchSerializer, self).transform_search_hit(pid,
-                                                                  record_hit,
-                                                                  links_factory)
+        sort_meta_data_by_options(record_hit)
+        return super(SearchSerializer, self).\
+            transform_search_hit(pid, record_hit, links_factory)
 
-    def reset_metadata(self, record_hit):
-        """
-        reset metadata by '_options'
-        :param record_hit:
-        :return:
-        """
-        rlt = ""
-        src = record_hit['_source']
-        if '_comment' in src:
-            return
-        op = src.pop("_options", {})
-        ignore_meta = ('title', 'alternative', 'fullTextURL')
-        if isinstance(op, dict):
-            src["_comment"] = []
-            for k, v in sorted(op.items(),
-                               key=lambda x: x[1]['index'] if x[1].get(
-                                   'index') else x[0]):
-                if k in ignore_meta:
-                    continue
-                # item value
-                vals = src.get(k)
-                if isinstance(vals, list):
-                    # index, options
-                    v.pop('index', "")
-                    for k1, v1 in sorted(v.items()):
-                        i = int(k1)
-                        if i < len(vals):
-                            crtf = v1.get("crtf")
-                            showlist = v1.get("showlist")
-                            hidden = v1.get("hidden")
-                            is_show = False if hidden else showlist
-                            # list index value
-                            if is_show:
-                                rlt = rlt + ((vals[i] + ",") if not crtf
-                                             else vals[i] + "\n")
-                elif isinstance(vals, str):
-                    crtf = v.get("crtf")
-                    showlist = v.get("showlist")
-                    hidden = v.get("hidden")
-                    is_show = False if hidden else showlist
-                    if is_show:
-                        rlt = rlt + ((vals + ",") if not crtf
-                                     else vals + "\n")
-            if len(rlt) > 0:
-                if rlt[-1] == ',':
-                    rlt = rlt[:-1]
-                src['_comment'] = rlt.split('\n')
-                if len(src['_comment'][-1]) == 0:
-                    src['_comment'].pop()
+    # def serialize_search(self, pid_fetcher, search_result, links=None,
+    #                      item_links_factory=None, **kwargs):
+    #     """Serialize a search result.
+    #
+    #     :param pid_fetcher: Persistent identifier fetcher.
+    #     :param search_result: Elasticsearch search result.
+    #     :param links: Dictionary of links to add to response.
+    #     """
+    #
+    #     # Get user info
+    #     roles = get_user_roles()
+    #     groups = get_user_groups()
+    #
+    #     flash(roles)
+    #     flash(groups)
+    #
+    #     indexes = {}
+    #     for hit in search_result['hits']['hits']:
+    #         is_authorized = True
+    #
+    #         paths = hit['_source']['_item_metadata']['path']
+    #         for path in paths:
+    #             index_id = path.split('/')[-1]
+    #             if not index_id in indexes:
+    #                 indexes[index_id] = dict(Indexes.get_index(index_id))
+    #
+    #             is_authorized = check_roles(roles,
+    #                                         indexes[index_id]['browsing_role']) and \
+    #                             check_groups(groups,
+    #                                          indexes[index_id]['browsing_group'])
+    #
+    #         # TODO
+    #         if is_authorized:
+    #
+    #
+    #
+    #
+    #
+    #
+    #         # index = dict(Indexes.get_index('1538469278676'))
+    #
+    #     # tree = Indexes.get_index_tree()
+    #     # flash(dict(Indexes.get_index('1538469278676')))
+    #
+    #
+    #     return json.dumps(dict(
+    #         hits=dict(
+    #             hits=[self.transform_search_hit(
+    #                 pid_fetcher(hit['_id'], hit['_source']),
+    #                 hit,
+    #                 links_factory=item_links_factory,
+    #                 **kwargs
+    #             ) for hit in search_result['hits']['hits']],
+    #             total=search_result['hits']['total'],
+    #         ),
+    #         links=links or {},
+    #         aggregations=search_result.get('aggregations', dict()),
+    #     ), **self._format_args())
+
+        # return json.dumps(dict(
+        #     hits=dict(
+        #         hits=[self.transform_search_hit(
+        #             pid_fetcher(hit['_id'], hit['_source']),
+        #             hit,
+        #             links_factory=item_links_factory,
+        #             **kwargs
+        #         ) for hit in search_result['hits']['hits']],
+        #         total=search_result['hits']['total'],
+        #     ),
+        #     links=links or {},
+        #     aggregations=search_result.get('aggregations', dict()),
+        # ), **self._format_args())

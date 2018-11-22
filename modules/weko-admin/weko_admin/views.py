@@ -20,18 +20,23 @@
 
 """Views for weko-admin."""
 
+import json
+import os
+import sys
 from datetime import timedelta
 
-from flask import Blueprint, Flask, current_app, flash, jsonify, \
-    render_template, request, session
+from flask import Blueprint, abort, current_app, flash, \
+    jsonify, make_response, render_template, request, session
 from flask_babelex import lazy_gettext as _
-from flask_breadcrumbs import default_breadcrumb_root, register_breadcrumb
+from flask_breadcrumbs import register_breadcrumb
 from flask_login import current_user, login_required
 from flask_menu import register_menu
+from invenio_admin.proxies import current_admin
+from weko_records.api import ItemTypes, SiteLicense
 from werkzeug.local import LocalProxy
 
-from . import config
 from .models import SessionLifetime
+from .utils import get_response_json
 
 _app = LocalProxy(lambda: current_app.extensions['weko-admin'].app)
 
@@ -44,23 +49,32 @@ blueprint = Blueprint(
 )
 
 
+def _has_admin_access():
+    """Use to check if a user has any admin access."""
+    return current_user.is_authenticated and current_admin \
+        .permission_factory(current_admin.admin.index_view).can()
+
+
 @blueprint.route('/session/lifetime/<int:minutes>', methods=['GET'])
 def set_lifetime(minutes):
-    """
-    Update session lifetime in db.
+    """Update session lifetime in db.
 
     :param minutes:
     :return: Session lifetime updated message.
     """
-    db_lifetime = SessionLifetime.get_validtime()
-    if db_lifetime is None:
-        db_lifetime = SessionLifetime(lifetime=minutes)
-    else:
-        db_lifetime.lifetime = minutes
-    db_lifetime.create()
-    _app.permanent_session_lifetime = timedelta(
-        minutes=db_lifetime.lifetime)
-    return jsonify(code=0, msg='Session lifetime was updated.')
+    try:
+        db_lifetime = SessionLifetime.get_validtime()
+        if db_lifetime is None:
+            db_lifetime = SessionLifetime(lifetime=minutes)
+        else:
+            db_lifetime.lifetime = minutes
+        db_lifetime.create()
+        _app.permanent_session_lifetime = timedelta(
+            minutes=db_lifetime.lifetime)
+        return jsonify(code=0, msg='Session lifetime was updated.')
+    except BaseException:
+        current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
+        return abort(400)
 
 
 @blueprint.route('/session', methods=['GET', 'POST'])
@@ -68,6 +82,7 @@ def set_lifetime(minutes):
 @register_menu(
     blueprint, 'settings.lifetime',
     _('%(icon)s Session', icon='<i class="fa fa-cogs fa-fw"></i>'),
+    visible_when=_has_admin_access,
     order=14
 )
 @register_breadcrumb(
@@ -76,43 +91,51 @@ def set_lifetime(minutes):
 )
 @login_required
 def lifetime():
-    """
-    Loading session setting page.
+    """Loading session setting page.
 
     :return: Lifetime in minutes.
     """
-    db_lifetime = SessionLifetime.get_validtime()
-    if db_lifetime is None:
-        db_lifetime = SessionLifetime(lifetime=30)
+    if not _has_admin_access():
+        return abort(403)
+    try:
+        db_lifetime = SessionLifetime.get_validtime()
+        if db_lifetime is None:
+            db_lifetime = SessionLifetime(lifetime=30)
 
-    if request.method == 'POST':
-        # Process forms
-        form = request.form.get('submit', None)
-        if form == 'lifetime':
-            new_lifetime = request.form.get('lifetimeRadios', '30')
-            db_lifetime.lifetime = int(new_lifetime)
-            db_lifetime.create()
-            _app.permanent_session_lifetime = timedelta(
-                minutes=db_lifetime.lifetime)
-            flash(_('Session lifetime was updated.'), category='success')
+        if request.method == 'POST':
+            # Process forms
+            form = request.form.get('submit', None)
+            if form == 'lifetime':
+                new_lifetime = request.form.get('lifetimeRadios', '30')
+                db_lifetime.lifetime = int(new_lifetime)
+                db_lifetime.create()
+                _app.permanent_session_lifetime = timedelta(
+                    minutes=db_lifetime.lifetime)
+                flash(_('Session lifetime was updated.'), category='success')
 
-    return render_template(current_app.config['WEKO_ADMIN_LIFETIME_TEMPLATE'],
-                           current_lifetime=str(db_lifetime.lifetime),
-                           map_lifetime=[('15', _('15 mins')),
-                                         ('30', _('30 mins')),
-                                         ('45', _('45 mins')),
-                                         ('60', _('60 mins')),
-                                         ('180', _('180 mins')),
-                                         ('360', _('360 mins')),
-                                         ('720', _('720 mins')),
-                                         ('1440', _('1440 mins'))]
-                           )
+        return render_template(
+            current_app.config['WEKO_ADMIN_LIFETIME_TEMPLATE'],
+            current_lifetime=str(db_lifetime.lifetime),
+            map_lifetime=[('15', _('15 mins')),
+                          ('30', _('30 mins')),
+                          ('45', _('45 mins')),
+                          ('60', _('60 mins')),
+                          ('180', _('180 mins')),
+                          ('360', _('360 mins')),
+                          ('720', _('720 mins')),
+                          ('1440', _('1440 mins'))]
+        )
+    except ValueError as valueErr:
+        current_app.logger.error(
+            'Could not convert data to an integer: {0}'.format(valueErr))
+    except BaseException:
+        current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
+        return abort(400)
 
 
-@blueprint.route("/session/offline/info", methods=['GET'])
+@blueprint.route('/session/offline/info', methods=['GET'])
 def session_info_offline():
-    """
-    Get session lifetime from app setting.
+    """Get session lifetime from app setting.
 
     :return: Session information offline in json.
     """
@@ -124,3 +147,33 @@ def session_info_offline():
                    lifetime=lifetime_str,
                    _app_lifetime=str(_app.permanent_session_lifetime),
                    current_app_name=current_app.name)
+
+
+@blueprint.route('/admin/site-license', methods=['GET', 'POST'])
+@blueprint.route('/admin/site-license/', methods=['GET', 'POST'])
+def site_license():
+    """Site license setting page."""
+    current_app.logger.info('site-license setting page')
+    if 'POST' in request.method:
+        jfy = {}
+        try:
+            # update item types and site license info
+            SiteLicense.update(request.get_json())
+            jfy['status'] = 201
+            jfy['message'] = 'Site license was successfully updated.'
+        except:
+            jfy['status'] = 500
+            jfy['message'] = 'Failed to update site license.'
+        return make_response(jsonify(jfy), jfy['status'])
+
+    try:
+        # site license list
+        result_list = SiteLicense.get_records()
+        # item types list
+        n_lst = ItemTypes.get_latest()
+        result = get_response_json(result_list, n_lst)
+        return render_template(
+            current_app.config['WEKO_ADMIN_SITE_LICENSE_TEMPLATE'],
+            result=json.dumps(result))
+    except:
+        abort(500)

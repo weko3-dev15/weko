@@ -63,6 +63,7 @@ install_requires = [
     'Flask-Mail>=0.9.1',
     'invenio-db>=1.0.0b9',
     'invenio-accounts>=1.0.0b3',
+    'invenio-assets>=1.0.0b7',
 ]
 
 packages = find_packages()
@@ -91,13 +92,23 @@ setup(
     entry_points={
         'flask.commands': [
             'lifetime = weko_admin.cli:lifetime',
-            'wekoaccess = weko_admin.cli:wekoaccess',
         ],
         'invenio_base.apps': [
             'weko_admin = weko_admin:WekoAdmin',
         ],
+        'invenio_admin.views': [
+            'weko_admin_style = weko_admin.admin:style_adminview',
+        ],
+        'invenio_access.actions': [
+            'page_style_access = weko_admin.permissions:action_admin_access',
+            'page_style_update = weko_admin.permissions:action_admin_update',
+        ],
         'invenio_db.alembic': [
             'weko_admin = weko_admin:alembic',
+        ],
+        'invenio_assets.bundles': [
+            'weko_admin_js = weko_admin.bundles:js',
+            'weko_admin_css = weko_admin.bundles:css',
         ],
         'invenio_db.models': [
             'weko_admin = weko_admin.models',

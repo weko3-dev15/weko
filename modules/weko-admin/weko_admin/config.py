@@ -23,7 +23,7 @@
 WEKO_ADMIN_DEFAULT_LIFETIME = 60
 """ Session time out setting, default 60 minutes """
 
-WEKO_ADMIN_BASE_TEMPLATE = None
+WEKO_ADMIN_BASE_TEMPLATE = 'weko_admin/base.html'
 """Base templates for weko-admin module."""
 
 WEKO_ADMIN_SETTINGS_TEMPLATE = None
@@ -31,3 +31,11 @@ WEKO_ADMIN_SETTINGS_TEMPLATE = None
 
 WEKO_ADMIN_LIFETIME_TEMPLATE = 'weko_admin/settings/lifetime.html'
 """Settings base templates for weko-admin module."""
+
+WEKO_ADMIN_SITE_LICENSE_TEMPLATE = 'weko_admin/site_license.html'
+"""Site-license templates."""
+
+WEKO_ADMIN_BlOCK_STYLE_TEMPLATE = 'weko_admin/block_style.html'
+"""Block-style templates."""
+
+LOGO_ALLOWED_EXTENSIONS = set(['png', 'jpeg', 'jpg'])

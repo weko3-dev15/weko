@@ -21,18 +21,54 @@
 
 {%- extends config.WEKO_RECORDS_UI_BASE_TEMPLATE %}
 
+{%- from "invenio_communities/macros.html" import community_header, community_footer %}
+
 {%- block javascript %}
   {{ super() }}
   {% assets "weko_theme_js_treeview" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_theme_js_top_page" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_theme_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_records_ui_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+<!-- start demo block-->
+<script type="text/javascript">var addthis_config = {"data_track_addressbar": true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5137aff66ad9c2a1"></script>
+<!-- end demo block -->
 {%- endblock javascript %}
 
 {%- block page_body_tabs %}
   {% from "weko_theme/macros/tabs_selector.html" import tabs_selector %}
-  {{ tabs_selector('top') }}
+  {{ tabs_selector('top',community_id) }}
 {%- endblock page_body_tabs%}
+
+{%- block page_header %}
+{%-if not community_id %}
+{{ super() }}
+{%- else%}
+
+{%- endif%}
+{%- endblock page_header %}
+
+{%- block page_footer %}
+{%-if not community_id%}
+{{ super() }}
+{%- endif%}
+{%- endblock page_footer %}
+
+
+{% block page_body %}
+{%-if not community_id %}
+{{super()}}
+{%- else%}
+<div class="communities">
+<div id="community-id" name="community-id" hidden>{{ community_id }}</div>
+{{ community_header(community, subtitle='') }}
+{{super()}}
+{{ community_footer(community, link=False, subtitle='') }}
+</div>
+<div class="communities">
+</div>
+{%- endif%}
+{% endblock page_body %}
 
 {%- block page_body_main %}
   <div class="row">
@@ -41,10 +77,10 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-3 col-md-3 col-lg-3">
+    <div class="col-sm-{{width}} col-md-{{width}} col-lg-{{width}}">
       {% include "weko_theme/body_index.html" %}
     </div>
-    <div class="col-sm-9 col-md-9 col-lg-9 m-top-20">
+    <div class="col-sm-{{12-width|int}} col-md-{{12-width|int}} col-lg-{{12-width|int}} m-top-20">
       {% include "weko_records_ui/body_contents.html" %}
     </div>
   </div>

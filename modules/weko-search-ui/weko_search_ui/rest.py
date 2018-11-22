@@ -20,36 +20,36 @@
 
 """Blueprint for Index Search rest."""
 
-import json, uuid, shutil
+import json
 import os.path
-
+import shutil
+import uuid
 # from copy import deepcopy
 from functools import partial
 
-from flask import Blueprint, abort, current_app, jsonify, request, \
-    url_for, redirect
+from flask import (
+    Blueprint, abort, current_app, jsonify, redirect, request, url_for)
 from invenio_db import db
+from invenio_files_rest.storage import PyFSFileStorage
 from invenio_oauth2server import require_api_auth, require_oauth_scopes
-from invenio_pidstore.errors import PIDInvalidAction
 from invenio_pidstore import current_pidstore
-from invenio_records_rest.utils import obj_or_import_string
-from invenio_records_rest.links import default_links_factory
+from invenio_pidstore.errors import PIDInvalidAction
 from invenio_records.api import Record
+from invenio_records_rest.errors import (
+    InvalidDataRESTError, MaxResultWindowRESTError, UnsupportedMediaRESTError)
+from invenio_records_rest.links import default_links_factory
+from invenio_records_rest.utils import obj_or_import_string
 from invenio_records_rest.views import \
     create_error_handlers as records_rest_error_handlers
-from invenio_records_rest.views import \
-    create_url_rules
-from invenio_records_rest.views import need_record_permission, pass_record
+from invenio_records_rest.views import (
+    create_url_rules, need_record_permission, pass_record)
 from invenio_rest import ContentNegotiatedMethodView
 from invenio_rest.views import create_api_errorhandler
 from webargs import fields
 from webargs.flaskparser import use_kwargs
-from werkzeug.utils import secure_filename
-from invenio_records_rest.errors import InvalidDataRESTError, \
-    UnsupportedMediaRESTError
-from invenio_files_rest.storage import PyFSFileStorage
-from invenio_records_rest.errors import MaxResultWindowRESTError
 from weko_index_tree.api import Indexes
+from werkzeug.utils import secure_filename
+from invenio_i18n.ext import current_i18n
 
 
 def create_blueprint(app, endpoints):
@@ -67,7 +67,6 @@ def create_blueprint(app, endpoints):
     )
 
     for endpoint, options in (endpoints or {}).items():
-
         if 'record_serializers' in options:
             serializers = options.get('record_serializers')
             serializers = {mime: obj_or_import_string(func)
@@ -85,7 +84,8 @@ def create_blueprint(app, endpoints):
         record_class = obj_or_import_string(options.get('record_class'),
                                             default=Record)
         search_class = obj_or_import_string(options.get('search_class'))
-        search_factory = obj_or_import_string(options.get('search_factory_imp'))
+        search_factory = obj_or_import_string(
+            options.get('search_factory_imp'))
 
         search_class_kwargs = {}
         search_class_kwargs['index'] = options.get('search_index')
@@ -204,17 +204,19 @@ class IndexSearchResource(ContentNegotiatedMethodView):
             links['prev'] = url_for('weko_search_rest.recid_index',
                                     page=page - 1, **urlkwargs)
         if size * page < search_result.hits.total and \
-                    size * page < self.max_result_window:
+                size * page < self.max_result_window:
             links['next'] = url_for('weko_search_rest.recid_index',
                                     page=page + 1, **urlkwargs)
 
         # aggs result identify
         rd = search_result.to_dict()
         q = request.values.get('q')
+        lang = current_i18n.language
+
         if q:
             try:
                 paths = Indexes.get_self_list(q)
-            except:
+            except BaseException:
                 paths = []
             agp = rd["aggregations"]["path"]["buckets"]
             nlst = []
@@ -223,22 +225,36 @@ class IndexSearchResource(ContentNegotiatedMethodView):
                 m = 0
                 for k in range(len(agp)):
                     if p.path == agp[k].get("key"):
-                        agp[k]["name"] = p.name
+                        agp[k]["name"] = p.name if lang == "ja" else p.name_en
                         date_range = agp[k].pop("date_range")
+                        no_available = agp[k].pop("no_available")
                         pub = dict()
-                        for d in date_range['buckets']:
-                            pub["pub_cnt" if d.get("to") else "un_pub_cnt"] = d.get("doc_count")
-                        agp[k]["date_range"] = pub
-                        nlst.append(agp.pop(k))
-                        m = 1
+                        bkt = date_range['available']['buckets']
+                        if bkt:
+                            for d in bkt:
+                                pub["pub_cnt" if d.get("to") else "un_pub_cnt"] = d.get(
+                                    "doc_count")
+                            pub["un_pub_cnt"] += no_available['doc_count']
+                            agp[k]["date_range"] = pub
+                            nlst.append(agp.pop(k))
+                            m = 1
                         break
                 if m == 0:
-                    nd = {'doc_count': 0, 'key': p.path, 'name': p.name, \
+                    nd = {'doc_count': 0, 'key': p.path, 'name': p.name if lang == "ja" else p.name_en,
                           'date_range': {'pub_cnt': 0, 'un_pub_cnt': 0}}
                     nlst.append(nd)
             agp.clear()
+            # process index tree image info
+            if len(nlst):
+                index_id = nlst[0].get('key')
+                index_id = index_id if '/' not in index_id \
+                    else index_id.split('/').pop()
+                index_info = Indexes.get_index(index_id=index_id)
+                if index_info.display_format == '2' \
+                    and len(index_info.image_name) > 0:
+                    nlst[0]['img'] = index_info.image_name
             agp.append(nlst)
-
+        current_app.logger.debug(rd)
         return self.make_response(
             pid_fetcher=self.pid_fetcher,
             search_result=rd,

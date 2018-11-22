@@ -36,9 +36,12 @@ WEKO_SEARCH_UI_THEME_FRONTPAGE_TEMPLATE = \
 """Reset invenio_theme.config['THEME_FRONTPAGE_TEMPLATE'] info"""
 
 WEKO_SEARCH_UI_SEARCH_TEMPLATE = 'weko_search_ui/search.html'
+
 """Reset search_ui_search config"""
 
 WEKO_SEARCH_UI_JSTEMPLATE_RESULTS = 'templates/weko_search_ui/itemlist.html'
+
+WEKO_SEARCH_UI_JSTEMPLATE_RESULTS_BASIC = 'templates/weko_search_ui/itemlistbasic.html'
 
 WEKO_SEARCH_UI_JSTEMPLATE_INDEX = 'templates/weko_search_ui/indexlist.html'
 
@@ -52,6 +55,13 @@ SEARCH_UI_JSTEMPLATE_SELECT_BOX = 'templates/weko_search_ui/selectbox.html'
 
 SEARCH_UI_JSTEMPLATE_SORT_ORDER = 'templates/weko_search_ui/togglebutton.html'
 
+INDEX_IMG = 'indextree/36466818-image.jpg'
+
+# Opensearch description
+WEKO_OPENSEARCH_SYSTEM_SHORTNAME = 'WEKO'
+WEKO_OPENSEARCH_SYSTEM_DESCRIPTION = 'WEKO - NII Scholarly and Academic Information Navigator'
+WEKO_OPENSEARCH_IMAGE_URL = 'static/favicon.ico'
+
 RECORDS_REST_ENDPOINTS = copy.deepcopy(RECORDS_REST_ENDPOINTS)
 RECORDS_REST_ENDPOINTS['recid']['search_factory_imp'] = \
     'weko_search_ui.query.es_search_factory'
@@ -63,6 +73,16 @@ RECORDS_REST_ENDPOINTS['recid']['search_serializers'] = {
 RECORDS_REST_ENDPOINTS['recid']['search_index'] = 'weko'
 RECORDS_REST_ENDPOINTS['recid']['search_type'] = 'item'
 
+# Opensearch endpoint
+RECORDS_REST_ENDPOINTS['opensearch'] = copy.deepcopy(RECORDS_REST_ENDPOINTS['recid'])
+RECORDS_REST_ENDPOINTS['opensearch']['search_factory_imp'] = \
+    'weko_search_ui.query.opensearch_factory'
+RECORDS_REST_ENDPOINTS['opensearch']['list_route'] = '/opensearch/search'
+RECORDS_REST_ENDPOINTS['opensearch']['search_serializers'] = {
+    'application/json': ('weko_records.serializers'
+                         ':opensearch_v1_search'),
+}
+
 INDEXER_DEFAULT_INDEX = 'weko'
 INDEXER_DEFAULT_DOCTYPE = 'item'
 INDEXER_DEFAULT_DOC_TYPE = 'item'
@@ -70,15 +90,12 @@ INDEXER_FILE_DOC_TYPE = 'content'
 
 SEARCH_UI_SEARCH_INDEX = 'weko'
 
+# set item type aggs
 RECORDS_REST_FACETS = dict(
     weko=dict(
         aggs=dict(
-            authors=dict(terms=dict(
-                field='NIItype')),
-        ),
-        post_filters=dict(
-            authors=terms_filter(
-                'NIItype'),
+            itemtypes=dict(terms=dict(
+                field='item_type_id')),
         )
     )
 )
@@ -159,3 +176,98 @@ WEKO_SEARCH_REST_ENDPOINTS = dict(
         max_result_window=10000,
     ),
 )
+
+WEKO_SEARCH_KEYWORDS_DICT = {
+    "nested": {
+        "subject": ("subject", {"sbjscheme": {
+            "subject.subjectScheme": [
+                "BSH",
+                "DDC",
+                "LCC",
+                "LCSH",
+                "MeSH",
+                "NDC",
+                "NDLC",
+                "NDLSH",
+                "UDC",
+                "Other",
+                "SciVal"
+            ]
+        }}),
+        "id": ("", {
+            "id_attr": {
+                "identifier": ("relation.relatedIdentifier", "identifierType=*"),
+                "URI": ("identifier", "identifierType=*"),
+                "fullTextURL": ("file.URI", "objectType=*"),
+                "selfDOI": ("identifierRegistration", "identifierType=*"),
+                "ISBN": ("relation.relatedIdentifier", "identifierType=ISBN"),
+                "ISSN": ("sourceIdentifier", "identifierType=ISSN"),
+                "NCID": [
+                    ("relation.relatedIdentifier", "identifierType=NCID"),
+                    ("sourceIdentifier", "identifierType=NCID")
+                ],
+                "pmid": ("relation.relatedIdentifier", "identifierType=PMID"),
+                "doi": ("relation.relatedIdentifier", "identifierType=DOI"),
+                "NAID": ("relation.relatedIdentifier", "identifierType=NAID"),
+                "ichushi": ("relation.relatedIdentifier", "identifierType=ICHUSHI")
+            }})
+    },
+    "string": {
+        "title": ["search_title", "search_title.ja"],
+        "creator": ["search_creator", "search_creator.ja"],
+        "des": ["search_des", "search_des.ja"],
+        "publisher": ["search_publisher", "search_publisher.ja"],
+        "cname": ["search_contributor", "search_contributor.ja"],
+        "itemtype": ("item_type_id", int),
+        "type": {
+            "type": [
+                "conference paper",
+                "departmental bulletin paper",
+                "journal article",
+                "article",
+                "book",
+                "conference object",
+                "dataset",
+                "research report",
+                "technical report",
+                "thesis",
+                "learning material",
+                "software",
+                "other"
+            ]
+        },
+        "mimetype": "file.mimeType",
+        "language": {
+            "language": ["jpn", "eng",
+                         "fra", "ita",
+                         "deu", "spa",
+                         "zho", "rus",
+                         "lat", "msa",
+                         "epo", "ara",
+                         "ell", "kor",
+                         "-"]},
+        "srctitle": ["sourceTitle", "sourceTitle.ja"],
+        "spatial": "geoLocation.geoLocationPlace",
+        "temporal": "temporal",
+        "rights": "rights",
+        "version": "versionType",
+        "dissno": "dissertationNumber",
+        "degreename": ["degreeName", "degreeName.ja"],
+        "dgname": ["dgName", "dgName.ja"],
+        "wid": "weko_id",
+        "iid": ("path.tree", int)
+    },
+    "date": {
+        "filedate": [('from', 'to'), ("file.date", {"fd_attr": {
+            "file.date.dateType": ["Accepted",
+                                   "Available",
+                                   "Collected",
+                                   "Copyrighted",
+                                   "Created",
+                                   "Issued",
+                                   "Submitted",
+                                   "Updated",
+                                   "Valid"]}})],
+        "dategranted": [('from', 'to'), "dateGranted"]
+    }
+}

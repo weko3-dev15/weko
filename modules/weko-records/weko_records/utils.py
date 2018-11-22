@@ -21,53 +21,72 @@
 """Item API."""
 
 import re
-import pytz
+from collections import OrderedDict
 
+import pytz
 from flask import current_app
+from flask_security import current_user
 from invenio_pidstore import current_pidstore
 from invenio_pidstore.ext import pid_exists
-from collections import OrderedDict
+
 from .api import ItemTypes, Mapping
+from weko_schema_ui.schema import SchemaTree
 
 
-def save_item_metadata(rejson, pid):
-    """Save the item.
-
-    :param rejson: json from item form post.
+def json_loader(data, pid):
+    """
+    Convert the item data and mapping to jpcoar
+    :param data: json from item form post.
     :param pid: pid value.
+    :return: dc, jrc, is_edit
     """
     dc = OrderedDict()
-    ju = OrderedDict()
+    jpcoar = OrderedDict()
     item = dict()
     ar = []
 
-    if not isinstance(rejson, dict) or rejson.get("$schema") is None:
+    if not isinstance(data, dict) or data.get("$schema") is None:
         return
 
     item_id = pid.object_uuid
     pid = pid.pid_value
 
-    # find the item type identifier
-    index = rejson["$schema"].rfind('/')
-    item_type_id = rejson["$schema"][index + 1:]
+    # get item type id
+    index = data["$schema"].rfind('/')
+    item_type_id = data["$schema"][index + 1:]
 
-    # get itemtype mapping file json data
+    # get item type mappings
     ojson = ItemTypes.get_record(item_type_id)
     mjson = Mapping.get_record(item_type_id)
-    # fjson = FilesMetadata.get_records(pid)
 
-    # sort items
-    rejson = sort_records(rejson, ojson.model.form)
     if ojson and mjson:
         mp = mjson.dumps()
-        rejson.get("$schema")
-        for k, v in rejson.items():
-            if k == "$schema" or mp.get(k) is None:
-                continue
+        data.get("$schema")
+        for k, v in data.items():
+            if k != "pubdate":
+                if k == "$schema" or mp.get(k) is None:
+                    continue
 
             item.clear()
             item["attribute_name"] = ojson["properties"][k]["title"] \
                 if ojson["properties"][k].get("title") is not None else k
+            # set a identifier to add a link on detail page when is a creator field
+            # creator = mp.get(k, {}).get('jpcoar_mapping', {})
+            # creator = creator.get('creator') if isinstance(
+            #     creator, dict) else None
+            iscreator = False
+            creator = ojson["properties"][k]
+            if 'object' == creator["type"]:
+                creator = creator["properties"]
+                if 'iscreator' in creator:
+                    iscreator = True
+            elif 'array' == creator["type"]:
+                creator = creator['items']["properties"]
+                if 'iscreator' in creator:
+                    iscreator = True
+            if iscreator:
+                item["attribute_type"] = 'creator'
+
             if isinstance(v, list):
                 if len(v) > 0 and isinstance(v[0], dict):
                     item["attribute_value_mlt"] = v
@@ -81,12 +100,15 @@ def save_item_metadata(rejson, pid):
                 item["attribute_value"] = v
 
             dc[k] = item.copy()
-            item.update(mp.get(k))
-            ju[k] = item.copy()
+            if k != "pubdate":
+                item.update(mp.get(k))
+            else:
+                pubdate = v
+            jpcoar[k] = item.copy()
 
     if dc:
         # get the tile name to detail page
-        title = rejson.get("title_ja") or rejson.get("title_en")
+        title = data.get("title_ja") or data.get("title_en")
 
         if 'control_number' in dc:
             del dc['control_number']
@@ -95,13 +117,11 @@ def save_item_metadata(rejson, pid):
         dc.update(dict(item_type_id=item_type_id))
         dc.update(dict(control_number=pid))
 
-        # convert to junii2 schema for es
-        current_app.logger.debug(ju)
-        jrc = to_junii2(ju, ojson.model)
+        # convert to es jpcoar mapping data
+        jrc = SchemaTree.get_jpcoar_json(jpcoar)
 
-        make_itemlist_desc(jrc)
-
-        oai_value = current_app.config.get('OAISERVER_ID_PREFIX', '') + str(pid)
+        oai_value = current_app.config.get(
+            'OAISERVER_ID_PREFIX', '') + str(pid)
         is_edit = pid_exists(oai_value, 'oai')
         if not is_edit:
             oaid = current_pidstore.minters['oaiid'](item_id, dc)
@@ -111,8 +131,14 @@ def save_item_metadata(rejson, pid):
         jrc.update(dict(_oai={"id": oai_value}))
         jrc.update(dict(_item_metadata=dc))
         jrc.update(dict(itemtype=ojson.model.item_type_name.name))
+        jrc.update(dict(publish_date=pubdate))
 
-    del ojson, mjson
+        # save items's creator to check permission
+        user_id = current_user.get_id()
+        if user_id:
+            jrc.update(dict(weko_creator_id=user_id))
+
+    del ojson, mjson, item
     return dc, jrc, is_edit
 
 
@@ -124,129 +150,6 @@ def set_timestamp(jrc, created, updated):
     jrc.update(
         {"_updated": pytz.utc.localize(updated)
             .isoformat() if updated else None})
-
-
-def to_junii2(records, model):
-    """
-    Convert to junii2 json.
-    :param records:
-    :param render:
-    :return: j
-    """
-    render = model.render
-    meta_lst = render.get("meta_list", {}) if isinstance(render, dict) else {}
-    meta_fix = render.get("meta_fix", {}) if isinstance(render, dict) else {}
-    op_flg = False if (len(meta_lst) == 0 or len(meta_fix) == 0) else True
-
-    j = dict()
-    op = dict()
-    ttp = dict()
-    _v = "@value"
-    idx = 0
-
-    def analysis(field):
-        index = 1
-        exp = (",",)
-        return exp[0], field.split(exp[0])
-
-    def merge_field(key, val, k):
-        """
-        Merge duble key.
-        :param key: junii2 key
-        :param val: value of list
-        :param k:   item key
-        :return:
-        """
-        nonlocal idx
-        # if exist key
-        arr = j.get(key)
-        arr2 = op.get(key)
-        opts = (meta_lst.get(k) or meta_fix.get(k) or {}).get("option", {})
-        opts['_ori_key'] = k
-        opts['_ori_title'] = (meta_lst.get(k) or meta_fix.get(k) or {}).get(
-            "title", "")
-        ttp.update({k: key})
-        if arr:
-            if isinstance(arr, list):
-                if isinstance(val, list):
-                    arr.extend(val)
-                else:
-                    arr.append(val)
-            else:
-                tmp = []
-                tmp.append(arr)
-                if isinstance(val, list):
-                    tmp.extend(val)
-                else:
-                    tmp.append(val)
-                j[key] = tmp
-
-            if op_flg:
-                if isinstance(arr2, dict):
-                    if not arr2.get('0'):
-                        op[key] = {}
-                        op[key].update({'0': arr2})
-                    idx = len(op[key])
-                    if isinstance(val, list):
-                        for i in range(len(val)):
-                            idx = idx + i
-                            op[key].update({str(idx): opts})
-                    else:
-                        op[key].update({str(idx): opts})
-        else:
-            j[key] = val
-            if op_flg:
-                if isinstance(val, list):
-                    op[key] = {}
-                    for i in range(len(val)):
-                        op[key].update({str(i): opts})
-                else:
-                    op[key] = opts
-
-    for k, y in records.items():
-        if isinstance(y, dict) and not re.match("^_\*?", k):
-            mpdic = y.get("junii2_mapping")
-            if isinstance(mpdic, dict):
-                # List or string
-                atr_v = y.get('attribute_value')
-                # List of dict
-                atr_vm = y.get('attribute_value_mlt')
-                for k1, v1 in mpdic.items():
-                    if atr_v:
-                        if isinstance(atr_v, list):
-                            # checkbox array
-                            merge_field(k1, ','.join(atr_v), k)
-                        else:
-                            merge_field(k1, atr_v, k)
-                    elif atr_vm:
-                        if isinstance(v1, dict) and _v in v1:
-                            # filemeta
-                            vle = v1.get(_v)
-                            if isinstance(vle, str):
-                                # if vl have expression or formula
-                                exp, lk = analysis(vle)
-                                alt = []
-                                for lst in atr_vm:
-                                    if isinstance(lst, dict):
-                                        ava = ""
-                                        for val in lk:
-                                            ava = ava + exp + lst.get(val)
-                                        alt.append(ava[1:])
-                                merge_field(k1, alt, k)
-                        elif isinstance(v1, str):
-                            atr_vm_str = ''
-                            for atr_vm_li in atr_vm:
-                                if isinstance(atr_vm_li,
-                                              dict) and 'interim' in atr_vm_li:
-                                    # text array
-                                    atr_vm_str = atr_vm_str + atr_vm_li.get(
-                                        'interim') + ','
-                            atr_vm_str = atr_vm_str[:-1] if len(
-                                atr_vm_str) > 0 else atr_vm_str
-                            merge_field(k1, atr_vm_str, k)
-    if len(op) > 0:
-        j.update({"_options": sort_op(op, ttp, model.form)})
-    return j
 
 
 def make_itemlist_desc(es_record):
@@ -276,7 +179,7 @@ def make_itemlist_desc(es_record):
                         # list index value
                         if is_show:
                             rlt = rlt + ((vals[i] + ",") if not crtf
-                                         else vals[i] + "\n")
+                            else vals[i] + "\n")
             elif isinstance(vals, str):
                 crtf = v.get("crtf")
                 showlist = v.get("showlist")
@@ -284,7 +187,7 @@ def make_itemlist_desc(es_record):
                 is_show = False if hidden else showlist
                 if is_show:
                     rlt = rlt + ((vals + ",") if not crtf
-                                 else vals + "\n")
+                    else vals + "\n")
         if len(rlt) > 0:
             if rlt[-1] == ',':
                 rlt = rlt[:-1]
@@ -381,17 +284,16 @@ def get_all_items(nlst, klst):
     """
     alst = []
 
-    def get_name(key):
-        for lst in klst:
-            k = lst[0].split('.')[-1]
-            if key == k:
-                return lst[1]
-
+    # def get_name(key):
+    #     for lst in klst:
+    #         k = lst[0].split('.')[-1]
+    #         if key == k:
+    #             return lst[1]
     def get_items(nlst):
         if isinstance(nlst, dict):
             for k, v in nlst.items():
                 if isinstance(v, str):
-                    alst.append({get_name(k): v})
+                    alst.append({k: v})
                 else:
                     get_items(v)
         elif isinstance(nlst, list):
@@ -415,7 +317,7 @@ def to_orderdict(alst, klst):
                 alst.insert(i, OrderedDict(alst.pop(i)))
                 to_orderdict(alst[i], klst)
     elif isinstance(alst, dict):
-        nlst=[]
+        nlst = []
         if isinstance(klst, list):
             for lst in klst:
                 key = lst[0].split('.')[-1]
@@ -433,3 +335,90 @@ def to_orderdict(alst, klst):
             for k, v in alst.items():
                 if not isinstance(v, str):
                     to_orderdict(v, klst)
+
+
+def get_options_and_order_list(item_type_id):
+    """
+     Get Options by item type id
+    :param item_type_id:
+    :return: options dict and sorted list
+    """
+    ojson = ItemTypes.get_record(item_type_id)
+    solst = find_items(ojson.model.form)
+    meta_options = ojson.model.render.pop('meta_fix')
+    meta_options.update(ojson.model.render.pop('meta_list'))
+    return solst, meta_options
+
+
+def sort_meta_data_by_options(record_hit):
+    """
+    reset metadata by '_options'
+    :param record_hit:
+    """
+    try:
+
+        src = record_hit['_source'].pop('_item_metadata')
+        item_type_id = record_hit['_source'].get('item_type_id') \
+                       or src.get('item_type_id')
+        if not item_type_id:
+            return
+
+        items = []
+        solst, meta_options = get_options_and_order_list(item_type_id)
+
+        newline = True
+        for lst in solst:
+            key = lst[0]
+
+            val = src.get(key)
+            option = meta_options.get(key, {}).get('option')
+            if not val or not option:
+                continue
+
+            hidden = option.get("hidden")
+            multiple = option.get('multiple')
+            crtf = option.get("crtf")
+            showlist = option.get("showlist")
+            is_show = False if hidden else showlist
+
+            if not is_show:
+                continue
+
+            mlt = val.get('attribute_value_mlt')
+            if mlt:
+                data = list(map(lambda x: ''.join(x.values()),
+                                get_all_items(mlt, solst)))
+            else:
+                data = val.get('attribute_value')
+
+            if data:
+                if isinstance(data, list):
+                    data = ",".join(data) if multiple else \
+                        (data[0] if len(data) > 0 else "")
+
+                if newline:
+                    items.append(data)
+                else:
+                    items[-1] += "," + data
+
+            newline = crtf
+
+        if items:
+            record_hit['_source']['_comment'] = items
+    except Exception:
+        current_app.logger.exception(
+            u'Record serialization failed {}.'.format(
+                str(record_hit['_source'].get('control_number'))))
+    return
+
+
+def get_keywords_data_load(str):
+    """
+     Get a json of item type info
+    :return: dict of item type info
+    """
+    try:
+        return [(x.name, x.id) for x in ItemTypes.get_latest()]
+    except:
+        pass
+    return []

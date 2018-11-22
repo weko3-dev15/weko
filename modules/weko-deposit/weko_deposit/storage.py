@@ -19,16 +19,19 @@
 # MA 02111-1307, USA.
 
 """Weko Deposit Storage."""
-import os, base64, hashlib
-import cchardet as chardet
+import base64
+import hashlib
+import os
 
+import cchardet as chardet
 from flask import current_app
-from invenio_files_rest.storage.pyfs import PyFSFileStorage
 from invenio_files_rest.storage.base import StorageError
+from invenio_files_rest.storage.pyfs import PyFSFileStorage
 
 
 class WekoFileStorage(PyFSFileStorage):
     """"""
+
     def _init_hash(self):
         """Initialize message digest object.
 
@@ -54,11 +57,13 @@ class WekoFileStorage(PyFSFileStorage):
             if ecd and 'UTF-8' not in ecd:
                 try:
                     s = s.decode(ecd).encode('utf-8')
-                except:
+                except BaseException:
                     pass
             strb = base64.b64encode(s).decode("utf-8")
-        else:
+        elif 'pdf' in mime:
             strb = base64.b64encode(fp.read()).decode("utf-8")
+        else:
+            strb = "" 
         fp.close()
 
         fjson.update({"file": strb})

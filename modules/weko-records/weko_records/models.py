@@ -25,25 +25,25 @@ from datetime import datetime
 
 from invenio_db import db
 from sqlalchemy.dialects import mysql, postgresql
-from sqlalchemy.sql.expression import asc, desc
-from sqlalchemy.types import BLOB, LargeBinary
+from sqlalchemy.sql.expression import desc
+from sqlalchemy.types import LargeBinary
 from sqlalchemy_utils.types import JSONType, UUIDType
 
 
 class Timestamp(object):
     """Timestamp model mix-in with fractional seconds support.
 
-    SQLAlchemy-Utils timestamp model does not have support for fractional
-    seconds.
+    SQLAlchemy-Utils timestamp model does not have support for
+    fractional seconds.
     """
 
     created = db.Column(
-        db.DateTime().with_variant(mysql.DATETIME(fsp=6), "mysql"),
+        db.DateTime().with_variant(mysql.DATETIME(fsp=6), 'mysql'),
         default=datetime.utcnow,
         nullable=False
     )
     updated = db.Column(
-        db.DateTime().with_variant(mysql.DATETIME(fsp=6), "mysql"),
+        db.DateTime().with_variant(mysql.DATETIME(fsp=6), 'mysql'),
         default=datetime.utcnow,
         nullable=False
     )
@@ -87,7 +87,7 @@ class ItemType(db.Model, Timestamp):
     item_type_name = db.relationship(
         'ItemTypeName',
         backref=db.backref('item_type', lazy='dynamic',
-                           order_by=desc("item_type.tag"))
+                           order_by=desc('item_type.tag'))
     )
     """Name information from ItemTypeName class."""
 
@@ -105,11 +105,10 @@ class ItemType(db.Model, Timestamp):
         default=lambda: dict(),
         nullable=True
     )
-    """Store schema in JSON format.
-    When you create a new ``item type`` the ``schema`` field value should never be
-    ``NULL``. Default value is an empty dict. ``NULL`` value means that the
-    record metadata has been deleted.
-    """
+    """Store schema in JSON format. When you create a new ``item type`` the 
+    ``schema`` field value should never be ``NULL``. Default value is an 
+    empty dict. ``NULL`` value means that the record metadata has been 
+    deleted. """
 
     form = db.Column(
         db.JSON().with_variant(
@@ -145,11 +144,10 @@ class ItemType(db.Model, Timestamp):
         default=lambda: dict(),
         nullable=True
     )
-    """Store page render information in JSON format.
-    When you create a new ``item type`` the ``render`` field value should never be
-    ``NULL``. Default value is an empty dict. ``NULL`` value means that the
-    record metadata has been deleted.
-    """
+    """Store page render information in JSON format. When you create a new 
+    ``item type`` the ``render`` field value should never be ``NULL``. 
+    Default value is an empty dict. ``NULL`` value means that the record 
+    metadata has been deleted. """
 
     tag = db.Column(db.Integer, nullable=False)
     """Tag of item type."""
@@ -184,6 +182,10 @@ class ItemTypeName(db.Model, Timestamp):
         unique=True
     )
     """Name of item type."""
+
+    has_site_license = db.Column(db.Boolean(name='has_site_license'),
+                                 default=True, nullable=False)
+    """site license identify."""
 
 
 class ItemTypeMapping(db.Model, Timestamp):
@@ -352,8 +354,8 @@ class FileMetadata(db.Model, Timestamp):
 class ItemTypeProperty(db.Model, Timestamp):
     """Represent an itemtype property.
 
-    The ItemTypeProperty object contains a ``created`` and  a ``updated``
-    properties that are automatically updated.
+    The ItemTypeProperty object contains a ``created`` and  a
+    ``updated`` properties that are automatically updated.
     """
 
     __tablename__ = 'item_type_property'
@@ -386,11 +388,10 @@ class ItemTypeProperty(db.Model, Timestamp):
         default=lambda: dict(),
         nullable=True
     )
-    """Store schema in JSON format.
-    When you create a new ``ItemTypeProperty`` the ``schema`` field value should never be
-    ``NULL``. Default value is an empty dict. ``NULL`` value means that the
-    record metadata has been deleted.
-    """
+    """Store schema in JSON format. When you create a new 
+    ``ItemTypeProperty`` the ``schema`` field value should never be ``NULL``. 
+    Default value is an empty dict. ``NULL`` value means that the record 
+    metadata has been deleted. """
 
     form = db.Column(
         db.JSON().with_variant(
@@ -406,11 +407,10 @@ class ItemTypeProperty(db.Model, Timestamp):
         default=lambda: dict(),
         nullable=True
     )
-    """Store schema form (single) in JSON format.
-    When you create a new ``ItemTypeProperty`` the ``form`` field value should never be
-    ``NULL``. Default value is an empty dict. ``NULL`` value means that the
-    record metadata has been deleted.
-    """
+    """Store schema form (single) in JSON format. When you create a new 
+    ``ItemTypeProperty`` the ``form`` field value should never be ``NULL``. 
+    Default value is an empty dict. ``NULL`` value means that the record 
+    metadata has been deleted. """
 
     forms = db.Column(
         db.JSON().with_variant(
@@ -426,11 +426,10 @@ class ItemTypeProperty(db.Model, Timestamp):
         default=lambda: dict(),
         nullable=True
     )
-    """Store schema form (array) in JSON format.
-    When you create a new ``ItemTypeProperty`` the ``forms`` field value should never be
-    ``NULL``. Default value is an empty dict. ``NULL`` value means that the
-    record metadata has been deleted.
-    """
+    """Store schema form (array) in JSON format. When you create a new 
+    ``ItemTypeProperty`` the ``forms`` field value should never be ``NULL``. 
+    Default value is an empty dict. ``NULL`` value means that the record 
+    metadata has been deleted. """
 
     delflg = db.Column(db.Boolean(name='delFlg'),
                        default=False, nullable=False)
@@ -438,11 +437,101 @@ class ItemTypeProperty(db.Model, Timestamp):
     """
 
 
+class SiteLicenseInfo(db.Model, Timestamp):
+    """Represent a SiteLicenseInfo data.
+
+    The SiteLicenseInfo object contains a ``created`` and  a ``updated``
+    properties that are automatically updated.
+    """
+    __tablename__ = 'sitelicense_info'
+
+    organization_id = db.Column(
+        db.Integer(),
+        primary_key=True,
+        autoincrement=True
+    )
+
+    organization_name = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    domain_name = db.Column(
+        db.Text,
+        nullable=True
+    )
+
+    mail_address = db.Column(
+        db.String(255),
+        nullable=True
+    )
+
+    # Relationships definitions
+    addresses = db.relationship(
+        'SiteLicenseIpAddress', backref='SiteLicenseInfo')
+    """Relationship to SiteLicenseIpAddress."""
+
+    def __iter__(self):
+        sl = {}
+        for name in dir(SiteLicenseInfo):
+            if not name.startswith('__') and not name.startswith('_'):
+                value = getattr(self, name)
+                if isinstance(value, list):
+                    ip_lst = []
+                    for lst in value:
+                        if isinstance(lst, SiteLicenseIpAddress):
+                            ip_lst.append(dict(lst))
+                    yield (name, ip_lst)
+                elif isinstance(value, str):
+                    yield (name, value)
+
+
+class SiteLicenseIpAddress(db.Model, Timestamp):
+    """Represent a SiteLicenseIpAddress data.
+
+    The SiteLicenseIpAddress object contains a ``created`` and  a
+    ``updated`` properties that are automatically updated.
+    """
+    __tablename__ = 'sitelicense_ip_address'
+
+    organization_id = db.Column(
+        db.Integer(),
+        db.ForeignKey(SiteLicenseInfo.organization_id, ondelete='RESTRICT'),
+        primary_key=True
+    )
+
+    organization_no = db.Column(
+        db.Integer(),
+        primary_key=True,
+        autoincrement=True
+    )
+
+    start_ip_address = db.Column(
+        db.String(16),
+        nullable=False
+    )
+
+    finish_ip_address = db.Column(
+        db.String(16),
+        nullable=False
+    )
+
+    def __iter__(self):
+        for name in dir(SiteLicenseIpAddress):
+            if not name.startswith('__') and not name.startswith('_'):
+                value = getattr(self, name)
+                if isinstance(value, str):
+                    yield (name, value)
+
+
 __all__ = (
+    'Timestamp',
     'ItemType',
     'ItemTypeName',
     'ItemTypeMapping',
     'ItemTypeProperty',
     'ItemMetadata',
     'FileMetadata',
+    'SiteLicenseInfo',
+    'SiteLicenseIpAddress',
 )

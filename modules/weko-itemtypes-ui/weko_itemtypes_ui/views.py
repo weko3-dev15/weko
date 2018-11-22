@@ -20,12 +20,16 @@
 
 """Blueprint for weko-itemtypes-ui."""
 
-from flask import abort, Blueprint, current_app, json, jsonify, redirect, \
-    render_template, request, url_for, Flask, make_response
+import sys
+
+from flask import Blueprint, Flask, abort, current_app, json, jsonify, \
+    make_response, redirect, render_template, request, url_for
 from flask_babelex import gettext as _
-from flask_login import login_required, current_user
+from flask_login import login_required
 from invenio_db import db
-from weko_records.api import ItemTypes, ItemTypeProps, Mapping
+from weko_records.api import ItemTypeProps, ItemTypes, Mapping
+from weko_schema_ui.api import WekoSchema
+from invenio_i18n.ext import current_i18n
 
 from .permissions import item_type_permission
 
@@ -36,11 +40,18 @@ blueprint = Blueprint(
     template_folder='templates',
     static_folder='static',
 )
+blueprint_api = Blueprint(
+    'weko_itemtypes_rest',
+    __name__,
+    url_prefix='/itemtypes',
+    template_folder='templates',
+    static_folder='static',
+)
 
 
-@blueprint.route("/", methods=['GET'])
-@blueprint.route("/<int:item_type_id>", methods=['GET'])
-@blueprint.route("/register", methods=['GET'])
+@blueprint.route('/', methods=['GET'])
+@blueprint.route('/<int:item_type_id>', methods=['GET'])
+@blueprint.route('/register', methods=['GET'])
 @login_required
 @item_type_permission.require(http_exception=403)
 def index(item_type_id=0):
@@ -56,7 +67,7 @@ def index(item_type_id=0):
     )
 
 
-@blueprint.route("/<int:item_type_id>/render", methods=['GET'])
+@blueprint.route('/<int:item_type_id>/render', methods=['GET'])
 @login_required
 @item_type_permission.require(http_exception=403)
 def render(item_type_id=0):
@@ -72,11 +83,13 @@ def render(item_type_id=0):
                 'schema': {}
             }
         }
-    return jsonify(result.render)
+    else:
+        result = result.render
+    return jsonify(result)
 
 
-@blueprint.route("/register", methods=['POST'])
-@blueprint.route("/<int:item_type_id>/register", methods=['POST'])
+@blueprint.route('/register', methods=['POST'])
+@blueprint.route('/<int:item_type_id>/register', methods=['POST'])
 @login_required
 @item_type_permission.require(http_exception=403)
 def register(item_type_id=0):
@@ -96,14 +109,14 @@ def register(item_type_id=0):
         Mapping.create(item_type_id=record.model.id,
                        mapping=data.get('table_row_map').get('mapping'))
         db.session.commit()
-    except:
+    except BaseException:
         db.session.rollback()
         return jsonify(msg=_('Fail'))
     current_app.logger.debug('itemtype register: {}'.format(item_type_id))
     return jsonify(msg=_('Success'))
 
 
-@blueprint.route("/property", methods=['GET'])
+@blueprint.route('/property', methods=['GET'])
 @login_required
 @item_type_permission.require(http_exception=403)
 def custom_property(property_id=0):
@@ -115,7 +128,7 @@ def custom_property(property_id=0):
     )
 
 
-@blueprint.route("/property/list", methods=['GET'])
+@blueprint.route('/property/list', methods=['GET'])
 @login_required
 @item_type_permission.require(http_exception=403)
 def get_property_list(property_id=0):
@@ -123,33 +136,26 @@ def get_property_list(property_id=0):
     props = ItemTypeProps.get_records([])
     lists = {}
     for k in props:
-        tmp = {}
-        tmp['name'] = k.name
-        tmp['schema'] = k.schema
-        tmp['form'] = k.form
-        tmp['forms'] = k.forms
+        tmp = {'name': k.name, 'schema': k.schema, 'form': k.form,
+               'forms': k.forms}
         lists[k.id] = tmp
 
     return jsonify(lists)
 
 
-@blueprint.route("/property/<int:property_id>", methods=['GET'])
+@blueprint.route('/property/<int:property_id>', methods=['GET'])
 @login_required
 @item_type_permission.require(http_exception=403)
 def get_property(property_id=0):
     """Renders an primitive property view."""
     prop = ItemTypeProps.get_record(property_id)
-    tmp = {}
-    tmp['id'] = prop.id
-    tmp['name'] = prop.name
-    tmp['schema'] = prop.schema
-    tmp['form'] = prop.form
-    tmp['forms'] = prop.forms
+    tmp = {'id': prop.id, 'name': prop.name, 'schema': prop.schema,
+           'form': prop.form, 'forms': prop.forms}
     return jsonify(tmp)
 
 
-@blueprint.route("/property", methods=['POST'])
-@blueprint.route("/property/<int:property_id>", methods=['POST'])
+@blueprint.route('/property', methods=['POST'])
+@blueprint.route('/property/<int:property_id>', methods=['POST'])
 @login_required
 @item_type_permission.require(http_exception=403)
 def custom_property_new(property_id=0):
@@ -173,8 +179,14 @@ def custom_property_new(property_id=0):
     return jsonify(msg=_('Success'))
 
 
-@blueprint.route("/mapping", methods=['GET'])
-@blueprint.route("/mapping/<int:ItemTypeID>", methods=['GET'])
+@blueprint_api.route('/<int:ItemTypeID>/mapping', methods=['GET'])
+def itemtype_mapping(ItemTypeID=0):
+    item_type_mapping = Mapping.get_record(ItemTypeID)
+    return jsonify(item_type_mapping)
+
+
+@blueprint.route('/mapping', methods=['GET'])
+@blueprint.route('/mapping/<int:ItemTypeID>', methods=['GET'])
 @login_required
 @item_type_permission.require(http_exception=403)
 def mapping_index(ItemTypeID=0):
@@ -183,26 +195,113 @@ def mapping_index(ItemTypeID=0):
     :param ItemTypeID: Item type ID. (Default: 0)
     :return: The rendered template.
     """
-    lists = ItemTypes.get_all()
-    if lists is None or len(lists) == 0:
+    try:
+        lists = ItemTypes.get_latest()    # ItemTypes.get_all()
+        if lists is None or len(lists) == 0:
+            return render_template(
+                current_app.config['WEKO_ITEMTYPES_UI_ERROR_TEMPLATE']
+            )
+        item_type = ItemTypes.get_by_id(ItemTypeID)
+        if item_type is None:
+            return redirect(url_for('.mapping_index', ItemTypeID=lists[0].id))
+        itemtype_list = []
+        itemtype_prop = item_type.schema.get('properties')
+        for key, prop in itemtype_prop.items():
+            cur_lang = current_i18n.language
+            schema_form = item_type.form
+            elemStr = ''
+            if 'default' != cur_lang:
+                for elem in schema_form:
+                    if 'items' in elem:
+                        for sub_elem in elem['items']:
+                            if 'key' in sub_elem and sub_elem['key'] == key:
+                                if 'title_i18n' in sub_elem:
+                                    if cur_lang in sub_elem['title_i18n']:
+                                        if len(sub_elem['title_i18n'][cur_lang]) > 0:
+                                            elemStr = sub_elem['title_i18n'][
+                                                cur_lang]
+                                else:
+                                    elemStr = sub_elem['title']
+                                break
+                    else:
+                        if elem['key'] == key:
+                            if 'title_i18n' in elem:
+                                if cur_lang in elem['title_i18n']:
+                                    if len(elem['title_i18n'][cur_lang]) > 0:
+                                        elemStr = elem['title_i18n'][
+                                            cur_lang]
+                            else:
+                                elemStr = elem['title']
+
+                    if elemStr != '':
+                        break
+
+            if elemStr == '':
+                elemStr = prop.get('title')
+
+            itemtype_list.append((key, elemStr))
+            # itemtype_list.append((key, prop.get('title')))
+        # jpcoar_list = []
+        mapping_name = request.args.get('mapping_type', 'jpcoar_mapping')
+        jpcoar_xsd = WekoSchema.get_all()
+        jpcoar_lists = {}
+        for item in jpcoar_xsd:
+            jpcoar_lists[item.schema_name] = json.loads(item.xsd)
+        # jpcoar_prop = json.loads(jpcoar_xsd.model.xsd)
+        # for key in jpcoar_prop.keys():
+        #     jpcoar_list.append((key, key))
+        item_type_mapping = Mapping.get_record(ItemTypeID)
+        # mapping = json.dumps(item_type_mapping, indent=4, ensure_ascii=False)
         return render_template(
-            current_app.config['WEKO_ITEMTYPES_UI_ERROR_TEMPLATE']
+            current_app.config['WEKO_ITEMTYPES_UI_MAPPING_TEMPLATE'],
+            lists=lists,
+            hide_mapping_prop=item_type_mapping,
+            mapping_name=mapping_name,
+            hide_itemtype_prop=itemtype_prop,
+            jpcoar_prop_lists=remove_xsd_prefix(jpcoar_lists),
+            itemtype_list=itemtype_list,
+            id=ItemTypeID
         )
-    item_type = ItemTypes.get_by_id(ItemTypeID)
-    if item_type is None:
-        return redirect(url_for('.mapping_index', ItemTypeID=lists[0].id))
-    item_type_mapping = Mapping.get_record(ItemTypeID)
-    mapping = json.dumps(item_type_mapping, indent=4, ensure_ascii=False)
-    current_app.logger.debug(mapping)
-    return render_template(
-        current_app.config['WEKO_ITEMTYPES_UI_MAPPING_TEMPLATE'],
-        lists=lists,
-        mapping=mapping,
-        id=ItemTypeID
-    )
+    except:
+        current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
+    return abort(400)
 
 
-@blueprint.route("/mapping", methods=['POST'])
+@blueprint.route('/mapping/schema', methods=['GET'])
+@blueprint.route('/mapping/schema/', methods=['GET'])
+@blueprint.route('/mapping/schema/<string:SchemaName>', methods=['GET'])
+@login_required
+@item_type_permission.require(http_exception=403)
+def schema_list(SchemaName=None):
+    jpcoar_lists = {}
+    if SchemaName is None:
+        jpcoar_xsd = WekoSchema.get_all()
+        for item in jpcoar_xsd:
+            jpcoar_lists[item.schema_name] = json.loads(item.xsd)
+    else:
+        jpcoar_xsd = WekoSchema.get_record_by_name(SchemaName)
+        if jpcoar_xsd is not None:
+            jpcoar_lists[SchemaName] = json.loads(jpcoar_xsd.model.xsd)
+    return jsonify(remove_xsd_prefix(jpcoar_lists))
+
+
+def remove_xsd_prefix(jpcoar_lists):
+    jpcoar_copy = {}
+
+    def remove_prefix(jpcoar_src, jpcoar_dst):
+        for key, value in jpcoar_src.items():
+            if 'type' == key:
+                jpcoar_dst[key] = value
+                continue
+            jpcoar_dst[key.split(':').pop()] = {}
+            if isinstance(value, object):
+                remove_prefix(value, jpcoar_dst[key.split(':').pop()])
+
+    remove_prefix(jpcoar_lists, jpcoar_copy)
+    return jpcoar_copy
+
+
+@blueprint.route('/mapping', methods=['POST'])
 @login_required
 @item_type_permission.require(http_exception=403)
 def mapping_register():
@@ -212,12 +311,11 @@ def mapping_register():
         return jsonify(msg=_('Header Error'))
 
     data = request.get_json()
-    current_app.logger.debug(data)
     try:
         Mapping.create(item_type_id=data.get('item_type_id'),
-                       mapping=json.loads(data.get('mapping')))
+                       mapping=data.get('mapping'))
         db.session.commit()
-    except:
+    except BaseException:
         db.session.rollback()
         return jsonify(msg=_('Fail'))
     return jsonify(msg=_('Success'))

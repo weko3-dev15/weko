@@ -25,7 +25,7 @@
 
 import copy
 
-WEKO_BUCKET_QUOTA_SIZE = 50 * 1000 * 1000 * 1000  # 50 GB
+WEKO_BUCKET_QUOTA_SIZE = 500 * 1000 * 1000 * 1000  # 500 GB
 """Maximum quota per bucket."""
 
 WEKO_MAX_FILE_SIZE = WEKO_BUCKET_QUOTA_SIZE
@@ -71,7 +71,8 @@ DEPOSIT_REST_ENDPOINTS = dict(
         list_route='/deposits/items',
         item_route='/deposits/items/<{0}:pid_value>'.format(_PID),
         file_list_route='/deposits/items/<{0}:pid_value>/files'.format(_PID),
-        file_item_route='/deposits/items/<{0}:pid_value>/files/<path:key>'.format(_PID),
+        file_item_route='/deposits/items/<{0}:pid_value>/files/<path:key>'.format(
+            _PID),
         default_media_type='application/json',
         links_factory_imp='weko_deposit.links:links_factory',
         max_result_window=10000,
@@ -84,7 +85,8 @@ DEPOSIT_REST_ENDPOINTS = dict(
 
 # for redirect to next page(index select)
 WEKO_DEPOSIT_REST_ENDPOINTS = copy.deepcopy(DEPOSIT_REST_ENDPOINTS)
-WEKO_DEPOSIT_REST_ENDPOINTS['depid']['rdc_rout'] = '/deposits/redirect/<{0}:pid_value>'.format(_PID)
+WEKO_DEPOSIT_REST_ENDPOINTS['depid']['rdc_route'] = '/deposits/redirect/<{0}:pid_value>'.format(
+    _PID)
 
 DEPOSIT_RECORDS_UI_ENDPOINTS = {
     'depid': {
@@ -95,7 +97,16 @@ DEPOSIT_RECORDS_UI_ENDPOINTS = {
         'view_imp': 'weko_items_ui.views.default_view_method',
         'permission_factory_imp': 'weko_items_ui.permissions:edit_permission_factory',
     },
+    'iframe_depid': {
+        'pid_type': 'depid',
+        'route': '/item/iframe/edit/<pid_value>',
+        'template': 'weko_items_ui/iframe/item_edit.html',
+        'record_class': 'weko_deposit.api:WekoDeposit',
+        'view_imp': 'weko_items_ui.views.default_view_method',
+        'permission_factory_imp': 'weko_items_ui.permissions:edit_permission_factory',
+    }
 }
 
 RECORDS_REST_DEFAULT_CREATE_PERMISSION_FACTORY = None
 RECORDS_REST_DEFAULT_UPDATE_PERMISSION_FACTORY = None
+RECORDS_REST_DEFAULT_DELETE_PERMISSION_FACTORY = None

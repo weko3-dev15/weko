@@ -25,14 +25,14 @@
 {%- endblock css %}
 
 {%- block javascript %}
-  {% assets "weko_index_tree_view" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {{ super() }}
+  {% assets "weko_index_tree_view" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_index_tree_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
 {%- endblock javascript %}
 
 {%- block page_body_tabs %}
   {% from "weko_theme/macros/edit_tabs_selector.html" import tabs_selector %}
-  {{ tabs_selector('edit tree') }}
+  {{ tabs_selector('edit_tree') }}
 {%- endblock page_body_tabs%}
 
 {%- block page_body_main %}
@@ -40,9 +40,9 @@
   <div class="col-sm-2 col-md-2 col-lg-2">
     <div id="index_tree"></div>
   </div>
-  <div class="col-sm-10 col-md-10 col-lg-10">
-    <div class="panel panel-default">
-      <div class="panel-heading">
+  <div class="col-sm-10el-default">
+      <div class="panel-he col-md-10 col-lg-10">
+    <div class="panel panading">
         <h3 class="panel-title">{{_('Index Tree')}}</h3>
       </div>
       <div class="panel-body">

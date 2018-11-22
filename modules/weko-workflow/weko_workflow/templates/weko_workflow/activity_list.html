@@ -1,0 +1,121 @@
+{#
+# This file is part of WEKO3.
+# Copyright (C) 2017 National Institute of Informatics.
+#
+# WEKO3 is free software; you can redistribute it
+# and/or modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# WEKO3 is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WEKO3; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+#}
+
+{%- extends config.WEKO_WORKFLOW_BASE_TEMPLATE %}
+{%- from "invenio_communities/macros.html" import community_header, community_footer %}
+
+{%- block css %}
+  {{ super() }}
+{%- endblock css %}
+
+{%- block javascript %}
+  {{ super() }}
+  {%- assets "workflow_activity_list_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+{%- endblock javascript %}
+
+{%- block page_body_tabs %}
+  {% from "weko_theme/macros/tabs_selector.html" import tabs_selector %}
+  {{ tabs_selector('flow',community_id) }}
+{%- endblock page_body_tabs %}
+
+{%- block page_header %}
+{%-if not community %}
+{{ super() }}
+{%- endif%}
+{%- endblock page_header %}
+
+{%- block page_footer %}
+{%-if not community%}
+{{ super() }}
+{%- endif%}
+{%- endblock page_footer %}
+
+{% block page_body %}
+{%-if not community %}
+{{super()}}
+{%- else%}
+<div class="communities">
+<div id="community-id" name="community-id" hidden>{{ community.id }}</div>
+{{ community_header(community, subtitle='') }}
+{{super()}}
+{{ community_footer(community, link=False, subtitle='') }}
+</div>
+<div class="communities">
+</div>
+{%- endif%}
+{% endblock page_body %}
+
+
+{%- block page_body_main %}
+<div role="navigation">
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active activity_li">
+      <a href="javascript:void();" class="activity_tab" data-show-tab="todo">{{_('ToDo')}}</a></li>
+    <li role="presentation" class="activity_li">
+      <a href="javascript:void();" class="activity_tab" data-show-tab="wait">{{_('Wait')}}</a></li>
+    <li role="presentation" class="activity_li">
+      <a href="javascript:void();" class="activity_tab" data-show-tab="all">{{_('All')}}</a></li>
+  </ul>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>{{ _('No.') }}</th>
+        <th>{{ _('Updated') }}</th>
+        <th>{{ _('Activity') }}</th>
+        <th>{{_('Item')}}</th>
+        <th>{{_('WorkFlow')}}</th>
+        <th>{{_('Action')}}</th>
+        <th>{{_('Status')}}</th>
+        <th>{{_('User')}}</th>
+      </tr>
+    </thead>
+    <tbody>
+    {%- for activity in activities %}
+      <tr class="hide tb-all {%- if 'ToDo' == activity.type %} tb-todo {%- elif 'Wait' == activity.type %} tb-wait {%- endif %}">
+        <th scope="row">{{loop.index}}</th>
+        <td>{{activity.updated.date()}}</td>
+        {%-if community%}
+        <td><a href="{{url_for('weko_workflow.display_activity', activity_id=activity.activity_id, status=activity.type, community=community.id)}}">{{activity.activity_id}}</a></td>
+        {%-else%}
+        <td><a href="{{url_for('weko_workflow.display_activity', activity_id=activity.activity_id, status=activity.type)}}">{{activity.activity_id}}</a></td>
+        {%- endif%}
+        <td>{{activity.ItemName}}</td>
+        <td>{{activity.workflow.flows_name}}</td>
+        <td>{{activity.action.action_name}}</td>
+        <td>{{_(activity.StatusDesc)}}</td>
+        <td>{{activity.User.email}}</td>
+      </tr>
+    {%- endfor %}
+    </tbody>
+    </table>
+    {%-if community%}
+      <a class="btn btn-default pull-right" href="{{url_for('weko_workflow.new_activity', community=community.id)}}">{{_('New Activity')}}</a>
+    {%-else%}
+      <a class="btn btn-default pull-right" href="{{url_for('weko_workflow.new_activity')}}">{{_('New Activity')}}</a>
+    {%- endif%}
+
+  </div>
+</div>
+{%- endblock page_body_main %}
+
+

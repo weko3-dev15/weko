@@ -60,6 +60,9 @@ class WekoSearchUI(object):
                 'WEKO_SEARCH_UI_BASE_PAGE_TEMPLATE',
                 app.config['BASE_PAGE_TEMPLATE'],
             )
+
+        app.config.setdefault( 'INDEX_IMG', app.config['INDEX_IMG'])
+
         app.config.update(
             SEARCH_UI_SEARCH_TEMPLATE=getattr(
                 config,
@@ -67,6 +70,9 @@ class WekoSearchUI(object):
             SEARCH_UI_JSTEMPLATE_RESULTS=getattr(
                 config,
                 'WEKO_SEARCH_UI_JSTEMPLATE_RESULTS'),
+            SEARCH_UI_JSTEMPLATE_RESULTS_BASIC=getattr(
+                config,
+                'WEKO_SEARCH_UI_JSTEMPLATE_RESULTS_BASIC'),
             SEARCH_UI_JSTEMPLATE_COUNT=getattr(
                 config,
                 'WEKO_SEARCH_UI_JSTEMPLATE_COUNT'),
@@ -80,6 +86,7 @@ class WekoSearchREST(object):
     """
       Index Search Rest Obj
     """
+
     def __init__(self, app=None):
         """Extension initialization.
 
@@ -97,8 +104,7 @@ class WekoSearchREST(object):
         :param app: An instance of :class:`flask.Flask`.
         """
         blueprint = create_blueprint(app,
-            app.config['WEKO_SEARCH_REST_ENDPOINTS']
-        )
+                                     app.config['WEKO_SEARCH_REST_ENDPOINTS']
+                                     )
         app.register_blueprint(blueprint)
         app.extensions['weko-search-rest'] = self
-

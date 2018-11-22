@@ -22,6 +22,7 @@
 
 from . import config
 from .views import blueprint
+from weko_records.utils import get_keywords_data_load
 
 
 class WekoTheme(object):
@@ -43,6 +44,7 @@ class WekoTheme(object):
         self.init_config(app)
         app.register_blueprint(blueprint)
         app.extensions['weko-theme'] = self
+        app.add_template_filter(get_keywords_data_load, name='item_type_all')
 
     def init_config(self, app):
         """Initialize configuration.
@@ -51,3 +53,9 @@ class WekoTheme(object):
         """
         for k in dir(config):
             app.config[k] = getattr(config, k)
+        if "ADMIN_UI_SKIN" in app.config:
+            app.config.update(
+                ADMIN_UI_SKIN='skin-red',
+            )
+        else:
+            app.config.setdefault("ADMIN_UI_SKIN", "skin-green")

@@ -26,3 +26,97 @@ msgstr ""
 msgid "Success"
 msgstr ""
 
+#: angular i18n add start
+#: app-author-add
+#: app-author-add/src/app/app.component.html:21
+msgid "Author_Name"
+msgstr ""
+
+#: app-author-add/src/app/app.component.html:60
+msgid "Author_Display"
+msgstr ""
+
+#: app-author-add/src/app/app.component.html:65
+msgid "Author_Hide"
+msgstr ""
+
+#: app-author-add/src/app/app.component.html:85
+msgid "Author_Add_Author_Item"
+msgstr ""
+
+#: app-author-add/src/app/app.component.html:101
+msgid "Author_ID"
+msgstr ""
+
+#: app-author-add/src/app/app.component.html:115
+msgid "Author_Placeholder_authorId"
+msgstr ""
+
+#: app-author-add/src/app/app.component.html:122
+msgid "Author_Confirm"
+msgstr ""
+
+#: app-author-add/src/app/app.component.html:158
+msgid "Author_Add_Author_ID"
+msgstr ""
+
+#: app-author-add/src/app/app.component.html:173
+msgid "Author_EMail"
+msgstr ""
+
+#: app-author-add/src/app/app.component.html:198
+msgid "Author_Add_EMail"
+msgstr ""
+
+#: app-author-add/src/app/app.component.html:215
+msgid "Author_Button_Clear"
+msgstr ""
+
+#: app-author-add/src/app/app.component.html:221
+msgid "Author_Button_Save"
+msgstr ""
+
+#: app-author-add/src/app/app.component.js:46
+msgid "Author_familyNmAndNm"
+msgstr ""
+
+#: app-author-add/src/app/app.component.js:47
+msgid "Author_fullNm"
+msgstr ""
+
+#: app-author-search start
+#: app-author-search/src/app/app.component.html:11
+msgid "Author_Add_Organization"
+msgstr ""
+
+#: app-author-search/src/app/app.component.html:17
+msgid "Author_Add_Author"
+msgstr ""
+
+#: app-author-search/src/app/app.component.html:29
+msgid "Author_Search"
+msgstr ""
+
+#: app-author-search/src/app/app.component.html:68
+msgid "Author_Mail_Address"
+msgstr ""
+
+#: app-author-search/src/app/app.component.html:102
+msgid "Author_Edit"
+msgstr ""
+
+#: app-author-search/src/app/app.component.html:112
+msgid "Author_Search_No_Result"
+msgstr ""
+
+#: app-author-search/src/app/app.component.html:121
+msgid "Author_Page_Previous"
+msgstr ""
+
+#: app-author-search/src/app/app.component.html:130
+msgid "Author_Page_Next"
+msgstr ""
+
+#: app-author-search/src/app/app.component.html:130
+msgid "Author_On_1_Page"
+msgstr ""

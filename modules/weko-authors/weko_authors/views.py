@@ -20,16 +20,16 @@
 
 """Views for weko-authors."""
 
-
-from elasticsearch_dsl import Q, Search
-from flask import Blueprint, current_app, json, jsonify, render_template, \
-    request
+from flask import (
+    Blueprint, current_app, json, jsonify, render_template, request)
 from flask_babelex import gettext as _
 from flask_login import login_required
 from invenio_indexer.api import RecordIndexer
-from invenio_search import current_search
 
 from .permissions import author_permission
+from invenio_db import db
+from .models import Authors
+from weko_records.models import ItemMetadata
 
 blueprint = Blueprint(
     'weko_authors',
@@ -66,25 +66,93 @@ def add():
         current_app.config['WEKO_AUTHORS_EDIT_TEMPLATE'])
 
 
+# add by ryuu at 20180808 start
+@blueprint.route("/edit", methods=['GET'])
+@login_required
+@author_permission.require(http_exception=403)
+def edit():
+    """Render an adding author view."""
+    return render_template(
+        current_app.config['WEKO_AUTHORS_EDIT_TEMPLATE'])
+# add by ryuu at 20180808 end
+
 @blueprint_api.route("/add", methods=['POST'])
 @login_required
 @author_permission.require(http_exception=403)
 def create():
     """Add an author."""
     if request.headers['Content-Type'] != 'application/json':
-        current_app.logger.debug(request.headers['Content-Type'])
         return jsonify(msg=_('Header Error'))
 
     data = request.get_json()
-    current_app.logger.debug(data)
-    current_app.logger.debug(type(data))
-    current_app.logger.debug(type(json.dumps(data)))
-    current_app.logger.debug(json.dumps(data))
+    data["gather_flg"]=0
     indexer = RecordIndexer()
     indexer.client.index(index="authors",
                          doc_type="author",
                          body=data,)
+
+    author_data = dict()
+
+    author_data["id"]= json.loads(json.dumps(data))["pk_id"]
+    author_data["json"]= json.dumps(data)
+
+    with db.session.begin_nested():
+        author = Authors(**author_data)
+        db.session.add(author)
+    db.session.commit()
     return jsonify(msg=_('Success'))
+
+# add by ryuu. at 20180820 start
+@blueprint_api.route("/edit", methods=['POST'])
+@login_required
+@author_permission.require(http_exception=403)
+def update_author():
+    """Add an author."""
+    if request.headers['Content-Type'] != 'application/json':
+        current_app.logger.debug(request.headers['Content-Type'])
+        return jsonify(msg=_('Header Error'))
+
+    data = request.get_json()
+    indexer = RecordIndexer()
+    body = {'doc': data}
+    indexer.client.update(
+        index="authors",
+        doc_type="author",
+        id=json.loads(json.dumps(data))["id"],
+        body=body
+    )
+
+    with db.session.begin_nested():
+        author_data = Authors.query.filter_by(id=json.loads(json.dumps(data))["pk_id"]).one()
+        author_data.json = json.dumps(data)
+        db.session.merge(author_data)
+    db.session.commit()
+
+    return jsonify(msg=_('Success'))
+
+@blueprint_api.route("/delete", methods=['post'])
+@login_required
+@author_permission.require(http_exception=403)
+def delete_author():
+    """Add an author."""
+    if request.headers['Content-Type'] != 'application/json':
+        current_app.logger.debug(request.headers['Content-Type'])
+        return jsonify(msg=_('Header Error'))
+
+    data = request.get_json()
+    indexer = RecordIndexer()
+    indexer.client.delete(id=json.loads(json.dumps(data))["Id"],
+                          index="authors",
+                          doc_type="author",)
+
+    with db.session.begin_nested():
+        author_data = Authors.query.filter_by(id=json.loads(json.dumps(data))["pk_id"]).one()
+        db.session.delete(author_data)
+    db.session.commit()
+
+    return jsonify(msg=_('Success'))
+
+# add by ryuu. at 20180820 end
 
 
 @blueprint_api.route("/search", methods=['POST'])
@@ -93,20 +161,30 @@ def create():
 def get():
     """Get all authors."""
     data = request.get_json()
-    current_app.logger.debug(data)
 
     search_key = data.get('searchKey') or ''
-    query = {"match_all": {}}
+    query = {"match": {"gather_flg":0}}
 
     if search_key:
         search_keys = search_key.split(" ")
-        current_app.logger.debug(search_keys)
-        current_app.logger.debug(len(search_keys))
         match = []
         for key in search_keys:
             if key:
                 match.append({"match": {"_all": key}})
-        query = {"bool": {"must": match}}
+        # query = {"bool": {"should": match},"filter":{"term":{"gather_flg":0}}}
+        query = {
+            "filtered":{
+                "filter":{
+                    "bool":{
+                        "should":match,
+                        "must":{
+                            "term":{"gather_flg":0}
+                        }
+                    }
+                }
+            }
+        }
+
 
     size = (data.get('numOfPage') or
             current_app.config['WEKO_AUTHORS_NUM_OF_PAGE'])
@@ -124,6 +202,50 @@ def get():
         "from": offset,
         "size": size,
         "sort": sort
+    }
+    query_item={
+      "size": 0,
+      "query": {
+          "bool": {
+              "must_not": {
+                  "match": {
+                      "weko_id": "",
+                  }
+              }
+          }
+      },"aggs":{
+          "item_count": {
+              "terms": {
+                "field": "weko_id"
+               }
+          }
+       }
+    }
+
+    current_app.logger.debug(body)
+    indexer = RecordIndexer()
+    result = indexer.client.search(index="authors", body=body)
+    result_itemCnt = indexer.client.search(index="weko", body=query_item)
+
+    result['item_cnt'] = result_itemCnt
+
+    return jsonify(result)
+
+@blueprint_api.route("/search_edit", methods=['POST'])
+@login_required
+@author_permission.require(http_exception=403)
+def getById():
+    """Get all authors."""
+    data = request.get_json()
+    search_key = data.get('Id') or ''
+
+    if search_key:
+        match = []
+        match.append({"match": {"_id": search_key}})
+        query = {"bool": {"must": match}}
+
+    body = {
+        "query": query
     }
     current_app.logger.debug(body)
     indexer = RecordIndexer()
@@ -179,3 +301,107 @@ def mapping():
 
     current_app.logger.debug([last])
     return json.dumps([last])
+
+@blueprint_api.route("/gather", methods=['POST'])
+@login_required
+@author_permission.require(http_exception=403)
+def gatherById():
+    """gather author."""
+    data = request.get_json()
+    gatherFrom = data["idFrom"]
+    gatherFromPkId = data["idFromPkId"]
+    gatherTo = data["idTo"]
+    current_app.logger.debug(gatherFrom)
+    current_app.logger.debug(gatherFromPkId)
+    current_app.logger.debug(gatherTo)
+
+    #update DB of Author
+    try:
+        with db.session.begin_nested():
+            for j in gatherFromPkId :
+                author_data = Authors.query.filter_by(id=j).one()
+                author_data.gather_flg = 1
+                db.session.merge(author_data)
+        db.session.commit()
+    except Exception as ex:
+        current_app.logger.debug(ex)
+        db.session.rollback()
+        return jsonify({'code': 204, 'msg': 'Faild'})
+
+    update_author_q = {
+        "query": {
+            "match": {
+                "_id": "@id"
+            }
+        }
+    }
+
+    indexer = RecordIndexer()
+    for t in gatherFrom:
+        q = json.dumps(update_author_q).replace("@id", t)
+        q = json.loads(q)
+        res = indexer.client.search(index="authors", body=q)
+        for h in res.get("hits").get("hits"):
+            body = {
+                'doc':{
+                    'gather_flg':1
+                }
+            }
+            indexer.client.update(
+                index="authors",
+                doc_type="author",
+                id=h.get("_id"),
+                body=body
+            )
+
+    update_q ={
+        "query": {
+            "match": {
+                "weko_id": "@id"
+            }
+        }
+    }
+    indexer = RecordIndexer()
+    item_pk_id =[]
+    for t in gatherFrom:
+        q = json.dumps(update_q).replace("@id", t)
+        q = json.loads(q)
+        res = indexer.client.search(index="weko", body=q)
+        current_app.logger.debug(res.get("hits").get("hits"))
+        for h in res.get("hits").get("hits"):
+            sub = {"id":h.get("_id"),"weko_id":t}
+            item_pk_id.append(sub)
+            body = {
+                'doc':{
+                    "weko_id":gatherTo,
+                    "weko_id_hidden":gatherTo
+                }
+            }
+            indexer.client.update(
+                index="weko",
+                doc_type="item",
+                id=h.get("_id"),
+                body=body
+            )
+    current_app.logger.debug(item_pk_id)
+    try:
+        with db.session.begin_nested():
+            for j in item_pk_id:
+                itemData = ItemMetadata.query.filter_by(id=j.get("id")).one()
+                itemJson = json.dumps(itemData.json)
+                itemJson = itemJson.replace(j.get("weko_id"),gatherTo)
+                itemData.json = json.loads(itemJson)
+                db.session.merge(itemData)
+        db.session.commit()
+    except Exception as ex:
+        current_app.logger.debug(ex)
+        db.session.rollback()
+        return jsonify({'code': 204, 'msg': 'Faild'})
+
+    return jsonify({'code': 0, 'msg': 'Success'})
+
+
+
+
+
+

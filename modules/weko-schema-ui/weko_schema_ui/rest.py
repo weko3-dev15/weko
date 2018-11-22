@@ -20,33 +20,30 @@
 
 """Blueprint for schema rest."""
 
-import json, uuid, shutil
+import json
 import os.path
+import shutil
+import uuid
+import zipfile
+
+from flask import Blueprint, abort, current_app, jsonify, request
+from invenio_db import db
+from invenio_files_rest.storage import PyFSFileStorage
+from invenio_pidstore import current_pidstore
+from invenio_pidstore.errors import PIDInvalidAction
+from invenio_records_rest.errors import (
+    InvalidDataRESTError, UnsupportedMediaRESTError)
+from invenio_records_rest.links import default_links_factory
+from invenio_records_rest.utils import obj_or_import_string
+from invenio_records_rest.views import \
+    create_error_handlers as records_rest_error_handlers
+from invenio_rest import ContentNegotiatedMethodView
+from invenio_rest.views import create_api_errorhandler
+
+from .schema import SchemaConverter
 
 # from copy import deepcopy
 # from functools import partial
-
-from flask import Blueprint, abort, current_app, jsonify, request, \
-    url_for, redirect
-from invenio_db import db
-from invenio_oauth2server import require_api_auth, require_oauth_scopes
-from invenio_pidstore.errors import PIDInvalidAction
-from invenio_pidstore import current_pidstore
-from invenio_records_rest.utils import obj_or_import_string
-from invenio_records_rest.links import default_links_factory
-from invenio_records_rest.views import \
-    create_error_handlers as records_rest_error_handlers
-from invenio_records_rest.views import \
-    create_url_rules
-from invenio_records_rest.views import need_record_permission, pass_record
-from invenio_rest import ContentNegotiatedMethodView
-from invenio_rest.views import create_api_errorhandler
-from webargs import fields
-from webargs.flaskparser import use_kwargs
-from werkzeug.utils import secure_filename
-from invenio_records_rest.errors import InvalidDataRESTError, UnsupportedMediaRESTError
-from invenio_files_rest.storage import PyFSFileStorage
-from .schema import SchemaConverter
 
 
 def create_error_handlers(blueprint):
@@ -104,7 +101,8 @@ def create_blueprint(endpoints):
             pid_type=options.get('pid_type'),
             pid_minter=options.get('pid_minter'),
             pid_fetcher=options.get('pid_fetcher'),
-            loaders={options.get('default_media_type'): lambda: request.get_json()},
+            loaders={
+                options.get('default_media_type'): lambda: request.get_json()},
             default_media_type=options.get('default_media_type'),
         )
 
@@ -170,9 +168,9 @@ class SchemaFilesResource(ContentNegotiatedMethodView):
 
         self.pid_minter = current_pidstore.minters[self.pid_minter]
         self.pid_fetcher = current_pidstore.minters[self.pid_fetcher]
-        self.xsd_location_folder = current_app.config['WEKO_SCHEMA_REST_XSD_LOCATION_FOLDER'].\
+        self.xsd_location_folder = current_app.config[
+            'WEKO_SCHEMA_REST_XSD_LOCATION_FOLDER']. \
             format(current_app.instance_path)
-
 
     # @pass_record
     # @need_record_permission('read_permission_factory')
@@ -181,9 +179,9 @@ class SchemaFilesResource(ContentNegotiatedMethodView):
 
     # @need_record_permission('create_permission_factory')
     def post(self, **kwargs):
-        """Create a uuid and return a links dict.
-        file upload step is below
-        ①create a uuuid
+        """Create a uuid and return a links dict. file upload step is below
+        create a uuuid.
+
         :returns: Json Response have a links dict.
         """
 
@@ -197,26 +195,42 @@ class SchemaFilesResource(ContentNegotiatedMethodView):
         pid = request.view_args.get('pid_value')
         # the second post
         if pid:
-            furl = self.xsd_location_folder + "tmp/" + pid + "/"
-            dst = self.xsd_location_folder + pid + "/"
+            # furl = self.xsd_location_folder + 'tmp/' + pid + '/'
+            furl = os.path.join(self.xsd_location_folder, 'tmp', pid)
+            # dst = self.xsd_location_folder + pid + '/'
+            dst = os.path.join(self.xsd_location_folder, pid)
             data.pop('$schema')
-            sn = data.get('name')
+            sn = data.get('name') if 'name' in data else None
+            root_name = data.get('root_name') if 'root_name' in data else None
+            if root_name is None or len(root_name) == 0:
+                abort(400, 'Root Name is empty.')
+            if sn is None or len(sn) == 0:
+                sn = root_name
+            if not sn.endswith('_mapping'):
+                sn = sn + '_mapping'
 
             if not os.path.exists(furl):
                 return jsonify({'status': 'Please upload file first.'})
 
-            fn = data.get('file_name')
-            fn = furl + (fn if "." in fn else fn + ".xsd")
+            fn = data.get('file_name') if 'file_name' in data else None
+            zip_file = data.get('zip_name') if 'zip_name' in data else None
+            fn = os.path.join(furl, (fn if '.' in fn else fn + '.xsd'))
 
-            xsd = SchemaConverter(fn, data.get('root_name'))
+            # if zip file unzip first
+            if not zip_file is None and zip_file.endswith('.zip'):
+                with zipfile.ZipFile(os.path.join(furl, zip_file)) as fp:
+                    fp.extractall(furl)
+
+            xsd = SchemaConverter(fn, root_name)
             try:
-                self.record_class.create(pid, sn+"_mapping", data, xsd.to_dict(), data.get('xsd_file'),
+                self.record_class.create(pid, sn.lower(), data,
+                                         xsd.to_dict(), data.get('xsd_file'),
                                          xsd.namespaces)
                 db.session.commit()
-            except:
+            except BaseException:
                 abort(400, 'Schema of the same name already exists.')
 
-            #set the schema to be vaild
+            # set the schema to be vaild
             # for k, v in current_app.config["RECORDS_UI_EXPORT_FORMATS"].items():
             #     if isinstance(v, dict):
             #         for k1, v1 in v.items():
@@ -241,7 +255,7 @@ class SchemaFilesResource(ContentNegotiatedMethodView):
             # move out those files from tmp folder
             shutil.move(furl, dst)
 
-            return jsonify({'status': 'uploaded successfully.'})
+            return jsonify({'message': 'uploaded successfully.'})
         else:
             # the first post
 
@@ -253,17 +267,18 @@ class SchemaFilesResource(ContentNegotiatedMethodView):
             db.session.commit()
             url = request.base_url + str(pid.object_uuid)
             links = dict(self=url)
-            links['bucket'] = request.base_url + "put/" + str(pid.object_uuid)
+            links['bucket'] = request.base_url + 'put/' + str(pid.object_uuid)
 
-            response = current_app.response_class(json.dumps({"links": links}), mimetype=request.mimetype)
+            response = current_app.response_class(json.dumps({'links': links}),
+                                                  mimetype=request.mimetype)
             response.status_code = 201
             return response
 
     # @need_record_permission('create_permission_factory')
     def put(self, **kwargs):
-        """Create a uuid and return a links dict.
-        file upload step is below
-        ② upload file to server
+        """Create a uuid and return a links dict. file upload step is below ②
+        upload file to server.
+
         :returns: Json Response have a links dict.
         """
         fn = request.view_args['key']
@@ -272,7 +287,7 @@ class SchemaFilesResource(ContentNegotiatedMethodView):
         #     abort(405, "Xsd File only !!")
 
         pid = request.view_args['pid_value']
-        furl = self.xsd_location_folder + "tmp/" + pid + "/" + fn
+        furl = self.xsd_location_folder + 'tmp/' + pid + '/' + fn
         # size = len(request.data)
 
         try:
@@ -283,8 +298,8 @@ class SchemaFilesResource(ContentNegotiatedMethodView):
         else:
             pass
 
-        jd = {"key": fn, "mimetype": request.mimetype, "links": {},
-              "size": bytes_written}
+        jd = {'key': fn, 'mimetype': request.mimetype, 'links': {},
+              'size': bytes_written}
         data = dict(key=fn, mimetype='text/plain')
         response = current_app.response_class(json.dumps(jd),
                                               mimetype='application/json')
@@ -293,9 +308,7 @@ class SchemaFilesResource(ContentNegotiatedMethodView):
 
 
 class SchemaFormatEditResource(ContentNegotiatedMethodView):
-    """
-    Edit metadata formats for OAI ListMetadataFormats
-    """
+    """Edit metadata formats for OAI ListMetadataFormats."""
     view_name = '{0}_formats_edit'
 
     def __init__(self, ctx, *args, **kwargs):

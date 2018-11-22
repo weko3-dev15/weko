@@ -1,0 +1,313 @@
+{#
+# This file is part of WEKO3.
+# Copyright (C) 2017 National Institute of Informatics.
+#
+# WEKO3 is free software; you can redistribute it
+# and/or modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# WEKO3 is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WEKO3; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+#}
+
+{%- extends admin_base_template %}
+
+{% block css %}
+{{ super() }}
+<link href="{{ url_for('static', filename='css/weko_admin/quill.snow.css') }}" rel="stylesheet">
+<link href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" rel="stylesheet">
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+  .fileupload-buttonbar .btn,
+  .fileupload-buttonbar .toggle {
+    margin-bottom: 5px;
+  }
+
+  .fileinput-button {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+  .fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter: 'alpha(opacity=0)';
+    font-size: 200px !important;
+    direction: ltr;
+    cursor: pointer;
+  }
+
+  /* Fixes for IE < 8 */
+  @media screen\9 {
+    .fileinput-button input {
+      filter: alpha(opacity=0);
+      font-size: 100%;
+      height: 100%;
+    }
+  }
+
+  #editor-container-header, #editor-container-footer {
+    height: 150px;
+  }
+
+  .panel-info {
+    margin-top: 20px;
+  }
+
+</style>
+{% endblock %}
+
+{%- block body %}
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel-group">
+        <div class="panel panel-default">
+          <div class="panel-body" id="color_setting">
+            <div class="row">
+              <div class="col-sm-10">
+                <form action={{url_for('stylesetting.index')}} method="POST">
+                  <div class="panel panel-info">
+                    <div class="panel-heading">
+                      <div class="pull-right">
+                        <button type="submit" id="btn_commit_bg" class="btn btn-primary">
+                          <i class="fa fa-gear"></i>{{_('Save')}}
+                        </button>
+                      </div>
+                      <div class="panel-title">
+                        <h4>{{_('Color Setting')}}</h4>
+                      </div>
+                    </div>
+                    <div class="panel-body">
+                      <div class="row">
+                        <div class="form-group col-sm-2">
+                          <label for="body-bg">{{_('Background1')}}</label>
+                          <input type="color" class="form-control" id="body-bg" name="body-bg" value={{ body_bg }}>
+                        </div>
+                        <div class="form-group col-sm-2">
+                          <label for="panel-bg">{{_('Background2')}}</label>
+                          <input type="color" class="form-control" id="panel-bg" name="panel-bg" value={{ panel_bg }}>
+                        </div>
+                        <div class="form-group col-sm-2">
+                          <label for="panel-default-border">{{_('Frame Border')}}</label>
+                          <input type="color" class="form-control" id="panel-default-border" name="panel-default-border" value={{ panel_default_border }}>
+                        </div>
+                        <div class="form-group col-sm-2">
+                          <label for="navbar-default-bg">{{_('Header')}}</label>
+                          <input type="color" class="form-control" id="navbar-default-bg" name="navbar-default-bg" value={{ navbar_default_bg }}>
+                        </div>
+                        <div class="form-group col-sm-2">
+                          <label for="footer-default-bg">{{_('Footer')}}</label>
+                          <input type="color" class="form-control" id="footer-default-bg" name="footer-default-bg" value={{ footer_default_bg }}>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10">
+                <div class="panel panel-info">
+                  <div class="panel-heading">
+                    <div class="pull-right">
+                      <button type="button" id="btn_commit_header" class="btn btn-primary">
+                        <i class="fa fa-gear"></i>{{_('Save')}}
+                      </button>
+                    </div>
+                    <div class="panel-title">
+                      <h4>{{_('Header Setting')}}</h4>
+                    </div>
+                  </div>
+                  <div class="panel-body">
+                    <div id="toolbar-container-header">
+                      <span class="ql-formats">
+                        <select class="ql-font"></select>
+                        <select class="ql-size"></select>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-bold"></button>
+                        <button class="ql-italic"></button>
+                        <button class="ql-underline"></button>
+                        <button class="ql-strike"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <select class="ql-color"></select>
+                        <select class="ql-background"></select>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-script" value="sub"></button>
+                        <button class="ql-script" value="super"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-header" value="1"></button>
+                        <button class="ql-header" value="2"></button>
+                        <button class="ql-blockquote"></button>
+                        <button class="ql-code-block"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-list" value="ordered"></button>
+                        <button class="ql-list" value="bullet"></button>
+                        <button class="ql-indent" value="-1"></button>
+                        <button class="ql-indent" value="+1"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-direction" value="rtl"></button>
+                        <select class="ql-align"></select>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-link"></button>
+                        <button class="ql-image"></button>
+                        <button class="ql-video"></button>
+                        <button class="ql-formula"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-clean"></button>
+                      </span>
+                    </div>
+                    <div id="editor-container-header" class="wysiwyg-editor"></div>
+                    <div id="header-editor-content" class="header-editor-content" hidden>{{ header_innerHtml|safe }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-10">
+                <div class="panel panel-info">
+                  <div class="panel-heading">
+                    <div class="pull-right">
+                      <button type="button" id="btn_commit_footer" class="btn btn-primary">
+                        <i class="fa fa-gear"></i>{{_('Save')}}
+                      </button>
+                    </div>
+                    <div class="panel-title">
+                      <h4>{{_('Footer Setting')}}</h4>
+                    </div>
+                  </div>
+                  <div class="panel-body">
+                    <div id="toolbar-container-footer">
+                      <span class="ql-formats">
+                        <select class="ql-font"></select>
+                        <select class="ql-size"></select>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-bold"></button>
+                        <button class="ql-italic"></button>
+                        <button class="ql-underline"></button>
+                        <button class="ql-strike"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <select class="ql-color"></select>
+                        <select class="ql-background"></select>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-script" value="sub"></button>
+                        <button class="ql-script" value="super"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-header" value="1"></button>
+                        <button class="ql-header" value="2"></button>
+                        <button class="ql-blockquote"></button>
+                        <button class="ql-code-block"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-list" value="ordered"></button>
+                        <button class="ql-list" value="bullet"></button>
+                        <button class="ql-indent" value="-1"></button>
+                        <button class="ql-indent" value="+1"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-direction" value="rtl"></button>
+                        <select class="ql-align"></select>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-link"></button>
+                        <button class="ql-image"></button>
+                        <button class="ql-video"></button>
+                        <button class="ql-formula"></button>
+                      </span>
+                      <span class="ql-formats">
+                        <button class="ql-clean"></button>
+                      </span>
+                    </div>
+                    <div id="editor-container-footer" class="wysiwyg-editor"></div>
+                    <div id="footer-editor-content" class="footer-editor-content" hidden>{{ footer_innerHtml|safe }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endblock body %}
+
+{% block tail %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
+<script src="{{ url_for('static', filename='js/weko_admin/quill.min.js') }}"></script>
+
+<script>
+  $(document).ready(function() {
+    var quill_header = new Quill('#editor-container-header', {
+      modules: {
+        formula: true,
+        syntax: true,
+        toolbar: '#toolbar-container-header'
+      },
+      placeholder: '',
+      theme: 'snow'
+    });
+
+    var quill_footer = new Quill('#editor-container-footer', {
+      modules: {
+        formula: true,
+        syntax: true,
+        toolbar: '#toolbar-container-footer'
+      },
+      placeholder: '',
+      theme: 'snow'
+    });
+
+    $('#editor-container-header').find('.ql-editor').html($('#header-editor-content').find('.ql-editor').html());
+    $('#editor-container-footer').find('.ql-editor').html($('#footer-editor-content').find('.ql-editor').html());
+
+    $('#btn_commit_header').on('click', function(){
+      isEmpty = quill_header.getText() === '\n' && quill_header.getLength() === 1;
+      content = $('#editor-container-header').find('.ql-editor').prop('outerHTML');
+      $.ajax({
+        type: 'POST',
+        url: '{{url_for('stylesetting.upload_editor')}}',
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify({'content': content, 'temp': 'header', 'isEmpty': isEmpty}),
+        success: function(data){
+        }
+      });
+    });
+
+    $('#btn_commit_footer').on('click', function(){
+      isEmpty = quill_footer.getText() === '\n' && quill_footer.getLength() === 1;
+      content = $('#editor-container-footer').find('.ql-editor').prop('outerHTML');
+      $.ajax({
+        type: 'POST',
+        url: '{{url_for('stylesetting.upload_editor')}}',
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify({'content': content, 'temp': 'footer', 'isEmpty': isEmpty}),
+        success: function(data){
+        }
+      });
+    });
+  })
+</script>
+{% endblock %}

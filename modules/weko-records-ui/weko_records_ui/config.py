@@ -23,18 +23,33 @@
 WEKO_RECORDS_UI_DETAIL_TEMPLATE = 'weko_records_ui/detail.html'
 WEKO_RECORDS_UI_BASE_TEMPLATE = 'weko_theme/page.html'
 
+WEKO_PERMISSION_ROLE_USER = ('System Administrator',
+                             'Repository Administrator',
+                             'Contributor',
+                             'General')
+
+ADMIN_SET_ITEM_TEMPLATE = 'weko_records_ui/admin/item_setting.html'
+# author setting page template
+
+ITEM_SEARCH_FLG = 'name'
+# setting author name search type: name or id
+
+EMAIL_DISPLAY_FLG = True
+# setting the email of author if display
+
 RECORDS_UI_ENDPOINTS = dict(
     recid=dict(
         pid_type='recid',
-        route="/records/<pid_value>",
-        # view_imp='weko_records.fd.weko_view_method',
+        route='/records/<pid_value>',
+        view_imp='weko_records_ui.views.default_view_method',
         template='weko_records_ui/detail.html',
         record_class='weko_deposit.api:WekoRecord',
-        permission_factory_imp='weko_records_ui.permissions:page_permission_factory',
+        permission_factory_imp='weko_records_ui.permissions'
+                               ':page_permission_factory',
     ),
     recid_export=dict(
         pid_type='recid',
-        route="/records/<pid_value>/export/<format>",
+        route='/records/<pid_value>/export/<format>',
         view_imp='weko_records_ui.views.export',
         template='weko_records_ui/export.html',
         record_class='weko_deposit.api:WekoRecord',
@@ -42,14 +57,18 @@ RECORDS_UI_ENDPOINTS = dict(
     recid_files=dict(
         pid_type='recid',
         route='/record/<pid_value>/files/<path:filename>',
-        view_imp='weko_records.fd.file_download_ui',
+        view_imp='weko_records_ui.fd.file_download_ui',
         record_class='weko_deposit.api:WekoRecord',
+        permission_factory_imp='weko_records_ui.permissions'
+                               ':page_permission_factory',
     ),
     recid_preview=dict(
         pid_type='recid',
         route='/record/<pid_value>/preview/<path:filename>',
         view_imp='weko_records_ui.preview.preview',
         record_class='weko_deposit.api:WekoRecord',
+        permission_factory_imp='weko_records_ui.permissions'
+                               ':page_permission_factory',
     ),
     recid_publish=dict(
         pid_type='recid',
@@ -57,6 +76,8 @@ RECORDS_UI_ENDPOINTS = dict(
         view_imp='weko_records_ui.views.publish',
         template='weko_records_ui/detail.html',
         record_class='weko_deposit.api:WekoRecord',
+        permission_factory_imp='weko_items_ui.permissions'
+                               ':edit_permission_factory',
         methods=['POST'],
     ),
 )
@@ -64,7 +85,7 @@ RECORDS_UI_ENDPOINTS = dict(
 RECORDS_UI_EXPORT_FORMATS = {
     'recid': {
         'junii2': dict(
-            title='JUNII2',
+            title='junii2',
             serializer='weko_schema_ui.serializers.WekoCommonSchema',
             order=1,
         ),
@@ -83,6 +104,11 @@ RECORDS_UI_EXPORT_FORMATS = {
             serializer='invenio_records_rest.serializers.json_v1',
             order=4,
         ),
+        'bibtex': dict(
+            title='BIBTEX',
+            serializer='weko_schema_ui.serializers.BibTexSerializer',
+            order=5,
+        ),
     }
 }
 
@@ -90,7 +116,7 @@ OAISERVER_METADATA_FORMATS = {
     'junii2': {
         'serializer': (
             'weko_schema_ui.utils:dumps_oai_etree', {
-                'schema_type': "junii2",
+                'schema_type': 'junii2',
             }
         ),
         'schema': 'http://irdb.nii.ac.jp/oai/junii2-3-1.xsd',
@@ -99,7 +125,7 @@ OAISERVER_METADATA_FORMATS = {
     'jpcoar': {
         'serializer': (
             'weko_schema_ui.utils:dumps_oai_etree', {
-                'schema_type': "jpcoar",
+                'schema_type': 'jpcoar',
             }
         ),
         'namespace': 'https://irdb.nii.ac.jp/schema/jpcoar/1.0/',
@@ -108,7 +134,7 @@ OAISERVER_METADATA_FORMATS = {
     'oai_dc': {
         'serializer': (
             'weko_schema_ui.utils:dumps_oai_etree', {
-                'schema_type': "oai_dc",
+                'schema_type': 'oai_dc',
             }
         ),
         'namespace': 'http://www.openarchives.org/OAI/2.0/oai_dc/',

@@ -20,20 +20,23 @@
 
 """Blueprint for schema rest."""
 
-import redis
-import xmlschema, json, copy
+import copy
+import json
+from collections import OrderedDict
+from functools import partial
 
+import redis
+import xmlschema
+from flask import abort, current_app, request, url_for
 from lxml import etree
 from lxml.builder import ElementMaker
-from weko_records.api import Mapping
-from .api import WekoSchema
-
-from flask import abort, current_app, url_for, request
-from collections import OrderedDict
 from simplekv.memory.redisstore import RedisStore
-from xmlschema.components import (XsdAtomicRestriction, XsdSingleFacet, XsdPatternsFacet, XsdEnumerationFacet,
-                                  XsdGroup, XsdAtomicBuiltin, XsdUnion
-                                  )
+from weko_records.api import Mapping
+from xmlschema.validators import (
+    XsdAtomicBuiltin, XsdAtomicRestriction, XsdEnumerationFacet, XsdGroup,
+    XsdPatternsFacet, XsdSingleFacet, XsdUnion, XsdAnyElement)
+
+from .api import WekoSchema
 
 
 class SchemaConverter:
@@ -56,8 +59,9 @@ class SchemaConverter:
                 for k, nsp in schema_data.namespaces.items():
                     if nsp in element_name:
                         if k == "":
-                            k = self.rootname.split(":")[-1] if ":" in self.rootname else self.rootname
-                        return element_name.replace("{"+nsp+"}", k+":")
+                            k = self.rootname.split(
+                                ":")[-1] if ":" in self.rootname else self.rootname
+                        return element_name.replace("{" + nsp + "}", k + ":")
 
             return element_name
 
@@ -85,7 +89,8 @@ class SchemaConverter:
                         rstr.update(OrderedDict(enumeration=va.enumeration))
                     if isinstance(va, XsdSingleFacet):
                         sf = OrderedDict()
-                        vn = va.name.split('(')[0] if "(" in va.name else va.name
+                        vn = va.elem.tag.split(
+                            '}')[-1] if "}" in va.elem.tag else va.elem.tag
                         sf[vn] = va.value
                         rstr.update(sf)
 
@@ -96,7 +101,6 @@ class SchemaConverter:
                     rstr.update(OrderedDict(patterns=plst))
 
             elif isinstance(type, XsdAtomicBuiltin):
-                # print("■ id : %s", type.id)
                 pass
             elif isinstance(type, XsdUnion):
                 for mt in type.member_types:
@@ -105,16 +109,22 @@ class SchemaConverter:
                 pass
             else:
                 atrlst = []
-                for atrb in type.attributes._attribute_group.values():
-                    attrd = OrderedDict(name=getXSVal(atrb.name), ref=atrb.ref, use=atrb.use)
-                    if 'lang' not in atrb.name:
-                        attrd.update(get_element_type(atrb.type))
+                if hasattr(type, 'attributes'):
+                    for atrb in type.attributes._attribute_group.values():
+                        attrd = OrderedDict(
+                            name=getXSVal(
+                                atrb.name),
+                            ref=atrb.ref,
+                            use=atrb.use)
+                        if 'lang' not in atrb.name:
+                            attrd.update(get_element_type(atrb.type))
 
-                    atrlst.append(attrd)
+                        atrlst.append(attrd)
 
                 if len(atrlst):
                     typd['attributes'] = atrlst
-                typd.update(get_element_type(type.content_type))
+                if hasattr(type, 'content_type'):
+                    typd.update(get_element_type(type.content_type))
                 pass
 
             return typd
@@ -123,14 +133,16 @@ class SchemaConverter:
 
             chdsm = OrderedDict()
             for chd in element.iterchildren():
-                ctp = OrderedDict()
-                chn = getXSVal(chd.name)
-                ctp["type"] = OrderedDict(minOccurs=chd.min_occurs, maxOccurs=chd.max_occurs \
-                    if chd.max_occurs else 'unbounded')
-                ctp["type"].update(get_element_type(chd.type))
+                if not isinstance(chd, XsdAnyElement):
+                    ctp = OrderedDict()
+                    chn = getXSVal(chd.name)
+                    ctp["type"] = OrderedDict(
+                        minOccurs=chd.min_occurs,
+                        maxOccurs=chd.max_occurs if chd.max_occurs else 'unbounded')
+                    ctp["type"].update(get_element_type(chd.type))
 
-                chdsm[chn] = ctp
-                chdsm[chn].update(get_elements(chd))
+                    chdsm[chn] = ctp
+                    chdsm[chn].update(get_elements(chd))
 
             return chdsm
 
@@ -138,8 +150,11 @@ class SchemaConverter:
         try:
             schema_file = open(schema_file, encoding='utf-8')
             schema_data = xmlschema.XMLSchema(schema_file)
-        except:
-            abort(400, "Error creating Schema: Can not open xsd file. Please check it!")
+        except Exception as ex:
+            current_app.error(ex)
+            abort(
+                400,
+                "Error creating Schema: Can not open xsd file. Please check it!")
 
         # namespace
         nsp, tagns = get_namespace(schema_data.namespaces)
@@ -152,18 +167,18 @@ class SchemaConverter:
             path = self.rootname + "/*" if ':' in self.rootname \
                 else '{%s}%s/*' % (tagns, nsp if nsp else self.rootname)
             elements = schema_data.findall(path)
-            elements = schema_data.findall('*/*') if len(elements) < 1 else elements
-        except:
+            elements = schema_data.findall(
+                '*/*') if len(elements) < 1 else elements
+        except Exception:
             abort(400, "Error creating Schema: Can not find element")
         else:
             if len(elements) > 0:
                 for ems in elements:
-
-                    # print("%s - %s" % (ems.name, ems.type.name))
                     ename = getXSVal(ems.name)
                     tp = OrderedDict()
-                    tp["type"] = OrderedDict(minOccurs=ems.min_occurs, maxOccurs=ems.max_occurs \
-                        if ems.max_occurs else 'unbounded')
+                    tp["type"] = OrderedDict(
+                        minOccurs=ems.min_occurs,
+                        maxOccurs=ems.max_occurs if ems.max_occurs else 'unbounded')
 
                     tp["type"].update(get_element_type(ems.type))
                     schema[ename] = tp
@@ -172,22 +187,25 @@ class SchemaConverter:
                         if ems.name == pae.name:
                             schema[ename].update(get_elements(pae))
             else:
-                print("no xsd element!!!!")
+                abort(400, "Error creating Schema: No xsd element")
 
         return schema, schema_data.namespaces
 
 
 class SchemaTree:
 
-    def __init__(self, record, schema_name):
+    def __init__(self, record=None, schema_name=None):
         """
 
         :param record: item metadata
         :param schema_name: schema name
         """
-        self._record = record["metadata"]
-        self._schema_name = schema_name
-        self._root_name, self._ns, self._schema_obj = self.get_mapping_data()
+        self._record = record["metadata"] \
+            if record and record.get("metadata") else None
+        self._schema_name = schema_name if schema_name else None
+        if self._record:
+            self._root_name, self._ns, self._schema_obj = \
+                self.get_mapping_data()
         self._v = "@value"
         self._atr = "@attributes"
 
@@ -213,189 +231,267 @@ class SchemaTree:
                 if mjson:
                     for k, v in self._record.items():
                         if isinstance(v, dict) and mp.get(k) and k != "_oai":
-                            v.update({self._schema_name: mp.get(k).get(self._schema_name)})
+                            v.update({self._schema_name: mp.get(
+                                k).get(self._schema_name)})
 
         # inject mappings info to record
         get_mapping()
         return rec.get('root_name'), rec.get('namespaces'), rec.get('schema')
+
+    def __converter(self, node):
+
+        _need_to_nested = ('subjectScheme', 'dateType', 'identifierType',
+                           'objectType',)
+
+        def list_reduce(olst):
+            if isinstance(olst, list):
+                for lst in olst:
+                    if isinstance(lst, str):
+                        yield lst
+                    else:
+                        for x in list_reduce(lst):
+                            yield x
+
+        def get_attr(x):
+            return x.split(':')[-1]
+
+        def create_json(name, node1, node2):
+            return {name: node1, "value": node2}
+
+        def json_reduce(node):
+            if isinstance(node, dict):
+                val = node.get(self._v)
+                attr = node.get(self._atr)
+                if val:
+                    alst = list(filter(lambda x: get_attr(x) in _need_to_nested,
+                                       attr.keys())) if attr else []
+                    if attr and alst:
+                        return list(map(partial(create_json, get_attr(alst[0])), list_reduce([attr.get(alst[0])]),
+                                        list(list_reduce(val))))
+
+                    return list(list_reduce(val))
+                else:
+                    if attr:
+                        node.pop(self._atr)
+                    for k, v in node.items():
+                        if k != self._atr:
+                            node[k] = json_reduce(v)
+                    return node
+
+        json_reduce(node)
+        return node
+
+    @classmethod
+    def get_jpcoar_json(cls, records, schema_name="jpcoar_mapping"):
+        """
+        Find elements values and return a jpcoar json
+        :param records:
+        :param schema_name: default set jpcoar_mapping
+        :return: json
+        """
+
+        obj = cls(schema_name=schema_name)
+        obj._record = records
+        vlst = list(map(obj.__converter,
+                        filter(lambda x: isinstance(x, dict),
+                               obj.__get_value_list())))
+
+        from .utils import json_merge_all
+        return json_merge_all(vlst)
+
+    def __get_value_list(self):
+        """ Find values to a list"""
+
+        def analysis(field):
+            exp = (',',)
+            return exp[0], field.split(exp[0])
+
+        def set_value(nd, nv):
+            if isinstance(nd, dict):
+                for ke, va in nd.items():
+                    if ke != self._atr:
+                        if isinstance(va, str):
+                            nd[ke] = {self._v: nv}
+                            return
+                        else:
+                            if len(va) == 0 or \
+                                (va.get(self._atr) and
+                                 not va.get(self._v) and len(va) == 1):
+                                va.update({self._v: nv})
+                                return
+
+                        set_value(va, nv)
+
+        def get_sub_item_value(atr_vm, key, p=None):
+            if isinstance(atr_vm, dict):
+                for ke, va in atr_vm.items():
+                    if key == ke:
+                        yield va, id(p)
+                    else:
+                        for z, w in get_sub_item_value(va, key, atr_vm):
+                            yield z, w
+            elif isinstance(atr_vm, list):
+                for n in atr_vm:
+                    for k, x in get_sub_item_value(n, key, atr_vm):
+                        yield k, x
+
+        def get_url(z, key, val):
+            if key and 'filemeta' in key:
+                attr = z.get(self._atr, {})
+                attr = attr.get(
+                    'jpcoar:objectType', '') or attr.get(
+                    'objectType', '')
+                if 'fulltext' in attr:
+                    pid = self._record.get('control_number')
+                    if pid:
+                        return request.host_url[:-1] + \
+                               url_for('invenio_records_ui.recid_files',
+                                       pid_value=pid, filename=val)
+                    else:
+                        return val
+                else:
+                    return val
+            else:
+                return val
+
+        def get_key_value(nd, key=None):
+            if isinstance(nd, dict):
+                for ke, va in nd.items():
+                    if ke == self._v or isinstance(va, str):
+                        yield nd, key
+                    else:
+                        for z, y in get_key_value(va, ke):
+                            yield z, y
+
+        def get_exp_value(atr_list):
+            if isinstance(atr_list, list):
+                for lst in atr_list:
+                    if isinstance(lst, list):
+                        for x, y in get_exp_value(lst):
+                            yield x, y
+                    elif isinstance(lst, str):
+                        yield lst, atr_list
+
+        def get_items_value_lst(atr_vm, key, z=None, kn=None):
+            klst = []
+            blst = []
+            parent_id = 0
+            for k2, p2 in get_sub_item_value(atr_vm, key):
+                if parent_id != p2 and parent_id != 0:
+                    klst.append(blst)
+                    blst = []
+                blst.append(get_url(z, kn, k2))
+                parent_id = p2
+            if blst:
+                klst.append(blst)
+            return klst
+
+        def get_atr_value_lst(node, atr_vm):
+            for k1, v1 in node.items():
+                # if 'item' not in v1:
+                #     continue
+                klst = get_items_value_lst(atr_vm, v1)
+                if klst:
+                    node[k1] = klst
+
+        def get_mapping_value(mpdic, atr_vm, k):
+            vlst = []
+            for ky, vl in mpdic.items():
+                vlc = copy.deepcopy(vl)
+                for z, y in get_key_value(vlc):
+                    # if it`s attributes node
+                    if y == self._atr:
+                        get_atr_value_lst(z, atr_vm)
+                    else:
+                        if not z.get(self._v):
+                            continue
+
+                        # check expression or formula
+                        exp, lk = analysis(z.get(self._v))
+                        # if not have expression or formula
+                        if len(lk) == 1:
+                            nlst = get_items_value_lst(
+                                atr_vm, lk[0].strip(), z, k)
+                            if nlst:
+                                z[self._v] = nlst
+                        else:
+                            nlst = []
+                            for val in lk:
+                                klst = get_items_value_lst(
+                                    atr_vm, val.strip(), z, k)
+                                nlst.append(klst)
+
+                            if nlst:
+                                ava = ""
+                                is_next = True
+                                glst = []
+                                for lst in nlst:
+                                    glst.append(get_exp_value(lst))
+
+                                mlst = []
+                                vst = []
+                                mc = 0
+                                while is_next:
+                                    ctp = ()
+                                    cnt = 0
+                                    ava = ""
+                                    for g in glst:
+                                        try:
+                                            eval, p = next(g)
+                                            ctp += (len(p),)
+                                            ava = ava + exp + eval
+                                        except StopIteration:
+                                            cnt += 1
+
+                                    if cnt == len(glst):
+                                        is_next = False
+                                        mlst.append(vst)
+                                    else:
+                                        mc = max(ctp)
+                                        if ava:
+                                            if len(vst) == mc:
+                                                mlst.append(vst)
+                                                vst = []
+                                            vst.append(ava[1:])
+
+                                z[self._v] = mlst
+                vlst.append({ky: vlc})
+            return vlst
+
+        vlst = []
+        current_app.logger.debug(
+            '_record: {0}'.format(json.dumps(self._record)))
+        for k, v in self._record.items():
+            if isinstance(v, dict):
+                # Dict
+                mpdic = v.get(
+                    self._schema_name) if self._schema_name in v else ''
+                if isinstance(mpdic, str) and len(mpdic) == 0:
+                    continue
+                # List or string
+                atr_v = v.get('attribute_value')
+                # List of dict
+                atr_vm = v.get('attribute_value_mlt')
+                if atr_v:
+                    if isinstance(atr_v, list):
+                        atr_v = [atr_v]
+                    elif isinstance(atr_v, str):
+                        atr_v = [[atr_v]]
+                    set_value(mpdic, atr_v)
+                    vlst.append(mpdic)
+                elif atr_vm:
+                    if isinstance(atr_vm, list) and isinstance(mpdic, dict):
+                        for lst in atr_vm:
+                            vlst.extend(get_mapping_value(mpdic, lst, k))
+        current_app.logger.debug(
+            '__get_value_list: {0}'.format(json.dumps(vlst)))
+        return vlst
 
     def create_xml(self):
         """
         create schema xml tree
         :return:
         """
-        def get_element(str):
-            return str.split(":")[-1] if ":" in str else str
-
-        def get_value_list():
-
-            def analysis(field):
-                exp = (',', )
-                return exp[0], field.split(exp[0])
-
-            def set_value(nd, nv):
-                if isinstance(nd, dict):
-                    for ke, va in nd.items():
-                        if ke != self._atr:
-                            if isinstance(va, str):
-                                nd[ke] = {self._v: nv}
-                                return
-                            else:
-                                if len(va) == 0 or (va.get(self._atr) and not va.get(self._v) and len(va) == 1):
-                                    va.update({self._v: nv})
-                                    return
-
-                            set_value(va, nv)
-
-            def get_sub_item_value(atr_vm, key, p=None):
-                if isinstance(atr_vm, dict):
-                    for ke, va in atr_vm.items():
-                        if key == ke:
-                            yield va, id(p)
-                        else:
-                            for z, w in get_sub_item_value(va, key, atr_vm):
-                                yield z, w
-                elif isinstance(atr_vm, list):
-                    for n in atr_vm:
-                        for k, x in get_sub_item_value(n, key, atr_vm):
-                            yield k, x
-
-            def get_url(z, key, val):
-                if 'filemeta' in key:
-                    attr = z.get(self._atr, {})
-                    attr = attr.get('jpcoar:objectType', '') or attr.get('objectType', '')
-                    if 'fulltext' in attr:
-                        pid = self._record.get('control_number')
-                        return request.host_url[:-1] + url_for('invenio_records_ui.recid_files',
-                                                               pid_value=pid, filename=val)
-                    else:
-                        return val
-                else:
-                    return val
-
-            def get_key_value(nd, key=None):
-                if isinstance(nd, dict):
-                    for ke, va in nd.items():
-                        if ke == self._v or isinstance(va, str):
-                            yield nd, key
-                        else:
-                            for z, y in get_key_value(va, ke):
-                                yield z, y
-
-            def get_exp_value(atr_list):
-                if isinstance(atr_list, list):
-                    for lst in atr_list:
-                        if isinstance(lst, list):
-                            for x, y in get_exp_value(lst):
-                                yield x, y
-                        elif isinstance(lst, str):
-                            yield lst, atr_list
-
-            def get_items_value_lst(atr_vm, key):
-                klst = []
-                blst = []
-                parent_id = 0
-                for k2, p2 in get_sub_item_value(atr_vm, key):
-                    if parent_id != p2 and parent_id != 0:
-                        klst.append(blst)
-                        blst = []
-                    blst.append(k2)
-                    parent_id = p2
-                if blst:
-                    klst.append(blst)
-                return klst
-
-            def get_atr_value_lst(node, atr_vm):
-                for k1, v1 in node.items():
-                    if 'item' not in v1:
-                        continue
-                    klst = get_items_value_lst(atr_vm, v1)
-                    if klst:
-                        node[k1] = klst
-
-            def get_mapping_value(mpdic, atr_vm, k):
-                vlst = []
-                for ky, vl in mpdic.items():
-                    vlc = copy.deepcopy(vl)
-                    for z, y in get_key_value(vlc):
-                        # if it`s attributes node
-                        if y == self._atr:
-                            get_atr_value_lst(z, atr_vm)
-                        else:
-                            if not z.get(self._v):
-                                continue
-
-                            # check expression or formula
-                            exp, lk = analysis(z.get(self._v))
-                            # if not have expression or formula
-                            if len(lk) == 1:
-                                nlst = get_items_value_lst(atr_vm, lk[0].strip())
-                                if nlst:
-                                    z[self._v] = nlst
-                            else:
-                                nlst = []
-                                for val in lk:
-                                    klst = get_items_value_lst(atr_vm, val.strip())
-                                    nlst.append(klst)
-
-                                if nlst:
-                                    ava = ""
-                                    is_next = True
-                                    glst = []
-                                    for lst in nlst:
-                                        glst.append(get_exp_value(lst))
-
-                                    mlst = []
-                                    vst = []
-                                    mc = 0
-                                    while is_next:
-                                        ctp = ()
-                                        cnt = 0
-                                        ava = ""
-                                        for g in glst:
-                                            try:
-                                                eval, p = next(g)
-                                                ctp += (len(p), )
-                                                ava = ava + exp + eval
-                                            except StopIteration:
-                                                cnt += 1
-
-                                        if cnt == len(glst):
-                                            is_next = False
-                                            mlst.append(vst)
-                                        else:
-                                            mc = max(ctp)
-                                            if ava:
-                                                if len(vst) == mc:
-                                                    mlst.append(vst)
-                                                    vst = []
-                                                vst.append(ava[1:])
-
-                                    z[self._v] = mlst
-                    vlst.append({ky: vlc})
-                return vlst
-
-            vlst = []
-            for k, v in self._record.items():
-                if isinstance(v, dict):
-                    # Dict
-                    mpdic = v.get(self._schema_name)
-                    # List or string
-                    atr_v = v.get('attribute_value')
-                    # List of dict
-                    atr_vm = v.get('attribute_value_mlt')
-                    if atr_v:
-                        if isinstance(atr_v, list):
-                            atr_v = [atr_v]
-                        elif isinstance(atr_v, str):
-                            atr_v = [[atr_v]]
-                        set_value(mpdic, atr_v)
-                        vlst.append(mpdic)
-                    elif atr_vm:
-                        if isinstance(atr_vm, list) and isinstance(mpdic, dict):
-                            for lst in atr_vm:
-                                vlst.extend(get_mapping_value(mpdic, lst, k))
-            return vlst
 
         def check_node(node):
             if isinstance(node, dict):
@@ -449,16 +545,24 @@ class SchemaTree:
                 val = node.get(self._v)
                 # the last children level
                 if val:
-                    atr = get_atr_list(node.get(self._atr))
-                    if atr:
-                        atr = get_atr_list(atr[index])
-                    for i in range(len(val[index])):
-                        chld = etree.Element(kname, None, ns)
-                        chld.text = val[index][i]
-                        if len(atr) > i:
-                            for k2, v2 in atr[i].items():
-                                chld.set(get_prefix(k2), v2)
-                        tree.append(chld)
+                    if node.get(self._atr):
+                        atr = get_atr_list(node.get(self._atr))
+                        for altt in atr:
+                            if altt:
+                                # atr = get_atr_list(atr[index])
+                                atrt = get_atr_list(altt)
+                            for i in range(len(val[index])):
+                                chld = etree.Element(kname, None, ns)
+                                chld.text = val[index][i]
+                                if len(atrt) > i:
+                                    for k2, v2 in atrt[i].items():
+                                        chld.set(get_prefix(k2), v2)
+                                tree.append(chld)
+                    else:
+                        for i in range(len(val[index])):
+                            chld = etree.Element(kname, None, ns)
+                            chld.text = val[index][i]
+                            tree.append(chld)
                 else:
                     # parents level
                     # if have any child
@@ -492,7 +596,7 @@ class SchemaTree:
             root.text = "Sorry! This Item has not been mappinged."
             return root
 
-        node_tree = self.find_nodes(get_value_list())
+        node_tree = self.find_nodes(self.__get_value_list())
         ns = self._ns
         if not ns.get("xml"):
             ns.update({"xml": "http://www.w3.org/XML/1998/namespace"})
@@ -508,10 +612,10 @@ class SchemaTree:
         root = E(rootname)
 
         # Create sub element
+        current_app.logger.debug(
+            'node_tree: {0}'.format(json.dumps(node_tree)))
         for lst in node_tree:
             for k, v in lst.items():
-                # print(k)
-                # if "rightsHolder" in k:
                 k = get_prefix(k)
                 set_children(k, v, root)
 
@@ -567,6 +671,7 @@ class SchemaTree:
 
     def find_nodes(self, mlst):
         """"""
+
         def get_generator(nlst):
             gdc.clear()
 
@@ -604,14 +709,12 @@ class SchemaTree:
                         yield value
 
         def get_path_list(key):
-            klst =[]
+            klst = []
             plst = self.to_list()
             for i in range(len(plst)):
                 if key in plst[i].split('.')[0]:
                     klst.append(plst[i])
             return klst
-
-
 
         gdc = OrderedDict()
         vlst = []
@@ -669,15 +772,19 @@ def cache_schema(schema_name, delete=False):
     """
 
     def get_schema():
-        rec = WekoSchema.get_record_by_name(schema_name)
-        if rec:
-            dstore = dict()
-            dstore['root_name'] = rec.get('root_name')
-            dstore['namespaces'] = rec.model.namespaces.copy()
-            dstore['schema'] = json.loads(rec.model.xsd, object_pairs_hook=OrderedDict)
-            rec.model.namespaces.clear()
-            del rec
-            return dstore
+        try:
+            rec = WekoSchema.get_record_by_name(schema_name)
+            if rec:
+                dstore = dict()
+                dstore['root_name'] = rec.get('root_name')
+                dstore['namespaces'] = rec.model.namespaces.copy()
+                dstore['schema'] = json.loads(
+                    rec.model.xsd, object_pairs_hook=OrderedDict)
+                rec.model.namespaces.clear()
+                del rec
+                return dstore
+        except:
+            return None
 
     try:
         # schema cached on Redis by schema name
@@ -686,15 +793,17 @@ def cache_schema(schema_name, delete=False):
         cache_key = current_app.config[
             'WEKO_SCHEMA_CACHE_PREFIX'].format(schema_name=schema_name)
         data_str = datastore.get(cache_key)
-        data = json.loads(data_str.decode('utf-8'), object_pairs_hook=OrderedDict)
+        data = json.loads(
+            data_str.decode('utf-8'),
+            object_pairs_hook=OrderedDict)
         if delete:
             datastore.delete(cache_key)
-    except:
+    except BaseException:
         try:
             schema = get_schema()
             if schema:
                 datastore.put(cache_key, json.dumps(schema))
-        except:
+        except BaseException:
             return get_schema()
         else:
             return schema
@@ -714,7 +823,7 @@ def delete_schema_cache(schema_name):
         cache_key = current_app.config[
             'WEKO_SCHEMA_CACHE_PREFIX'].format(schema_name=schema_name)
         datastore.delete(cache_key)
-    except:
+    except BaseException:
         pass
 
 
@@ -762,7 +871,7 @@ def reset_oai_metadata_formats(app):
         if isinstance(oad, dict):
             try:
                 obj = WekoSchema.get_all()
-            except:
+            except BaseException:
                 pass
             else:
                 if isinstance(obj, list):
@@ -772,14 +881,17 @@ def reset_oai_metadata_formats(app):
                         if not oad.get(schema_name):
                             scm = dict()
                             if isinstance(lst.namespaces, dict):
-                                ns = lst.namespaces.get('') or lst.namespaces.get(schema_name)
+                                ns = lst.namespaces.get(
+                                    '') or lst.namespaces.get(schema_name)
                                 scm.update({'namespace': ns})
                             scm.update({'schema': lst.schema_location})
-                            scm.update({'serializer': (sel[0], {'schema_type': schema_name})})
+                            scm.update(
+                                {'serializer': (sel[0], {'schema_type': schema_name})})
                             oad.update({schema_name: scm})
                         else:
                             if isinstance(lst.namespaces, dict):
-                                ns = lst.namespaces.get('') or lst.namespaces.get(schema_name)
+                                ns = lst.namespaces.get(
+                                    '') or lst.namespaces.get(schema_name)
                                 if ns:
                                     oad[schema_name]['namespace'] = ns
                             if lst.schema_location:
