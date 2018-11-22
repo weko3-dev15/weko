@@ -572,10 +572,10 @@ def item_path_search_factory(self, search, index_id=None):
           "type": "number",
           "params": {
             "factor": {
-              "105": 1,
-              "1": 2,
-              "109": 3,
-              "7": 4
+              "30": 1,
+              "31": 4,
+              "32": 2,
+              "33": 3
             }
           },
           "order": "asc"
