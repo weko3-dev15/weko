@@ -359,7 +359,10 @@ class WekoDeposit(Deposit):
                             try:
                                 file_size_max = current_app.config['WEKO_MAX_FILE_SIZE']
                                 if file.obj.file.size <= file_size_max:
+                                    flash('upload_file!!!!')
                                     file.obj.file.upload_file(lst)
+                                flash(file_size_max)
+                                flash(file.obj.file.size)
                                 flash(lst)
                             except Exception as e:
                                 abort(500, '{}'.format(e.errors))
