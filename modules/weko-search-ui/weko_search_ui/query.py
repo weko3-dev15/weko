@@ -552,7 +552,7 @@ def item_path_search_factory(self, search, index_id=None):
 
     from invenio_records_rest.sorter import default_sorter_factory
     search_index = search._index[0]
-    current_app.logger.debug(search_index)
+
     search, sortkwargs = default_sorter_factory(search, search_index)
 
     script_str={
@@ -573,6 +573,7 @@ def item_path_search_factory(self, search, index_id=None):
             # json.dumps(script_str).replace("@in_id", ind_id)
             # current_app.logger.debug(script_str)
             # script_str = json.loads(script_str)
+            search._sort=[script_str]
             urlkwargs.add(key, script_str)
         else:
             urlkwargs.add(key, value)
