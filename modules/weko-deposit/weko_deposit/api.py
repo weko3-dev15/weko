@@ -349,7 +349,7 @@ class WekoDeposit(Deposit):
             for file in self.files:
                 if isinstance(fmd, list):
                     for lst in fmd:
-                        flash(file.obj.size)
+                        flash(file.obj.key)
 
                         if file.obj.key == lst.get('filename'):
                             lst.update({'mimetype': file.obj.mimetype})
