@@ -197,25 +197,25 @@ ${INVENIO_WEB_INSTANCE} access \
 
 ##### sphinxdoc-create-test-data-begin
 ${INVENIO_WEB_INSTANCE} users create \
-       "test01@hitachi.com" \
+       "repo-admin@ir.rcos.nii.ac.jp" \
        --password "${INVENIO_USER_PASS}" \
        --active
 
 ${INVENIO_WEB_INSTANCE} roles add \
-       "test01@hitachi.com" \
+       "repo-admin@ir.rcos.nii.ac.jp" \
        "${INVENIO_ROLE_REPOSITORY}"
 
 ${INVENIO_WEB_INSTANCE} users create \
-       "test02@hitachi.com" \
+       "contributor@ir.rcos.nii.ac.jp" \
        --password "${INVENIO_USER_PASS}" \
        --active
 
 ${INVENIO_WEB_INSTANCE} roles add \
-        "test02@hitachi.com" \
+        "contributor@ir.rcos.nii.ac.jp" \
        "${INVENIO_ROLE_CONTRIBUTOR}"
 
 ${INVENIO_WEB_INSTANCE} users create \
-       "test03@hitachi.com" \
+       "user@ir.rcos.nii.ac.jp" \
        --password "${INVENIO_USER_PASS}" \
        --active
 ##### sphinxdoc-create-test-data-end
