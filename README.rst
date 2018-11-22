@@ -24,7 +24,7 @@
 .. image:: https://travis-ci.org/RCOSDP/weko.svg?branch=master
         :target: https://travis-ci.org/RCOSDP/weko
 
-.. image:: https://coveralls.io/repos/github/RCOSDP/weko/badge.svg?branch=master
+.. image:: https://coveralls.io/repos/github/RCOSDP/weko/badge.svg?branch=maste
         :target: https://coveralls.io/github/RCOSDP/weko?branch=master
 
 
