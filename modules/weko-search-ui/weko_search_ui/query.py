@@ -562,7 +562,8 @@ def item_path_search_factory(self, search, index_id=None):
             "params": {
                 "in_id": "1539652608824"
             },
-            "order": "asc"
+            "order": "asc",
+            "ignore_unmapped": True
         }
     }
     for key, value in sortkwargs.items():
