@@ -555,17 +555,35 @@ def item_path_search_factory(self, search, index_id=None):
     search_index = search._index[0]
     search, sortkwargs = default_sorter_factory(search, search_index)
 
-    script_str={
+    # script_str={
+    #     "_script": {
+    #         "script":"doc['custom_sort'].get('1539652608824').value!=0 ? doc['custom_sort'].get('1539652608824').value:(doc['custom_sort'].get('1539652608824').value + 1) * Integer.MAX_VALUE",
+    #         "type": "number",
+    #         "params": {
+    #             "in_id": "1539652608824"
+    #         },
+    #         "order": "asc",
+    #         "ignore_unmapped": "true"
+    #     }
+    # }
+
+    script_str = {
         "_script": {
-            "script":"doc['custom_sort'].get('1539652608824').value!=0 ? doc['custom_sort'].get('1539652608824').value:(doc['custom_sort'].get('1539652608824').value + 1) * Integer.MAX_VALUE",
-            "type": "number",
-            "params": {
-                "in_id": "1539652608824"
-            },
-            "order": "asc",
-            "ignore_unmapped": "true"
+          "script": "factor.get(doc[\"control_number\"].value) ? factor.get(doc[\"control_number\"].value):Integer.MAX_VALUE",
+          "type": "number",
+          "params": {
+            "factor": {
+              "105": 1,
+              "1": 2,
+              "109": 3,
+              "7": 4
+            }
+          },
+          "order": "asc"
         }
     }
+
+
     for key, value in sortkwargs.items():
         if value=='custorm_sort':
             # ind_id = request.values.get('q', '')
