@@ -573,7 +573,7 @@ def item_path_search_factory(self, search, index_id=None):
             # json.dumps(script_str).replace("@in_id", ind_id)
             # current_app.logger.debug(script_str)
             # script_str = json.loads(script_str)
-            search._sort=[script_str]
+            search._sort=[{"sort": script_str}]
             urlkwargs.add(key, script_str)
         else:
             urlkwargs.add(key, value)
