@@ -28,7 +28,7 @@
         :target: https://coveralls.io/github/RCOSDP/weko?branch=master
 
 
-WEKO3 is invenio based repository platform that aims to support 500 Japanese universities. It's being developed by National Institute of Informatics, Japan.
+WEKO3 is invenio based multi-tenancy repository platform that aims to support 500 Japanese universities. It's being developed by Research Center for Open Science and Data Platform, National Institute of Informatics, Japan.
 
 *This is an experimental developer preview release.*
 
