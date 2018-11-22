@@ -152,16 +152,15 @@ RECORDS_REST_SORT_OPTIONS = dict(
             fields=['date'],
             default_order='asc',
             order=8,
-        )
-    #     add at 20181121 start
-        ,
+        ),
+        # add 20181121 start
         custom_sort=dict(
                     title='Custom Sort',
-                    fields=['control_number'],
+                    fields=['custom_sort.sort'],
                     default_order='asc',
                     order=8,
         )
-    #     add at 20181121 start
+        # add 20181121 end
     )
 )
 
