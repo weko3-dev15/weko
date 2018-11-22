@@ -557,7 +557,7 @@ def item_path_search_factory(self, search, index_id=None):
 
     script_str={
         "_script": {
-            "script":"doc[\"custom_sort\"].value.get('1539652608824')!=0 ? doc[\"custom_sort\"].value.get('1539652608824'):(doc[\"custom_sort\"].value.get('1539652608824')+1) * Integer.MAX_VALUE",
+            "script":"doc['custom_sort'].get('1539652608824').value!=0 ? doc['custom_sort'].get('1539652608824').value:(doc['custom_sort'].get('1539652608824').value + 1) * Integer.MAX_VALUE",
             "type": "number",
             "params": {
                 "in_id": "1539652608824"
