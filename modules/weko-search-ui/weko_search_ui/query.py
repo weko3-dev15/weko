@@ -557,7 +557,7 @@ def item_path_search_factory(self, search, index_id=None):
 
     script_str={
         "_script": {
-            "script":"doc[\"custom_sort\"].size()",
+            "script":"doc[\"control_number\"].value",
             "type": "number",
             "params": {
                 "in_id": "1539652608824"
