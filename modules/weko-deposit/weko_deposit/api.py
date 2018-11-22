@@ -349,8 +349,6 @@ class WekoDeposit(Deposit):
             for file in self.files:
                 if isinstance(fmd, list):
                     for lst in fmd:
-                        flash(file.obj.file.size)
-
                         if file.obj.key == lst.get('filename'):
                             lst.update({'mimetype': file.obj.mimetype})
 
@@ -359,7 +357,10 @@ class WekoDeposit(Deposit):
 
                             # upload file metadata to Elasticsearch
                             try:
-                                file.obj.file.upload_file(lst)
+                                file_size_max = current_app.config['WEKO_MAX_FILE_SIZE']
+                                if file.obj.file.size <= file_size_max:
+                                    file.obj.file.upload_file(lst)
+                                flash(lst)
                             except Exception as e:
                                 abort(500, '{}'.format(e.errors))
                             break
