@@ -157,7 +157,7 @@ RECORDS_REST_SORT_OPTIONS = dict(
         ,
         custom_sort=dict(
                     title='Custom Sort',
-                    fields=['custom_sort'],
+                    fields=['control_number'],
                     default_order='asc',
                     order=8,
         )
