@@ -120,8 +120,8 @@ def opensearch_description():
 def save_sort():
     """ Save custom sort"""
 
-    data = request.get_json()
-    current_app.logger.debug(data)
+    # data = request.get_json()
+    # current_app.logger.debug(data)
     # index_id = data["index_id"]
     # sort_data = data["sort_data"]
 
@@ -144,6 +144,5 @@ def save_sort():
     #         body=body
     #     )
 
-    return render_template(
-        current_app.config['WEKO_SCHEMA_UI_UPLOAD'],
-        record={})
+    return redirect(
+        url_for('.search', page=1, size=20, search_type=2, q='1539652608824'))
