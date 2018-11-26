@@ -580,6 +580,7 @@ def item_path_search_factory(self, search, index_id=None):
           "order": "asc"
         }
     }
+    default_sort ={"_score": {'order': 'asc' }}
 
 
     for key, value in sortkwargs.items():
@@ -591,6 +592,7 @@ def item_path_search_factory(self, search, index_id=None):
             # script_str = json.loads(script_str)
             search._sort=[]
             search._sort.append(script_str)
+            search._sort.append(default_sort)
             urlkwargs.add(key, script_str)
         else:
             urlkwargs.add(key, value)
