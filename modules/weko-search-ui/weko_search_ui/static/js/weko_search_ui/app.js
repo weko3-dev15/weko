@@ -98,7 +98,7 @@
           headers: {'Content-Type': 'application/json'},
         }).then(function successCallback(response) {
           $http({
-            method: 'POST',
+            method: 'GET',
             url: '/search?search_type=2&q=1539652608824',
             headers: {'Content-Type': 'application/json'},
           })
