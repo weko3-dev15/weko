@@ -86,7 +86,7 @@
 
      $scope.itemManagementSave= function(){
         var data = $scope.vm.invenioSearchResults
-
+         alert(data)
 
 
 　　   // request api
