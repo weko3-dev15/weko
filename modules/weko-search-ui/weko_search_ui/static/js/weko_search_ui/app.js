@@ -91,8 +91,8 @@
 //        $("#tab_display").addClass("active")
 
 
-        var data = $rootScope.invenioSearchResults.hits.hits
-        alert(data)
+        var data = $rootScope.vm.invenioSearchResults
+
 
 
 //        // request api
@@ -135,7 +135,7 @@
 
     angular.bootstrap(
       document.getElementById('invenio-search'), [
-        'searchResult',
+        'searchResult','invenioSearch'
       ]
     );
   });
