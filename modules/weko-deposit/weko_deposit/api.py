@@ -339,7 +339,8 @@ class WekoDeposit(Deposit):
                 # remove large base64 files for release memory
                 if self.jrc.get('content'):
                     for content in self.jrc['content']:
-                        del content['file']
+                        if content.get('file'):
+                            del content['file']
 # TODO
     def get_content_files(self):
         """Get content file metadata."""
