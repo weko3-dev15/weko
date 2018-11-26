@@ -360,7 +360,7 @@ class WekoDeposit(Deposit):
                                 file_size_max = current_app.config[
                                     'WEKO_MAX_FILE_SIZE_FOR_ES']
                                 mimetypes = current_app.config[
-                                    'WEKO_MIMETYPE_WHITELIST']
+                                    'WEKO_MIMETYPE_WHITELIST_FOR_ES']
                                 if file.obj.file.size <= file_size_max and \
                                     file.obj.mimetype in mimetypes:
 
