@@ -84,23 +84,39 @@
      }
 
      $scope.itemManagementSave= function(){
-        $rootScope.disable_flg = true;
-        $rootScope.display_flg = true;
-        $("#tab_edit").removeClass("active")
-        $("#tab_display").addClass("active")
+//        $rootScope.disable_flg = true;
+//        $rootScope.display_flg = true;
+//        $("#tab_edit").removeClass("active")
+//        $("#tab_display").addClass("active")
         // request api
-        $http({
+//        $http({
+//            method: 'POST',
+//            url: '/item_management/save',
+//            data: {
+//            'recid':"123"
+//          },
+//          headers: {'Content-Type': 'application/json'},
+//        }).then(function successCallback(response) {
+//
+//        }, function errorCallback(response) {
+//
+//        });
+
+          $.ajax({
             method: 'POST',
             url: '/item_management/save',
-            data: {
-            'recid':"123"
-          },
-          headers: {'Content-Type': 'application/json'},
-        }).then(function successCallback(response) {
+            async: true,
+            contentType: 'application/json',
+            dataType: 'json',
+            data: {"aa":"111"}
+            success: function(data,textStatus){
 
-        }, function errorCallback(response) {
+            },
+            error: function(textStatus,errorThrown){
+              
+            }
+          });
 
-        });
      }
 
      $scope.itemManagementCancel= function(){
