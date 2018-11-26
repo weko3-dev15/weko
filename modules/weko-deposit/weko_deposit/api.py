@@ -344,7 +344,6 @@ class WekoDeposit(Deposit):
 # TODO
     def get_content_files(self):
         """Get content file metadata."""
-        # fmd = self.data.get('filemeta')
         fmd = self.get_file_data()
         if fmd:
             for file in self.files:
@@ -352,7 +351,6 @@ class WekoDeposit(Deposit):
                     for lst in fmd:
                         if file.obj.key == lst.get('filename'):
                             lst.update({'mimetype': file.obj.mimetype})
-                            flash(file.obj.mimetype)
 
                             # update file_files's json
                             file.obj.file.update_json(lst)
