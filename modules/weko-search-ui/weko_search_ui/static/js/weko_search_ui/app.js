@@ -93,8 +93,7 @@
             method: 'POST',
             url: '/item_management/save',
             data: {
-            'recid': recid,
-            'action': action,
+            'recid':"123"
           },
           headers: {'Content-Type': 'application/json'},
         }).then(function successCallback(response) {
