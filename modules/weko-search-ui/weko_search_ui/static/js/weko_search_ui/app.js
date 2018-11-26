@@ -86,21 +86,25 @@
 
      $scope.itemManagementSave= function(){
         var data = $scope.vm.invenioSearchResults.hits.hits
-         alert(JSON.stringify(data))
-
+        var custom_sort =[]
+        for(var x in data){
+           var sub = {"id":"", custom_sort:{}}
+           sub.id= x.id;
+           sub.custom_sort=x.custom_sort;
+           custom_sort.push(sub);
+        }
+        var post_data ={"q_id":$rootScope.index_id_q, "sort":custom_sort}
 
 　　   // request api
         $http({
             method: 'POST',
             url: '/item_management/save',
-            data: {
-            'recid':"123"
-          },
+            data: post_data,
           headers: {'Content-Type': 'application/json'},
         }).then(function successCallback(response) {
-          window.location.href = '/search?search_type=2&q=1539652608824'
+          window.location.href = '/search?search_type=2&q='+$rootScope.index_id_q;
         }, function errorCallback(response) {
-
+          window.location.href = '/search?search_type=2&q='+$rootScope.index_id_q;
         });
      }
 

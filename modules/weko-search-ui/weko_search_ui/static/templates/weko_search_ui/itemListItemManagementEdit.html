@@ -9,7 +9,7 @@
       <tr>
         <td>{{ record.metadata.hasOwnProperty('title')?record.metadata.title[0]:record.metadata['dc:title'][0] }}</td>
         <td>
-          <input ng-disabled="disable_flg" type="text" id="cur_order" name="cur_order" class="form-control" ng-model="record.metadata.custom_sort[index_id_q]" value="{{record.metadata.custom_sort[index_id_q]!=6?record.metadata.custom_sort[index_id_q]:''}}">
+          <input ng-disabled="disable_flg" type="text" id="cur_order" name="cur_order" class="form-control" ng-model="record.metadata.custom_sort[index_id_q]" value="{{record.metadata.custom_sort[index_id_q]}}">
         </td>
       </tr>
     </tbody>

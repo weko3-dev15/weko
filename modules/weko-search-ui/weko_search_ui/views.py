@@ -121,8 +121,8 @@ def opensearch_description():
 def save_sort():
     """ Save custom sort"""
 
-    # data = request.get_json()
-    # current_app.logger.debug(data)
+    data = request.get_json()
+    current_app.logger.debug(data)
     # index_id = data["index_id"]
     # sort_data = data["sort_data"]
 
