@@ -124,6 +124,9 @@ class Index(db.Model, Timestamp):
     owner_user_id = db.Column(db.Integer, nullable=True, default=0)
     """Owner user id of the index."""
 
+    item_custom_sort = db.Column(db.Text, nullable=True, default='')
+    """The sort of item by custom setting"""
+
     # index_items = db.relationship('IndexItems', back_populates='index', cascade='delete')
 
     def __iter__(self):
