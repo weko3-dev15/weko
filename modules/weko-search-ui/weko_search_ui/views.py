@@ -115,7 +115,8 @@ def opensearch_description():
     response.headers['Content-Type'] = 'application/xml'
     return response
 
-@blueprint.route("/item_management/save")
+
+@blueprint.route("/item_management/save", methods=['POST'])
 def save_sort():
     """ Save custom sort"""
 
