@@ -86,7 +86,7 @@
 
      $scope.itemManagementSave= function(){
         var data = $scope.vm.invenioSearchResults.hits.hits
-        alert(data)
+        alert(JSON.stringify(data))
         var custom_sort_list =[]
         for(var x in data){
            var sub = {"id":"", custom_sort:""}
