@@ -160,5 +160,6 @@ def save_sort():
     # return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
     #                        index_id=cur_index_id, community_id=community_id,
     #                        width=width, **ctx)
-    return redirect(
-        url_for('.search'))
+    return render_template(
+        current_app.config['WEKO_SCHEMA_UI_UPLOAD'],
+        record={})
