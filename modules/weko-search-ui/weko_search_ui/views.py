@@ -20,7 +20,8 @@
 
 """Blueprint for weko-search-ui."""
 
-from flask import Blueprint, current_app, render_template, request, redirect, url_for
+from flask import Blueprint, current_app, render_template, request, \
+    redirect, url_for, make_response, jsonify
 from xml.etree import ElementTree as ET
 from weko_index_tree.models import IndexStyle
 from weko_index_tree.api import Indexes
@@ -143,6 +144,9 @@ def save_sort():
     #         id=d.get("_id"),
     #         body=body
     #     )
+    jfy = {}
+    jfy['status'] = 200
+    jfy['message'] = 'Data is successfully updated.'
 
-    return redirect(
-        url_for('.search', page=1, size=20, search_type=2, q='1539652608824'))
+
+    return make_response(jsonify(jfy), jfy['status'])
