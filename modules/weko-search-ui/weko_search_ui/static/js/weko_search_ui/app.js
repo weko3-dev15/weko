@@ -86,14 +86,14 @@
 
      $scope.itemManagementSave= function(){
         var data = $scope.vm.invenioSearchResults.hits.hits
-        var custom_sort =[]
+        var custom_sort_list =[]
         for(var x in data){
-           var sub = {"id":"", custom_sort:{}}
+           var sub = {"id":"", custom_sort:""}
            sub.id= x.id;
            sub.custom_sort=x.custom_sort;
-           custom_sort.push(sub);
+           custom_sort_list.push(sub);
         }
-        var post_data ={"q_id":$rootScope.index_id_q, "sort":custom_sort}
+        var post_data ={"q_id":$rootScope.index_id_q, "sort":custom_sort_list}
 
 　　   // request api
         $http({
