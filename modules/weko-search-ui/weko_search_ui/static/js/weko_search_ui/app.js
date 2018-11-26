@@ -89,18 +89,6 @@
 //        $("#tab_edit").removeClass("active")
 //        $("#tab_display").addClass("active")
         // request api
-//        $http({
-//            method: 'POST',
-//            url: '/item_management/save',
-//            data: {
-//            'recid':"123"
-//          },
-//          headers: {'Content-Type': 'application/json'},
-//        }).then(function successCallback(response) {
-//
-//        }, function errorCallback(response) {
-//
-//        });
 
           $.ajax({
             method: 'POST',
@@ -113,7 +101,7 @@
 
             },
             error: function(textStatus,errorThrown){
-              
+
             }
           });
 
