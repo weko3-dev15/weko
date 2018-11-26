@@ -91,7 +91,7 @@
 //        $("#tab_display").addClass("active")
 
 
-        var data = $rootScope.vm.invenioSearchResults.hits.hits
+        var data = $rootScope.invenioSearchResults.hits.hits
         alert(data)
 
 
