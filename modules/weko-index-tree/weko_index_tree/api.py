@@ -864,3 +864,21 @@ class Indexes(object):
         except Exception as se:
             current_app.logger.debug(se)
             return False
+
+    @classmethod
+    def set_item_sort_custom(cls, index_id, sort_json={}):
+        """Set custom sort"""
+        try:
+            with db.session.begin_nested():
+                index = cls.get_index(index_id)
+                if not index:
+                    return
+                index.item_custom_sort = sort_json
+                db.session.merge(index)
+            db.session.commit()
+            return index
+        except Exception as ex:
+            current_app.logger.debug(ex)
+            db.session.rollback()
+        return
+

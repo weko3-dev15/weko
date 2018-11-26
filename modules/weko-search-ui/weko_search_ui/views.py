@@ -23,6 +23,8 @@
 from flask import Blueprint, current_app, render_template, request
 from xml.etree import ElementTree as ET
 from weko_index_tree.models import IndexStyle
+from weko_index_tree.api import Indexes
+from invenio_indexer.api import RecordIndexer
 
 blueprint = Blueprint(
     'weko_search_ui',
@@ -112,3 +114,31 @@ def opensearch_description():
     # update headers
     response.headers['Content-Type'] = 'application/xml'
     return response
+
+@blueprint.route("/item_management/save")
+def save_sort():
+    """ Save custom sort"""
+
+    data = request.get_json()
+    current_app.logger.debug(data)
+    # index_id = data["index_id"]
+    # sort_data = data["sort_data"]
+
+    # Indexes.set_item_sort_custom(index_id, sort_data)
+    #
+    # # update es
+    # indexer = RecordIndexer()
+    #
+    # for d in sort_data:
+    #     d[index_id]= 0
+    #     body = {
+    #         'doc': {
+    #             "custom_sort": d,
+    #         }
+    #     }
+    #     indexer.client.update(
+    #         index="weko",
+    #         doc_type="item",
+    #         id=d.get("_id"),
+    #         body=body
+    #     )

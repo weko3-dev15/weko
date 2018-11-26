@@ -88,6 +88,20 @@
         $rootScope.display_flg = true;
         $("#tab_edit").removeClass("active")
         $("#tab_display").addClass("active")
+        // request api
+        $http({
+            method: 'POST',
+            url: '/item_management/save',
+            data: {
+            'recid': recid,
+            'action': action,
+          },
+          headers: {'Content-Type': 'application/json'},
+        }).then(function successCallback(response) {
+
+        }, function errorCallback(response) {
+
+        });
      }
 
      $scope.itemManagementCancel= function(){
