@@ -85,29 +85,23 @@
      }
 
      $scope.itemManagementSave= function(){
-//        $rootScope.disable_flg = true;
-//        $rootScope.display_flg = true;
-//        $("#tab_edit").removeClass("active")
-//        $("#tab_display").addClass("active")
-
-
-        var data = $rootScope.vm.invenioSearchResults
+        var data = $scope.vm.invenioSearchResults
 
 
 
-//        // request api
-//        $http({
-//            method: 'POST',
-//            url: '/item_management/save',
-//            data: {
-//            'recid':"123"
-//          },
-//          headers: {'Content-Type': 'application/json'},
-//        }).then(function successCallback(response) {
-//          window.location.href = '/search?search_type=2&q=1539652608824'
-//        }, function errorCallback(response) {
-//
-//        });
+　　   // request api
+        $http({
+            method: 'POST',
+            url: '/item_management/save',
+            data: {
+            'recid':"123"
+          },
+          headers: {'Content-Type': 'application/json'},
+        }).then(function successCallback(response) {
+          window.location.href = '/search?search_type=2&q=1539652608824'
+        }, function errorCallback(response) {
+
+        });
      }
 
      $scope.itemManagementCancel= function(){
