@@ -572,7 +572,7 @@ def item_path_search_factory(self, search, index_id=None):
           "type": "number",
           "params": {
             "factor": {
-              "35": 3,
+              "34": 3,
               "36": 1,
               "37": 2
             }
