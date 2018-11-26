@@ -89,22 +89,18 @@
 //        $("#tab_edit").removeClass("active")
 //        $("#tab_display").addClass("active")
         // request api
-
-          $.ajax({
+        $http({
             method: 'POST',
             url: '/item_management/save',
-            async: true,
-            contentType: 'application/json',
-            dataType: 'json',
-            data: {"aa":"111"}
-            success: function(data,textStatus){
+            data: {
+            'recid':"123"
+          },
+          headers: {'Content-Type': 'application/json'},
+        }).then(function successCallback(response) {
 
-            },
-            error: function(textStatus,errorThrown){
+        }, function errorCallback(response) {
 
-            }
-          });
-
+        });
      }
 
      $scope.itemManagementCancel= function(){
