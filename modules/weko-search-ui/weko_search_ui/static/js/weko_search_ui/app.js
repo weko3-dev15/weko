@@ -92,7 +92,7 @@
 
 
         var data = $rootScope.vm
-        console.log(data)
+        alert(data)
 
 
         // request api
