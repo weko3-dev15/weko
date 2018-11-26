@@ -580,7 +580,7 @@ def item_path_search_factory(self, search, index_id=None):
           "order": "asc"
         }
     }
-    default_sort ={"_score": {'order': 'asc' }}
+    default_sort ={'_score': {'order': 'desc'}}
 
 
     for key, value in sortkwargs.items():
