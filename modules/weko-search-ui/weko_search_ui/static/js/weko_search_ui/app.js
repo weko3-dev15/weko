@@ -49,7 +49,7 @@
   // Bootstrap it!
   angular.element(document).ready(function() {
     angular.module('searchResult.controllers', []);
-    function searchResCtrl($scope, $rootScope, $http){
+    function searchResCtrl($scope, $rootScope, $http, $location){
      var commInfo=$("#community").val();
      if(commInfo != ""){
         $rootScope.commInfo="?community="+commInfo;
@@ -97,11 +97,7 @@
           },
           headers: {'Content-Type': 'application/json'},
         }).then(function successCallback(response) {
-          $http({
-            method: 'GET',
-            url: '/search?search_type=2&q=1539652608824',
-            headers: {'Content-Type': 'application/json'},
-          })
+          $location.path('/search?search_type=2&q=1539652608824')
         }, function errorCallback(response) {
 
         });
@@ -119,7 +115,8 @@
     searchResCtrl.$inject = [
       '$scope',
       '$rootScope',
-      '$http'
+      '$http',
+      '$location'
     ];
     angular.module('searchResult.controllers')
       .controller('searchResCtrl', searchResCtrl);
