@@ -90,7 +90,7 @@
         for(var x in data){
            var sub = {"id":"", custom_sort:""}
            sub.id= x.id;
-           sub.custom_sort=x.custom_sort;
+           sub.custom_sort=x.metadata.custom_sort;
            custom_sort_list.push(sub);
         }
         var post_data ={"q_id":$rootScope.index_id_q, "sort":custom_sort_list}
