@@ -62,7 +62,6 @@
      $rootScope.disable_flg = true;
      $rootScope.display_flg = true;
      $rootScope.index_id_q = $location.search().q;
-     alert($rootScope.index_id_q)
 
       $scope.itemManagementTabEdit= function(){
         $rootScope.disable_flg = false;
@@ -92,7 +91,7 @@
 //        $("#tab_display").addClass("active")
 
 
-        var data = $rootScope.vm.invenioSearchResults.hits.hits
+        var data = $rootScope.vm
         console.log(data)
 
 
