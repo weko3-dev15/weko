@@ -61,6 +61,8 @@
 //   button setting
      $rootScope.disable_flg = true;
      $rootScope.display_flg = true;
+     $rootScope.index_id_q = $location.search().q;
+     alert($rootScope.index_id_q)
 
       $scope.itemManagementTabEdit= function(){
         $rootScope.disable_flg = false;
@@ -88,6 +90,12 @@
 //        $rootScope.display_flg = true;
 //        $("#tab_edit").removeClass("active")
 //        $("#tab_display").addClass("active")
+
+
+        var data = $rootScope.vm.invenioSearchResults.hits.hits
+        console.log(data)
+
+
         // request api
         $http({
             method: 'POST',
