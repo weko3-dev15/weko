@@ -49,7 +49,7 @@
   // Bootstrap it!
   angular.element(document).ready(function() {
     angular.module('searchResult.controllers', []);
-    function searchResCtrl($scope, $rootScope){
+    function searchResCtrl($scope, $rootScope, $http){
      var commInfo=$("#community").val();
      if(commInfo != ""){
         $rootScope.commInfo="?community="+commInfo;
