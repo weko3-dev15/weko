@@ -97,7 +97,7 @@
           },
           headers: {'Content-Type': 'application/json'},
         }).then(function successCallback(response) {
-          $location.path('/search?search_type=2&q=1539652608824')
+          window.location.href = '/search?search_type=2&q=1539652608824'
         }, function errorCallback(response) {
 
         });
