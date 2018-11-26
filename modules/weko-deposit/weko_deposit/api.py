@@ -359,8 +359,13 @@ class WekoDeposit(Deposit):
 
                             # upload file metadata to Elasticsearch
                             try:
-                                file_size_max = current_app.config['WEKO_MAX_FILE_SIZE_FOR_ES']
-                                if file.obj.file.size <= file_size_max:
+                                file_size_max = current_app.config[
+                                    'WEKO_MAX_FILE_SIZE_FOR_ES']
+                                mimetypes = current_app.config[
+                                    'WEKO_MIMETYPE_WHITELIST']
+                                if file.obj.file.size <= file_size_max and \
+                                    file.obj.mimetype in mimetypes:
+
                                     file.obj.file.upload_file(lst)
                             except Exception as e:
                                 abort(500, '{}'.format(e.errors))
