@@ -29,8 +29,11 @@ WEKO_BUCKET_QUOTA_SIZE = 50 * 1000 * 1000 * 1000  # 50 GB
 """Maximum quota per bucket."""
 
 WEKO_MAX_FILE_SIZE = WEKO_BUCKET_QUOTA_SIZE
-WEKO_MAX_FILE_SIZE_FOR_ES = 50 * 1000  # Byte
+WEKO_MAX_FILE_SIZE_FOR_ES = WEKO_BUCKET_QUOTA_SIZE  # Byte
 """Maximum file size accepted."""
+WEKO_MIMETYPE = [
+    'text/plain',
+]
 
 FILES_REST_STORAGE_FACTORY = 'weko_deposit.storage.pyfs_storage_factory'
 """Import path of factory used to create a storage instance."""
