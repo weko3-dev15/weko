@@ -131,7 +131,9 @@ def save_sort():
         item_sort[sort.get('id')]=sort.get('custom_sort').get(index_id)
 
     Indexes.set_item_sort_custom(index_id, item_sort)
-    
+
+    # update es
+    Indexes.update_item_sort_custom_es(sort_data)
     #
     # # update es
     # indexer = RecordIndexer()

@@ -35,6 +35,7 @@ from weko_groups.api import Group
 from .models import Index
 from .utils import get_tree_json, cached_index_tree_json, reset_tree, get_index_id_list
 from invenio_i18n.ext import current_i18n
+from invenio_indexer.api import RecordIndexer
 
 class Indexes(object):
     """Define API for index tree creation and update."""
@@ -881,4 +882,21 @@ class Indexes(object):
             current_app.logger.debug(ex)
             db.session.rollback()
         return
+
+    @classmethod
+    def update_item_sort_custom_es(cls, sort_json=[]):
+        """Set custom sort"""
+        indexer = RecordIndexer()
+        for d in sort_json:
+            body = {
+                'doc': {
+                    'custom_sort': d.get('custom_sort'),
+                }
+            }
+            indexer.client.update(
+                index="weko",
+                doc_type="item",
+                id=d.get("id"),
+                body=body
+            )
 
