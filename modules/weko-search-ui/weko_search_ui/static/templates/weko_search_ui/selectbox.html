@@ -1,5 +1,5 @@
 <select class="form-control" name="select-{{ data.sortParameter }}" ng-model="data.selectedOption" ng-change="handleFieldChange()">
   <option ng-repeat="option in data.availableOptions.options"
    value="{{ option.value }}"
-   ng-selected="isSelected(option.value)">{{ option.title }}</option>
+   ng-selected="isSelected(option.value)">{{data.availableOptions.options }}</option>
 </select>
