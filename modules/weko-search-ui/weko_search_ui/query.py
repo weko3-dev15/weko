@@ -412,7 +412,7 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
         else:
             query_q = _get_simple_search_query(qs)
 
-    src = {'_source': {'exclude': ['content']}}
+    src = {'_source': {'excludes': ['content', '*.*.file']}}
     # extr = search._extra.copy()
     # search.update_from_dict(src)
     search._extra.update(src)
@@ -537,7 +537,6 @@ def item_path_search_factory(self, search, index_id=None):
 
     # create a index search query
     query_q = _get_index_earch_query()
-    # flash(str(query_q))
 
     urlkwargs = MultiDict()
     try:
