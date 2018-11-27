@@ -933,6 +933,6 @@ class Indexes(object):
         :return: sort list
 
         """
-        item_custom_sort=db.session.query(Index.item_custom_sort).filter(Index.id == index_id).one_or_none()
+        item_custom_sort=db.session.query(Index.item_custom_sort).filter(Index.id == index_id).one()
 
         return item_custom_sort
