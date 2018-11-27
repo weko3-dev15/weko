@@ -179,10 +179,8 @@ class IndexSearchResource(ContentNegotiatedMethodView):
 
         getArgs = request.args
         if "management" in getArgs:
-            current_app.logger.debug("AAAAAAA")
-            size = request.values.get('size', 100, type=int)
-            current_app.logger.debug(size)
-
+            size = 100
+            
         if page * size >= self.max_result_window:
             raise MaxResultWindowRESTError()
 
