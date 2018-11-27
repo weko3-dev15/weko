@@ -3,6 +3,6 @@ require([
   "bootstrap"
 ], function () {
   $('#index_form_submit').on('click', function () {
-    alert("Index Admin !!!!")
+    alert("Index Admin !!!!");
   })
 })
