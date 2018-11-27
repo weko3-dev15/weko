@@ -556,7 +556,8 @@ def item_path_search_factory(self, search, index_id=None):
     search, sortkwargs = default_sorter_factory(search, search_index)
 
     for key, value in sortkwargs.items():
-        if value=='custom_sort':
+        # set custom sort option
+        if value == 'custom_sort':
             ind_id = request.values.get('q', '')
             factor_obj = Indexes.get_item_sort(ind_id)
             script_str = {
@@ -573,8 +574,7 @@ def item_path_search_factory(self, search, index_id=None):
             search._sort=[]
             search._sort.append(script_str)
             search._sort.append(default_sort)
-            current_app.logger.debug(search._sort)
-            urlkwargs.add(key, "custom_sort")
+            urlkwargs.add(key, value)
         else:
             urlkwargs.add(key, value)
 
