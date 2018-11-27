@@ -39,7 +39,6 @@ class OpenSearchSerializer(JSONSerializer):
         :param search_result: Elasticsearch search result.
         :param links: Dictionary of links to add to response.
         """
-        flash(search_result)
         format = request.values.get('format')
         if not format or format == 'atom':
             mimetype = 'application/atom+xml'
