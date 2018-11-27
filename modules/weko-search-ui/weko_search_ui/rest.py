@@ -208,7 +208,6 @@ class IndexSearchResource(ContentNegotiatedMethodView):
 
         # aggs result identify
         rd = search_result.to_dict()
-        current_app.logger.debug(rd)
         q = request.values.get('q')
         lang = current_i18n.language
 
