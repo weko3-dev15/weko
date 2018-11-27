@@ -41,3 +41,9 @@ js = Bundle(
     filters='requirejs',
     output="gen/index_tree.%(version)s.js"
 )
+
+js_indexadmin = Bundle(
+    'js/weko_index_tree/index_admin.js',
+    filters='requirejs',
+    output="gen/weko_index_tree_admin.js"
+)

@@ -99,6 +99,7 @@ setup(
             'weko_index_tree_css = weko_index_tree.bundles:style',
             'weko_index_tree_view = weko_index_tree.bundles:js_treeview',
             'weko_index_tree_js = weko_index_tree.bundles:js',
+            'weko_index_tree_admin_js = weko_index_tree.bundles:js_indexadmin',
         ],
         'invenio_db.alembic': [
             'weko_index_tree = weko_index_tree:alembic',
