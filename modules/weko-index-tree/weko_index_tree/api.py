@@ -935,4 +935,4 @@ class Indexes(object):
         """
         item_custom_sort=db.session.query(Index.item_custom_sort).filter(Index.id == index_id).one()
 
-        return item_custom_sort
+        return item_custom_sort[0]
