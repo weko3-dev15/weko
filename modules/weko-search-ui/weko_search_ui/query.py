@@ -554,39 +554,35 @@ def item_path_search_factory(self, search, index_id=None):
     search_index = search._index[0]
 
     search, sortkwargs = default_sorter_factory(search, search_index)
-    factor_obj={}
-
-    script_str = {
-        "_script": {
-          "script": "factor.get(doc[\"control_number\"].value) ? factor.get(doc[\"control_number\"].value):Integer.MAX_VALUE",
-          "type": "number",
-          "params": {
-            "factor": factor_obj
-          },
-          "order": "asc"
-        }
-    }
-    default_sort ={'_score': {'order': 'desc'}}
-
 
     for key, value in sortkwargs.items():
         if value=='custom_sort':
+            factor_obj = {}
             ind_id = request.values.get('q', '')
             factor_obj = Indexes.get_item_sort(ind_id)
+            script_str = {
+                "_script": {
+                    "script": "factor.get(doc[\"control_number\"].value) ? factor.get(doc[\"control_number\"].value):Integer.MAX_VALUE",
+                    "type": "number",
+                    "params": {
+                        "factor": factor_obj
+                    },
+                    "order": "asc"
+                }
+            }
+            default_sort = {'_score': {'order': 'desc'}}
             # json.dumps(script_str).replace("@custom_sort", custom_sort)
             # script_str.get("").params.factor = custom_sort
-            # current_app.logger.debug(script_str)
             # script_str = json.loads(script_str)
             search._sort=[]
             search._sort.append(script_str)
             search._sort.append(default_sort)
-
+            current_app.logger.debug(search._sort)
             urlkwargs.add(key, script_str)
         else:
             urlkwargs.add(key, value)
 
     urlkwargs.add('q', query_q)
-    current_app.logger.debug(urlkwargs)
     return search, urlkwargs
 
 
