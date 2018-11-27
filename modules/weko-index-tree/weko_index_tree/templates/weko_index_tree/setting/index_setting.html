@@ -21,6 +21,7 @@
 {%- extends admin_base_template %}
 
 {%- block javascript %}
+{{ super() }}
 {% assets "weko_index_tree_admin_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
 {%- endblock javascript %}
 
