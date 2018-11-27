@@ -20,11 +20,6 @@
 #}
 {%- extends admin_base_template %}
 
-{%- block javascript %}
-{{ super() }}
-{% assets "weko_index_tree_admin_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
-{%- endblock javascript %}
-
 {% from "weko_admin/settings/_macros.html" import render_field, form_errors %}
 
 {% set panel_title = _("Life Time") %}
@@ -80,7 +75,7 @@
     alert("Index!!!!!!");
     $('#index_form_submit').on('click', function(){
       alert("index_form_submit!!!!!!");
-      
+
     });
   })
 </script>
