@@ -88,7 +88,7 @@
         var data = $scope.vm.invenioSearchResults.hits.hits
         var custom_sort_list =[]
         for(var x of data){
-           var sub = {"id":"", custom_sort:""}
+           var sub = {"id":"", "custom_sort":"", "es_data":data}
            sub.id= x.id;
            sub.custom_sort=x.metadata.custom_sort;
            custom_sort_list.push(sub);
