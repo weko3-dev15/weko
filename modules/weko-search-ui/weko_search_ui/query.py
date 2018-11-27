@@ -448,9 +448,9 @@ def item_path_search_factory(self, search, index_id=None):
     def _get_index_earch_query():
 
         query_q = {
-            "_source": {
-                "exclude": ['content', '_item_metadata']
-            },
+            # "_source": {
+            #     "exclude": ['content', '_item_metadata']
+            # },
             "query": {
                 "match": {
                     "path.tree": "@index"
