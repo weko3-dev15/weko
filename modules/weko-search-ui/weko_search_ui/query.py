@@ -574,7 +574,7 @@ def item_path_search_factory(self, search, index_id=None):
             search._sort.append(script_str)
             search._sort.append(default_sort)
             current_app.logger.debug(search._sort)
-            urlkwargs.add(key, script_str)
+            urlkwargs.add(key, "custom_sort")
         else:
             urlkwargs.add(key, value)
 
