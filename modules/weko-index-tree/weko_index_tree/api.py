@@ -23,7 +23,7 @@
 from datetime import datetime
 from copy import deepcopy
 
-from flask import current_app
+from flask import current_app, json, jsonify
 from flask_login import current_user
 from invenio_db import db
 from invenio_accounts.models import Role
@@ -884,19 +884,34 @@ class Indexes(object):
         return
 
     @classmethod
-    def update_item_sort_custom_es(cls, sort_json=[]):
+    def update_item_sort_custom_es(cls, index_id, sort_json=[]):
         """Set custom sort"""
-        indexer = RecordIndexer()
-        for d in sort_json:
-            body = {
-                'doc': {
-                    'custom_sort': d.get('custom_sort'),
+
+        upd_item_sort_q = {
+            "query": {
+                "match": {
+                    "path.tree": "@index"
                 }
             }
-            indexer.client.update(
-                index="weko",
-                doc_type="item",
-                id=d.get("id"),
-                body=body
-            )
+        }
+        query_q = json.dumps(upd_item_sort_q).replace("@index", index_id)
+        query_q = json.loads(query_q)
+        indexer = RecordIndexer()
+        res = indexer.client.search(index="weko", body=query_q)
+        current_app.logger.debug(res)
+
+        # for d in sort_json:
+        #     for h in res.get("hits").get("hits"):
+        #         body = {
+        #             'doc': {
+        #                 'custom_sort': d.get('custom_sort'),
+        #             }
+        #         }
+        #         indexer.client.update(
+        #             index="weko",
+        #             doc_type="item",
+        #             id=h.get("_id"),
+        #             body=body
+        #         )
+
 

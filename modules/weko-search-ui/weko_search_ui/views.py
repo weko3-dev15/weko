@@ -131,10 +131,10 @@ def save_sort():
     for sort in sort_data:
         item_sort[sort.get('id')]=sort.get('custom_sort').get(index_id)
 
-    Indexes.set_item_sort_custom(index_id, item_sort)
+    # Indexes.set_item_sort_custom(index_id, item_sort)
 
     # update es
-    Indexes.update_item_sort_custom_es(sort_data)
+    Indexes.update_item_sort_custom_es(index_id, sort_data)
     #
     # # update es
     # indexer = RecordIndexer()
