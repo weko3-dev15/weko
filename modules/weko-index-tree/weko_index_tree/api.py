@@ -884,7 +884,7 @@ class Indexes(object):
         return
 
     @classmethod
-    def update_item_sort_custom_es(cls, index_id, sort_json=[]):
+    def update_item_sort_custom_es(cls, index_path, sort_json=[]):
         """Set custom sort"""
 
         upd_item_sort_q = {
@@ -894,7 +894,7 @@ class Indexes(object):
                 }
             }
         }
-        query_q = json.dumps(upd_item_sort_q).replace("@index", index_id)
+        query_q = json.dumps(upd_item_sort_q).replace("@index", index_path)
         query_q = json.loads(query_q)
         indexer = RecordIndexer()
         res = indexer.client.search(index="weko", body=query_q)

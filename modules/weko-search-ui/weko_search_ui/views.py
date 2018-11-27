@@ -134,7 +134,8 @@ def save_sort():
     # Indexes.set_item_sort_custom(index_id, item_sort)
 
     # update es
-    Indexes.update_item_sort_custom_es('1539600870081/1539652371320/1539652608824', sort_data)
+    fp = Indexes.get_self_path(index_id)
+    Indexes.update_item_sort_custom_es(fp.path, sort_data)
     #
     # # update es
     # indexer = RecordIndexer()
