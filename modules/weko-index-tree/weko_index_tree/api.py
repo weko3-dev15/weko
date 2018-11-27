@@ -425,8 +425,6 @@ class Indexes(object):
             reset_tree(tree=tree, path=record.get('path'))
         else:
             reset_tree(tree=tree, path=[])
-# TODO
-        flash(tree)
 
         return tree
 
