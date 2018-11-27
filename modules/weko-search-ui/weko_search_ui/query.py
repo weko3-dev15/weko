@@ -562,7 +562,7 @@ def item_path_search_factory(self, search, index_id=None):
             factor_obj = Indexes.get_item_sort(ind_id)
             script_str = {
                 "_script": {
-                    "script": "factor.get(doc[\"control_number\"].value) ? factor.get(doc[\"control_number\"].value):Integer.MAX_VALUE",
+                    "script": "factor.get(doc[\"control_number\"].value) !=0 ? factor.get(doc[\"control_number\"].value):Integer.MAX_VALUE",
                     "type": "number",
                     "params": {
                         "factor": factor_obj
