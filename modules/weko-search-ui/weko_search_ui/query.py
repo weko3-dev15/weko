@@ -449,7 +449,7 @@ def item_path_search_factory(self, search, index_id=None):
 
         query_q = {
             "_source": {
-                "exclude": ['content']
+                "exclude": ['content', '_item_metadata.item_1542872214361.attribute_value_mlt.file']
             },
             "query": {
                 "match": {
