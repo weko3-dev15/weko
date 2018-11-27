@@ -572,8 +572,8 @@ def item_path_search_factory(self, search, index_id=None):
         if value=='custom_sort':
             ind_id = request.values.get('q', '')
             custom_sort = Indexes.get_item_sort(ind_id)
-            current_app.logger.debug(custom_sort)
-            json.dumps(script_str).replace("@custom_sort", dict(custom_sort))
+            # json.dumps(script_str).replace("@custom_sort", custom_sort)
+            json.dumps(script_str).replace("@custom_sort", "{'36': 2, '38': '1', '35': 3, '34': 5, '37': '4'}")
             current_app.logger.debug(script_str)
             script_str = json.loads(script_str)
             search._sort=[]
