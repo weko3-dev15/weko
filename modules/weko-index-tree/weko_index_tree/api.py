@@ -896,7 +896,7 @@ class Indexes(object):
             indexer.client.update(
                 index="weko",
                 doc_type="item",
-                id=d.get("id"),
+                _id=d.get("id"),
                 body=body
             )
 
