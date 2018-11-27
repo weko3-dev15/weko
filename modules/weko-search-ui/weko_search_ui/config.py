@@ -55,6 +55,8 @@ WEKO_SEARCH_UI_JSTEMPLATE_COUNT = 'templates/weko_search_ui/count.html'
 
 SEARCH_UI_JSTEMPLATE_PAGINATION = 'templates/weko_search_ui/pagination.html'
 
+SEARCH_UI_ITEM_MANAGEMENT_JSTEMPLATE_PAGINATION = 'templates/weko_search_ui/paginationItemManagement.html'
+
 SEARCH_UI_JSTEMPLATE_SELECT_BOX = 'templates/weko_search_ui/selectbox.html'
 
 SEARCH_UI_JSTEMPLATE_SORT_ORDER = 'templates/weko_search_ui/togglebutton.html'
