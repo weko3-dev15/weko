@@ -557,7 +557,6 @@ def item_path_search_factory(self, search, index_id=None):
 
     for key, value in sortkwargs.items():
         if value=='custom_sort':
-            factor_obj = {}
             ind_id = request.values.get('q', '')
             factor_obj = Indexes.get_item_sort(ind_id)
             script_str = {
@@ -571,9 +570,6 @@ def item_path_search_factory(self, search, index_id=None):
                 }
             }
             default_sort = {'_score': {'order': 'desc'}}
-            # json.dumps(script_str).replace("@custom_sort", custom_sort)
-            # script_str.get("").params.factor = custom_sort
-            # script_str = json.loads(script_str)
             search._sort=[]
             search._sort.append(script_str)
             search._sort.append(default_sort)

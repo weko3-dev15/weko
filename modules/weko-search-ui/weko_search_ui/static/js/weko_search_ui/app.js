@@ -102,9 +102,9 @@
             data: post_data,
           headers: {'Content-Type': 'application/json'},
         }).then(function successCallback(response) {
-          window.location.href = '/search?search_type=2&q='+$rootScope.index_id_q;
+          window.location.href = '/search?search_type=2&q='+$rootScope.index_id_q + "management=item&sort=custom_sort";
         }, function errorCallback(response) {
-          window.location.href = '/search?search_type=2&q='+$rootScope.index_id_q;
+          window.location.href = '/search?search_type=2&q='+$rootScope.index_id_q+ "management=item&sort=custom_sort";
         });
      }
 
