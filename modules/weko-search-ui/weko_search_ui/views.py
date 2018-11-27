@@ -126,15 +126,12 @@ def save_sort():
     sort_data = data["sort"]
     current_app.logger.debug(sort_data)
     # save data to DB
-
     item_sort={}
     for sort in sort_data:
         item_sort[sort.get('id')]=sort.get('custom_sort').get(index_id)
 
-    current_app.logger.debug(item_sort)
-
-
-    # Indexes.set_item_sort_custom(index_id, sort_data)
+    Indexes.set_item_sort_custom(index_id, item_sort)
+    
     #
     # # update es
     # indexer = RecordIndexer()
