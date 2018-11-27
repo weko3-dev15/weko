@@ -886,32 +886,34 @@ class Indexes(object):
     @classmethod
     def update_item_sort_custom_es(cls, index_path, sort_json=[]):
         """Set custom sort"""
-
-        upd_item_sort_q = {
-            "query": {
-                "match": {
-                    "path.tree": "@index"
+        try:
+            upd_item_sort_q = {
+                "query": {
+                    "match": {
+                        "path.tree": "@index"
+                    }
                 }
             }
-        }
-        query_q = json.dumps(upd_item_sort_q).replace("@index", index_path)
-        query_q = json.loads(query_q)
-        indexer = RecordIndexer()
-        res = indexer.client.search(index="weko", body=query_q)
-        current_app.logger.debug(res)
+            query_q = json.dumps(upd_item_sort_q).replace("@index", index_path)
+            query_q = json.loads(query_q)
+            indexer = RecordIndexer()
+            res = indexer.client.search(index="weko", body=query_q)
 
-        # for d in sort_json:
-        #     for h in res.get("hits").get("hits"):
-        #         body = {
-        #             'doc': {
-        #                 'custom_sort': d.get('custom_sort'),
-        #             }
-        #         }
-        #         indexer.client.update(
-        #             index="weko",
-        #             doc_type="item",
-        #             id=h.get("_id"),
-        #             body=body
-        #         )
-
-
+            for d in sort_json:
+                for h in res.get("hits").get("hits"):
+                    if h.get('_source').get('control_number') == d.get("id"):
+                        body = {
+                            'doc': {
+                                'custom_sort': d.get('custom_sort'),
+                            }
+                        }
+                        indexer.client.update(
+                            index="weko",
+                            doc_type="item",
+                            id=h.get("_id"),
+                            body=body
+                        )
+                        break
+        except Exception as ex:
+            current_app.logger.debug(ex)
+        return

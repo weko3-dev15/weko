@@ -120,42 +120,28 @@ def opensearch_description():
 @blueprint.route("/item_management/save", methods=['POST'])
 def save_sort():
     """ Save custom sort"""
+    try:
+        data = request.get_json()
+        index_id = data.get("q_id")
+        sort_data = data.get("sort")
+        es_data = data.get("es_data")
+        current_app.logger.debug(es_data)
+        # save data to DB
+        item_sort={}
+        for sort in sort_data:
+            item_sort[sort.get('id')]=sort.get('custom_sort').get(index_id)
 
-    data = request.get_json()
-    index_id = data.get("q_id")
-    sort_data = data.get("sort")
-    es_data = data.get("es_data")
-    current_app.logger.debug(es_data)
-    # save data to DB
-    item_sort={}
-    for sort in sort_data:
-        item_sort[sort.get('id')]=sort.get('custom_sort').get(index_id)
+        # Indexes.set_item_sort_custom(index_id, item_sort)
 
-    # Indexes.set_item_sort_custom(index_id, item_sort)
+        # update es
+        fp = Indexes.get_self_path(index_id)
+        Indexes.update_item_sort_custom_es(fp.path, sort_data)
 
-    # update es
-    fp = Indexes.get_self_path(index_id)
-    Indexes.update_item_sort_custom_es(fp.path, sort_data)
-    #
-    # # update es
-    # indexer = RecordIndexer()
-    #
-    # for d in sort_data:
-    #     d[index_id]= 0
-    #     body = {
-    #         'doc': {
-    #             "custom_sort": d,
-    #         }
-    #     }
-    #     indexer.client.update(
-    #         index="weko",
-    #         doc_type="item",
-    #         id=d.get("_id"),
-    #         body=body
-    #     )
-    jfy = {}
-    jfy['status'] = 200
-    jfy['message'] = 'Data is successfully updated.'
-
-
-    return make_response(jsonify(jfy), jfy['status'])
+        jfy = {}
+        jfy['status'] = 200
+        jfy['message'] = 'Data is successfully updated.'
+        return make_response(jsonify(jfy), jfy['status'])
+    except Exception as ex:
+        jfy['status'] = 405
+        jfy['message'] = 'Error'
+        return make_response(jsonify(jfy), jfy['status'])
