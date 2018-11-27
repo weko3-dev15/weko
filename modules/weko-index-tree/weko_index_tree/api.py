@@ -914,6 +914,8 @@ class Indexes(object):
                             body=body
                         )
                         break
+            res_test = indexer.client.search(index="weko", body=query_q)
+            current_app.logger.debug(res_test)
         except Exception as ex:
             current_app.logger.debug(ex)
         return
