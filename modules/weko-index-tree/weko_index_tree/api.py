@@ -869,6 +869,8 @@ class Indexes(object):
     @classmethod
     def set_item_sort_custom(cls, index_id, sort_json={}):
         """Set custom sort"""
+
+
         try:
             with db.session.begin_nested():
                 index = cls.get_index(index_id)
@@ -885,7 +887,12 @@ class Indexes(object):
 
     @classmethod
     def update_item_sort_custom_es(cls, index_path, sort_json=[]):
-        """Set custom sort"""
+        """
+        Set custom sort
+        :param index_path selected index path
+        :param sort_json custom setted item sort
+
+        """
         try:
             upd_item_sort_q = {
                 "query": {
@@ -902,8 +909,6 @@ class Indexes(object):
             for d in sort_json:
                 for h in res.get("hits").get("hits"):
                     if int(h.get('_source').get('control_number')) == int(d.get("id")):
-                        current_app.logger.debug(h.get('_source').get('control_number'))
-                        current_app.logger.debug(d.get("id"))
                         body = {
                             'doc': {
                                 'custom_sort': d.get('custom_sort'),
@@ -916,8 +921,18 @@ class Indexes(object):
                             body=body
                         )
                         break
-            res_test = indexer.client.search(index="weko", body=query_q)
 
         except Exception as ex:
             current_app.logger.debug(ex)
         return
+
+    @classmethod
+    def get_item_sort(cls, index_id):
+        """
+        :param index_id: search index id
+        :return: sort list
+
+        """
+        item_custom_sort=db.session.query(Index.item_custom_sort).filter(Index.id == index_id).one_or_none()
+
+        return item_custom_sort
