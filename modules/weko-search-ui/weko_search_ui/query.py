@@ -554,13 +554,14 @@ def item_path_search_factory(self, search, index_id=None):
     search_index = search._index[0]
 
     search, sortkwargs = default_sorter_factory(search, search_index)
+    factor_obj={}
 
     script_str = {
         "_script": {
           "script": "factor.get(doc[\"control_number\"].value) ? factor.get(doc[\"control_number\"].value):Integer.MAX_VALUE",
           "type": "number",
           "params": {
-            "factor": "@custom_sort"
+            "factor": factor_obj
           },
           "order": "asc"
         }
@@ -571,9 +572,9 @@ def item_path_search_factory(self, search, index_id=None):
     for key, value in sortkwargs.items():
         if value=='custom_sort':
             ind_id = request.values.get('q', '')
-            custom_sort = Indexes.get_item_sort(ind_id)
+            factor_obj = Indexes.get_item_sort(ind_id)
             # json.dumps(script_str).replace("@custom_sort", custom_sort)
-            script_str._script.params.factor = custom_sort
+            # script_str.get("").params.factor = custom_sort
             # current_app.logger.debug(script_str)
             # script_str = json.loads(script_str)
             search._sort=[]
