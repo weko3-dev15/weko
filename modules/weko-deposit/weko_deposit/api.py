@@ -447,7 +447,7 @@ class WekoDeposit(Deposit):
         sub_sort={}
         for pth in index_lst:
             # sub_sort[pth[-13:]]=0
-            sub_sort[pth[-13:]] = 0
+            sub_sort[pth[-13:]] = ""
         jrc.update(dict(custom_sort=sub_sort))
         # dc.update(dict(custom_sort=sub_sort))
         current_app.logger.debug(sub_sort)

@@ -866,17 +866,26 @@ class Indexes(object):
             current_app.logger.debug(se)
             return False
 
+
     @classmethod
     def set_item_sort_custom(cls, index_id, sort_json={}):
         """Set custom sort"""
 
+        # change type of custom sort data
+        sort_dict_db = dict(sort_json)
+
+        for k,v in sort_dict_db.items():
+            if v != "":
+                sort_dict_db[k] = int(v)
+            else:
+                sort_dict_db[k] = 0
 
         try:
             with db.session.begin_nested():
                 index = cls.get_index(index_id)
                 if not index:
                     return
-                index.item_custom_sort = sort_json
+                index.item_custom_sort = sort_dict_db
                 db.session.merge(index)
             db.session.commit()
             return index
