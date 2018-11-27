@@ -124,14 +124,13 @@ def save_sort():
         data = request.get_json()
         index_id = data.get("q_id")
         sort_data = data.get("sort")
-        es_data = data.get("es_data")
-        current_app.logger.debug(es_data)
+
         # save data to DB
         item_sort={}
         for sort in sort_data:
             item_sort[sort.get('id')]=sort.get('custom_sort').get(index_id)
 
-        # Indexes.set_item_sort_custom(index_id, item_sort)
+        Indexes.set_item_sort_custom(index_id, item_sort)
 
         # update es
         fp = Indexes.get_self_path(index_id)

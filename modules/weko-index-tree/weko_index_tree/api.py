@@ -880,6 +880,8 @@ class Indexes(object):
             else:
                 sort_dict_db[k] = 0
 
+        current_app.logger.debug(sort_dict_db)
+
         try:
             with db.session.begin_nested():
                 index = cls.get_index(index_id)
