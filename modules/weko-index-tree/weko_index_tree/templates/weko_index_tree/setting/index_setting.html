@@ -70,8 +70,10 @@
   $(document).ready(function() {
     $('#index_form_submit').on('click', function(){
       let height = $('#height').val();
-      alert(height);
-
+      if(height == null || isNaN(height) || height <= 0) {
+        alert("Invalid height for indextree panel.");
+        return false;
+      }
     });
   })
 </script>
