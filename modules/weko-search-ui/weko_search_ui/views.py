@@ -130,9 +130,9 @@ def save_sort():
 
     item_sort={}
     for sort in sort_data:
-        item_sort[sort.id]=sort.custom_sort[index_id]
+        # item_sort[sort.id]=sort.custom_sort[index_id]
+        current_app.logger.debug(item_sort)
 
-    current_app.logger.debug(item_sort)
 
     # Indexes.set_item_sort_custom(index_id, sort_data)
     #
