@@ -122,10 +122,9 @@ def save_sort():
     """ Save custom sort"""
 
     data = request.get_json()
-    current_app.logger.debug(data)
     index_id = data["q_id"]
     sort_data = data["sort"]
-
+    current_app.logger.debug(sort_data)
     # save data to DB
 
     item_sort={}
