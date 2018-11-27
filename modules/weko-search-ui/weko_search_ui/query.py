@@ -449,7 +449,7 @@ def item_path_search_factory(self, search, index_id=None):
 
         query_q = {
             "_source": {
-                "excludes": ['content', 'item_1542872214361']
+                "excludes": ['content', 'file']
             },
             "query": {
                 "match": {
