@@ -537,7 +537,7 @@ def item_path_search_factory(self, search, index_id=None):
 
     # create a index search query
     query_q = _get_index_earch_query()
-    flash(str(query_q))
+    # flash(str(query_q))
 
     urlkwargs = MultiDict()
     try:
