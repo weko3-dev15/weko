@@ -341,7 +341,7 @@ class WekoDeposit(Deposit):
                     for content in self.jrc['content']:
                         if content.get('file'):
                             del content['file']
-# TODO
+
     def get_content_files(self):
         """Get content file metadata."""
         fmd = self.get_file_data()

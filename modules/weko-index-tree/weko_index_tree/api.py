@@ -23,7 +23,7 @@
 from datetime import datetime
 from copy import deepcopy
 
-from flask import current_app
+from flask import current_app, flash
 from flask_login import current_user
 from invenio_db import db
 from invenio_accounts.models import Role
@@ -425,6 +425,8 @@ class Indexes(object):
             reset_tree(tree=tree, path=record.get('path'))
         else:
             reset_tree(tree=tree, path=[])
+# TODO
+        flash(tree)
 
         return tree
 
