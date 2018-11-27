@@ -901,9 +901,9 @@ class Indexes(object):
 
             for d in sort_json:
                 for h in res.get("hits").get("hits"):
-                    current_app.logger.debug(h.get('_source').get('control_number'))
-                    current_app.logger.debug(d.get("id"))
                     if h.get('_source').get('control_number') == d.get("id"):
+                        current_app.logger.debug(h.get('_source').get('control_number'))
+                        current_app.logger.debug(d.get("id"))
                         body = {
                             'doc': {
                                 'custom_sort': d.get('custom_sort'),
