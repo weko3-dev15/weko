@@ -60,7 +60,7 @@
      }
 
      $rootScope.$on('$locationChangeStart', function(ev){
-      alert("$locationChangeStart!!!!!");
+//      alert("$locationChangeStart!!!!!");
      });
 
     }
