@@ -104,6 +104,7 @@
      }
      $rootScope.confirmFunc=function(){
         alert("AAAAA");
+        return true;
      }
      $rootScope.confirmFunc2=function(){
         alert("BBBB");
