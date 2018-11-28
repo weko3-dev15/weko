@@ -72,7 +72,7 @@
     }
 
     var timer = 0;
-    $('#search_res').on('resize', function(){
+    $('#search_res').on('exResize', function(){
       if (timer > 0) {clearTimeout(timer);}
       timer = setTimeout(function () {
         alert("Loaded !!!");
