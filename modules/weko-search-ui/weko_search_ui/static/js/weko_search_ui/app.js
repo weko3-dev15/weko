@@ -105,6 +105,9 @@
      $rootScope.confirmFunc=function(){
         alert("AAAAA");
      }
+     $rootScope.confirmFunc2=function(){
+        alert("BBBB");
+     }
 
     }
     // Inject depedencies
