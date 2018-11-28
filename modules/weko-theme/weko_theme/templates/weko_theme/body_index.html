@@ -37,7 +37,7 @@
         <h3 class="panel-title">{{_('Index Tree')}}</h3>
     </div>
     <div id="index-height" name="index-height" hidden>{{ height }}</div>
-    <div class="panel-body index-body">
+    <div class="panel-body index-body" style="overflow: auto;">
       <app-tree-items></app-tree-items>
     </div>
   </div>
@@ -56,6 +56,7 @@
     <!--Search page-->
     if(search_url != -1){
       let resultAreaHeight = $('#index_item_list').parentNode.height();
+      alert(resultAreaHeight);
       if(resultAreaHeight > height){
         height = resultAreaHeight;
       }
