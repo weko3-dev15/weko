@@ -62,6 +62,7 @@
      $rootScope.disable_flg = true;
      $rootScope.display_flg = true;
      $rootScope.index_id_q = $location.search().q;
+     var continueFlg = false;
 
      $scope.itemManagementTabDisplay= function(){
         $rootScope.disable_flg = true;
@@ -103,20 +104,26 @@
         $("#tab_display").addClass("active")
      }
      $rootScope.confirmFunc=function(){
-        $('#comfirmModal').modal({
-          show: true
-        })
-//        return true;
+        if (!$rootScope.disable_flg){
+           $('#comfirmModal').modal({
+            show: true
+          })
+          return this.continueFlg
+        }else{
+          return true;
+        }
      }
      $rootScope.confirmFunc2=function(){
         alert("BBBB");
      }
      $rootScope.btnMcontineFunc=function(){
-        return true;
+        this.continueFlg = true;
+        $rootScope.confirmFunc();
      }
 
      $rootScope.btnMCancelFunc=function(){
-        return false;
+        this.continueFlg = false;
+        $rootScope.confirmFunc();
      }
 
 
