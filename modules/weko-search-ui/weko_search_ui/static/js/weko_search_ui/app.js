@@ -59,14 +59,8 @@
         $rootScope.commInfoIndex="";;
      }
 
-     $rootScope.$on('invenio.search.finished', function(ev){
-       $('#search_res').exResize(function(){
-        contentsWatch : true,
-        callback : function(){
-          alert("Resized!!!!!");
-        }
-
-       });
+     $rootScope.$on('invenio.search.request', function(ev){
+      alert("invenio.search.request!!!!!");
      });
 
     }
