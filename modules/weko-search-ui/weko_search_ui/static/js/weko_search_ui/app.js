@@ -104,7 +104,10 @@
      }
      $rootScope.confirmFunc=function(){
         alert("AAAAA");
-        return true;
+        $('#comfirmModal').modal({
+          show: false
+        })
+//        return true;
      }
      $rootScope.confirmFunc2=function(){
         alert("BBBB");
