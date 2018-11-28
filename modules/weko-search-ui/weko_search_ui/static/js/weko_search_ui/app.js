@@ -59,8 +59,8 @@
         $rootScope.commInfoIndex="";;
      }
 
-     $rootScope.$on('invenio.search.finished', function(ev){
-      alert("invenio.search.finished!!!!!");
+     $rootScope.$on('$locationChangeStart', function(ev){
+      alert("$locationChangeStart!!!!!");
      });
 
     }
