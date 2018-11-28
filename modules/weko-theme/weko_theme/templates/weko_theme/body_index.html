@@ -55,10 +55,12 @@
 
     <!--Search page-->
     if(search_url != -1){
-      let resultAreaHeight = $('#search-result-body').clientHeight;
+      let resultAreaHeight = $('#search-result-body').height();
+      alert(resultAreaHeight);
       if(resultAreaHeight > height){
         height = resultAreaHeight;
       }
+      alert(height);
 
     <!--Detail page-->
     }else if(detail_url != -1){
