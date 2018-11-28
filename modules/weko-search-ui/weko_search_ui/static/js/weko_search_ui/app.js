@@ -104,7 +104,7 @@
      }
      $rootScope.confirmFunc=function(){
         $('#comfirmModal').modal({
-          show: false
+          show: true
         })
 //        return true;
      }
