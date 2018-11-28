@@ -103,7 +103,6 @@
         $("#tab_display").addClass("active")
      }
      $rootScope.confirmFunc=function(){
-        alert("AAAAA");
         $('#comfirmModal').modal({
           show: false
         })
