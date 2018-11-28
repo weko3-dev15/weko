@@ -62,23 +62,23 @@
 
     <!--Detail page-->
     }else if(detail_url != -1){
-      let indexPanelBodyHeight = $('#body-contents-index-body').height();
-      let itemPanelHeight = $('#body-contents-item').height();
-      let detailAreaHeight = indexPanelBodyHeight + itemPanelHeight;
+      let detailBodyHeight = $('#detail-body').height();
+      let detailPanelHeaderHeight = $('#detail-body-index-header').height();
+      let detailAreaHeight = detailBodyHeight - detailPanelHeaderHeight;
 
       if(detailAreaHeight > height){
         height = detailAreaHeight;
       }
     }
 
-    var timer = 0;
-    $('#search-result-body').on('load resize', function(){
-      if (timer > 0) {clearTimeout(timer);}
-      timer = setTimeout(function () {
-        alert("Loaded !!!");
+    <!--var timer = 0;-->
+    <!--$('#search-result-body').on('load resize', function(){-->
+      <!--if (timer > 0) {clearTimeout(timer);}-->
+      <!--timer = setTimeout(function () {-->
+        <!--alert("Loaded !!!");-->
 
-      }, 200);
-    });
+      <!--}, 200);-->
+    <!--});-->
 
     $('.index-body').css('height',height.toString());
 
