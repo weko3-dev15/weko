@@ -102,6 +102,9 @@
         $rootScope.display_flg = true;
         $("#tab_display").addClass("active")
      }
+     $rootScope.confirmFunc=function(){
+        alert("AAAAA");
+     }
 
     }
     // Inject depedencies
