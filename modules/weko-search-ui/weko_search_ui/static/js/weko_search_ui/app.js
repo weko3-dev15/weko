@@ -60,7 +60,7 @@
      }
 
      $rootScope.$on('invenio.search.finished', function(ev){
-       $('#search_res').exResize(function(){alert("Resized!!!!!")}
+       $('#search_res').exResize(function(){alert("Resized!!!!!")});
      });
 
     }
