@@ -59,7 +59,7 @@
         $rootScope.commInfoIndex="";;
      }
 
-     $rootScope.$on('invenio.search.finished', function(ev){
+     $rootScope.$on('invenio.search.initialization', function(ev){
        alert($('#search-result-body').height());
      });
 
