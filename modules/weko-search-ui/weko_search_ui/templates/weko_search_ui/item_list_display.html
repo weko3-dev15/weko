@@ -113,12 +113,12 @@
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h4 class="modal-title" id="myModalLabel"></h4>
           </div>
-          <div class="modal-body text-center">
-            {{_('Is the input contents discarded')}}
+          <div class="modal-body">
+            <strong>{{_('Is the input contents discarded ?')}}</strong>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="btnModalContinue" data-dismiss="modal">{{_('Continue')}}</button>
-            <button type="button" class="btn btn-default" id="btnModalCancel" data-dismiss="modal">{{_('Cancel')}}</button>
+            <button type="button" class="btn btn-primary" id="btnModalContinue" ng-click="btnMcontineFunc()">{{_('Continue')}}</button>
+            <button type="button" class="btn btn-default" id="btnModalCancel" data-dismiss="modal" ng-click="btnMCancelFunc()">{{_('Cancel')}}</button>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
