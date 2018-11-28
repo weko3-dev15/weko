@@ -66,13 +66,11 @@
      $scope.itemManagementTabDisplay= function(){
         $rootScope.disable_flg = true;
         $rootScope.display_flg = true;
-        $("#tab_display").addClass("active")
      }
 
      $scope.itemManagementEdit= function(){
         $rootScope.disable_flg = false;
         $rootScope.display_flg = false;
-        $("#tab_display").removeClass("active")
      }
 
      $scope.itemManagementSave= function(){
