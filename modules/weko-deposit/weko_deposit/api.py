@@ -351,6 +351,7 @@ class WekoDeposit(Deposit):
                     for lst in fmd:
                         if file.obj.key == lst.get('filename'):
                             lst.update({'mimetype': file.obj.mimetype})
+                            flash(lst)
 
                             # update file_files's json
                             file.obj.file.update_json(lst)
