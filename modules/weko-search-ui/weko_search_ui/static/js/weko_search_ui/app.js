@@ -59,8 +59,8 @@
         $rootScope.commInfoIndex="";;
      }
 
-     $rootScope.$on('invenio.search.request', function(ev){
-      alert("invenio.search.request!!!!!");
+     $rootScope.$on('invenio.search.finished', function(ev){
+      alert("invenio.search.finished!!!!!");
      });
 
     }
