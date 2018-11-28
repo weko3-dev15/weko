@@ -108,7 +108,6 @@
            $('#comfirmModal').modal({
             show: true
           })
-          return this.continueFlg
         }else{
           return true;
         }
@@ -117,7 +116,7 @@
         alert("BBBB");
      }
      $rootScope.btnMcontineFunc=function(){
-        this.continueFlg = true;
+       $rootScope.confirmFunc2();
      }
 
      $rootScope.btnMCancelFunc=function(){
