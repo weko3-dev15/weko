@@ -109,11 +109,15 @@
     <div class="modal fade" tabindex="-1" role="dialog" id="comfirmModal">
       <div class="modal-dialog modelWidth" role="document">
         <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel"></h4>
+          </div>
           <div class="modal-body text-center">
-            <strong>{{_('Is the input contents discarded ?')}}</strong>
-            <br>
-            <button type="button" class="btn btn-default" id="btnModalContinue" data-dismiss="modal">{{_('Continue')}}</button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            {{_('Is the input contents discarded')}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="btnModalContinue" data-dismiss="modal">{{_('Continue')}}</button>
             <button type="button" class="btn btn-default" id="btnModalCancel" data-dismiss="modal">{{_('Cancel')}}</button>
           </div>
         </div><!-- /.modal-content -->
