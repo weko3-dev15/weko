@@ -107,7 +107,7 @@
            $('#comfirmModal').modal({
             show: true
           })
-          return false
+          return false;
         }else{
           return false;
         }
