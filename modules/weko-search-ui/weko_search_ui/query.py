@@ -574,7 +574,6 @@ def item_path_search_factory(self, search, index_id=None):
             search._sort=[]
             search._sort.append(script_str)
             search._sort.append(default_sort)
-            urlkwargs.add(key, value)
         # set selectbox
         urlkwargs.add(key, value)
 
