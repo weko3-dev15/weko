@@ -111,6 +111,14 @@
      $rootScope.confirmFunc2=function(){
         alert("BBBB");
      }
+     $rootScope.btnMcontineFunc=function(){
+        return true;
+     }
+
+     $rootScope.btnMCancelFunc=function(){
+        return false;
+     }
+
 
     }
     // Inject depedencies
