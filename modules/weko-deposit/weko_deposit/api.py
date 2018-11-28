@@ -93,7 +93,7 @@ class WekoIndexer(RecordIndexer):
         #                       doc_type=self.es_doc_type):
         #     self.client.delete(id=str(item_id), index=self.es_index,
         #                        doc_type=self.es_doc_type)
-
+        flash(jrc)
         self.client.index(id=str(item_id),
                           index=self.es_index,
                           doc_type=self.es_doc_type,
@@ -351,7 +351,6 @@ class WekoDeposit(Deposit):
                     for lst in fmd:
                         if file.obj.key == lst.get('filename'):
                             lst.update({'mimetype': file.obj.mimetype})
-                            flash(lst)
 
                             # update file_files's json
                             file.obj.file.update_json(lst)
