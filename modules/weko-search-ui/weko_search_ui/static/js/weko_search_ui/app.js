@@ -62,7 +62,6 @@
      $rootScope.disable_flg = true;
      $rootScope.display_flg = true;
      $rootScope.index_id_q = $location.search().q;
-     var continueFlg = false;
 
      $scope.itemManagementTabDisplay= function(){
         $rootScope.disable_flg = true;
@@ -108,22 +107,20 @@
            $('#comfirmModal').modal({
             show: true
           })
-          return this.continueFlg
+          return false
         }else{
-          return true;
+          return false;
         }
      }
      $rootScope.confirmFunc2=function(){
         alert("BBBB");
      }
      $rootScope.btnMcontineFunc=function(){
-        this.continueFlg = true;
-        $rootScope.confirmFunc=true;
+        $rootScope.confirmFunc()=true;
      }
 
      $rootScope.btnMCancelFunc=function(){
-        this.continueFlg = false;
-        $rootScope.confirmFunc=false;
+        $rootScope.confirmFunc()=false;
      }
 
 
