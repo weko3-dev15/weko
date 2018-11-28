@@ -45,7 +45,7 @@
 
 <script>
   $(document).ready(function() {
-    var urlArr = window.location.href.split('/');
+    let urlArr = window.location.href.split('/');
     let hostUrl = urlArr[0] + "//" + urlArr[2];
 
     let search_url = window.location.href.indexOf(hostUrl+"/search?");
@@ -56,11 +56,9 @@
     <!--Search page-->
     if(search_url != -1){
       let resultAreaHeight = $('#search-result-body').height();
-      alert(resultAreaHeight);
       if(resultAreaHeight > height){
         height = resultAreaHeight;
       }
-      alert(height);
 
     <!--Detail page-->
     }else if(detail_url != -1){
@@ -72,6 +70,15 @@
         height = detailAreaHeight;
       }
     }
+
+    var timer = 0;
+    $('#search-result-body').on('load resize', function(){
+      if (timer > 0) {clearTimeout(timer);}
+      timer = setTimeout(function () {
+        alert("Loaded !!!");
+
+      }, 200);
+    });
 
     $('.index-body').css('height',height.toString());
 
