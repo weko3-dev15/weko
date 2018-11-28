@@ -59,16 +59,9 @@
         $rootScope.commInfoIndex="";;
      }
 
-     $rootScope.$on('invenio.search.finished', function(ev){
+//     $rootScope.$on('invenio.search.finished', function(ev){
 //      alert("$locationChangeStart!!!!!");
-        if ($window.performance) {
-          if (performance.navigation.type === 1) {
-            alert("Reload!!!!!");
-          } else {
-            alert("First");
-          }
-        }
-     });
+//     });
 
     }
     // Inject depedencies
