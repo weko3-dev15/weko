@@ -71,14 +71,14 @@
       }
     }
 
-    <!--var timer = 0;-->
-    <!--$('#search-result-body').on('load resize', function(){-->
-      <!--if (timer > 0) {clearTimeout(timer);}-->
-      <!--timer = setTimeout(function () {-->
-        <!--alert("Loaded !!!");-->
+    var timer = 0;
+    $('#search_res').on('resize', function(){
+      if (timer > 0) {clearTimeout(timer);}
+      timer = setTimeout(function () {
+        alert("Loaded !!!");
 
-      <!--}, 200);-->
-    <!--});-->
+      }, 200);
+    });
 
     $('.index-body').css('height',height.toString());
 
