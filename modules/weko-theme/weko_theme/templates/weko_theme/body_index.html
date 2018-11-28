@@ -43,9 +43,10 @@
   </div>
 </div>
 
-<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="{{ url_for('static', filename='js/weko_theme/jquery.exresize-latest.js') }}"></script>
 <script>
+  $(window).load(function() {
+    alert($('#search-result-body').height());
+  });
   $(document).ready(function() {
     let urlArr = window.location.href.split('/');
     let hostUrl = urlArr[0] + "//" + urlArr[2];
@@ -72,16 +73,6 @@
         height = detailAreaHeight;
       }
     }
-
-    var timer = 0;
-    $('#search_res').exResize(function(){
-      alert("Resize!!!!");
-      <!--if (timer > 0) {clearTimeout(timer);}-->
-      <!--timer = setTimeout(function () {-->
-        <!--alert("Loaded !!!");-->
-
-      <!--}, 200);-->
-    });
 
     $('.index-body').css('height',height.toString());
 
