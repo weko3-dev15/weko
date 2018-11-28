@@ -57,11 +57,10 @@ def search():
     # Get index style
     style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
     width = style.width if style else '3'
-    height = style.height if style else '300'
 
     return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
                            index_id=cur_index_id, community_id=community_id,
-                           width=width, height=height, **ctx)
+                           width=width, **ctx)
 
 
 @blueprint_api.route('/opensearch/description.xml', methods=['GET'])

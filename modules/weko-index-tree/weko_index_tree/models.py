@@ -184,9 +184,6 @@ class IndexStyle(db.Model, Timestamp):
     width = db.Column(db.Text, nullable=False, default='')
     """Index area width."""
 
-    height = db.Column(db.Text, nullable=False, default='')
-    """Index area height."""
-
     @classmethod
     def create(cls, community_id, **data):
         try:
@@ -221,7 +218,7 @@ class IndexStyle(db.Model, Timestamp):
                     return
 
                 for k, v in data.items():
-                    if "width" in k or "height" in k:
+                    if "width" in k:
                         setattr(style, k, v)
                 db.session.merge(style)
             db.session.commit()
