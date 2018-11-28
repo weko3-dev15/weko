@@ -60,7 +60,7 @@
      }
 
      $rootScope.$on('invenio.search.finished', function(ev){
-       alert('invenio.search.finished !!!');
+       alert($('#search-result-body').height());
      });
 
     }
