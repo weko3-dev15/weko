@@ -575,6 +575,23 @@ def item_path_search_factory(self, search, index_id=None):
             search._sort=[]
             search._sort.append(script_str)
             search._sort.append(default_sort)
+        if value =="-custom_sort":
+            ind_id = request.values.get('q', '')
+            factor_obj = Indexes.get_item_sort(ind_id)
+            script_str = {
+                "_script": {
+                    "script": "factor.get(doc[\"control_number\"].value)&&factor.get(doc[\"control_number\"].value) !=0 ? factor.get(doc[\"control_number\"].value):Integer.MAX_VALUE",
+                    "type": "number",
+                    "params": {
+                        "factor": factor_obj
+                    },
+                    "order": "desc"
+                }
+            }
+            default_sort = {'_score': {'order': 'asc'}}
+            search._sort = []
+            search._sort.append(script_str)
+            search._sort.append(default_sort)
         # set selectbox
         urlkwargs.add(key, value)
 
