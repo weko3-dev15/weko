@@ -588,7 +588,7 @@ def item_path_search_factory(self, search, index_id=None):
                     "order": "desc"
                 }
             }
-            default_sort = {'_score': {'order': 'desc'}}
+            default_sort = {'_score': {'order': 'asc'}}
             search._sort = []
             search._sort.append(script_str)
             search._sort.append(default_sort)
