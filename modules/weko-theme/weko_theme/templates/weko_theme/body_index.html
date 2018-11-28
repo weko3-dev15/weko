@@ -63,7 +63,7 @@
     <!--Detail page-->
     }else if(detail_url != -1){
       let detailBodyHeight = $('#detail-body').height();
-      let detailPanelHeaderHeight = $('#detail-body-index-header').height();
+      let detailPanelHeaderHeight = $('#detail-body-index-header').innerHeight();
       let detailAreaHeight = detailBodyHeight - detailPanelHeaderHeight;
 
       if(detailAreaHeight > height){
