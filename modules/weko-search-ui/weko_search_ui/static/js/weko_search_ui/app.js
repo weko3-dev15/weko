@@ -62,7 +62,7 @@
      $rootScope.disable_flg = true;
      $rootScope.display_flg = true;
      $rootScope.index_id_q = $location.search().q;
-     var continueFlg = false;
+     
 
      $scope.itemManagementTabDisplay= function(){
         $rootScope.disable_flg = true;
@@ -116,11 +116,14 @@
         alert("BBBB");
      }
      $rootScope.btnMcontineFunc=function(){
+       $('#comfirmModal').modal({
+            show: false
+          })
        $rootScope.confirmFunc2();
      }
 
      $rootScope.btnMCancelFunc=function(){
-        this.continueFlg = false;
+
      }
 
 
