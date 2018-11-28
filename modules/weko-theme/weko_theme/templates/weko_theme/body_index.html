@@ -55,7 +55,7 @@
 
     <!--Search page-->
     if(search_url != -1){
-      let resultAreaHeight = $('#index_item_list').parentNode.height();
+      let resultAreaHeight = $('#index_item_list').parentNode.clientHeight;
       alert(resultAreaHeight);
       if(resultAreaHeight > height){
         height = resultAreaHeight;
