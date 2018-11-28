@@ -118,12 +118,12 @@
      }
      $rootScope.btnMcontineFunc=function(){
         this.continueFlg = true;
-        $rootScope.confirmFunc();
+        $rootScope.confirmFunc=true;
      }
 
      $rootScope.btnMCancelFunc=function(){
         this.continueFlg = false;
-        $rootScope.confirmFunc();
+        $rootScope.confirmFunc=false;
      }
 
 
