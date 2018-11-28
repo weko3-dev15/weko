@@ -36,6 +36,7 @@
     <div class="panel-heading clearfix">
         <h3 class="panel-title">{{_('Index Tree')}}</h3>
     </div>
+    <div id="index-height" name="index-height" hidden>{{ height }}</div>
     <div class="panel-body index-body">
       <app-tree-items></app-tree-items>
     </div>
@@ -44,18 +45,33 @@
 
 <script>
   $(document).ready(function() {
-    var url = window.location.href;
-    <!--alert(url);-->
-  
+    var urlArr = window.location.href.split('/');
+    let hostUrl = urlArr[0] + "//" + urlArr[2];
 
+    let search_url = window.location.href.indexOf(hostUrl+"/search?");
+    let detail_url = window.location.href.indexOf(hostUrl+"/records/");
 
-    <!--$('.index-body').on('load', function(){-->
-      <!--alert("Index Body!!!");-->
-      <!--&lt;!&ndash;let height = $('#height').val();&ndash;&gt;-->
-      <!--&lt;!&ndash;if(height == null || isNaN(height) || height <= 0) {&ndash;&gt;-->
-        <!--&lt;!&ndash;alert("Invalid height for indextree panel.");&ndash;&gt;-->
-        <!--&lt;!&ndash;return false;&ndash;&gt;-->
-      <!--&lt;!&ndash;}&ndash;&gt;-->
-    <!--});-->
+    height = parseInt($('#index-height').text(), 10);
+
+    <!--Search page-->
+    if(search_url != -1){
+      let resultAreaHeight = $('#index_item_list').parentNode.height();
+      if(resultAreaHeight > height){
+        height = resultAreaHeight;
+      }
+
+    <!--Detail page-->
+    }else if(detail_url != -1){
+      let indexPanelBodyHeight = $('#body-contents-index-body').height();
+      let itemPanelHeight = $('#body-contents-item').height();
+      let detailAreaHeight = indexPanelBodyHeight + itemPanelHeight;
+
+      if(detailAreaHeight > height){
+        height = detailAreaHeight;
+      }
+    }
+
+    $('.index-body').css('height',height.toString());
+
   })
 </script>

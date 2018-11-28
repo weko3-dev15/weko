@@ -24,7 +24,7 @@
   <div class="panel-heading clearfix">
     <h3 class="panel-title">{{_('Index')}}</h3>
   </div>
-  <div class="panel-body">
+  <div id="body-contents-index-body" class="panel-body">
     <pre class="hide">{{record|tojson}}</pre>
     <div class="panel_bread" id="panel_bread">
       {%- if record.navi -%}
@@ -41,7 +41,7 @@
     </div>
   </div>
 </div>
-<div class="panel panel-default">
+<div id="body-contents-item" class="panel panel-default">
   <div class="panel-heading clearfix">
     <h3 class="panel-title">{{_('Item')}}</h3>
   </div>
