@@ -334,6 +334,16 @@ class WekoDeposit(Deposit):
 
                 # upload file content to Elasticsearch
                 self.get_content_files()
+# TODO
+                if self.jrc.get('_item_metadata'):
+                    meta = self.jrc['_item_metadata']
+                    if meta.get('item_1542872214361'):
+                        for metadata in meta.get('item_1542872214361'):
+                            if metadata.get('file'):
+                                flash('Delete file!!!!!')
+                                del metadata['file']
+
+
                 self.indexer.upload_metadata(self.jrc, self.pid.object_uuid,
                                              self.revision_id)
                 # remove large base64 files for release memory
