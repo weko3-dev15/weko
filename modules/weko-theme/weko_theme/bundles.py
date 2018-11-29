@@ -47,7 +47,7 @@ css_bootstrap = NpmBundle(
         'bootstrap-sass': '~3.3.5',
         'font-awesome': '~4.4.0',
         'jquery': '~1.9.1',
-        'jquery-confirm': '~3.3.0'
+        'jquery-confirm': '3.3.0'
     }
 )
 """Default CSS bundle with Bootstrap and Font-Awesome."""
