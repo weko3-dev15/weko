@@ -135,7 +135,7 @@
 //  });
 //})(angular);
 
-angular.module('searchResApp')
+angular.module('searchResApp',[])
   .controller('searchResCtrl', function ($scope, $rootScope, $http, $location) {
     var commInfo=$("#community").val();
      if(commInfo != ""){
