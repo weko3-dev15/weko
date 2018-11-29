@@ -68,13 +68,6 @@ def item_management():
     """Render view."""
     page_id="itemManagement"
     return render_template(
-        current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
+        current_app.config['WEKO_ITEM_MANAGEMENT_INIT_TEMPLATE'],
         page_id=page_id
     )
-
-@blueprint.route("/item_management/edit")
-@login_required
-def item_management_edit():
-    """Render a basic view."""
-    return render_template(
-        current_app.config['WEKO_ITEM_MANAGEMENT_EDIT_TEMPLATE'])
