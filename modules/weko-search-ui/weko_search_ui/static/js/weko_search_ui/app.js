@@ -107,7 +107,7 @@
         return confirm("Is the input contents discarded ?")
      }
      $rootScope.confirmFunc2=function(){
-        cons
+        alert("AAAAAAAAA")
      }
      $rootScope.btnMcontineFunc=function(){
        $rootScope.confirmFunc2();
