@@ -93,7 +93,7 @@ class WekoIndexer(RecordIndexer):
         #                       doc_type=self.es_doc_type):
         #     self.client.delete(id=str(item_id), index=self.es_index,
         #                        doc_type=self.es_doc_type)
-        flash(jrc)
+        # flash(jrc)
         self.client.index(id=str(item_id),
                           index=self.es_index,
                           doc_type=self.es_doc_type,
