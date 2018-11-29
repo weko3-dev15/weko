@@ -344,7 +344,6 @@ class WekoDeposit(Deposit):
 
     def get_content_files(self):
         """Get content file metadata."""
-        flash(self.jrc)
         fmd = self.get_file_data()
         if fmd:
             for file in self.files:
@@ -364,7 +363,6 @@ class WekoDeposit(Deposit):
                                     'WEKO_MIMETYPE_WHITELIST_FOR_ES']
                                 if file.obj.file.size <= file_size_max and \
                                     file.obj.mimetype in mimetypes:
-                                    # flash('upload_file!!')
 
                                     file.obj.file.upload_file(lst)
                             except Exception as e:
@@ -372,7 +370,6 @@ class WekoDeposit(Deposit):
                             break
             self.jrc.update({'content': fmd})
         flash(self.jrc)
-        flash(self.data)
 
     def get_file_data(self):
         file_data = []
