@@ -93,7 +93,7 @@ class WekoIndexer(RecordIndexer):
         #                       doc_type=self.es_doc_type):
         #     self.client.delete(id=str(item_id), index=self.es_index,
         #                        doc_type=self.es_doc_type)
-        # flash(jrc)
+        flash(jrc)
         self.client.index(id=str(item_id),
                           index=self.es_index,
                           doc_type=self.es_doc_type,
@@ -363,7 +363,7 @@ class WekoDeposit(Deposit):
                                     'WEKO_MIMETYPE_WHITELIST_FOR_ES']
                                 if file.obj.file.size <= file_size_max and \
                                     file.obj.mimetype in mimetypes:
-                                    flash('upload_file!!')
+                                    # flash('upload_file!!')
 
                                     file.obj.file.upload_file(lst)
                             except Exception as e:
