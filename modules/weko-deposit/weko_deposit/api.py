@@ -233,8 +233,6 @@ class WekoDeposit(Deposit):
     jrc = None
     is_edit = False
 
-    file_properties = []
-
     @property
     def item_metadata(self):
         """Return the Item metadata."""
@@ -335,11 +333,6 @@ class WekoDeposit(Deposit):
 
                 # Get file contents
                 self.get_content_files()
-                # if self.jrc.get('_item_metadata'):
-                #     item_meta = self.jrc['_item_metadata']
-                #     for file_property in self.file_properties:
-                #         if item_meta.get(file_property):
-                #             del item_meta[file_property]
 
                 # upload file content to Elasticsearch
                 self.indexer.upload_metadata(self.jrc, self.pid.object_uuid,
@@ -376,7 +369,6 @@ class WekoDeposit(Deposit):
 
                                     content = lst.copy()
                                     content.update({"file": file.obj.file.read_file(lst)})
-
                                     contents.append(content)
 
                             except Exception as e:
@@ -391,8 +383,6 @@ class WekoDeposit(Deposit):
                 for item in self.data.get(key):
                     if 'filename' in item:
                         file_data.extend(self.data.get(key))
-                        # if key not in self.file_properties:
-                        #     self.file_properties.append(key)
                         break
         return file_data
 
