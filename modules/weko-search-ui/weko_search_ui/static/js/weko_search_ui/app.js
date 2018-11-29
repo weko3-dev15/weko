@@ -135,8 +135,9 @@
 //  });
 //})(angular);
 
-angular.module('searchResApp',[])
-  .controller('searchResCtrl', function ($scope, $rootScope, $http, $location) {
+//invenioSearch
+
+function searchResCtrl($scope, $rootScope, $http, $location) {
     var commInfo=$("#community").val();
      if(commInfo != ""){
         $rootScope.commInfo="?community="+commInfo;
@@ -197,5 +198,10 @@ angular.module('searchResApp',[])
           return true;
         }
      }
-  })
+  }
+
+
+
+angular.module('searchResApp',[])
+  .controller('searchResCtrl', searchResCtrl)
 
