@@ -93,7 +93,6 @@ class WekoIndexer(RecordIndexer):
         #                       doc_type=self.es_doc_type):
         #     self.client.delete(id=str(item_id), index=self.es_index,
         #                        doc_type=self.es_doc_type)
-        # flash(self.data)
         self.client.index(id=str(item_id),
                           index=self.es_index,
                           doc_type=self.es_doc_type,
@@ -334,17 +333,18 @@ class WekoDeposit(Deposit):
                 # upload item metadata to Elasticsearch
                 set_timestamp(self.jrc, self.created, self.updated)
 
-                # upload file content to Elasticsearch
+                # Get file contents
                 self.get_content_files()
-# TODO
                 if self.jrc.get('_item_metadata'):
                     item_meta = self.jrc['_item_metadata']
                     for file_property in self.file_properties:
                         if item_meta.get(file_property):
                             del item_meta[file_property]
 
+                # upload file content to Elasticsearch
                 self.indexer.upload_metadata(self.jrc, self.pid.object_uuid,
                                              self.revision_id)
+
                 # remove large base64 files for release memory
                 if self.jrc.get('content'):
                     for content in self.jrc['content']:
