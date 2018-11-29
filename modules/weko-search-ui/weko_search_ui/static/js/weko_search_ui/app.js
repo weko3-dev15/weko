@@ -202,6 +202,10 @@ function searchResCtrl($scope, $rootScope, $http, $location) {
 
 
 
-angular.module('searchResApp',[])
-  .controller('searchResCtrl', searchResCtrl)
+//angular.module('invenioSearch')
+//  .controller('searchResCtrl', searchResCtrl)
+
+angular.module('invenioSearch.controllers')
+  .controller('searchResCtrl', searchResCtrl);
+
 
