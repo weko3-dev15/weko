@@ -45,7 +45,8 @@
     });
 });
 
-//invenioSearch
+//add controller to invenioSearch
+// add by ryuu. at 20181129 start
 
 function searchResCtrl($scope, $rootScope, $http, $location) {
     var commInfo=$("#community").val();
@@ -112,5 +113,7 @@ function searchResCtrl($scope, $rootScope, $http, $location) {
 
 angular.module('invenioSearch.controllers')
   .controller('searchResCtrl', searchResCtrl);
+
+// add by ryuu. at 20181129 end
 
 
