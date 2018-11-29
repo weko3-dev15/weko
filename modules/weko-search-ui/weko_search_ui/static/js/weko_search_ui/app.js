@@ -200,7 +200,6 @@ function searchResCtrl($scope, $rootScope, $http, $location) {
      }
   }
 
-
 angular.module('invenioSearch.controllers')
   .controller('searchResCtrl', searchResCtrl);
 
