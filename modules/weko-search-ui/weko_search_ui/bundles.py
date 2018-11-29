@@ -42,8 +42,11 @@ js_dependecies = NpmBundle(
     output='gen/weko_search_ui.dependencies.%(version)s.js',
 )
 
-js = Bundle(
+js = NpmBundle(
     'js/weko_search_ui/app.js',
+    npm={
+        'jquery-confirm': '3.3.0'
+    },
     filters='requirejs',
     output="gen/weko_search_ui.%(version)s.js",
 )
