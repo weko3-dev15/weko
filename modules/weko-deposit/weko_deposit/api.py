@@ -380,7 +380,7 @@ class WekoDeposit(Deposit):
                                     contents.append(content)
 
                             except Exception as e:
-                                abort(500, '{}'.format(e.errors))
+                                abort(500, '{}'.format(str(e)))
                             break
             self.jrc.update({'content': contents})
 
