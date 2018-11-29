@@ -24,7 +24,7 @@
   <div role="navigation">
     <ul class="nav nav-tabs">
       <li id="tab_display" role="presentation" class="active activity_li">
-        <a ng-click="itemManagementTabDisplay()" class="active activity_li" data-show-tab="display">{{_('Custom Sort')}}</a></li>
+        {{_('Custom Sort')}}</li>
     </ul>
   </div>
   <br>
@@ -38,7 +38,6 @@
    search-hidden-params='{% if search_hidden_params %}{{search_hidden_params|tojson}}{% endif %}'
    search-headers='{"Accept": "{{ config.SEARCH_UI_SEARCH_MIMETYPE|default('application/json')}}"}'
   >
-  <!--<div id="search_res" ng-controller="searchResCtrl">-->
   <div class="panel panel-default">
     <div class="panel-heading clearfix">
       <span class="panel-title">
@@ -106,7 +105,6 @@
       </div>
     </div>
   </div>
-    <!--</div >-->
   </invenio-search>
     <!--<div class="modal fade" tabindex="-1" role="dialog" id="comfirmModal">-->
       <!--<div class="modal-dialog modelWidth" role="document">-->
