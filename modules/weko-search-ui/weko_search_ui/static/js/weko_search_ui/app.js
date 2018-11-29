@@ -104,22 +104,12 @@
         $("#tab_display").addClass("active")
      }
      $rootScope.confirmFunc=function(){
-        $.confirm({
-            confirmButton: 'Yes i agree',
-            cancelButton: 'NO never !'
-        });
+        if(!$rootScope.disable_flg){
+          return confirm("Is the input contents discarded ?") ;
+        }else{
+          return true;
+        }
      }
-     $rootScope.confirmFunc2=function(){
-        alert("AAAAAAAAA")
-     }
-     $rootScope.btnMcontineFunc=function(){
-       $rootScope.confirmFunc2();
-     }
-
-     $rootScope.btnMCancelFunc=function(){
-
-     }
-
 
     }
     // Inject depedencies
