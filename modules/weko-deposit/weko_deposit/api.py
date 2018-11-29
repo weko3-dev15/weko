@@ -377,7 +377,7 @@ class WekoDeposit(Deposit):
             if isinstance(self.data.get(key), list):
                 for item in self.data.get(key):
                     if 'filename' in item:
-                        file_data.extend(self.data.get(key))
+                        file_data.extend(self.data.get(key).copy())
                         break
         return file_data
 
