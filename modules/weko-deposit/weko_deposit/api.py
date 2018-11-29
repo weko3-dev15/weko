@@ -338,18 +338,10 @@ class WekoDeposit(Deposit):
                 self.get_content_files()
 # TODO
                 if self.jrc.get('_item_metadata'):
-                    meta = self.jrc['_item_metadata']
+                    item_meta = self.jrc['_item_metadata']
                     for file_property in self.file_properties:
-                        flash(file_property)
-                    # if meta.get('item_1542872214361'):
-                    #     flash('Delete item_1542872214361!!!!!')
-                    #     del meta['item_1542872214361']
-                        # values = meta['item_1542872214361']['attribute_value_mlt']
-                        # for metadata in values:
-                        #     if metadata.get('file'):
-                        #         flash('Delete file!!!!!')
-                        #         del metadata['file']
-
+                        if item_meta.get(file_property):
+                            del item_meta[file_property]
 
                 self.indexer.upload_metadata(self.jrc, self.pid.object_uuid,
                                              self.revision_id)
