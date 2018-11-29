@@ -104,7 +104,10 @@
         $("#tab_display").addClass("active")
      }
      $rootScope.confirmFunc=function(){
-        return confirm("Is the input contents discarded ?")
+        $.confirm({
+            confirmButton: 'Yes i agree',
+            cancelButton: 'NO never !'
+        });
      }
      $rootScope.confirmFunc2=function(){
         alert("AAAAAAAAA")
