@@ -338,7 +338,7 @@ class WekoDeposit(Deposit):
                 if self.jrc.get('_item_metadata'):
                     meta = self.jrc['_item_metadata']
                     if meta.get('item_1542872214361'):
-                        values = meta['attribute_value_mlt']
+                        values = meta['item_1542872214361']['attribute_value_mlt']
                         for metadata in values:
                             if metadata.get('file'):
                                 flash('Delete file!!!!!')
