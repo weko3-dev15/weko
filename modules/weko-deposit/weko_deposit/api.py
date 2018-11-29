@@ -344,6 +344,7 @@ class WekoDeposit(Deposit):
 
     def get_content_files(self):
         """Get content file metadata."""
+        flash(self.jrc)
         fmd = self.get_file_data()
         if fmd:
             for file in self.files:
