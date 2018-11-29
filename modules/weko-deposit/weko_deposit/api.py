@@ -353,6 +353,7 @@ class WekoDeposit(Deposit):
 
     def get_content_files(self):
         """Get content file metadata."""
+        contents = []
         fmd = self.get_file_data()
         if fmd:
             for file in self.files:
@@ -373,12 +374,15 @@ class WekoDeposit(Deposit):
                                 if file.obj.file.size <= file_size_max and \
                                     file.obj.mimetype in mimetypes:
 
-                                    file_content = file.obj.file.read_file(lst)
-                                    flash(file_content)
+                                    content = lst.deepcopy()
+                                    content.update({"file": file.obj.file.read_file(lst)})
+
+                                    contents.append(content)
+
                             except Exception as e:
                                 abort(500, '{}'.format(e.errors))
                             break
-            self.jrc.update({'content': fmd})
+            self.jrc.update({'content': contents})
 
     def get_file_data(self):
         file_data = []
