@@ -334,12 +334,12 @@ class WekoDeposit(Deposit):
                 set_timestamp(self.jrc, self.created, self.updated)
 
                 # Get file contents
-                # self.get_content_files()
-                # if self.jrc.get('_item_metadata'):
-                #     item_meta = self.jrc['_item_metadata']
-                #     for file_property in self.file_properties:
-                #         if item_meta.get(file_property):
-                #             del item_meta[file_property]
+                self.get_content_files()
+                if self.jrc.get('_item_metadata'):
+                    item_meta = self.jrc['_item_metadata']
+                    for file_property in self.file_properties:
+                        if item_meta.get(file_property):
+                            del item_meta[file_property]
 
                 # upload file content to Elasticsearch
                 self.indexer.upload_metadata(self.jrc, self.pid.object_uuid,
@@ -377,7 +377,6 @@ class WekoDeposit(Deposit):
                             except Exception as e:
                                 abort(500, '{}'.format(e.errors))
                             break
-            # flash(self.jrc)
             self.jrc.update({'content': fmd})
 
     def get_file_data(self):
