@@ -234,6 +234,8 @@ class WekoDeposit(Deposit):
     jrc = None
     is_edit = False
 
+    file_properties = []
+
     @property
     def item_metadata(self):
         """Return the Item metadata."""
@@ -337,9 +339,11 @@ class WekoDeposit(Deposit):
 # TODO
                 if self.jrc.get('_item_metadata'):
                     meta = self.jrc['_item_metadata']
-                    if meta.get('item_1542872214361'):
-                        flash('Delete item_1542872214361!!!!!')
-                        del meta['item_1542872214361']
+                    for file_property in self.file_properties:
+                        flash(file_property)
+                    # if meta.get('item_1542872214361'):
+                    #     flash('Delete item_1542872214361!!!!!')
+                    #     del meta['item_1542872214361']
                         # values = meta['item_1542872214361']['attribute_value_mlt']
                         # for metadata in values:
                         #     if metadata.get('file'):
@@ -382,7 +386,6 @@ class WekoDeposit(Deposit):
                                 abort(500, '{}'.format(e.errors))
                             break
             self.jrc.update({'content': fmd})
-        flash(self.jrc)
 
     def get_file_data(self):
         file_data = []
@@ -390,7 +393,9 @@ class WekoDeposit(Deposit):
             if isinstance(self.data.get(key), list):
                 for item in self.data.get(key):
                     if 'filename' in item:
-                        file_data.extend(self.data.get(key).copy())
+                        file_data.extend(self.data.get(key))
+                        if key not in self.file_properties:
+                            self.file_properties.append(key)
                         break
         return file_data
 
