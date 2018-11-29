@@ -374,7 +374,7 @@ class WekoDeposit(Deposit):
                                 if file.obj.file.size <= file_size_max and \
                                     file.obj.mimetype in mimetypes:
 
-                                    content = lst.deepcopy()
+                                    content = lst.copy()
                                     content.update({"file": file.obj.file.read_file(lst)})
 
                                     contents.append(content)
