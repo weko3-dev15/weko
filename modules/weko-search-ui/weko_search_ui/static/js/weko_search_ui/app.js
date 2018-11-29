@@ -62,7 +62,7 @@
      $rootScope.disable_flg = true;
      $rootScope.display_flg = true;
      $rootScope.index_id_q = $location.search().q;
-     
+
 
      $scope.itemManagementTabDisplay= function(){
         $rootScope.disable_flg = true;
@@ -104,21 +104,12 @@
         $("#tab_display").addClass("active")
      }
      $rootScope.confirmFunc=function(){
-        if (!$rootScope.disable_flg){
-           $('#comfirmModal').modal({
-            show: true
-          })
-        }else{
-          return true;
-        }
+        return confirm("Is the input contents discarded ?")
      }
      $rootScope.confirmFunc2=function(){
-        alert("BBBB");
+        cons
      }
      $rootScope.btnMcontineFunc=function(){
-       $('#comfirmModal').modal({
-            show: false
-          })
        $rootScope.confirmFunc2();
      }
 
