@@ -377,6 +377,7 @@ class WekoDeposit(Deposit):
                             except Exception as e:
                                 abort(500, '{}'.format(e.errors))
                             break
+            flash(self.jrc)
             self.jrc.update({'content': fmd})
 
     def get_file_data(self):
