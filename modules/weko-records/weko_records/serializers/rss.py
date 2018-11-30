@@ -97,6 +97,7 @@ class RssSerializer(JSONSerializer):
             return fg.rss_str(pretty=True)
 
 # TODO
+        fg.description('RSS Output!!')
         return fg.rss_str(pretty=True)
 
 
