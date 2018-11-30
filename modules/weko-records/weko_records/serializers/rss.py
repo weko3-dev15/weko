@@ -99,7 +99,7 @@ class RssSerializer(JSONSerializer):
 # TODO
         fg.description('RSS Output!!')
         fg.language('japanese')
-        fg.requestUrl('BASE_URL/?action=repository_opensearch&index_id=2&format=rss')
+        fg.requestUrl(request.url)
         return fg.rss_str(pretty=True)
 
 
