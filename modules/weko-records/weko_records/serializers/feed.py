@@ -274,6 +274,9 @@ class WekoFeedGenerator(FeedGenerator):
                     self.__rss_language
 
         channel = etree.SubElement(feed, 'channel')
+        channel.attrib['{http://www.w3.org/1999/02/22-rdf-syntax-ns#}about'] = \
+            'BASE_URL/?action=repository_opensearch&index_id=2&format=rss'
+
         if not (self.__rss_title and
                 self.__rss_link and
                 self.__rss_description):
