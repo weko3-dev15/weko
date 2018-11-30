@@ -98,6 +98,7 @@ class RssSerializer(JSONSerializer):
 
 # TODO
         fg.description('RSS Output!!')
+        fg.language('japanese')
         return fg.rss_str(pretty=True)
 
 

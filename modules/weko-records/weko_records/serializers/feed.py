@@ -266,10 +266,13 @@ class WekoFeedGenerator(FeedGenerator):
         #               'content': 'http://purl.org/rss/1.0/modules/content/'})
 
         nsmap.update({'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-                      'rdfs': 'http://www.w3.org/2000/01/rdf-schema#',
-                      'lang': 'ja'})
+                      'rdfs': 'http://www.w3.org/2000/01/rdf-schema#'})
 
-        feed = etree.Element('rss', version='2.0', nsmap=nsmap)
+        feed = etree.Element('rdf:RDF', xmlns='http://purl.org/rss/1.0/', nsmap=nsmap)
+        if self.__rss_language:
+            feed.attrib['{http://www.w3.org/XML/1998/namespace}lang'] = \
+                    self.__rss_language
+
         channel = etree.SubElement(feed, 'channel')
         if not (self.__rss_title and
                 self.__rss_link and
