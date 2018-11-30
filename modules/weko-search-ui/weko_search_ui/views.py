@@ -60,14 +60,16 @@ def search():
     # Get index style
     style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
     width = style.width if style else '3'
+    height = style.height if style else None
+
     if 'management' in getArgs:
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
-                               width=width, **ctx)
+                               width=width, height=height, **ctx)
     else:
         return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
-                               width=width, **ctx)
+                               width=width, height=height, **ctx)
 
 
 
