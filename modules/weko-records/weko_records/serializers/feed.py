@@ -268,7 +268,7 @@ class WekoFeedGenerator(FeedGenerator):
         nsmap.update({'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
                       'rdfs': 'http://www.w3.org/2000/01/rdf-schema#'})
 
-        feed = etree.Element('rdf:RDF', xmlns='http://purl.org/rss/1.0/', nsmap=nsmap)
+        feed = etree.Element('rss', xmlns='http://purl.org/rss/1.0/', nsmap=nsmap)
         if self.__rss_language:
             feed.attrib['{http://www.w3.org/XML/1998/namespace}lang'] = \
                     self.__rss_language
