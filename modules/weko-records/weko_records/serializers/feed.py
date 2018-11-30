@@ -265,8 +265,7 @@ class WekoFeedGenerator(FeedGenerator):
         # nsmap.update({'atom':  'http://www.w3.org/2005/Atom',
         #               'content': 'http://purl.org/rss/1.0/modules/content/'})
 
-        nsmap.update({'': 'http://purl.org/rss/1.0/',
-                      'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+        nsmap.update({'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
                       'rdfs': 'http://www.w3.org/2000/01/rdf-schema#',
                       'lang': 'ja'})
 
