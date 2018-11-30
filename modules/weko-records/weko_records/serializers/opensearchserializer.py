@@ -47,7 +47,6 @@ class OpenSearchSerializer(JSONSerializer):
                                             links=None, item_links_factory=None,
                                             **kwargs), mimetype
         elif format and format == 'rss':
-            flash('rss!!!')
             mimetype = 'application/rss+xml'
             rss_v1 = RssSerializer(RecordSchemaJSONV1)
             return rss_v1.serialize_search(pid_fetcher, search_result,
