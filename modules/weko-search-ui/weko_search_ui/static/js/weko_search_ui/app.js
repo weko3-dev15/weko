@@ -115,7 +115,7 @@ angular.module('invenioSearch')
   .controller('searchResCtrl', searchResCtrl);
 
 
-angular.module('invenioSearchResultsProvisional')
+angular.module('invenioCommunities.directives')
   .controller('searchResCtrl', searchResCtrl);
 
 
