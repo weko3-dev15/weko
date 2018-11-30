@@ -95,6 +95,8 @@ class WekoFeedGenerator(FeedGenerator):
         self.__rss_ttl = None
         self.__rss_webMaster = None
 
+        self.__rss_request_url = None
+
         # Extension list:
         self.__extensions = {}
 
@@ -268,14 +270,17 @@ class WekoFeedGenerator(FeedGenerator):
         nsmap.update({'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
                       'rdfs': 'http://www.w3.org/2000/01/rdf-schema#'})
 
-        feed = etree.Element('{http://www.w3.org/1999/02/22-rdf-syntax-ns#}RDF', xmlns='http://purl.org/rss/1.0/', nsmap=nsmap)
+        feed = etree.Element('{http://www.w3.org/1999/02/22-rdf-syntax-ns#}RDF',
+                             xmlns='http://purl.org/rss/1.0/', nsmap=nsmap)
+
         if self.__rss_language:
             feed.attrib['{http://www.w3.org/XML/1998/namespace}lang'] = \
                     self.__rss_language
 
         channel = etree.SubElement(feed, 'channel')
-        channel.attrib['{http://www.w3.org/1999/02/22-rdf-syntax-ns#}about'] = \
-            'BASE_URL/?action=repository_opensearch&index_id=2&format=rss'
+        if self.__rss_request_url:
+            channel.attrib['{http://www.w3.org/1999/02/22-rdf-syntax-ns#}about'] = \
+                self.__rss_request_url
 
         if not (self.__rss_title and
                 self.__rss_link and
@@ -822,6 +827,17 @@ class WekoFeedGenerator(FeedGenerator):
             self.__rss_language = language
             self.__atom_feed_xml_lang = language
         return self.__rss_language
+
+    def requestUrl(self, url=None):
+        '''Get or set the url of the feed. This is an RSS only
+        field.  However, this value will also be used to set the rdf:about
+        property of the RSS channel node.
+        :param url: url of the channel.
+        :returns: url of the channel.
+        '''
+        if url is not None:
+            self.__rss_request_url = url
+        return self.__rss_request_url
 
     def managingEditor(self, managingEditor=None):
         '''Set or get the value for managingEditor which is the email address
