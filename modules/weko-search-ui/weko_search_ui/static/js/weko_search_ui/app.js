@@ -114,7 +114,10 @@ function searchResCtrl($scope, $rootScope, $http, $location) {
 angular.module('invenioSearch.controllers')
   .controller('searchResCtrl', searchResCtrl);
 
-
+angular.element(document).ready(function() {
+    angular.bootstrap(
+      document.getElementById("invenio-search"), ['invenioSearch']
+    );
 // add by ryuu. at 20181129 end
 
 
