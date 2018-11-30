@@ -115,6 +115,10 @@ angular.module('invenioSearch')
   .controller('searchResCtrl', searchResCtrl);
 
 
+angular.module('invenioSearchResultsProvisional')
+  .controller('searchResCtrl', searchResCtrl);
+
+
 // add by ryuu. at 20181129 end
 
 
