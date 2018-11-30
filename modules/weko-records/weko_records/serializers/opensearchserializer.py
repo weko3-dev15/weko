@@ -25,7 +25,7 @@ from flask import current_app, json, request, render_template, render_template_s
 from invenio_records_rest.serializers.json import JSONSerializer
 from invenio_records_rest.serializers.schemas.json import RecordSchemaJSONV1
 from .atom import AtomSerializer
-from weko_search_ui.views import search
+from .rss import RssSerializer
 
 class OpenSearchSerializer(JSONSerializer):
     """
@@ -40,10 +40,16 @@ class OpenSearchSerializer(JSONSerializer):
         :param links: Dictionary of links to add to response.
         """
         format = request.values.get('format')
-        if not format or format == 'atom':
+        if format and format == 'atom':
             mimetype = 'application/atom+xml'
             atom_v1 = AtomSerializer(RecordSchemaJSONV1)
             return atom_v1.serialize_search(pid_fetcher, search_result,
+                                            links=None, item_links_factory=None,
+                                            **kwargs), mimetype
+        elif format and format == 'rss':
+            mimetype = 'application/rss+xml'
+            rss_v1 = RssSerializer(RecordSchemaJSONV1)
+            return rss_v1.serialize_search(pid_fetcher, search_result,
                                             links=None, item_links_factory=None,
                                             **kwargs), mimetype
         else:
