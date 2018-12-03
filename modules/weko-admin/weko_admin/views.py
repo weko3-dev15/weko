@@ -177,3 +177,17 @@ def site_license():
             result=json.dumps(result))
     except:
         abort(500)
+
+
+@blueprint.route('/admin/search', methods=['GET', 'POST'])
+def set_search():
+    """Site license setting page."""
+    current_app.logger.info('search setting page')
+    try:
+        return render_template(
+            current_app.config['WEKO_ADMIN_SEARCH_MANAGEMENT_TEMPLATE'],
+        )
+    except:
+        abort(500)
+
+

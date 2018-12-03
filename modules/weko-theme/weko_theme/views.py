@@ -61,6 +61,7 @@ def edit():
         current_app.config['BASE_EDIT_TEMPLATE'],
     )
 
+
 @blueprint.route("/item_management")
 @login_required
 def item_management():
