@@ -38,6 +38,7 @@
 {%- block page_body_main %}
 <div id="search_management" class="container-fluid table-responsive">
   <div ng-init="fetch('[[{{result}}]]')" ng-controller="searchManagementCtrl">
+    <span>[[testdata]]</span>
     <div class="row">
       <div class="col-sm-12 col-md-12 col-md-12">
         <div class="panel panel-default">
@@ -58,7 +59,7 @@
                             <option>20</option>
                             <option>50</option>
                             <option>75</option>
-                            <option>[[testdata]]</option>
+                            <option>100</option>
                           </select>
                         </div>
                       </form>
