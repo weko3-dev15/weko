@@ -76,7 +76,7 @@ class RssSerializer(JSONSerializer):
         fg.link(href=request.url)
 
         # Set date
-        fg.dc.date(datetime.now(pytz.utc))
+        fg.dc.dc_date(datetime.now(pytz.utc))
 
         # Set totalResults
         _totalResults = search_result['hits']['total']
