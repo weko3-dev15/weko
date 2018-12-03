@@ -224,7 +224,7 @@ class RssSerializer(JSONSerializer):
                             fe.dc.dc_identifier(uri_list, False)
 
             # Set author info
-            _creatorName_attr_lang = 'creator.creatorName.@attributes.xml:lang'
+            _creatorName_attr_lang = 'creator.creatorName.@attributes.creatorNameLang'
             _creatorName_value = 'creator.creatorName.@value'
             if _creatorName_value in item_map:
                 item_id = item_map[_creatorName_value].split('.')[0]
