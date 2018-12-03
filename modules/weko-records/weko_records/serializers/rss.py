@@ -153,7 +153,7 @@ class RssSerializer(JSONSerializer):
             item_url = request.host_url + 'records/' + _pid
             fe.link(href=item_url, rel='alternate', type='text/xml')
 
-            return fg.rss_str(pretty=True)
+            # return fg.rss_str(pretty=True)
 
             # Set oai
             # _oai = item_metadata['_oai']['id']
