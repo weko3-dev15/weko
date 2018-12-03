@@ -156,12 +156,12 @@ class RssSerializer(JSONSerializer):
             return fg.rss_str(pretty=True)
 
             # Set oai
-            _oai = item_metadata['_oai']['id']
-            item_url = request.host_url + 'oai2d?verb=GetRecord&metadataPrefix=jpcoar&identifier=' + _oai
-            fe.link(href=item_url, rel='alternate', type='text/xml')
+            # _oai = item_metadata['_oai']['id']
+            # item_url = request.host_url + 'oai2d?verb=GetRecord&metadataPrefix=jpcoar&identifier=' + _oai
+            # fe.link(href=item_url, rel='alternate', type='text/xml')
 
             # Set id
-            fe.id(item_url)
+            # fe.id(item_url)
 
             # Set weko id
             fe.dc.dc_identifier(_pid)
@@ -224,7 +224,6 @@ class RssSerializer(JSONSerializer):
                             fe.dc.dc_identifier(uri_list, False)
 
             # Set author info
-            request_lang = request.args.get('lang')
             _creatorName_attr_lang = 'creator.creatorName.@attributes.xml:lang'
             _creatorName_value = 'creator.creatorName.@value'
             if _creatorName_value in item_map:
@@ -333,6 +332,7 @@ class RssSerializer(JSONSerializer):
                             fe.prism.publicationName(source_titles)
 
             # Set sourceIdentifier
+            _sourceIdentifier_attr_type = 'sourceIdentifier.@attributes.identifierType'
             _sourceIdentifier_value = 'sourceIdentifier.@value'
             if _sourceIdentifier_value in item_map:
                 item_id = item_map[_sourceIdentifier_value].split('.')[0]
@@ -343,13 +343,19 @@ class RssSerializer(JSONSerializer):
                         item_metadata[item_id], item_id)
 
                     source_identifiers = sourceIdentifier_metadata[
+                        item_map[_sourceIdentifier_attr_type]]
+
+                    source_identifier_types = sourceIdentifier_metadata[
                         item_map[_sourceIdentifier_value]]
 
                     if source_identifiers:
                         if isinstance(source_identifiers, list):
-                            for source_identifier in source_identifiers:
-                                fe.prism.issn(source_identifier)
-                        else:
+                            for i in range(len(source_identifiers)):
+                                source_identifier_type = source_identifier_types[i]
+                                if source_identifier_type and source_identifier_type == 'ISSN':
+                                    fe.prism.issn(source_identifiers[i])
+
+                        elif source_identifier_type and source_identifier_type == 'ISSN':
                             fe.prism.issn(source_identifiers)
 
             # Set volume
@@ -429,6 +435,7 @@ class RssSerializer(JSONSerializer):
                             fe.prism.endingPage(pageEnds)
 
             # Set publicationDate
+            _date_attr_type = 'date.@attributes.dateType'
             _date = 'date.@value'
             if _date in item_map:
                 item_id = item_map[_date].split('.')[0]
@@ -439,12 +446,16 @@ class RssSerializer(JSONSerializer):
                         item_metadata[item_id], item_id)
 
                     dates = date_metadata[item_map[_date]]
+                    date_types = date_metadata[item_map[_date_attr_type]]
 
                     if dates:
                         if isinstance(dates, list):
-                            for date in dates:
-                                fe.prism.publicationDate(date)
-                        else:
+                            for i in range(len(dates)):
+                                date_type = date_types[i]
+                                if date_type and date_type == 'Issued':
+                                    fe.prism.publicationDate(dates[i])
+
+                        elif date_type and date_type == 'Issued':
                             fe.prism.publicationDate(dates)
 
             # Set content
@@ -479,10 +490,14 @@ class RssSerializer(JSONSerializer):
                             else:
                                 fe.content(descriptions, description_langs)
 
+            publish_date = item_metadata['pubdate']['attribute_value']
+            if publish_date:
+                fe.dc.dc_date(str(datetime.now(pytz.utc)))
+
             # Set updated
-            _updated = hit['_source']['_updated']
-            if _updated:
-                fe.updated(_updated)
+            # _updated = hit['_source']['_updated']
+            # if _updated:
+            #     fe.updated(_updated)
 
             # Set creationDate
             _creationDate = hit['_source']['_created']
