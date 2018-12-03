@@ -71,6 +71,7 @@ class WekoFeedEntry(FeedEntry):
         self.__rss_pubDate = None
         self.__rss_source = None
         self.__rss_title = None
+        self.__rss_itemUrl = None
 
         # Extension list:
         self.__extensions = {}
@@ -213,6 +214,10 @@ class WekoFeedEntry(FeedEntry):
     def rss_entry(self, extensions=True):
         '''Create a RSS item and return it.'''
         entry = etree.Element('item')
+        if self.__rss_itemUrl:
+            entry.attrib['{http://www.w3.org/1999/02/22-rdf-syntax-ns#}about'] = \
+                self.__rss_itemUrl
+
         if not (self.__rss_title or
                 self.__rss_description or
                 self.__rss_content):
@@ -286,6 +291,16 @@ class WekoFeedEntry(FeedEntry):
             self.__atom_title = title
             self.__rss_title = title
         return self.__atom_title
+
+    def itemUrl(self, itemUrl=None):
+        '''Get or set the item url value of the entry. This is an RSS only
+        field.
+        :param itemUrl: The item url of the entry.
+        :returns: The item's url.
+        '''
+        if itemUrl is not None:
+            self.__rss_itemUrl = itemUrl
+        return self.__rss_itemUrl
 
     def id(self, id=None):
         '''Get or set the entry id which identifies the entry using a

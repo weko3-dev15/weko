@@ -160,8 +160,8 @@ class RssSerializer(JSONSerializer):
             # item_url = request.host_url + 'oai2d?verb=GetRecord&metadataPrefix=jpcoar&identifier=' + _oai
             # fe.link(href=item_url, rel='alternate', type='text/xml')
 
-            # Set id
-            # fe.id(item_url)
+            # Set item url
+            fe.itemUrl(item_url)
 
             # Set weko id
             fe.dc.dc_identifier(_pid)
