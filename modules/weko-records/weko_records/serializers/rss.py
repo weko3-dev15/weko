@@ -234,7 +234,7 @@ class RssSerializer(JSONSerializer):
                     creator_metadata = self.get_metadata_from_map(
                         item_metadata[item_id], item_id)
 
-                    return str(creator_metadata)
+                    return str(item_map)
 
                     creator_names = creator_metadata[
                         item_map[_creatorName_value]]
