@@ -3,7 +3,7 @@
   angular.element(document).ready(function() {
     angular.module('searchManagement.controllers', []);
     function searchManagementCtrl($scope, $rootScope,$http,$location){
-      $scope.testdata= angularjs is successfully running  !!!;
+      $scope.testdata= "angularjs is successfully running  !!!";
     }
     // Inject depedencies
     searchManagementCtrl.$inject = [
