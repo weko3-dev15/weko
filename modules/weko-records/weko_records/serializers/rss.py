@@ -234,11 +234,10 @@ class RssSerializer(JSONSerializer):
                     creator_metadata = self.get_metadata_from_map(
                         item_metadata[item_id], item_id)
 
-                    return str(creator_metadata)
+                    return str(item_metadata)
 
-                    creator_names = creator_metadata[
-                        item_map[_creatorName_value]]
-                    creator_name_langs = creator_metadata[item_id + '.' + '']
+                    creator_names = creator_metadata[item_map[_creatorName_value]]
+                    creator_name_langs = creator_metadata[item_id + '.' + 'creatorNameLang']
 
                     if creator_name_langs:
                         if isinstance(creator_name_langs, list):
