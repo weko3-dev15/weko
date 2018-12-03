@@ -410,7 +410,7 @@ class WekoFeedGenerator(FeedGenerator):
 
         for entry in self.__feed_entries:
             item = entry.rss_entry()
-            channel.append(item)
+            feed.append(item)
 
         doc = etree.ElementTree(feed)
         return feed, doc
