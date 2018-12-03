@@ -241,12 +241,15 @@
                <tr>
                 <td>
                   <div class="row">
-                    {{_('Please set the sort of search results .')}}
+                    <div class="col-sm-12 col-md-12 col-md-12">
+                      {{_('Please set the sort of search results .')}}
+                    </div>
                   </div>
                   <p>
                   <div class="row">
-                    <div class="col-sm-6 col-md-6 col-md-6">
+                    <div class="col-sm-5 col-md-5 col-md-5">
                       {{_('Deny')}}
+                      <br>
                       <br>
                       <select multiple class="form-control">
                         <option>{{_('Title')}}</option>
@@ -255,8 +258,18 @@
                         <option>{{_('ID')}}</option>
                       </select>
                     </div>
-                    <div class="col-sm-6 col-md-6 col-md-6">
+                    <div class="col-sm-2 col-md-2 col-md-2">
+                      <button type="button" class="btn btn-default" >
+                        <span class="glyphicon glyphicon-arrow-right"></span>
+                      </button>
+                      <p>
+                      <button type="button" class="btn btn-default" >
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                      </button>
+                    </div>
+                    <div class="col-sm-5 col-md-5 col-md-5">
                       {{_('Allow')}}
+                      <br>
                       <br>
                       <select multiple class="form-control">
                         <option>{{_('Title')}}</option>
