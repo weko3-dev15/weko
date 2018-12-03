@@ -240,8 +240,32 @@
               </tr>
                <tr>
                 <td>
-                  <div class="col-sm-3 col-md-3 col-md-3">{{_('Default Display Number :')}}</div>
-                  <div class="col-sm-9 col-md-9 col-md-9">bb</div>
+                  <div class="row">
+                    {{_('Please set the sort of search results .')}}
+                  </div>
+                  <p>
+                  <div class="row">
+                    <div class="col-sm-6 col-md-6 col-md-6">
+                      {{_('Deny')}}
+                      <br>
+                      <select multiple class="form-control">
+                        <option>{{_('Title')}}</option>
+                        <option>{{_('Creator')}}</option>
+                        <option>{{_('ItemType')}}</option>
+                        <option>{{_('ID')}}</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-md-6">
+                      {{_('Allow')}}
+                      <br>
+                      <select multiple class="form-control">
+                        <option>{{_('Title')}}</option>
+                        <option>{{_('Creator')}}</option>
+                        <option>{{_('ItemType')}}</option>
+                        <option>{{_('ID')}}</option>
+                      </select>
+                    </div>
+                  </div>
                 </td>
               </tr>
             </table>
