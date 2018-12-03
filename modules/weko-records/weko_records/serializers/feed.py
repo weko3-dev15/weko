@@ -96,6 +96,7 @@ class WekoFeedGenerator(FeedGenerator):
         self.__rss_webMaster = None
 
         self.__rss_request_url = None
+        self.__rss_items = None
 
         # Extension list:
         self.__extensions = {}
@@ -286,16 +287,16 @@ class WekoFeedGenerator(FeedGenerator):
                 self.__rss_link and
                 self.__rss_description):
             missing = ([] if self.__rss_title else ['title']) + \
-                      ([] if self.__rss_link else ['link']) + \
-                      ([] if self.__rss_description else ['description'])
+                      ([] if self.__rss_link else ['link'])
+                      # ([] if self.__rss_description else ['description'])
             missing = ', '.join(missing)
             raise ValueError('Required fields not set (%s)' % missing)
         title = etree.SubElement(channel, 'title')
         title.text = self.__rss_title
         link = etree.SubElement(channel, 'link')
         link.text = self.__rss_link
-        desc = etree.SubElement(channel, 'description')
-        desc.text = self.__rss_description
+        # desc = etree.SubElement(channel, 'description')
+        # desc.text = self.__rss_description
         for ln in self.__atom_link or []:
             # It is recommended to include a atom self link in rss documents…
             if ln.get('rel') == 'self':
@@ -354,6 +355,17 @@ class WekoFeedGenerator(FeedGenerator):
         if self.__rss_language:
             language = etree.SubElement(channel, 'language')
             language.text = self.__rss_language
+        if self.__rss_items:
+            items = etree.SubElement(channel, 'items')
+            seq = etree.SubElement(items,
+                                   '{http://www.w3.org/1999/02/22-rdf-syntax-ns#}Seq')
+            for item in self.__rss_items:
+                li = etree.SubElement(seq,
+                                      '{http://www.w3.org/1999/02/22-rdf-syntax-ns#}li')
+
+                li.attrib[
+                    '{http://www.w3.org/1999/02/22-rdf-syntax-ns#}resource'] = item
+
         if self.__rss_lastBuildDate:
             lastBuildDate = etree.SubElement(channel, 'lastBuildDate')
 
@@ -838,6 +850,17 @@ class WekoFeedGenerator(FeedGenerator):
         if url is not None:
             self.__rss_request_url = url
         return self.__rss_request_url
+
+    def items(self, items=None):
+        '''Get or set the items of the feed. This is an RSS only
+        field.  However, this value will also be used to set the rdf:resource
+        property of the RSS channel node.
+        :param items: items of the channel.
+        :returns: items of the channel.
+        '''
+        if items is not None and len(items) != 0:
+            self.__rss_items = items
+        return self.__rss_items
 
     def managingEditor(self, managingEditor=None):
         '''Set or get the value for managingEditor which is the email address

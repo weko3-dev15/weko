@@ -44,6 +44,7 @@ class RssSerializer(JSONSerializer):
         :param search_result: Elasticsearch search result.
         :param links: Dictionary of links to add to response.
         """
+        return search_result
         fg = WekoFeedGenerator()
 
         # Add extentions
@@ -75,11 +76,8 @@ class RssSerializer(JSONSerializer):
         # Set link
         fg.link(href=request.url)
 
-        # Set id
-        fg.id(request.url)
-
-        # Set updated
-        fg.updated(datetime.now(pytz.utc))
+        # Set date
+        fg.dc.date(datetime.now(pytz.utc))
 
         # Set totalResults
         _totalResults = search_result['hits']['total']
@@ -93,13 +91,21 @@ class RssSerializer(JSONSerializer):
         _itemPerPage = request.args.get('size')
         fg.opensearch.itemsPerPage(str(_itemPerPage))
 
+        # Set Request URL
+        if int(_totalResults) != 0:
+            fg.requestUrl(request.url)
+
         if not _keywords and not _indexId:
             return fg.rss_str(pretty=True)
 
-# TODO
-        fg.description('RSS Output!!')
+        # atomのように検索結果をループするときに、値を詰めてループを抜けてから最後にfeedにセットする
+        # create_rssには追加済み
+        rss_items = []
+
+
+
         fg.language('japanese')
-        fg.requestUrl(request.url)
+
         return fg.rss_str(pretty=True)
 
 
