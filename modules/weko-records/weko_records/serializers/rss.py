@@ -115,6 +115,8 @@ class RssSerializer(JSONSerializer):
             item_type_id = item_metadata['item_type_id']
             type_mapping = Mapping.get_record(item_type_id)
 
+            return jsonify(type_mapping)
+
             if item_type_id in jpcoar_map:
                 item_map = jpcoar_map[item_type_id]
             else:
@@ -224,7 +226,7 @@ class RssSerializer(JSONSerializer):
                             fe.dc.dc_identifier(uri_list, False)
 
             # Set author info
-            _creatorName_attr_lang = 'creator.creatorName.@attributes.creatorNameLang'
+            _creatorName_attr_lang = 'creator.creatorName.@attributes.xml:lang'
             _creatorName_value = 'creator.creatorName.@value'
             if _creatorName_value in item_map:
                 item_id = item_map[_creatorName_value].split('.')[0]
