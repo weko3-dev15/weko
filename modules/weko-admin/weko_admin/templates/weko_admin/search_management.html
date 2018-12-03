@@ -193,7 +193,12 @@
                     <form class="form-inline">
                       <div class="form-group">
                         <label for="def_dis_num">{{_('Default Display Number :')}}</label>
-                        <input type="text" class="form-control" id="def_dis_num" placeholder="Jane Doe">
+                        <select id="def_dis_num" class="form-control">
+                          <option>20</option>
+                          <option>50</option>
+                          <option>75</option>
+                          <option>100</option>
+                        </select>
                       </div>
                     </form>
                   </div>
@@ -205,7 +210,12 @@
                     <form class="form-inline">
                       <div class="form-group">
                         <label for="def_dis_sort_index">{{_('Default Display Sort (Index Search) :')}}</label>
-                        <input type="text" class="form-control" id="def_dis_sort_index" placeholder="Jane Doe">
+                        <select id="def_dis_sort_index" class="form-control">
+                          <option>{{_('Title')}}</option>
+                          <option>{{_('Creator')}}</option>
+                          <option>{{_('ItemType')}}</option>
+                          <option>{{_('ID')}}</option>
+                        </select>
                       </div>
                     </form>
                   </div>
@@ -217,7 +227,12 @@
                     <form class="form-inline">
                       <div class="form-group">
                         <label for="def_dis_sort_keywords">{{_('Default Display Sort (Keywords Search) :')}}</label>
-                        <input type="text" class="form-control" id="def_dis_sort_keywords" placeholder="Jane Doe">
+                        <select id="def_dis_sort_keywords" class="form-control">
+                          <option>{{_('Title')}}</option>
+                          <option>{{_('Creator')}}</option>
+                          <option>{{_('ItemType')}}</option>
+                          <option>{{_('ID')}}</option>
+                        </select>
                       </div>
                     </form>
                   </div>
