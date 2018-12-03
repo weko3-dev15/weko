@@ -115,7 +115,7 @@ class RssSerializer(JSONSerializer):
             item_type_id = item_metadata['item_type_id']
             type_mapping = Mapping.get_record(item_type_id)
 
-            return jsonify(type_mapping)
+            return str(type_mapping)
 
             if item_type_id in jpcoar_map:
                 item_map = jpcoar_map[item_type_id]
