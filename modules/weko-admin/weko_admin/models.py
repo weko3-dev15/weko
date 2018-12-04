@@ -110,10 +110,10 @@ class SearchManagement(db.Model):
     default_dis_num = db.Column( db.Integer, nullable=False, default=20)
     """ Default display number of search results"""
 
-    default_dis_sort_index = db.Column( db.text, nullable=True, default="")
+    default_dis_sort_index = db.Column( db.text, nullable=False, default="")
     """ Default display sort of index search"""
 
-    default_dis_sort_index = db.Column(db.text, nullable=True, default="")
+    default_dis_sort_index = db.Column(db.text, nullable=False, default="")
     """ Default display sort of keyword search"""
 
     sort_setting = db.Column(
