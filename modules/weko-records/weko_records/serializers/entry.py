@@ -712,12 +712,13 @@ class WekoFeedEntry(FeedEntry):
         self.register_extension(name, ext, atom, rss)
 
     def register_extension(self, namespace, extension_class_entry=None,
-                           atom=True, rss=True):
+                           atom=True, rss=True, jpcoar=True):
         '''Register a specific extension by classes to a namespace.
         :param namespace: namespace for the extension
         :param extension_class_entry: Class of the entry extension to load.
         :param atom: If the extension should be used for ATOM feeds.
         :param rss: If the extension should be used for RSS feeds.
+        :param jpcoar: If the extension should be used for JPCOAR feeds.
         '''
         # Check loaded extensions
         # `load_extension` ignores the "Extension" suffix.
@@ -736,5 +737,6 @@ class WekoFeedEntry(FeedEntry):
                 'inst': extinst,
                 'extension_class_entry': extension_class_entry,
                 'atom': atom,
-                'rss': rss
+                'rss': rss,
+                'jpcoar': jpcoar
                 }
