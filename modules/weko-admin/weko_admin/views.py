@@ -187,7 +187,7 @@ def set_search():
     current_app.logger.debug(result)
     try:
         return render_template(
-            current_app.config['WEKO_ADMIN_SEARCH_MANAGEMENT_TEMPLATE'],
+            current_app.config['WEKO_ADMIN_SITE_LICENSE_TEMPLATE'],
             setting_data=result
         )
     except:
