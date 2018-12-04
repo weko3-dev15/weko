@@ -7,8 +7,6 @@
       $scope.initData = function(data){
         $scope.dataJson = angular.fromJson(data);
         $scope.rowspanNum = $scope.dataJson.detail_condition.length;
-        alert($scope.rowspanNum)
-        alert($scope.dataJson)
       }
     }
     // Inject depedencies
