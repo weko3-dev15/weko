@@ -10,13 +10,35 @@
       }
       // set selected data to allow
       $scope.setAllow=function(data){
-        res = data
-        alert(data.length)
+        if (data){
+          if (data.length==1){
+            obj = dataJson.sort_options.deny[data[0]]
+            dataJson.sort_options.allow.push(obj)
+            dataJson.sort_options.deny.splice(data[0],1)
+          }else{
+            for(var i=data.length-1;i>=0;i--){
+              obj = dataJson.sort_options.deny[d]
+              dataJson.sort_options.allow.push(obj)
+              dataJson.sort_options.deny.splice(data[i],1)
+            }
+          }
+        }
       }
       // set selected data to deny
       $scope.setDeny=function(data){
-        res = data
-        alert(data.length)
+        if (data){
+          if (data.length==1){
+            obj = dataJson.sort_options.allow[data[0]]
+            dataJson.sort_options.deny.push(obj)
+            dataJson.sort_options.allow.splice(data[0],1)
+          }else{
+            for(var i=data.length-1;i>=0;i--){
+              obj = dataJson.sort_options.allow[d]
+              dataJson.sort_options.deny.push(obj)
+              dataJson.sort_options.allow.splice(data[i],1)
+            }
+          }
+        }
       }
       //
       $scope.saveData=function(){
