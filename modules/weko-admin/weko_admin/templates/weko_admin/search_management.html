@@ -104,7 +104,7 @@
                           {{_('Deny')}}
                           <br>
                           <select multiple name="select_deny" id="select_deny" class="form-control" ng-model="selected_deny">
-                            <option ng-repeat="opt_sort_deny in dataJson.sort_options.deny track by $index" value="[[opt_sort_deny.id]]">{{_('[[opt_sort_deny.contents]]')}}</option>
+                            <option ng-repeat="opt_sort_deny in dataJson.sort_options.deny track by $index" value="[[$index]]">{{_('[[opt_sort_deny.contents]]')}}</option>
                           </select>
                         </div>
                       </div>
