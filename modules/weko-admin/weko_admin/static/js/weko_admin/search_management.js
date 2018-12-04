@@ -6,9 +6,9 @@
       $scope.testdata= "angular test info :angularjs is successfully running  !!!";
       $scope.initData = function(data){
         $scope.dataJson = angular.fromJson(data);
-        $scope.rowspanNum = $scope.dataJson.detail_condition.length;
-        alert($scope.rowspanNum)
-        alert($scope.dataJson)
+//        $scope.rowspanNum = $scope.dataJson
+//        alert($scope.rowspanNum)
+        alert(data)
       }
     }
     // Inject depedencies
