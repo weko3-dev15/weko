@@ -72,6 +72,7 @@ class WekoFeedEntry(FeedEntry):
         self.__rss_source = None
         self.__rss_title = None
         self.__rss_itemUrl = None
+        self.__rss_seeAlso = None
 
         # Extension list:
         self.__extensions = {}
@@ -228,6 +229,11 @@ class WekoFeedEntry(FeedEntry):
         if self.__rss_link:
             link = etree.SubElement(entry, 'link')
             link.text = self.__rss_link
+        if self.__rss_seeAlso:
+            seeAlso = etree.SubElement(entry, '{http://www.w3.org/2000/01/rdf-schema#}seeAlso')
+            seeAlso.attrib['{http://www.w3.org/1999/02/22-rdf-syntax-ns#}resource'] = \
+                self.__rss_seeAlso
+
         if self.__rss_description and self.__rss_content:
             description = etree.SubElement(entry, 'description')
             description.text = self.__rss_description
@@ -301,6 +307,16 @@ class WekoFeedEntry(FeedEntry):
         if itemUrl is not None:
             self.__rss_itemUrl = itemUrl
         return self.__rss_itemUrl
+
+    def seeAlso(self, seeAlso=None):
+        '''Get or set the oai url value of the entry. This is an RSS only
+        field.
+        :param seeAlso: The oai url of the entry.
+        :returns: The oai's url.
+        '''
+        if seeAlso is not None:
+            self.__rss_seeAlso = seeAlso
+        return self.__rss_seeAlso
 
     def id(self, id=None):
         '''Get or set the entry id which identifies the entry using a
