@@ -8,6 +8,20 @@
         $scope.dataJson = angular.fromJson(data);
         $scope.rowspanNum = $scope.dataJson.detail_condition.length+1;
       }
+      // set selected data to allow
+      $scope.setAllow=function(data){
+        res = data
+      }
+      // set selected data to deny
+      $scope.setDeny=function(data){
+        res = data
+      }
+      //
+      $scope.saveData=function(){
+
+      }
+
+      //
     }
     // Inject depedencies
     searchManagementCtrl.$inject = [
