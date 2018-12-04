@@ -93,6 +93,12 @@ class AtomSerializer(JSONSerializer):
         _itemPerPage = request.args.get('size')
         fg.opensearch.itemsPerPage(str(_itemPerPage))
 
+        request_lang = request.args.get('lang')
+        if request_lang:
+            fg.language(request_lang)
+        else:
+            fg.language('en')
+
         if not _keywords and not _indexId:
             return fg.atom_str(pretty=True)
 
