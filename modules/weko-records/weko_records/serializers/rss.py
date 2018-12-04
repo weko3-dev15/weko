@@ -502,6 +502,9 @@ class RssSerializer(JSONSerializer):
             if _modificationDate:
                 fe.prism.modificationDate(_modificationDate)
 
+            # Set file preview url
+            fe.prism.url(item_url)
+
         # Set channel items
         fg.items(rss_items)
 
