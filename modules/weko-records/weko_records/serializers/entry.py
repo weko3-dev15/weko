@@ -309,73 +309,73 @@ class WekoFeedEntry(FeedEntry):
             self.__jpcoar_itemUrl
 
         entry = etree.SubElement(des, 'jpcoar')
-        if self.__rss_itemUrl:
-            entry.attrib['{http://www.w3.org/1999/02/22-rdf-syntax-ns#}about'] = \
-                self.__rss_itemUrl
-
-        if not (self.__rss_title or
-                self.__rss_description or
-                self.__rss_content):
-            raise ValueError('Required fields not set')
-        if self.__rss_title:
-            title = etree.SubElement(entry, 'title')
-            title.text = self.__rss_title
-        if self.__rss_link:
-            link = etree.SubElement(entry, 'link')
-            link.text = self.__rss_link
-        if self.__rss_seeAlso:
-            seeAlso = etree.SubElement(entry, '{http://www.w3.org/2000/01/rdf-schema#}seeAlso')
-            seeAlso.attrib['{http://www.w3.org/1999/02/22-rdf-syntax-ns#}resource'] = \
-                self.__rss_seeAlso
-
-        if self.__rss_description and self.__rss_content:
-            description = etree.SubElement(entry, 'description')
-            description.text = self.__rss_description
-            XMLNS_CONTENT = 'http://purl.org/rss/1.0/modules/content/'
-            content = etree.SubElement(entry, '{%s}encoded' % XMLNS_CONTENT)
-            content.text = etree.CDATA(self.__rss_content['content']) \
-                if self.__rss_content.get('type', '') == 'CDATA' \
-                else self.__rss_content['content']
-        elif self.__rss_description:
-            description = etree.SubElement(entry, 'description')
-            description.text = self.__rss_description
-        elif self.__rss_content:
-            description = etree.SubElement(entry, 'description')
-            description.text = etree.CDATA(self.__rss_content['content']) \
-                if self.__rss_content.get('type', '') == 'CDATA' \
-                else self.__rss_content['content']
-        for a in self.__rss_author or []:
-            author = etree.SubElement(entry, 'author')
-            author.text = a
-        if self.__rss_guid.get('guid'):
-            guid = etree.SubElement(entry, 'guid')
-            guid.text = self.__rss_guid['guid']
-            permaLink = str(self.__rss_guid.get('permalink', False)).lower()
-            guid.attrib['isPermaLink'] = permaLink
-        for cat in self.__rss_category or []:
-            category = etree.SubElement(entry, 'category')
-            category.text = cat['value']
-            if cat.get('domain'):
-                category.attrib['domain'] = cat['domain']
-        if self.__rss_comments:
-            comments = etree.SubElement(entry, 'comments')
-            comments.text = self.__rss_comments
-        if self.__rss_enclosure:
-            enclosure = etree.SubElement(entry, 'enclosure')
-            enclosure.attrib['url'] = self.__rss_enclosure['url']
-            enclosure.attrib['length'] = self.__rss_enclosure['length']
-            enclosure.attrib['type'] = self.__rss_enclosure['type']
-        if self.__rss_pubDate:
-            pubDate = etree.SubElement(entry, 'pubDate')
-            pubDate.text = formatRFC2822(self.__rss_pubDate)
-        if self.__rss_source:
-            source = etree.SubElement(entry, 'source',
-                                      url=self.__rss_source['url'])
-            source.text = self.__rss_source['title']
+        # if self.__rss_itemUrl:
+        #     entry.attrib['{http://www.w3.org/1999/02/22-rdf-syntax-ns#}about'] = \
+        #         self.__rss_itemUrl
+        #
+        # if not (self.__rss_title or
+        #         self.__rss_description or
+        #         self.__rss_content):
+        #     raise ValueError('Required fields not set')
+        # if self.__rss_title:
+        #     title = etree.SubElement(entry, 'title')
+        #     title.text = self.__rss_title
+        # if self.__rss_link:
+        #     link = etree.SubElement(entry, 'link')
+        #     link.text = self.__rss_link
+        # if self.__rss_seeAlso:
+        #     seeAlso = etree.SubElement(entry, '{http://www.w3.org/2000/01/rdf-schema#}seeAlso')
+        #     seeAlso.attrib['{http://www.w3.org/1999/02/22-rdf-syntax-ns#}resource'] = \
+        #         self.__rss_seeAlso
+        #
+        # if self.__rss_description and self.__rss_content:
+        #     description = etree.SubElement(entry, 'description')
+        #     description.text = self.__rss_description
+        #     XMLNS_CONTENT = 'http://purl.org/rss/1.0/modules/content/'
+        #     content = etree.SubElement(entry, '{%s}encoded' % XMLNS_CONTENT)
+        #     content.text = etree.CDATA(self.__rss_content['content']) \
+        #         if self.__rss_content.get('type', '') == 'CDATA' \
+        #         else self.__rss_content['content']
+        # elif self.__rss_description:
+        #     description = etree.SubElement(entry, 'description')
+        #     description.text = self.__rss_description
+        # elif self.__rss_content:
+        #     description = etree.SubElement(entry, 'description')
+        #     description.text = etree.CDATA(self.__rss_content['content']) \
+        #         if self.__rss_content.get('type', '') == 'CDATA' \
+        #         else self.__rss_content['content']
+        # for a in self.__rss_author or []:
+        #     author = etree.SubElement(entry, 'author')
+        #     author.text = a
+        # if self.__rss_guid.get('guid'):
+        #     guid = etree.SubElement(entry, 'guid')
+        #     guid.text = self.__rss_guid['guid']
+        #     permaLink = str(self.__rss_guid.get('permalink', False)).lower()
+        #     guid.attrib['isPermaLink'] = permaLink
+        # for cat in self.__rss_category or []:
+        #     category = etree.SubElement(entry, 'category')
+        #     category.text = cat['value']
+        #     if cat.get('domain'):
+        #         category.attrib['domain'] = cat['domain']
+        # if self.__rss_comments:
+        #     comments = etree.SubElement(entry, 'comments')
+        #     comments.text = self.__rss_comments
+        # if self.__rss_enclosure:
+        #     enclosure = etree.SubElement(entry, 'enclosure')
+        #     enclosure.attrib['url'] = self.__rss_enclosure['url']
+        #     enclosure.attrib['length'] = self.__rss_enclosure['length']
+        #     enclosure.attrib['type'] = self.__rss_enclosure['type']
+        # if self.__rss_pubDate:
+        #     pubDate = etree.SubElement(entry, 'pubDate')
+        #     pubDate.text = formatRFC2822(self.__rss_pubDate)
+        # if self.__rss_source:
+        #     source = etree.SubElement(entry, 'source',
+        #                               url=self.__rss_source['url'])
+        #     source.text = self.__rss_source['title']
 
         if extensions:
             for ext in self.__extensions.values() or []:
-                if ext.get('rss'):
+                if ext.get('jpcoar'):
                     ext['inst'].extend_rss(entry)
 
         return entry
