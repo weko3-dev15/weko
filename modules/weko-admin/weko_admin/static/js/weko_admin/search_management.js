@@ -11,10 +11,12 @@
       // set selected data to allow
       $scope.setAllow=function(data){
         res = data
+        alert(data)
       }
       // set selected data to deny
       $scope.setDeny=function(data){
         res = data
+        alert(data)
       }
       //
       $scope.saveData=function(){
