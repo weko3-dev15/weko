@@ -503,8 +503,8 @@ class WekoFeedGenerator(FeedGenerator):
         #     missing = ', '.join(missing)
         #     raise ValueError('Required fields not set (%s)' % missing)
 
-        title = etree.SubElement(header, 'title')
-        title.text = self.__jpcoar_title
+        # title = etree.SubElement(header, 'title')
+        # title.text = self.__jpcoar_title
         # link = etree.SubElement(channel, 'link')
         # link.text = self.__rss_link
         # # desc = etree.SubElement(channel, 'description')
@@ -658,7 +658,6 @@ class WekoFeedGenerator(FeedGenerator):
         if title is not None:
             self.__atom_title = title
             self.__rss_title = title
-            self.__jpcoar_title = title
         return self.__atom_title
 
     def id(self, id=None):
