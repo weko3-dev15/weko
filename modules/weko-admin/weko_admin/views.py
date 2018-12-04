@@ -183,7 +183,7 @@ def site_license():
 def set_search():
     """Site license setting page."""
     current_app.logger.info('search setting page')
-    result = get_search_setting()
+    result = json.dumps(get_search_setting())
     try:
         return render_template(
             current_app.config['WEKO_ADMIN_SEARCH_MANAGEMENT_TEMPLATE'],
