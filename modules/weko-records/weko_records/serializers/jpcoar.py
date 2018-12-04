@@ -56,8 +56,6 @@ class JpcoarSerializer(JSONSerializer):
         fg.register_extension('prism',
                               extension_class_feed=PrismExtension,
                               extension_class_entry=PrismEntryExtension)
-# TODO
-        return fg.jpcoar_str(pretty=True)
 
         # Set title
         index_meta = {}
@@ -73,6 +71,9 @@ class JpcoarSerializer(JSONSerializer):
             fg.title('WEKO OpenSearch: ' + str(index_meta[_indexId]))
         else:
             fg.title('WEKO OpenSearch: ' + str(_keywords))
+
+        # TODO
+        return fg.jpcoar_str(pretty=True)
 
         # Set link
         fg.link(href=request.url)

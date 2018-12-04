@@ -615,11 +615,11 @@ class WekoFeedGenerator(FeedGenerator):
         #     webMaster = etree.SubElement(channel, 'webMaster')
         #     webMaster.text = self.__rss_webMaster
         #
-        # if extensions:
-        #     for ext in self.__extensions.values() or []:
-        #         if ext.get('jpcoar'):
-        #             ext['inst'].extend_rss(feed)
-        #
+        if extensions:
+            for ext in self.__extensions.values() or []:
+                if ext.get('jpcoar'):
+                    ext['inst'].extend_jpcoar(feed)
+
         # for entry in self.__feed_entries:
         #     item = entry.rss_entry()
         #     feed.append(item)

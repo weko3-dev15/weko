@@ -105,3 +105,11 @@ class DcWekoEntryExtension(DcWekoBaseExtension):
         '''
         self._extend_xml(item)
         return item
+
+    def extend_jpcoar(self, item):
+        '''Add dc elements to a JPCOAR item. Alters the item itself.
+        :param item: A JPCOAR item element.
+        :returns: The item element.
+        '''
+        self._extend_xml(item)
+        return item
