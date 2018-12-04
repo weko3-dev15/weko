@@ -17,7 +17,7 @@
             $scope.dataJson.sort_options.deny.splice(data[0],1)
           }else{
             for(var i=data.length-1;i>=0;i--){
-              obj = $scope.dataJson.sort_options.deny[d]
+              obj = $scope.dataJson.sort_options.deny[data[i]]
               $scope.dataJson.sort_options.allow.push(obj)
               $scope.dataJson.sort_options.deny.splice(data[i],1)
             }
@@ -33,7 +33,7 @@
             $scope.dataJson.sort_options.allow.splice(data[0],1)
           }else{
             for(var i=data.length-1;i>=0;i--){
-              obj = $scope.dataJson.sort_options.allow[d]
+              obj = $scope.dataJson.sort_options.allow[data[i]]
               $scope.dataJson.sort_options.deny.push(obj)
               $scope.dataJson.sort_options.allow.splice(data[i],1)
             }
