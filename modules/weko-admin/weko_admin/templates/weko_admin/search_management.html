@@ -103,7 +103,7 @@
                         <div class="col-sm-12 col-md-12 col-md-12">
                           {{_('Deny')}}
                           <br>
-                          <select multiple ng-model="" class="form-control" ng-model="selected_deny">
+                          <select multiple name="select_deny" id="select_deny" class="form-control" ng-model="selected_deny">
                             <option ng-repeat="opt_sort_deny in dataJson.sort_options.deny track by $index" value="[[opt_sort_deny.id]]">{{_('[[opt_sort_deny.contents]]')}}</option>
                           </select>
                         </div>
@@ -123,7 +123,7 @@
                         <div class="col-sm-12 col-md-12 col-md-12">
                           {{_('Allow')}}
                           <br>
-                          <select multiple ng-model="" class="form-control" ng-model="selected_allow">
+                          <select multiple name="select_allow" id="select_allow" class="form-control" ng-model="selected_allow">
                             <option ng-repeat="opt_sort_allow in dataJson.sort_options.allow track by $index" value="[[$index]]">{{_('[[opt_sort_allow.contents]]')}}</option>
                           </select>
                         </div>
