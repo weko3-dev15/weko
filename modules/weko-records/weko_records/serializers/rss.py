@@ -103,10 +103,7 @@ class RssSerializer(JSONSerializer):
         if not _keywords and not _indexId:
             return fg.rss_str(pretty=True)
 
-        # atomのように検索結果をループするときに、値を詰めてループを抜けてから最後にfeedにセットする
-        # create_rssには追加済み
         rss_items = []
-
         jpcoar_map = {}
         for hit in search_result['hits']['hits']:
 
@@ -160,6 +157,9 @@ class RssSerializer(JSONSerializer):
 
             # Set item url
             fe.itemUrl(item_url)
+
+            # Add to channel item list
+            rss_items.append(item_url)
 
             # Set weko id
             fe.dc.dc_identifier(_pid)
@@ -504,6 +504,9 @@ class RssSerializer(JSONSerializer):
             _modificationDate = hit['_source']['_updated']
             if _modificationDate:
                 fe.prism.modificationDate(_modificationDate)
+        
+        # Set channel items
+        fg.items(rss_items)
 
         return fg.rss_str(pretty=True)
 
