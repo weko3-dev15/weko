@@ -24,6 +24,8 @@ from datetime import datetime
 
 from invenio_db import db
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.dialects import mysql, postgresql
+from sqlalchemy_utils.types import JSONType
 
 
 class SessionLifetime(db.Model):
@@ -96,3 +98,56 @@ class SessionLifetime(db.Model):
     def is_anonymous(self):
         """Return whether this UserProfile is anonymous."""
         return False
+
+
+class SearchManagement(db.Model):
+    """Search setting model"""
+
+    __tablename__ = 'search_management'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    default_dis_num = db.Column( db.Integer, nullable=False, default=20)
+    """ Default display number of search results"""
+
+    default_dis_sort_index = db.Column( db.text, nullable=True, default="")
+    """ Default display sort of index search"""
+
+    default_dis_sort_index = db.Column(db.text, nullable=True, default="")
+    """ Default display sort of keyword search"""
+
+    sort_setting = db.Column(
+        db.JSON().with_variant(
+            postgresql.JSONB(none_as_null=True),
+            'postgresql',
+        ).with_variant(
+            JSONType(),
+            'sqlite',
+        ).with_variant(
+            JSONType(),
+            'mysql',
+        ),
+        default=lambda: dict(),
+        nullable=True
+    )
+    """ The list of sort setting"""
+
+    search_conditions = db.Column(
+        db.JSON().with_variant(
+            postgresql.JSONB(none_as_null=True),
+            'postgresql',
+        ).with_variant(
+            JSONType(),
+            'sqlite',
+        ).with_variant(
+            JSONType(),
+            'mysql',
+        ),
+        default=lambda: dict(),
+        nullable=True
+    )
+    """ The list of search condition """
+
+    create_date = db.Column(db.DateTime, default=datetime.now)
+    """Create Time"""
+
