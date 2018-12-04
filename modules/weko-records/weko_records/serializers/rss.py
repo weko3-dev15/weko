@@ -119,9 +119,6 @@ class RssSerializer(JSONSerializer):
                 item_map = self.get_mapping(type_mapping, 'jpcoar_mapping')
                 jpcoar_map[item_type_id] = item_map
 
-# TODO
-            return str(item_map)
-
             fe = fg.add_entry()
 
             # Set title
