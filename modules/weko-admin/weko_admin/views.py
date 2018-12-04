@@ -184,10 +184,13 @@ def set_search():
     """Site license setting page."""
     current_app.logger.info('search setting page')
     result = json.dumps(get_search_setting())
+    current_app.logger.debug(result)
+    str ={'id':0, 'value':'ddd'}
+    str = json.dumps(str)
     try:
         return render_template(
             current_app.config['WEKO_ADMIN_SEARCH_MANAGEMENT_TEMPLATE'],
-            result=result
+            result=str
         )
     except:
         abort(500)
