@@ -310,7 +310,7 @@ class WekoFeedEntry(FeedEntry):
             self.__jpcoar_itemUrl
 
         entry = etree.SubElement(des, 'jpcoar')
-        des.attrib['{http://www.w3.org/2001/XMLSchema-instance}schemaLocation'] = \
+        entry.attrib['{http://www.w3.org/2001/XMLSchema-instance}schemaLocation'] = \
             self.__jpcoar_schema
 
 
