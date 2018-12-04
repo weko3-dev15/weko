@@ -48,12 +48,12 @@ LOGO_ALLOWED_EXTENSIONS = set(['png', 'jpeg', 'jpg'])
 
 WEKO_SEARCH_MANAGEMENT_OPTIONS = {
     'dlt_dis_num_options':[
-        {'id': 20, 'contents': '20'},
-        {'id': 50, 'contents': '50'},
-        {'id': 75, 'contents': '75'},
-        {'id': 100, 'contents': '100'}
+        {'id': '20', 'contents': '20'},
+        {'id': '50', 'contents': '50'},
+        {'id': '75', 'contents': '75'},
+        {'id': '100'', 'contents': '100'}
     ],
-    'dlt_dis_num_selected': 20,
+    'dlt_dis_num_selected': '20',
     'dlt_index_sort_options':[
         {'id': 'title_asc', 'contents': 'Title_ASC'},
         {'id': 'title_desc', 'contents': 'Title_DESC'},
