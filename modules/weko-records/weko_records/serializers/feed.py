@@ -492,7 +492,7 @@ class WekoFeedGenerator(FeedGenerator):
                       'xsi': 'http://www.w3.org/2001/XMLSchema-instance'})
 
         feed = etree.Element('{http://www.w3.org/1999/02/22-rdf-syntax-ns#}RDF',
-                             xmlns='http://purl.org/rss/1.0/', nsmap=nsmap)
+                             nsmap=nsmap)
 
         header = etree.SubElement(feed, 'header')
 
@@ -620,9 +620,11 @@ class WekoFeedGenerator(FeedGenerator):
                 if ext.get('jpcoar'):
                     ext['inst'].extend_jpcoar(feed)
 
-        # for entry in self.__feed_entries:
-        #     item = entry.rss_entry()
-        #     feed.append(item)
+        if self.__feed_entries:
+            items = etree.SubElement(feed, 'items')
+            for entry in self.__feed_entries:
+                item = entry.jpcoar_entry()
+                items.append(item)
 
         doc = etree.ElementTree(feed)
         return feed, doc
