@@ -89,14 +89,15 @@ WEKO_SEARCH_MANAGEMENT_OPTIONS = {
     ],
     'dlt_keyword_sort_selected': 'publish_date_desc',
     'sort_options':{
-        'deny':[],
-        'allow':[
+        'deny':[
             {'id': 'title_asc', 'contents': 'Title_ASC'},
             {'id': 'title_desc', 'contents': 'Title_DESC'},
             {'id': 'creator_asc', 'contents': 'creator_ASC'},
             {'id': 'creator_desc', 'contents': 'creator_DESC'},
             {'id': 'itemType_asc', 'contents': 'itemType_ASC'},
             {'id': 'itemType_desc', 'contents': 'itemType_DESC'},
+        ],
+        'allow':[
             {'id': 'id_asc', 'contents': 'ID_ASC'},
             {'id': 'id_desc', 'contents': 'ID_DESC'},
             {'id': 'upd_asc', 'contents': 'Update_ASC'},
