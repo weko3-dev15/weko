@@ -56,7 +56,7 @@
                         <div class="form-group">
                           <label for="def_dis_num">{{_('Default Display Number :')}}</label>
                           <select id="def_dis_num" ng-model="dataJson.dlt_dis_num_selected" class="form-control">
-                            <option ng-repeat="opt_num in dataJson.dlt_dis_num_options" value="{{opt_num.id}}">{{opt_num.contents}}</option>
+                            <option ng-repeat="opt_num in dataJson.dlt_dis_num_options" value="[[opt_num.id]]">[[opt_num.contents]]</option>
                           </select>
                         </div>
                       </form>
