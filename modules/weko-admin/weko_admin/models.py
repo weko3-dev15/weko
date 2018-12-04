@@ -151,3 +151,22 @@ class SearchManagement(db.Model):
     create_date = db.Column(db.DateTime, default=datetime.now)
     """Create Time"""
 
+    @classmethod
+    def create(cls, **data):
+        """Create data"""
+        return
+
+    @classmethod
+    def get(cls, **data):
+        """Get setting"""
+        return cls.query.filter_by(id=id).one_or_none()
+
+    @classmethod
+    def update(cls, **data):
+        """Update setting"""
+
+
+
+
+
+__all__ = (['SearchManagement'])

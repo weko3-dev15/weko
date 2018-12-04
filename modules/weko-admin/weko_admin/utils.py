@@ -66,3 +66,12 @@ def get_response_json(result_list, n_lst):
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in config.LOGO_ALLOWED_EXTENSIONS
+
+
+def get_search_setting():
+    """
+    Get search setting from DB
+    :return: Setting data by Json
+    """
+
+    return config.WEKO_SEARCH_MANAGEMENT_OPTIONS

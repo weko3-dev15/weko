@@ -36,7 +36,7 @@ from weko_records.api import ItemTypes, SiteLicense
 from werkzeug.local import LocalProxy
 
 from .models import SessionLifetime
-from .utils import get_response_json
+from .utils import get_response_json, get_search_setting
 
 _app = LocalProxy(lambda: current_app.extensions['weko-admin'].app)
 
@@ -179,15 +179,15 @@ def site_license():
         abort(500)
 
 
-@blueprint.route('/admin/search', methods=['GET', 'POST'])
+@blueprint.route('/admin/search-management', methods=['GET', 'POST'])
 def set_search():
     """Site license setting page."""
     current_app.logger.info('search setting page')
-    result = {}
+    result = get_search_setting()
     try:
         return render_template(
             current_app.config['WEKO_ADMIN_SEARCH_MANAGEMENT_TEMPLATE'],
-            result = result
+            result=result
         )
     except:
         abort(500)

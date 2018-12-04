@@ -37,7 +37,7 @@
 
 {%- block page_body_main %}
 <div id="search_management" class="container-fluid table-responsive">
-  <div ng-init="fetch('[[{{result}}]]')" ng-controller="searchManagementCtrl">
+  <div ng-init="initData('[[{{result}}]]')" ng-controller="searchManagementCtrl">
     <span>[[testdata]]</span>
     <div class="row">
       <div class="col-sm-12 col-md-12 col-md-12">
@@ -55,11 +55,8 @@
                       <form class="form-inline">
                         <div class="form-group">
                           <label for="def_dis_num">{{_('Default Display Number :')}}</label>
-                          <select id="def_dis_num" class="form-control">
-                            <option>20</option>
-                            <option>50</option>
-                            <option>75</option>
-                            <option>100</option>
+                          <select id="def_dis_num" ng-model="dataJson.dlt_dis_num_selected" class="form-control">
+                            <option ng-repeat="opt_num in dataJson.dlt_dis_num_options" value="{{opt_num.id}}">{{opt_num.contents}}</option>
                           </select>
                         </div>
                       </form>
@@ -72,11 +69,8 @@
                       <form class="form-inline">
                         <div class="form-group">
                           <label for="def_dis_sort_index">{{_('Default Display Sort (Index Search) :')}}</label>
-                          <select id="def_dis_sort_index" class="form-control">
-                            <option>{{_('Title')}}</option>
-                            <option>{{_('Creator')}}</option>
-                            <option>{{_('ItemType')}}</option>
-                            <option>{{_('ID')}}</option>
+                          <select id="def_dis_sort_index" ng-model="dataJson.dlt_index_sort_selected" class="form-control">
+                            <option ng-repeat="opt_index_sort in dataJson.dlt_index_sort_options" value="{{opt_index_sort.id}}">{{opt_index_sort.contents}}</option>
                           </select>
                         </div>
                       </form>
@@ -89,11 +83,8 @@
                       <form class="form-inline">
                         <div class="form-group">
                           <label for="def_dis_sort_keywords">{{_('Default Display Sort (Keywords Search) :')}}</label>
-                          <select id="def_dis_sort_keywords" class="form-control">
-                            <option>{{_('Title')}}</option>
-                            <option>{{_('Creator')}}</option>
-                            <option>{{_('ItemType')}}</option>
-                            <option>{{_('ID')}}</option>
+                          <select id="def_dis_sort_keywords" ng-model="dataJson.dlt_keyword_sort_selected" class="form-control">
+                            <option ng-repeat="opt_keyword_sort in dataJson.dlt_keyword_sort_options" value="{{opt_keyword_sort.id}}">{{opt_keyword_sort.contents}}</option>
                           </select>
                         </div>
                       </form>
@@ -113,11 +104,8 @@
                         <div class="col-sm-12 col-md-12 col-md-12">
                           {{_('Deny')}}
                           <br>
-                          <select multiple class="form-control">
-                            <option>{{_('Title')}}</option>
-                            <option>{{_('Creator')}}</option>
-                            <option>{{_('ItemType')}}</option>
-                            <option>{{_('ID')}}</option>
+                          <select multiple ng-model="" class="form-control">
+                            <option ng-repeat="opt_sort_deny in dataJson.sort_options.deny" value="{{opt_sort_deny.id}}">{{opt_sort_deny.contents}}</option>
                           </select>
                         </div>
                       </div>
@@ -136,11 +124,8 @@
                         <div class="col-sm-12 col-md-12 col-md-12">
                           {{_('Allow')}}
                           <br>
-                          <select multiple class="form-control">
-                            <option>{{_('Title')}}</option>
-                            <option>{{_('Creator')}}</option>
-                            <option>{{_('ItemType')}}</option>
-                            <option>{{_('ID')}}</option>
+                          <select multiple ng-model="" class="form-control">
+                            <option ng-repeat="opt_sort_allow in dataJson.sort_options.allow" value="{{opt_sort_allow.id}}">{{opt_sort_allow.contents}}</option>
                           </select>
                         </div>
                       </div>
@@ -165,7 +150,7 @@
               <div class="col-sm-12 col-md-12 col-md-12 text-center">
                 <table class="table table-bordered">
                 <tr>
-                  <td rowspan="3">
+                  <td rowspan="rowspanNum">
                     <div class="col-sm-12 col-md-12 col-md-12">
                       {{_('Item')}}
                     </div>
@@ -191,54 +176,28 @@
                     </div>
                   </td>
                 </tr>
-                <tr>
+                <tr ng-repeat = "option_condition in dataJson.detail_condition">
                   <td >
                     <div class="col-sm-12 col-md-12 col-md-12">
                         <label>
-                          <input type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
+                          <input type="checkbox" id="chk_useable_[[$index]]" value="option_condition.id" ng-model="option_condition.useable_status" >
                         </label>
                     </div>
                   </td>
                   <td >
                     <div class="col-sm-12 col-md-12 col-md-12">
-                      {{_('Key Word')}}
+                      [[option_condition.contents]]
                     </div>
                   </td>
                   <td >
                     <div class="col-sm-12 col-md-12 col-md-12">
-                      {{_('subject')}}
-                    </div>
-                  </td>
-                  <td >
-                    <div class="col-sm-12 col-md-12 col-md-12">
-                        <label>
-                          <input type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-                        </label>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td >
-                    <div class="col-sm-12 col-md-12 col-md-12">
-                        <label>
-                          <input type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-                        </label>
-                    </div>
-                  </td>
-                  <td >
-                    <div class="col-sm-12 col-md-12 col-md-12">
-                      {{_('Title')}}
-                    </div>
-                  </td>
-                  <td >
-                    <div class="col-sm-12 col-md-12 col-md-12">
-                      {{_('title')}}<br>{{_('alternative')}}
+                      <span ng-repeat = "option_condition_mapping in option_condition">[[option_condition_mapping]]</span>
                     </div>
                   </td>
                   <td >
                     <div class="col-sm-12 col-md-12 col-md-12">
                         <label>
-                          <input type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
+                          <input type="checkbox" id="chk_init_[[$index]]" value="option_condition.id" ng-model="option_condition.default_display" >
                         </label>
                     </div>
                   </td>
