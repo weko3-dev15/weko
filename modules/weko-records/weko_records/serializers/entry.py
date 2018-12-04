@@ -75,6 +75,7 @@ class WekoFeedEntry(FeedEntry):
         self.__rss_seeAlso = None
 
         # JPCOAR
+        self.__jpcoar_schema = 'http://irdb.nii.ac.jp/oai http://irdb.nii.ac.jp/oai/junii2-3-1.xsd'
         self.__jpcoar_author = None
         self.__jpcoar_category = None
         self.__jpcoar_comments = None
@@ -309,6 +310,10 @@ class WekoFeedEntry(FeedEntry):
             self.__jpcoar_itemUrl
 
         entry = etree.SubElement(des, 'jpcoar')
+        des.attrib['{http://www.w3.org/2001/XMLSchema-instance}schemaLocation'] = \
+            self.__jpcoar_schema
+
+
         # if self.__rss_itemUrl:
         #     entry.attrib['{http://www.w3.org/1999/02/22-rdf-syntax-ns#}about'] = \
         #         self.__rss_itemUrl
