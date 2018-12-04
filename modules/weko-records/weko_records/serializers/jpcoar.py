@@ -90,6 +90,9 @@ class JpcoarSerializer(JSONSerializer):
         _itemPerPage = request.args.get('size')
         fg.opensearch.itemsPerPage(str(_itemPerPage))
 
+        fe = fg.add_entry()
+        fe.itemUrl('http://13.112.163.210:5005/records/2')
+
         # TODO
         return fg.jpcoar_str(pretty=True)
 
