@@ -212,7 +212,7 @@ class AtomSerializer(JSONSerializer):
 
             # Set author info
             request_lang = request.args.get('lang')
-            _creatorName_attr_lang = 'creator.creatorName.@attributes.xml:lang'
+            # _creatorName_attr_lang = 'creator.creatorName.@attributes.xml:lang'
             _creatorName_value = 'creator.creatorName.@value'
             if _creatorName_value in item_map:
                 item_id = item_map[_creatorName_value].split('.')[0]
@@ -225,7 +225,7 @@ class AtomSerializer(JSONSerializer):
                     creator_names = creator_metadata[
                         item_map[_creatorName_value]]
                     creator_name_langs = creator_metadata[
-                        item_map[_creatorName_attr_lang]]
+                        item_id + '.' + 'creatorNameLang']
 
                     if creator_name_langs:
                         if isinstance(creator_name_langs, list):

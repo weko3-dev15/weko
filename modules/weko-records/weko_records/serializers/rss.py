@@ -222,7 +222,7 @@ class RssSerializer(JSONSerializer):
                             fe.dc.dc_identifier(uri_list, False)
 
             # Set author info
-            _creatorName_attr_lang = 'creator.creatorName.@attributes.xml:lang'
+            # _creatorName_attr_lang = 'creator.creatorName.@attributes.xml:lang'
             _creatorName_value = 'creator.creatorName.@value'
             if _creatorName_value in item_map:
                 item_id = item_map[_creatorName_value].split('.')[0]
@@ -490,11 +490,6 @@ class RssSerializer(JSONSerializer):
             if publish_date:
                 fe.dc.dc_date(str(datetime.now(pytz.utc)))
 
-            # Set updated
-            # _updated = hit['_source']['_updated']
-            # if _updated:
-            #     fe.updated(_updated)
-
             # Set creationDate
             _creationDate = hit['_source']['_created']
             if _creationDate:
@@ -504,7 +499,7 @@ class RssSerializer(JSONSerializer):
             _modificationDate = hit['_source']['_updated']
             if _modificationDate:
                 fe.prism.modificationDate(_modificationDate)
-        
+
         # Set channel items
         fg.items(rss_items)
 
