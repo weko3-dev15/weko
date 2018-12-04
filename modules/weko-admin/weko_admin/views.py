@@ -185,11 +185,10 @@ def set_search():
     current_app.logger.info('search setting page')
     result = json.dumps(get_search_setting())
     current_app.logger.debug(result)
-    str ={'id':0, 'value':'ddd'}
-    str = json.dumps(str)
     try:
         return render_template(
             current_app.config['WEKO_ADMIN_SEARCH_MANAGEMENT_TEMPLATE'],
+            setting_data=result
         )
     except:
         abort(500)
