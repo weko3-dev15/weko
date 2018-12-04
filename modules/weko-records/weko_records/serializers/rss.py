@@ -94,6 +94,7 @@ class RssSerializer(JSONSerializer):
         if int(_totalResults) != 0:
             fg.requestUrl(request.url)
 
+        # Set language
         request_lang = request.args.get('lang')
         if request_lang:
             fg.language(request_lang)
