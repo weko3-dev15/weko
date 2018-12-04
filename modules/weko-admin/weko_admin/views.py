@@ -190,7 +190,6 @@ def set_search():
     try:
         return render_template(
             current_app.config['WEKO_ADMIN_SEARCH_MANAGEMENT_TEMPLATE'],
-            result=str
         )
     except:
         abort(500)
