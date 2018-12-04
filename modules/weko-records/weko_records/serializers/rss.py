@@ -120,7 +120,7 @@ class RssSerializer(JSONSerializer):
                 jpcoar_map[item_type_id] = item_map
 
 # TODO
-            return str(item_metadata)
+            return str(item_map)
 
             fe = fg.add_entry()
 
