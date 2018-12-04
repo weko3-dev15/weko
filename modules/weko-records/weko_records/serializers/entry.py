@@ -376,9 +376,9 @@ class WekoFeedEntry(FeedEntry):
         if extensions:
             for ext in self.__extensions.values() or []:
                 if ext.get('jpcoar'):
-                    ext['inst'].extend_rss(entry)
+                    ext['inst'].extend_rss(des)
 
-        return entry
+        return des
 
     def title(self, title=None):
         '''Get or set the title value of the entry. It should contain a human
