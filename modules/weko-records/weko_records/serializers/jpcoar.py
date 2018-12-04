@@ -58,28 +58,25 @@ class JpcoarSerializer(JSONSerializer):
                               extension_class_entry=PrismEntryExtension)
 
         # Set title
-        index_meta = {}
-        _keywords = request.args.get('q', '')
-        _indexId = request.args.get('index_id')
-
-        if _indexId:
-            index = Index.query.filter_by(id=_indexId).one_or_none()
-            _indexName = index.index_name
-            index_meta[_indexId] = _indexName if _indexName else \
-                'Nonexistent Index'
-
-            fg.title('WEKO OpenSearch: ' + str(index_meta[_indexId]))
-        else:
-            fg.title('WEKO OpenSearch: ' + str(_keywords))
-
-        # TODO
-        return fg.jpcoar_str(pretty=True)
+        # index_meta = {}
+        # _keywords = request.args.get('q', '')
+        # _indexId = request.args.get('index_id')
+        #
+        # if _indexId:
+        #     index = Index.query.filter_by(id=_indexId).one_or_none()
+        #     _indexName = index.index_name
+        #     index_meta[_indexId] = _indexName if _indexName else \
+        #         'Nonexistent Index'
+        #
+        #     fg.title('WEKO OpenSearch: ' + str(index_meta[_indexId]))
+        # else:
+        #     fg.title('WEKO OpenSearch: ' + str(_keywords))
 
         # Set link
-        fg.link(href=request.url)
+        # fg.link(href=request.url)
 
         # Set date
-        fg.dc.dc_date(str(datetime.now(pytz.utc)))
+        # fg.dc.dc_date(str(datetime.now(pytz.utc)))
 
         # Set totalResults
         _totalResults = search_result['hits']['total']
@@ -92,6 +89,9 @@ class JpcoarSerializer(JSONSerializer):
         # Set itemPerPage
         _itemPerPage = request.args.get('size')
         fg.opensearch.itemsPerPage(str(_itemPerPage))
+
+        # TODO
+        return fg.jpcoar_str(pretty=True)
 
         # Set Request URL
         if int(_totalResults) != 0:
