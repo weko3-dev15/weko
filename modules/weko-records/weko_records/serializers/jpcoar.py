@@ -72,8 +72,8 @@ class JpcoarSerializer(JSONSerializer):
         # data = dumps_etree(search_result['hits']['hits'][0], 'jpcoar')
 
         metadata = {'metadata': search_result['hits']['hits'][0]['_source']}
-        data = dumps_etree(metadata, 'jpcoar')
-        flash(str(data))
+        # data = dumps_etree(metadata, 'jpcoar')
+        # flash(str(data))
         # return str(data)
 
         # Set title
@@ -111,6 +111,7 @@ class JpcoarSerializer(JSONSerializer):
 
         fe = fg.add_entry()
         fe.itemUrl('http://13.112.163.210:5005/records/2')
+        fe.itemRecord(metadata)
 
         # TODO
         return fg.jpcoar_str(pretty=True)

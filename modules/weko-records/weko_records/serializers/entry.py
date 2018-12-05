@@ -37,6 +37,8 @@ from lxml import etree
 from feedgen.compat import string_types
 from feedgen.util import ensure_format, formatRFC2822
 
+from weko_schema_ui.utils import dumps_etree
+
 
 
 class WekoFeedEntry(FeedEntry):
@@ -78,7 +80,7 @@ class WekoFeedEntry(FeedEntry):
 
         # JPCOAR
         self.__jpcoar_schema = 'http://irdb.nii.ac.jp/oai http://irdb.nii.ac.jp/oai/junii2-3-1.xsd'
-        self.__jpcoar_author = None
+        self.__jpcoar_record = None
         self.__jpcoar_category = None
         self.__jpcoar_comments = None
         self.__jpcoar_description = None
@@ -311,9 +313,13 @@ class WekoFeedEntry(FeedEntry):
         des.attrib['{http://www.w3.org/1999/02/22-rdf-syntax-ns#}about'] = \
             self.__jpcoar_itemUrl
 
-        entry = etree.SubElement(des, 'jpcoar')
-        entry.attrib['{http://www.w3.org/2001/XMLSchema-instance}schemaLocation'] = \
-            self.__jpcoar_schema
+        if self.__jpcoar_record:
+            data = dumps_etree(self.__jpcoar_record, 'jpcoar')
+            entry = etree.SubElement(des, data)
+
+        # entry = etree.SubElement(des, 'jpcoar')
+        # entry.attrib['{http://www.w3.org/2001/XMLSchema-instance}schemaLocation'] = \
+        #     self.__jpcoar_schema
 
 
         # if self.__rss_itemUrl:
@@ -408,6 +414,16 @@ class WekoFeedEntry(FeedEntry):
         if itemUrl is not None:
             self.__rss_itemUrl = itemUrl
             self.__jpcoar_itemUrl = itemUrl
+        return self.__rss_itemUrl
+# TODO
+    def itemRecord(self, itemRecord=None):
+        '''Get or set the item url value of the entry. This is an RSS only
+        field.
+        :param itemUrl: The item url of the entry.
+        :returns: The item's url.
+        '''
+        if itemRecord is not None:
+            self.__jpcoar_record = itemRecord
         return self.__rss_itemUrl
 
     def seeAlso(self, seeAlso=None):
