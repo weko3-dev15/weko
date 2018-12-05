@@ -22,6 +22,7 @@
 
 from datetime import datetime
 
+from flask import current_app
 from invenio_db import db
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.dialects import mysql, postgresql
@@ -164,7 +165,7 @@ class SearchManagement(db.Model):
     @classmethod
     def update(cls, **data):
         """Update setting"""
-
+        current_app.logger.debug(data)
 
 
 

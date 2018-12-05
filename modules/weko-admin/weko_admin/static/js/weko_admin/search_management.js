@@ -42,9 +42,14 @@
       }
       //
       $scope.saveData=function(){
-
+        var url = $location.path();
+        dbJson = $scope.dataJson;
+        $http.post(url, dbJson).then(function successCallback(response) {
+           alert(response.data.message);
+        }, function errorCallback(response) {
+           alert(response.data.message);
+        });
       }
-
       //
     }
     // Inject depedencies

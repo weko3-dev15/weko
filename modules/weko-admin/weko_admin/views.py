@@ -35,7 +35,8 @@ from invenio_admin.proxies import current_admin
 from weko_records.api import ItemTypes, SiteLicense
 from werkzeug.local import LocalProxy
 
-from .models import SessionLifetime
+
+from .models import SessionLifetime, SearchManagement
 from .utils import get_response_json, get_search_setting
 
 _app = LocalProxy(lambda: current_app.extensions['weko-admin'].app)
@@ -185,6 +186,19 @@ def set_search():
     current_app.logger.info('search setting page')
     result = json.dumps(get_search_setting())
     current_app.logger.debug(result)
+
+    if 'POST' in request.method:
+        jfy = {}
+        try:
+            # update search setting
+            SearchManagement.update(request.get_json())
+            jfy['status'] = 201
+            jfy['message'] = 'Search setting was successfully updated.'
+        except:
+            jfy['status'] = 500
+            jfy['message'] = 'Failed to update search setting.'
+        return make_response(jsonify(jfy), jfy['status'])
+
     try:
         return render_template(
             current_app.config['WEKO_ADMIN_SEARCH_MANAGEMENT_TEMPLATE'],
