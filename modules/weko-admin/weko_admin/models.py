@@ -171,7 +171,7 @@ class SearchManagement(db.Model):
     @classmethod
     def create(cls, data):
         """Create data"""
-
+        current_app.logger.debug("AAAA")
         try:
             with db.session.begin_nested():
                 cls.default_dis_num = data.dlt_dis_num_selected
@@ -182,8 +182,9 @@ class SearchManagement(db.Model):
                 cls.search_setting_all= data
                 db.session.add(cls)
             db.session.commit()
-        except BaseException:
+        except BaseException as ex:
             db.session.rollback()
+            current_app.logger.debug(ex)
             raise
         return cls
 
