@@ -37,6 +37,8 @@ from lxml import etree
 from feedgen.compat import string_types
 from feedgen.util import ensure_format, formatRFC2822
 
+
+
 class WekoFeedEntry(FeedEntry):
 
     def __init__(self):

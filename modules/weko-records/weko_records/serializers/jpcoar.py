@@ -32,6 +32,9 @@ from .prism import PrismExtension, PrismEntryExtension
 from .dc import DcWekoBaseExtension, DcWekoEntryExtension
 from weko_index_tree.api import Index
 
+from weko_deposit.api import WekoRecord
+from weko_schema_ui.serializers.WekoBibTexSerializer import WekoBibTexSerializer
+
 class JpcoarSerializer(JSONSerializer):
     """
     Serialize search result to jpcoar format.
@@ -56,6 +59,9 @@ class JpcoarSerializer(JSONSerializer):
         fg.register_extension('prism',
                               extension_class_feed=PrismExtension,
                               extension_class_entry=PrismEntryExtension)
+
+        jpcoar_data = WekoBibTexSerializer.get_jpcoar_data('2', WekoRecord.get_record_by_pid('2'))
+        return jpcoar_data
 
         # Set title
         # index_meta = {}
