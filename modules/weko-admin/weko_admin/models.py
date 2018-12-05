@@ -171,7 +171,7 @@ class SearchManagement(db.Model):
     @classmethod
     def create(cls, data):
         """Create data"""
-        current_app.logger.debug("AAAA")
+        current_app.logger.debug(data)
         try:
             with db.session.begin_nested():
                 cls.default_dis_num = data.dlt_dis_num_selected
