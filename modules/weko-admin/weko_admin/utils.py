@@ -78,10 +78,8 @@ def get_search_setting():
 
     res = SearchManagement.get()
 
-    current_app.logger.debug(res.search_setting_all)
-
-    # if res:
-    #     db_obj= dict(res).get("search_setting_all")
-    #     return res
-    # else:
-    return config.WEKO_SEARCH_MANAGEMENT_OPTIONS
+    if res:
+        db_obj= res.search_setting_all
+        return db_obj
+    else:
+        return config.WEKO_SEARCH_MANAGEMENT_OPTIONS

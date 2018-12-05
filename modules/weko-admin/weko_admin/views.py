@@ -194,7 +194,7 @@ def set_search():
             res = SearchManagement.get()
 
             if res:
-                id = json.loads(res).get("id")
+                id = res.id
                 SearchManagement.update(id, dbData)
             else:
                 SearchManagement.create(dbData)
