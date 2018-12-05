@@ -314,8 +314,8 @@ class WekoFeedEntry(FeedEntry):
             self.__jpcoar_itemUrl
 
         if self.__jpcoar_record:
-            data = dumps_etree(self.__jpcoar_record, 'jpcoar')
-            entry = etree.SubElement(des, data)
+            jpcoar_tree = dumps_etree(self.__jpcoar_record, 'jpcoar')
+            des.append(jpcoar_tree)
 
         # entry = etree.SubElement(des, 'jpcoar')
         # entry.attrib['{http://www.w3.org/2001/XMLSchema-instance}schemaLocation'] = \
