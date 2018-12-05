@@ -193,8 +193,10 @@ class SearchManagement(db.Model):
     @classmethod
     def get(cls):
         """Get setting"""
-        # return cls.query.filter_by(func.max(SearchManagement.id)).one_or_none()
-        return cls.query.get(func.max(SearchManagement.id))
+
+        id = cls.query(func.max(SearchManagement.id)).all(
+        current_app.logger.debug(id))
+        return cls.query.filter_by(id=id).one_or_none()
 
     @classmethod
     def update(cls, id, data):
