@@ -62,11 +62,12 @@ class JpcoarSerializer(JSONSerializer):
                               extension_class_feed=PrismExtension,
                               extension_class_entry=PrismEntryExtension)
 
-        # record = WekoRecord.get_record_by_pid('2')
+        record = WekoRecord.get_record_by_pid('2')
         # record.update({'@export_schema_type': 'jpcoar'})
         # serializer = WekoXMLSerializer()
         # data = serializer.serialize('2', record)
         # jpcoar_data = WekoBibTexSerializer.get_jpcoar_data('2', WekoRecord.get_record_by_pid('2'))
+        flash(record is None)
 
         return str(WekoRecord.get_record_by_pid('2'))
 
