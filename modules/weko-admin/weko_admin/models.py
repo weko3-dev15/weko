@@ -194,7 +194,8 @@ class SearchManagement(db.Model):
     def get(cls):
         """Get setting"""
 
-        return cls.query.filter(id !=0 ).first()
+
+        return cls.query.filter(id=2).one_or_none()
 
     @classmethod
     def update(cls, id, data):
