@@ -163,3 +163,9 @@ tree-internal ul .more {
 tree-internal ul .value-container {
   font-size: 14px;
 }
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:  flex;
+}
