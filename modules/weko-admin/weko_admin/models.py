@@ -27,6 +27,7 @@ from invenio_db import db
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.dialects import mysql, postgresql
 from sqlalchemy_utils.types import JSONType
+from sqlalchemy.sql import func
 
 
 class SessionLifetime(db.Model):
@@ -192,7 +193,7 @@ class SearchManagement(db.Model):
     @classmethod
     def get(cls):
         """Get setting"""
-        return cls.query.filter_by(id=1).one_or_none()
+        return cls.query.filter_by(id=func.max(SearchManagement.id)).one_or_none()
 
     @classmethod
     def update(cls, id, data):
