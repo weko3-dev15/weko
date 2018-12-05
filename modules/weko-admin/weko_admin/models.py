@@ -193,7 +193,7 @@ class SearchManagement(db.Model):
     @classmethod
     def get(cls):
         """Get setting"""
-        return cls.query.get(func.max(cls.id)).all()
+        return cls.query.filter_by(id=2).one_or_none()
 
     @classmethod
     def update(cls, id, data):
@@ -206,7 +206,7 @@ class SearchManagement(db.Model):
                 setting_data.default_dis_sort_keyword = data.get('dlt_keyword_sort_selected')
                 setting_data.sort_setting = data.get('sort_options')
                 setting_data.search_conditions = data.get('detail_condition')
-                setting_data.search_setting_all = json.dumps(data)
+                setting_data.search_setting_all = data
                 db.session.merge(setting_data)
             db.session.commit()
         except BaseException as ex:
