@@ -70,6 +70,7 @@ class JpcoarSerializer(JSONSerializer):
         fg.opensearch.itemsPerPage(str(_itemPerPage))
 
         for hit in search_result['hits']['hits']:
+            fe = fg.add_entry()
 
             # Set item url
             _pid = hit['_source']['_item_metadata']['control_number']
