@@ -70,11 +70,11 @@ class JpcoarSerializer(JSONSerializer):
         # data = serializer.serialize('2', record)
         # jpcoar_data = WekoBibTexSerializer.get_jpcoar_data('2', WekoRecord.get_record_by_pid('2'))
         # data = dumps_etree(search_result['hits']['hits'][0], 'jpcoar')
-
+        import xml.etree.ElementTree as ET
         metadata = {'metadata': search_result['hits']['hits'][0]['_source']}
         data = dumps_etree(metadata, 'jpcoar')
         flash(ET.tostring(data, encoding='utf8', method='xml'))
-        import xml.etree.ElementTree as ET
+
         return ET.tostring(data, encoding='utf8', method='xml')
 
         # Set title
