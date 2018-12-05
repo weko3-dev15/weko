@@ -33,6 +33,7 @@ from .dc import DcWekoBaseExtension, DcWekoEntryExtension
 from weko_index_tree.api import Index
 
 from weko_deposit.api import WekoRecord
+from weko_schema_ui.serializers.WekoBibTexSerializer import WekoBibTexSerializer
 from weko_schema_ui.serializers.wekoxml import WekoXMLSerializer
 from invenio_records_ui.utils import obj_or_import_string
 
@@ -61,40 +62,13 @@ class JpcoarSerializer(JSONSerializer):
                               extension_class_feed=PrismExtension,
                               extension_class_entry=PrismEntryExtension)
 
-        record = WekoRecord.get_record_by_pid('2')
+        # record = WekoRecord.get_record_by_pid('2')
         # record.update({'@export_schema_type': 'jpcoar'})
         # serializer = WekoXMLSerializer()
         # data = serializer.serialize('2', record)
-        # flash(data)
+        jpcoar_data = self.get_jpcoar_data('2', WekoRecord.get_record_by_pid('2'))
 
-        formats = current_app.config.get('RECORDS_UI_EXPORT_FORMATS', {}).get(
-            'recid')
-        # schema_type = request.view_args.get('format')
-        fmt = formats.get('jpcoar')
-
-        if fmt is False:
-            # If value is set to False, it means it was deprecated.
-            abort(410)
-        elif fmt is None:
-            abort(404)
-        else:
-            record.update({'@export_schema_type': 'jpcoar'})
-
-            serializer = obj_or_import_string(fmt['serializer'])
-            data = serializer.serialize('2', record)
-            # if isinstance(data, six.binary_type):
-            #     data = data.decode('utf8')
-            #
-            # response = make_response(data)
-            #
-            # if 'json' in schema_type or 'bibtex' in schema_type:
-            #     response.headers['Content-Type'] = 'text/plain'
-            # else:
-            #     response.headers['Content-Type'] = 'text/xml'
-            #
-            # return response
-
-        return str(data)
+        return jpcoar_data
 
         # Set title
         # index_meta = {}
