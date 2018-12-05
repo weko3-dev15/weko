@@ -114,7 +114,7 @@ class SearchManagement(db.Model):
     default_dis_sort_index = db.Column( db.Text, nullable=True, default="")
     """ Default display sort of index search"""
 
-    default_dis_sort_index = db.Column(db.Text, nullable=True, default="")
+    default_dis_sort_keyword = db.Column(db.Text, nullable=True, default="")
     """ Default display sort of keyword search"""
 
     sort_setting = db.Column(
@@ -149,13 +149,43 @@ class SearchManagement(db.Model):
     )
     """ The list of search condition """
 
+    search_setting_all = db.Column(
+        db.JSON().with_variant(
+            postgresql.JSONB(none_as_null=True),
+            'postgresql',
+        ).with_variant(
+            JSONType(),
+            'sqlite',
+        ).with_variant(
+            JSONType(),
+            'mysql',
+        ),
+        default=lambda: dict(),
+        nullable=True
+    )
+    """ The list of search condition """
+
     create_date = db.Column(db.DateTime, default=datetime.now)
     """Create Time"""
 
     @classmethod
-    def create(cls, **data):
+    def create(cls, data):
         """Create data"""
-        return
+
+        try:
+            with db.session.begin_nested():
+                cls.default_dis_num = data.dlt_dis_num_selected
+                cls.default_dis_sort_index = data.dlt_index_sort_selected
+                cls.default_dis_sort_keyword = data.dlt_keyword_sort_selected
+                cls.sort_setting = data.sort_options
+                cls.search_conditions = data.detail_condition
+                cls.search_setting_all= data
+                db.session.add(cls)
+            db.session.commit()
+        except BaseException:
+            db.session.rollback()
+            raise
+        return cls
 
     @classmethod
     def get(cls, **data):
@@ -165,6 +195,7 @@ class SearchManagement(db.Model):
     @classmethod
     def update(cls, data):
         """Update setting"""
+
         current_app.logger.debug(data)
 
 

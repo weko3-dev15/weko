@@ -190,8 +190,8 @@ def set_search():
         jfy = {}
         try:
             # update search setting
-            dbData = json.dumps(request.get_json())
-            SearchManagement.update(dbData)
+            dbData = request.get_json()
+            SearchManagement.create(dbData)
             jfy['status'] = 201
             jfy['message'] = 'Search setting was successfully updated.'
         except:

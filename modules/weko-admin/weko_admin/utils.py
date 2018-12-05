@@ -21,6 +21,7 @@
 """Utilities for convert response json."""
 
 from . import config
+from .models import SearchManagement
 
 
 def get_response_json(result_list, n_lst):
@@ -73,5 +74,10 @@ def get_search_setting():
     Get search setting from DB
     :return: Setting data by Json
     """
+
+    res = SearchManagement.get()
+
+    if res:
+        return res
 
     return config.WEKO_SEARCH_MANAGEMENT_OPTIONS
