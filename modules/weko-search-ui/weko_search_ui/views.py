@@ -21,7 +21,7 @@
 """Blueprint for weko-search-ui."""
 
 from flask import Blueprint, current_app, render_template, request, \
-    redirect, url_for, make_response, jsonify
+    redirect, url_for, make_response, jsonify, app, config
 from xml.etree import ElementTree as ET
 from weko_index_tree.models import IndexStyle
 from weko_index_tree.api import Indexes
@@ -60,6 +60,14 @@ def search():
     # Get index style
     style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
     width = style.width if style else '3'
+
+    app.config.update(
+        RECORDS_REST_SORT_OPTIONS=getattr(
+            config,
+            'WEKO_SEARCH_UI_SEARCH_TEMPLATE'),
+    )
+
+
     if 'management' in getArgs:
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
@@ -68,7 +76,6 @@ def search():
         return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
                                width=width, **ctx)
-
 
 
 @blueprint_api.route('/opensearch/description.xml', methods=['GET'])

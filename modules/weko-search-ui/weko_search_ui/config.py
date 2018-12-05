@@ -166,6 +166,63 @@ RECORDS_REST_SORT_OPTIONS = dict(
     )
 )
 
+
+RECORDS_REST_SORT_OPTIONS = dict(
+    weko=dict(
+        controlnumber=dict(
+            title='Control number',
+            fields=['control_number'],
+            default_order='desc',
+            order=2,
+        ),
+        wtl=dict(
+            title='Title',
+            fields=['title'],
+            default_order='asc',
+            order=3,
+        ),
+        creator=dict(
+            title='Creator',
+            fields=['creator'],
+            default_order='asc',
+            order=4,
+        ),
+        upd=dict(
+            title='Update date',
+            fields=['_updated'],
+            default_order='asc',
+            order=5,
+        ),
+        createdate=dict(
+            title='Create date',
+            fields=['_created'],
+            default_order='asc',
+            order=6,
+        ),
+        pyear=dict(
+            title='Date of Issued',
+            fields=['dateofissued'],
+            default_order='asc',
+            order=7,
+        ),
+        publish_date=dict(
+            title='Publish date',
+            fields=['date'],
+            default_order='asc',
+            order=8,
+        ),
+        # add 20181121 start
+        custom_sort=dict(
+                    title='Custom',
+                    fields=['custom_sort.sort'],
+                    default_order='asc',
+                    order=9,
+        )
+        # add 20181121 end
+    )
+)
+
+
 WEKO_SEARCH_REST_ENDPOINTS = dict(
     recid=dict(
         pid_type='recid',
