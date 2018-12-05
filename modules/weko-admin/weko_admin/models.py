@@ -190,7 +190,7 @@ class SearchManagement(db.Model):
         return cls
 
     @classmethod
-    def get(cls, **data):
+    def get(cls):
         """Get setting"""
         return cls.query.filter_by(id=1).one_or_none()
 
