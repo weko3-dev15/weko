@@ -592,12 +592,12 @@ class SchemaTree:
                                 if k1 != self._atr:
                                     k1 = get_prefix(k1)
                                     set_children(k1, v1, chld)
-# TODO
-#         if not self._schema_obj:
-#             E = ElementMaker()
-#             root = E.Weko()
-#             root.text = "Sorry! This Item has not been mappinged."
-#             return root
+
+        if not self._schema_obj:
+            E = ElementMaker()
+            root = E.Weko()
+            root.text = "Sorry! This Item has not been mappinged."
+            return root
 
         node_tree = self.find_nodes(self.__get_value_list())
         ns = self._ns
