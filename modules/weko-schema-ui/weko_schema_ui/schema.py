@@ -210,7 +210,7 @@ class SchemaTree:
         self._v = "@value"
         self._atr = "@attributes"
 
-        flash(self._schema_obj is None)
+        flash(self._record)
 
     def get_mapping_data(self):
         """
