@@ -186,6 +186,7 @@ def set_search():
     current_app.logger.info('search setting page')
     result = json.dumps(get_search_setting())
 
+    current_app.logger.debug(result)
     if 'POST' in request.method:
         jfy = {}
         try:
