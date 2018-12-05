@@ -76,6 +76,9 @@ class WekoSearchUI(object):
             SEARCH_UI_JSTEMPLATE_COUNT=getattr(
                 config,
                 'WEKO_SEARCH_UI_JSTEMPLATE_COUNT'),
+            RECORDS_REST_SORT_OPTIONS=getattr(
+                config,
+                'RECORDS_REST_SORT_OPTIONS_TEST'),
         )
         for k in dir(config):
             if k.startswith('WEKO_SEARCH_UI_'):

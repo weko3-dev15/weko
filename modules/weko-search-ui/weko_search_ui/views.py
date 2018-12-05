@@ -61,13 +61,6 @@ def search():
     style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
     width = style.width if style else '3'
 
-    config.update(
-        RECORDS_REST_SORT_OPTIONS=getattr(
-            config,
-            'WEKO_SEARCH_UI_SEARCH_TEMPLATE'),
-    )
-
-
     if 'management' in getArgs:
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,

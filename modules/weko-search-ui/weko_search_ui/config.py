@@ -167,7 +167,7 @@ RECORDS_REST_SORT_OPTIONS = dict(
 )
 
 
-RECORDS_REST_SORT_OPTIONS = dict(
+RECORDS_REST_SORT_OPTIONS_TEST = dict(
     weko=dict(
         controlnumber=dict(
             title='Control number',
