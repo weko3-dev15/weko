@@ -33,7 +33,7 @@ from .dc import DcWekoBaseExtension, DcWekoEntryExtension
 from weko_index_tree.api import Index
 
 from weko_deposit.api import WekoRecord
-from weko_schema_ui.serializers.WekoBibTexSerializer import WekoBibTexSerializer
+from weko_schema_ui.serializers.wekoxml import WekoXMLSerializer
 
 class JpcoarSerializer(JSONSerializer):
     """
@@ -60,8 +60,12 @@ class JpcoarSerializer(JSONSerializer):
                               extension_class_feed=PrismExtension,
                               extension_class_entry=PrismEntryExtension)
 
-        jpcoar_data = WekoBibTexSerializer.get_jpcoar_data('2', WekoRecord.get_record_by_pid('2'))
-        return jpcoar_data
+        record = WekoRecord.get_record_by_pid('2')
+        record.update({'@export_schema_type': 'jpcoar'})
+        serializer = WekoXMLSerializer()
+        data = serializer.serialize('2', record)
+
+        return data
 
         # Set title
         # index_meta = {}
