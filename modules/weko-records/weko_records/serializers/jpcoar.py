@@ -64,14 +64,14 @@ class JpcoarSerializer(JSONSerializer):
                               extension_class_feed=PrismExtension,
                               extension_class_entry=PrismEntryExtension)
 
-        record = WekoRecord.get_record_by_pid('2')
+        # record = WekoRecord.get_record_by_pid('2')
         # record.update({'@export_schema_type': 'jpcoar'})
         # serializer = WekoXMLSerializer()
         # data = serializer.serialize('2', record)
         # jpcoar_data = WekoBibTexSerializer.get_jpcoar_data('2', WekoRecord.get_record_by_pid('2'))
-        data = dumps_etree(search_result['hits']['hits'][0], 'jpcoar')
+        # data = dumps_etree(search_result['hits']['hits'][0], 'jpcoar')
 
-        return data
+        return search_result['hits']['hits'][0]
 
         # Set title
         # index_meta = {}
