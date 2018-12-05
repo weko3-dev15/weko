@@ -66,7 +66,7 @@ class JpcoarSerializer(JSONSerializer):
         # record.update({'@export_schema_type': 'jpcoar'})
         # serializer = WekoXMLSerializer()
         # data = serializer.serialize('2', record)
-        jpcoar_data = self.get_jpcoar_data('2', WekoRecord.get_record_by_pid('2'))
+        jpcoar_data = WekoBibTexSerializer.get_jpcoar_data('2', WekoRecord.get_record_by_pid('2'))
 
         return jpcoar_data
 
