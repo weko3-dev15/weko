@@ -163,7 +163,7 @@ class SearchManagement(db.Model):
         return cls.query.filter_by(id=id).one_or_none()
 
     @classmethod
-    def update(cls, **data):
+    def update(cls, data):
         """Update setting"""
         current_app.logger.debug(data)
 
