@@ -193,9 +193,7 @@ class SearchManagement(db.Model):
     @classmethod
     def get(cls):
         """Get setting"""
-
-
-        return cls.query.filter(id=2).one_or_none()
+        return cls.query.filter_by(id=2).one_or_none()
 
     @classmethod
     def update(cls, id, data):
