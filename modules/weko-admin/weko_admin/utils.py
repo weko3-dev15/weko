@@ -79,7 +79,8 @@ def get_search_setting():
     res = SearchManagement.get()
 
     if res:
-        db_obj= res.search_setting_all
+        db_str= res.search_setting_all
+        db_obj= json.loads(db_str)
         return db_obj
     else:
         return config.WEKO_SEARCH_MANAGEMENT_OPTIONS
