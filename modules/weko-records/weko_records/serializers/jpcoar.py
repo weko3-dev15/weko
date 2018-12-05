@@ -69,15 +69,6 @@ class JpcoarSerializer(JSONSerializer):
         _itemPerPage = request.args.get('size')
         fg.opensearch.itemsPerPage(str(_itemPerPage))
 
-        fe = fg.add_entry()
-        fe.itemUrl('http://13.112.163.210:5005/records/2')
-
-        metadata = {'metadata': search_result['hits']['hits'][0]['_source']}
-        fe.itemRecord(metadata)
-
-        # TODO
-        # return fg.jpcoar_str(pretty=True)
-
         for hit in search_result['hits']['hits']:
 
             # Set item url
@@ -89,4 +80,4 @@ class JpcoarSerializer(JSONSerializer):
             item_metadata = {'metadata': hit['_source'].copy()}
             fe.itemRecord(item_metadata)
 
-        return fg.rss_str(pretty=True)
+        return fg.jpcoar_str(pretty=True)
