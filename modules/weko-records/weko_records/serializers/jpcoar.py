@@ -71,7 +71,8 @@ class JpcoarSerializer(JSONSerializer):
         # jpcoar_data = WekoBibTexSerializer.get_jpcoar_data('2', WekoRecord.get_record_by_pid('2'))
         # data = dumps_etree(search_result['hits']['hits'][0], 'jpcoar')
 
-        flash(search_result['hits']['hits'])
+        metadata = {'metadata': search_result['hits']['hits']['_source']}
+        flash(metadata)
 
         # Set title
         # index_meta = {}
