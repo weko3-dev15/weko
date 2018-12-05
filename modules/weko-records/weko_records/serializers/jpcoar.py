@@ -35,6 +35,8 @@ from weko_index_tree.api import Index
 from weko_deposit.api import WekoRecord
 from weko_schema_ui.serializers.WekoBibTexSerializer import WekoBibTexSerializer
 from weko_schema_ui.serializers.wekoxml import WekoXMLSerializer
+from weko_schema_ui.schema import SchemaTree
+from weko_schema_ui.utils import dumps_etree
 from invenio_records_ui.utils import obj_or_import_string
 
 class JpcoarSerializer(JSONSerializer):
@@ -67,9 +69,9 @@ class JpcoarSerializer(JSONSerializer):
         # serializer = WekoXMLSerializer()
         # data = serializer.serialize('2', record)
         # jpcoar_data = WekoBibTexSerializer.get_jpcoar_data('2', WekoRecord.get_record_by_pid('2'))
-        flash(record is None)
+        data = dumps_etree(record, 'jpcoar')
 
-        return str(WekoRecord.get_record_by_pid('2'))
+        return data
 
         # Set title
         # index_meta = {}
