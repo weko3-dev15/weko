@@ -79,20 +79,7 @@ class WekoFeedEntry(FeedEntry):
         self.__rss_seeAlso = None
 
         # JPCOAR
-        self.__jpcoar_schema = 'http://irdb.nii.ac.jp/oai http://irdb.nii.ac.jp/oai/junii2-3-1.xsd'
-        self.__jpcoar_record = None
-        self.__jpcoar_category = None
-        self.__jpcoar_comments = None
-        self.__jpcoar_description = None
-        self.__jpcoar_content = None
-        self.__jpcoar_enclosure = None
-        self.__jpcoar_guid = {}
-        self.__jpcoar_link = None
-        self.__jpcoar_pubDate = None
-        self.__jpcoar_source = None
-        self.__jpcoar_title = None
-        self.__jpcoar_itemUrl = None
-        self.__jpcoar_seeAlso = None
+        self.__jpcoar_itemData = None
 
         # Extension list:
         self.__extensions = {}
@@ -306,85 +293,15 @@ class WekoFeedEntry(FeedEntry):
 
         return entry
 
-# TODO
     def jpcoar_entry(self, extensions=True):
         '''Create a JPCOAR item and return it.'''
         des = etree.Element('{http://www.w3.org/1999/02/22-rdf-syntax-ns#}Description')
         des.attrib['{http://www.w3.org/1999/02/22-rdf-syntax-ns#}about'] = \
             self.__jpcoar_itemUrl
 
-        if self.__jpcoar_record:
-            jpcoar_tree = dumps_etree(self.__jpcoar_record, 'jpcoar')
+        if self.__jpcoar_itemData:
+            jpcoar_tree = dumps_etree(self.__jpcoar_itemData, 'jpcoar')
             des.append(jpcoar_tree)
-
-        # entry = etree.SubElement(des, 'jpcoar')
-        # entry.attrib['{http://www.w3.org/2001/XMLSchema-instance}schemaLocation'] = \
-        #     self.__jpcoar_schema
-
-
-        # if self.__rss_itemUrl:
-        #     entry.attrib['{http://www.w3.org/1999/02/22-rdf-syntax-ns#}about'] = \
-        #         self.__rss_itemUrl
-        #
-        # if not (self.__rss_title or
-        #         self.__rss_description or
-        #         self.__rss_content):
-        #     raise ValueError('Required fields not set')
-        # if self.__rss_title:
-        #     title = etree.SubElement(entry, 'title')
-        #     title.text = self.__rss_title
-        # if self.__rss_link:
-        #     link = etree.SubElement(entry, 'link')
-        #     link.text = self.__rss_link
-        # if self.__rss_seeAlso:
-        #     seeAlso = etree.SubElement(entry, '{http://www.w3.org/2000/01/rdf-schema#}seeAlso')
-        #     seeAlso.attrib['{http://www.w3.org/1999/02/22-rdf-syntax-ns#}resource'] = \
-        #         self.__rss_seeAlso
-        #
-        # if self.__rss_description and self.__rss_content:
-        #     description = etree.SubElement(entry, 'description')
-        #     description.text = self.__rss_description
-        #     XMLNS_CONTENT = 'http://purl.org/rss/1.0/modules/content/'
-        #     content = etree.SubElement(entry, '{%s}encoded' % XMLNS_CONTENT)
-        #     content.text = etree.CDATA(self.__rss_content['content']) \
-        #         if self.__rss_content.get('type', '') == 'CDATA' \
-        #         else self.__rss_content['content']
-        # elif self.__rss_description:
-        #     description = etree.SubElement(entry, 'description')
-        #     description.text = self.__rss_description
-        # elif self.__rss_content:
-        #     description = etree.SubElement(entry, 'description')
-        #     description.text = etree.CDATA(self.__rss_content['content']) \
-        #         if self.__rss_content.get('type', '') == 'CDATA' \
-        #         else self.__rss_content['content']
-        # for a in self.__rss_author or []:
-        #     author = etree.SubElement(entry, 'author')
-        #     author.text = a
-        # if self.__rss_guid.get('guid'):
-        #     guid = etree.SubElement(entry, 'guid')
-        #     guid.text = self.__rss_guid['guid']
-        #     permaLink = str(self.__rss_guid.get('permalink', False)).lower()
-        #     guid.attrib['isPermaLink'] = permaLink
-        # for cat in self.__rss_category or []:
-        #     category = etree.SubElement(entry, 'category')
-        #     category.text = cat['value']
-        #     if cat.get('domain'):
-        #         category.attrib['domain'] = cat['domain']
-        # if self.__rss_comments:
-        #     comments = etree.SubElement(entry, 'comments')
-        #     comments.text = self.__rss_comments
-        # if self.__rss_enclosure:
-        #     enclosure = etree.SubElement(entry, 'enclosure')
-        #     enclosure.attrib['url'] = self.__rss_enclosure['url']
-        #     enclosure.attrib['length'] = self.__rss_enclosure['length']
-        #     enclosure.attrib['type'] = self.__rss_enclosure['type']
-        # if self.__rss_pubDate:
-        #     pubDate = etree.SubElement(entry, 'pubDate')
-        #     pubDate.text = formatRFC2822(self.__rss_pubDate)
-        # if self.__rss_source:
-        #     source = etree.SubElement(entry, 'source',
-        #                               url=self.__rss_source['url'])
-        #     source.text = self.__rss_source['title']
 
         if extensions:
             for ext in self.__extensions.values() or []:
@@ -415,16 +332,16 @@ class WekoFeedEntry(FeedEntry):
             self.__rss_itemUrl = itemUrl
             self.__jpcoar_itemUrl = itemUrl
         return self.__rss_itemUrl
-# TODO
-    def itemRecord(self, itemRecord=None):
-        '''Get or set the item url value of the entry. This is an RSS only
+
+    def itemData(self, itemData=None):
+        '''Get or set the item metadata of the entry. This is an JPCOAR only
         field.
-        :param itemUrl: The item url of the entry.
-        :returns: The item's url.
+        :param itemData: The item data of the entry.
+        :returns: The item's data.
         '''
-        if itemRecord is not None:
-            self.__jpcoar_record = itemRecord
-        return self.__rss_itemUrl
+        if itemData is not None:
+            self.__jpcoar_itemData = itemData
+        return self.__jpcoar_itemData
 
     def seeAlso(self, seeAlso=None):
         '''Get or set the oai url value of the entry. This is an RSS only

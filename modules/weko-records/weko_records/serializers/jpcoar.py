@@ -79,6 +79,6 @@ class JpcoarSerializer(JSONSerializer):
 
             # Set item record
             item_metadata = {'metadata': hit['_source'].copy()}
-            fe.itemRecord(item_metadata)
+            fe.itemData(item_metadata)
 
         return fg.jpcoar_str(pretty=True)

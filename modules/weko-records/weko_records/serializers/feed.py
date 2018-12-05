@@ -98,31 +98,6 @@ class WekoFeedGenerator(FeedGenerator):
         self.__rss_request_url = None
         self.__rss_items = None
 
-        # JPCOAR
-        self.__jpcoar_title = None
-        self.__jpcoar_link = None
-        self.__jpcoar_description = None
-
-        self.__jpcoar_category = None
-        self.__jpcoar_cloud = None
-        self.__jpcoar_copyright = None
-        # self.__jpcoar_docs = 'http://www.rssboard.org/rss-specification'
-        # self.__jpcoar_generator = 'python-feedgen'
-        self.__jpcoar_image = None
-        self.__jpcoar_language = None
-        self.__jpcoar_lastBuildDate = datetime.now(dateutil.tz.tzutc())
-        self.__jpcoar_managingEditor = None
-        self.__jpcoar_pubDate = None
-        self.__jpcoar_rating = None
-        self.__jpcoar_skipHours = None
-        self.__jpcoar_skipDays = None
-        self.__jpcoar_textInput = None
-        self.__jpcoar_ttl = None
-        self.__jpcoar_webMaster = None
-
-        self.__jpcoar_request_url = None
-        self.__jpcoar_items = None
-
         # Extension list:
         self.__extensions = {}
 
@@ -476,7 +451,6 @@ class WekoFeedGenerator(FeedGenerator):
         doc.write(filename, pretty_print=pretty, encoding=encoding,
                   xml_declaration=xml_declaration)
 
-# TODO
     def _create_jpcoar(self, extensions=True):
         '''Create an JPCOAR feed xml structure containing all previously set
         fields.
@@ -496,125 +470,6 @@ class WekoFeedGenerator(FeedGenerator):
 
         header = etree.SubElement(feed, 'header')
 
-        # if not (self.__rss_title and
-        #         self.__rss_link):
-        #     missing = ([] if self.__rss_title else ['title']) + \
-        #               ([] if self.__rss_link else ['link'])
-        #     missing = ', '.join(missing)
-        #     raise ValueError('Required fields not set (%s)' % missing)
-
-        # title = etree.SubElement(header, 'title')
-        # title.text = self.__jpcoar_title
-        # link = etree.SubElement(channel, 'link')
-        # link.text = self.__rss_link
-        # # desc = etree.SubElement(channel, 'description')
-        # # desc.text = self.__rss_description
-        # for ln in self.__atom_link or []:
-        #     # It is recommended to include a atom self link in rss documents…
-        #     if ln.get('rel') == 'self':
-        #         selflink = etree.SubElement(
-        #                 channel, '{http://www.w3.org/2005/Atom}link',
-        #                 href=ln['href'], rel='self')
-        #         if ln.get('type'):
-        #             selflink.attrib['type'] = ln['type']
-        #         if ln.get('hreflang'):
-        #             selflink.attrib['hreflang'] = ln['hreflang']
-        #         if ln.get('title'):
-        #             selflink.attrib['title'] = ln['title']
-        #         if ln.get('length'):
-        #             selflink.attrib['length'] = ln['length']
-        #         break
-        # if self.__rss_category:
-        #     for cat in self.__rss_category:
-        #         category = etree.SubElement(channel, 'category')
-        #         category.text = cat['value']
-        #         if cat.get('domain'):
-        #             category.attrib['domain'] = cat['domain']
-        # if self.__rss_cloud:
-        #     cloud = etree.SubElement(channel, 'cloud')
-        #     cloud.attrib['domain'] = self.__rss_cloud.get('domain')
-        #     cloud.attrib['port'] = self.__rss_cloud.get('port')
-        #     cloud.attrib['path'] = self.__rss_cloud.get('path')
-        #     cloud.attrib['registerProcedure'] = self.__rss_cloud.get(
-        #             'registerProcedure')
-        #     cloud.attrib['protocol'] = self.__rss_cloud.get('protocol')
-        # if self.__rss_copyright:
-        #     copyright = etree.SubElement(channel, 'copyright')
-        #     copyright.text = self.__rss_copyright
-        # if self.__rss_docs:
-        #     docs = etree.SubElement(channel, 'docs')
-        #     docs.text = self.__rss_docs
-        # if self.__rss_generator:
-        #     generator = etree.SubElement(channel, 'generator')
-        #     generator.text = self.__rss_generator
-        # if self.__rss_image:
-        #     image = etree.SubElement(channel, 'image')
-        #     url = etree.SubElement(image, 'url')
-        #     url.text = self.__rss_image.get('url')
-        #     title = etree.SubElement(image, 'title')
-        #     title.text = self.__rss_image.get('title', self.__rss_title)
-        #     link = etree.SubElement(image, 'link')
-        #     link.text = self.__rss_image.get('link', self.__rss_link)
-        #     if self.__rss_image.get('width'):
-        #         width = etree.SubElement(image, 'width')
-        #         width.text = self.__rss_image.get('width')
-        #     if self.__rss_image.get('height'):
-        #         height = etree.SubElement(image, 'height')
-        #         height.text = self.__rss_image.get('height')
-        #     if self.__rss_image.get('description'):
-        #         description = etree.SubElement(image, 'description')
-        #         description.text = self.__rss_image.get('description')
-        # if self.__rss_language:
-        #     language = etree.SubElement(channel, 'language')
-        #     language.text = self.__rss_language
-        # if self.__rss_items:
-        #     items = etree.SubElement(channel, 'items')
-        #     seq = etree.SubElement(items,
-        #                            '{http://www.w3.org/1999/02/22-rdf-syntax-ns#}Seq')
-        #     for item in self.__rss_items:
-        #         li = etree.SubElement(seq,
-        #                               '{http://www.w3.org/1999/02/22-rdf-syntax-ns#}li')
-        #
-        #         li.attrib[
-        #             '{http://www.w3.org/1999/02/22-rdf-syntax-ns#}resource'] = item
-        #
-        # if self.__rss_lastBuildDate:
-        #     lastBuildDate = etree.SubElement(channel, 'lastBuildDate')
-        #
-        #     lastBuildDate.text = formatRFC2822(self.__rss_lastBuildDate)
-        # if self.__rss_managingEditor:
-        #     managingEditor = etree.SubElement(channel, 'managingEditor')
-        #     managingEditor.text = self.__rss_managingEditor
-        # if self.__rss_pubDate:
-        #     pubDate = etree.SubElement(channel, 'pubDate')
-        #     pubDate.text = formatRFC2822(self.__rss_pubDate)
-        # if self.__rss_rating:
-        #     rating = etree.SubElement(channel, 'rating')
-        #     rating.text = self.__rss_rating
-        # if self.__rss_skipHours:
-        #     skipHours = etree.SubElement(channel, 'skipHours')
-        #     for h in self.__rss_skipHours:
-        #         hour = etree.SubElement(skipHours, 'hour')
-        #         hour.text = str(h)
-        # if self.__rss_skipDays:
-        #     skipDays = etree.SubElement(channel, 'skipDays')
-        #     for d in self.__rss_skipDays:
-        #         day = etree.SubElement(skipDays, 'day')
-        #         day.text = d
-        # if self.__rss_textInput:
-        #     textInput = etree.SubElement(channel, 'textInput')
-        #     textInput.attrib['title'] = self.__rss_textInput.get('title')
-        #     textInput.attrib['description'] = \
-        #         self.__rss_textInput.get('description')
-        #     textInput.attrib['name'] = self.__rss_textInput.get('name')
-        #     textInput.attrib['link'] = self.__rss_textInput.get('link')
-        # if self.__rss_ttl:
-        #     ttl = etree.SubElement(channel, 'ttl')
-        #     ttl.text = str(self.__rss_ttl)
-        # if self.__rss_webMaster:
-        #     webMaster = etree.SubElement(channel, 'webMaster')
-        #     webMaster.text = self.__rss_webMaster
-        #
         if extensions:
             for ext in self.__extensions.values() or []:
                 if ext.get('jpcoar'):

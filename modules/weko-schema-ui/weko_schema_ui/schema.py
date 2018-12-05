@@ -27,7 +27,7 @@ from functools import partial
 
 import redis
 import xmlschema
-from flask import abort, current_app, request, url_for, flash
+from flask import abort, current_app, request, url_for
 from lxml import etree
 from lxml.builder import ElementMaker
 from simplekv.memory.redisstore import RedisStore
@@ -193,7 +193,7 @@ class SchemaConverter:
 
 
 class SchemaTree:
-# TODO
+
     def __init__(self, record=None, schema_name=None):
         """
 
