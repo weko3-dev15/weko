@@ -22,7 +22,7 @@
 
 from datetime import datetime
 
-from flask import current_app
+from flask import current_app, json
 from invenio_db import db
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.dialects import mysql, postgresql
@@ -173,9 +173,7 @@ class SearchManagement(db.Model):
         """Create data"""
         current_app.logger.debug(data)
         try:
-
             dataObj = SearchManagement()
-
             with db.session.begin_nested():
                 dataObj.default_dis_num = data.get('dlt_dis_num_selected')
                 dataObj.default_dis_sort_index = data.get('dlt_index_sort_selected')
@@ -194,13 +192,27 @@ class SearchManagement(db.Model):
     @classmethod
     def get(cls, **data):
         """Get setting"""
-        return cls.query.filter_by(id=id).one_or_none()
+        return cls.query.filter_by(id=1).one_or_none()
 
     @classmethod
-    def update(cls, data):
+    def update(cls, id, data):
         """Update setting"""
-
-        current_app.logger.debug(data)
+        try:
+            with db.session.begin_nested():
+                setting_data = cls.query.filter_by(id=id).one()
+                setting_data.default_dis_num = data.get('dlt_dis_num_selected')
+                setting_data.default_dis_sort_index = data.get('dlt_index_sort_selected')
+                setting_data.default_dis_sort_keyword = data.get('dlt_keyword_sort_selected')
+                setting_data.sort_setting = data.get('sort_options')
+                setting_data.search_conditions = data.get('detail_condition')
+                setting_data.search_setting_all = json.dumps(data)
+                db.session.merge(setting_data)
+            db.session.commit()
+        except BaseException as ex:
+            db.session.rollback()
+            current_app.logger.debug(ex)
+            raise
+        return cls
 
 
 

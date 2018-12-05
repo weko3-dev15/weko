@@ -22,6 +22,7 @@
 
 from . import config
 from .models import SearchManagement
+from flask import json
 
 
 def get_response_json(result_list, n_lst):
@@ -75,9 +76,10 @@ def get_search_setting():
     :return: Setting data by Json
     """
 
-    # res = SearchManagement.get()
-    #
-    # if res:
-    #     return res
-    # else:
-    return config.WEKO_SEARCH_MANAGEMENT_OPTIONS
+    res = SearchManagement.get()
+
+    if res:
+        db_obj= json.loads(res).search_setting_all
+        return db_obj
+    else:
+        return config.WEKO_SEARCH_MANAGEMENT_OPTIONS
