@@ -75,9 +75,9 @@ def get_search_setting():
     :return: Setting data by Json
     """
 
-    res = SearchManagement.get()
-
-    if res:
-        return res
-
+    # res = SearchManagement.get()
+    #
+    # if res:
+    #     return res
+    # else:
     return config.WEKO_SEARCH_MANAGEMENT_OPTIONS
