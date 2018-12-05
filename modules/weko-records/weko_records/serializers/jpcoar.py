@@ -72,7 +72,7 @@ class JpcoarSerializer(JSONSerializer):
         # data = dumps_etree(search_result['hits']['hits'][0], 'jpcoar')
 
         metadata = {'metadata': search_result['hits']['hits'][0]['_source']}
-        flash(metadata['metadata'])
+        flash(metadata)
 
         # Set title
         # index_meta = {}
