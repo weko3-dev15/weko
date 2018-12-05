@@ -80,7 +80,6 @@ def get_search_setting():
 
     if res:
         db_str= res.search_setting_all
-        current_app.logger.debug(db_str)
         db_obj= json.loads(db_str)
 
         return db_obj
