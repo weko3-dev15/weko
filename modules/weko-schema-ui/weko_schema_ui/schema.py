@@ -204,13 +204,10 @@ class SchemaTree:
             if record and record.get("metadata") else None
         self._schema_name = schema_name if schema_name else None
         if self._record:
-            flash('Have record')
             self._root_name, self._ns, self._schema_obj = \
                 self.get_mapping_data()
         self._v = "@value"
         self._atr = "@attributes"
-
-        flash(self._record)
 
     def get_mapping_data(self):
         """
