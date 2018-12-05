@@ -33,7 +33,7 @@ from .dc import DcWekoBaseExtension, DcWekoEntryExtension
 from weko_index_tree.api import Index
 
 from weko_deposit.api import WekoRecord
-from weko_schema_ui.serializers.WekoBibTexSerializer import WekoBibTexSerializer
+# from weko_schema_ui.serializers.WekoBibTexSerializer import WekoBibTexSerializer
 from weko_schema_ui.serializers.wekoxml import WekoXMLSerializer
 from weko_schema_ui.schema import SchemaTree
 from weko_schema_ui.utils import dumps_etree
