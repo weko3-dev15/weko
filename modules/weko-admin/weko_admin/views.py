@@ -185,13 +185,13 @@ def set_search():
     """Site license setting page."""
     current_app.logger.info('search setting page')
     result = json.dumps(get_search_setting())
-    current_app.logger.debug(result)
 
     if 'POST' in request.method:
         jfy = {}
         try:
             # update search setting
-            SearchManagement.update(request.get_json())
+            current_app.logger.debug(request.get_json())
+            # SearchManagement.update(request.get_json())
             jfy['status'] = 201
             jfy['message'] = 'Search setting was successfully updated.'
         except:
