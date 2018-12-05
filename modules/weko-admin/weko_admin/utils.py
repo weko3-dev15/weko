@@ -85,7 +85,7 @@ def get_search_setting():
             db_str.replace('False','false')
         if 'True' in db_str:
             db_str.replace('True', 'true')
-        
+        db_str = json.dumps(db_str)
         db_obj= json.loads(db_str)
 
         return db_obj
