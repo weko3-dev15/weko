@@ -78,7 +78,7 @@ def get_search_setting():
 
     res = SearchManagement.get()
 
-    current_app.logger.debug(res.get("search_setting_all"))
+    current_app.logger.debug(res.search_setting_all)
 
     # if res:
     #     db_obj= dict(res).get("search_setting_all")
