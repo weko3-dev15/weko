@@ -27,7 +27,7 @@ from functools import partial
 
 import redis
 import xmlschema
-from flask import abort, current_app, request, url_for
+from flask import abort, current_app, request, url_for, flash
 from lxml import etree
 from lxml.builder import ElementMaker
 from simplekv.memory.redisstore import RedisStore
@@ -193,7 +193,7 @@ class SchemaConverter:
 
 
 class SchemaTree:
-
+# TODO
     def __init__(self, record=None, schema_name=None):
         """
 
@@ -204,10 +204,13 @@ class SchemaTree:
             if record and record.get("metadata") else None
         self._schema_name = schema_name if schema_name else None
         if self._record:
+            flash('Have record')
             self._root_name, self._ns, self._schema_obj = \
                 self.get_mapping_data()
         self._v = "@value"
         self._atr = "@attributes"
+
+        flash(self._schema_obj is None)
 
     def get_mapping_data(self):
         """
