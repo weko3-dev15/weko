@@ -173,14 +173,17 @@ class SearchManagement(db.Model):
         """Create data"""
         current_app.logger.debug(data)
         try:
+
+            dataObj = SearchManagement()
+
             with db.session.begin_nested():
-                cls.default_dis_num = data.get('dlt_dis_num_selected')
-                cls.default_dis_sort_index = data.get('dlt_index_sort_selected')
-                cls.default_dis_sort_keyword = data.get('dlt_keyword_sort_selected')
-                cls.sort_setting = data.get('sort_options')
-                cls.search_conditions = data.get('detail_condition')
-                cls.search_setting_all= data
-                db.session.add(cls)
+                dataObj.default_dis_num = data.get('dlt_dis_num_selected')
+                dataObj.default_dis_sort_index = data.get('dlt_index_sort_selected')
+                dataObj.default_dis_sort_keyword = data.get('dlt_keyword_sort_selected')
+                dataObj.sort_setting = data.get('sort_options')
+                dataObj.search_conditions = data.get('detail_condition')
+                dataObj.search_setting_all= data
+                db.session.add(dataObj)
             db.session.commit()
         except BaseException as ex:
             db.session.rollback()
