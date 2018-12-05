@@ -184,9 +184,8 @@ def site_license():
 def set_search():
     """Site license setting page."""
     current_app.logger.info('search setting page')
-    # result = json.dumps(get_search_setting())
-    result = get_search_setting()
-    current_app.logger.debug(result)
+    result = json.dumps(get_search_setting())
+
     if 'POST' in request.method:
         jfy = {}
         try:
