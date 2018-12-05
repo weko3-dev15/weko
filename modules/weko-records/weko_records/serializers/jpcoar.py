@@ -69,7 +69,7 @@ class JpcoarSerializer(JSONSerializer):
         # serializer = WekoXMLSerializer()
         # data = serializer.serialize('2', record)
         # jpcoar_data = WekoBibTexSerializer.get_jpcoar_data('2', WekoRecord.get_record_by_pid('2'))
-        data = dumps_etree(record, 'jpcoar')
+        data = dumps_etree(search_result['hits']['hits'][0], 'jpcoar')
 
         return data
 
