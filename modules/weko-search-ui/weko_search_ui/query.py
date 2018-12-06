@@ -441,9 +441,11 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
         sort_obj=dict()
         if sort=='desc':
             sort_key = '-'+sort_key
-            sort_obj=dict(sort_key=dict(order='desc'))
+            # sort_obj=dict(sort_key=dict(order='desc'))
+            sort_obj[sort_key] =dict(order='desc')
         else:
-            sort_obj = dict(sort_key=dict(order='asc'))
+            # sort_obj = dict(sort_key=dict(order='asc'))
+            sort_obj[sort_key] = dict(order='asc')
         search._sort.append(sort_obj)
         urlkwargs.add('sort',sort_key)
 
