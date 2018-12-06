@@ -54,7 +54,7 @@ class SearchSetting(object):
         return sort_options, display_number
 
     @classmethod
-    def get_default_sort(cls, search_type):
+    def get_default_sort(search_type):
         """Get default sort """
         res = sm.get()
         sort_str=None
