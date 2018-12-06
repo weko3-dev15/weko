@@ -33,6 +33,7 @@ from werkzeug.datastructures import MultiDict
 
 from .permissions import search_permission
 from invenio_communities.models import Community
+from .api import SearchSetting
 
 
 def get_item_type_aggs(search_index):
@@ -434,7 +435,13 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
     for key, value in sortkwargs.items():
         urlkwargs.add(key, value)
 
+    # defalult sort
     if not sortkwargs:
+        sort_key, sort = SearchSetting.get_default_sort(current_app.config['WEKO_SEARCH_TYPE_KEYWORD'])
+
+        current_app.logger.debug(sort_key)
+        current_app.logger.debug(sort)
+
         urlkwargs.add('sort','itemType')
 
 

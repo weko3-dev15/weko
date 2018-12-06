@@ -69,4 +69,8 @@ class SearchSetting(object):
             else:
                 sort_str = current_app.config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('dlt_index_sort_selected')
 
-        return  sort_str
+        sort_key = sort_str[0:sort_str.rfind('_', 1)]
+
+        sort = sort_str[-1:sort_str.rfind('_', 1)]
+
+        return  sort_key, sort
