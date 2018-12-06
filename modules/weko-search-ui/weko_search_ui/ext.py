@@ -22,8 +22,7 @@
 
 from . import config
 from .views import blueprint
-from .rest import create_blueprint
-from .api import SearchSetting
+from .rest import create_blueprint, SearchSetting
 
 
 class WekoSearchUI(object):
