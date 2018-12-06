@@ -59,13 +59,13 @@ class SearchSetting(object):
         res = sm.get()
         sort_str=None
         if res :
-            if search_type ==current_app.config['WEKO_SEARCH_TYPE_KEYWORD']:
+            if search_type == current_app.config['WEKO_SEARCH_TYPE_KEYWORD']:
                 sort_str=res.default_dis_sort_keyword
             else:
                 sort_str = res.default_dis_sort_index
         else:
-            if search_type ==current_app.config['WEKO_SEARCH_TYPE_KEYWORD']:
-                sort_str=current_app.config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('dlt_keyword_sort_selected')
+            if search_type == current_app.config['WEKO_SEARCH_TYPE_KEYWORD']:
+                sort_str= current_app.config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('dlt_keyword_sort_selected')
             else:
                 sort_str = current_app.config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('dlt_index_sort_selected')
 

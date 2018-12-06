@@ -437,6 +437,7 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
 
     # defalult sort
     if not sortkwargs:
+        import weko_admin
         sort_key, sort = SearchSetting.get_default_sort(current_app.config['WEKO_SEARCH_TYPE_KEYWORD'])
 
         current_app.logger.debug(sort_key)
