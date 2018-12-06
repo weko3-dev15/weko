@@ -21,7 +21,7 @@
 """WEKO3 module docstring."""
 
 
-from flask import current_app, config
+from flask import current_app
 from invenio_db import db
 from weko_admin.models import SearchManagement as sm
 
@@ -36,13 +36,13 @@ class SearchSetting(object):
         if res:
             res = res.sort_setting.get('allow')
         else:
-            res = config.WEKO_SEARCH_MANAGEMENT_OPTIONS.get('sort_options').get('allow')
+            res = current_app.config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('sort_options').get('allow')
 
         for x in res:
             key_str = x.get('id')
             key = key_str[0:key_str.rfind('_',1)]
 
-            val = config.RECORDS_REST_SORT_OPTIONS.get(config.SEARCH_UI_SEARCH_INDEX)
+            val = current_app.config['RECORDS_REST_SORT_OPTIONS'].get(current_app.config.SEARCH_UI_SEARCH_INDEX)
             break
 
         return key
