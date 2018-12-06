@@ -161,6 +161,12 @@ RECORDS_REST_SORT_OPTIONS = dict(
                     fields=['custom_sort.sort'],
                     default_order='asc',
                     order=9,
+        ),
+        itemType=dict(
+                    title='ItemType',
+                    fields=['itemtype'],
+                    default_order='asc',
+                    order=10,
         )
         # add 20181121 end
     )
@@ -217,7 +223,13 @@ RECORDS_REST_SORT_OPTIONS_TEST = dict(
                     fields=['custom_sort.sort'],
                     default_order='asc',
                     order=9,
-        )
+        ),
+        itemType=dict(
+                    title='ItemType',
+                    fields=['itemtype'],
+                    default_order='asc',
+                    order=10,
+        ),
         # add 20181121 end
     )
 )
