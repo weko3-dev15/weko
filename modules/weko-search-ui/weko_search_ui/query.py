@@ -615,8 +615,7 @@ def item_path_search_factory(self, search, index_id=None):
     #     urlkwargs.add('sort', sort_key)
 
     urlkwargs.add('q', query_q)
-
-    urlkwargs.add('q', query_q)
+    current_app.logger.debug("AAAA")
     return search, urlkwargs
 
 
