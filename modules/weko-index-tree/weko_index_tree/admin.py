@@ -35,7 +35,7 @@ class IndexSettingView(BaseView):
             # Get record
             style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
             width = style.width if style else '3'
-            height = style.height if style else '300'
+            height = style.height if style else None
 
             # Post
             if request.method == 'POST':
@@ -43,7 +43,7 @@ class IndexSettingView(BaseView):
                 form = request.form.get('submit', None)
                 if form == 'index_form':
                     width = request.form.get('width', '3')
-                    height = request.form.get('height', '300')
+                    height = request.form.get('height', None)
 
                     if style:
                         IndexStyle.update(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'],

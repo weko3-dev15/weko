@@ -204,7 +204,7 @@ class IndexStyle(db.Model, Timestamp):
     width = db.Column(db.Text, nullable=False, default='')
     """Index area width."""
 
-    height = db.Column(db.Text, nullable=False, default='')
+    height = db.Column(db.Text, nullable=True, default='')
     """Index area height."""
 
     @classmethod
