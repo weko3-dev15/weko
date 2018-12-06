@@ -22,7 +22,7 @@
 
 from . import config
 from .views import blueprint
-from .rest import create_blueprint, SearchSetting
+from .rest import create_blueprint, get_results_sort_list
 
 
 class WekoSearchUI(object):
@@ -81,7 +81,7 @@ class WekoSearchUI(object):
                 'RECORDS_REST_SORT_OPTIONS_TEST'),
         )
 
-        SearchSetting.get_results_sort_list()
+        get_results_sort_list()
 
         for k in dir(config):
             if k.startswith('WEKO_SEARCH_UI_'):
