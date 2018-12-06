@@ -26,6 +26,7 @@ from xml.etree import ElementTree as ET
 from weko_index_tree.models import IndexStyle
 from weko_index_tree.api import Indexes
 from invenio_indexer.api import RecordIndexer
+from .api import SearchSetting
 
 blueprint = Blueprint(
     'weko_search_ui',
@@ -62,6 +63,10 @@ def search():
     width = style.width if style else '3'
 
     sort_options= current_app.config['RECORDS_REST_SORT_OPTIONS_TEST']
+
+    key = SearchSetting.get_results_sort_list()
+
+    current_app.logger.debug(key)
 
     if 'management' in getArgs:
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],

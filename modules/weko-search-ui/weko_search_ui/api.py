@@ -25,8 +25,10 @@ from flask import current_app, config
 from invenio_db import db
 from weko_admin.models import SearchManagement as sm
 
+
 class SearchSetting(object):
     """About search setting"""
+
     @classmethod
     def get_results_sort_list(self):
         res = sm.get()
