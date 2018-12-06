@@ -62,9 +62,12 @@ def search():
     style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
     width = style.width if style else '3'
 
-    sort_options = SearchSetting.get_results_sort_list()
+    # add at 1206 for search management
+    sort_options, display_number = SearchSetting.get_results_setting()
+    disply_setting =dict(page=1,size=display_number)
 
     current_app.logger.debug(str(sort_options))
+    current_app.logger.debug(str(disply_setting))
 
     if 'management' in getArgs:
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
@@ -72,8 +75,8 @@ def search():
                                width=width, **ctx)
     else:
         return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
-                               index_id=cur_index_id, community_id=community_id, sort_option=sort_options,
-                               width=width, **ctx)
+                               index_id=cur_index_id, community_id=community_id,
+                               sort_option=sort_options, disply_setting=disply_setting, width=width, **ctx)
 
 
 @blueprint_api.route('/opensearch/description.xml', methods=['GET'])

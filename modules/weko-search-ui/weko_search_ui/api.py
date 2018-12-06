@@ -30,14 +30,16 @@ class SearchSetting(object):
     """About search setting"""
 
     @classmethod
-    def get_results_sort_list(self):
+    def get_results_setting(self):
         res = sm.get()
         options =dict()
         sort_options=dict()
+        display_number = 20
         if res:
+            display_number = res.default_dis_num
             res = res.sort_setting.get('allow')
         else:
-            return current_app.config['RECORDS_REST_SORT_OPTIONS']
+            return current_app.config['RECORDS_REST_SORT_OPTIONS'], display_number
 
         for x in res:
             key_str = x.get('id')
@@ -48,7 +50,7 @@ class SearchSetting(object):
 
         sort_options[current_app.config['SEARCH_UI_SEARCH_INDEX']] = options
 
-        return sort_options
+        return sort_options, display_number
 
 
 
