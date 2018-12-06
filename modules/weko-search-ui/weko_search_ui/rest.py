@@ -258,9 +258,3 @@ class IndexSearchResource(ContentNegotiatedMethodView):
             item_links_factory=self.links_factory,
         )
 
-
-
-
-def get_results_sort_list(self):
-    return 1
-
