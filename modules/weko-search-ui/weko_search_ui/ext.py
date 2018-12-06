@@ -20,6 +20,7 @@
 
 """Flask extension for weko-search-ui."""
 
+from flask import current_app
 from . import config
 from .views import blueprint
 from .rest import create_blueprint
@@ -83,6 +84,8 @@ class WekoSearchUI(object):
         )
 
         app.logger.info(SearchSetting.get_results_sort_list())
+
+        current_app.logger.debug("AAAAAAA")
 
         for k in dir(config):
             if k.startswith('WEKO_SEARCH_UI_'):
