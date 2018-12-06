@@ -82,7 +82,7 @@ class WekoSearchUI(object):
                 'RECORDS_REST_SORT_OPTIONS_TEST'),
         )
 
-        SearchSetting.get_results_sort_list()
+        app.logger.debug(SearchSetting.get_results_sort_list())
 
         for k in dir(config):
             if k.startswith('WEKO_SEARCH_UI_'):
