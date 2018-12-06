@@ -37,7 +37,7 @@ class SearchSetting(object):
         if res:
             res = res.sort_setting.get('allow')
         else:
-            res = current_app.config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('sort_options').get('allow')
+            res = current_app.config.WEKO_SEARCH_MANAGEMENT_OPTIONS.get('sort_options').get('allow')
 
         for x in res:
             key_str = x.get('id')
