@@ -439,12 +439,10 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
     if not sortkwargs:
         import weko_admin
         sort_key, sort = SearchSetting.get_default_sort(current_app.config['WEKO_SEARCH_TYPE_KEYWORD'])
+        if sort.cmp('desc'):
+            sort_key = '-'.join(sort_key)
 
-        current_app.logger.debug(sort_key)
-        current_app.logger.debug(sort)
-
-        urlkwargs.add('sort','itemType')
-
+        urlkwargs.add('sort',sort_key)
 
     urlkwargs.add('q', query_q)
 
@@ -566,10 +564,8 @@ def item_path_search_factory(self, search, index_id=None):
 
     from invenio_records_rest.sorter import default_sorter_factory
     search_index = search._index[0]
-
     search, sortkwargs = default_sorter_factory(search, search_index)
 
-    current_app.logger.debug(sortkwargs.items())
     for key, value in sortkwargs.items():
         # set custom sort option
         if value == 'custom_sort':
@@ -608,6 +604,17 @@ def item_path_search_factory(self, search, index_id=None):
             search._sort.append(default_sort)
         # set selectbox
         urlkwargs.add(key, value)
+        # defalult sort
+    # default sort
+    if not sortkwargs:
+        import weko_admin
+        sort_key, sort = SearchSetting.get_default_sort(current_app.config['WEKO_SEARCH_TYPE_KEYWORD'])
+        if sort.cmp('desc'):
+            sort_key = '-'.join(sort_key)
+
+        urlkwargs.add('sort', sort_key)
+
+    urlkwargs.add('q', query_q)
 
     urlkwargs.add('q', query_q)
     return search, urlkwargs
