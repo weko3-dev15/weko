@@ -45,14 +45,23 @@
 </div>
 <script>
   $(document).ready(function() {
-    let urlArr = window.location.href.split('/');
-    let hostUrl = urlArr[0] + "//" + urlArr[2];
+    adminHeight = $('#index-height').text();
+    if(adminHeight == null || adminHeight == '') return;
+    $('.index-body').css('height',adminHeight);
 
-    let search_url = window.location.href.indexOf(hostUrl+"/search?");
-    let detail_url = window.location.href.indexOf(hostUrl+"/records/");
 
-    alert($('#index-height').text() == null);
-    alert($('#index-height').text() == '');
+
+    <!--let urlArr = window.location.href.split('/');-->
+    <!--let hostUrl = urlArr[0] + "//" + urlArr[2];-->
+
+    <!--let search_url = window.location.href.indexOf(hostUrl+"/search?");-->
+    <!--let detail_url = window.location.href.indexOf(hostUrl+"/records/");-->
+
+
+
+
+    <!--alert($('#index-height').text() == null);-->
+    <!--alert($('#index-height').text() == '');-->
     <!--adminHeight = parseInt($('#index-height').text(), 10);-->
     <!--if(search_url == -1 && detail_url == -1){-->
       <!--$('.index-body').css('height',adminHeight.toString());-->
