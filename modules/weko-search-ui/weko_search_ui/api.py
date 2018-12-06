@@ -74,3 +74,8 @@ class SearchSetting(object):
         sort = sort_str[sort_str.rfind('_', 1)+1:]
 
         return  sort_key, sort
+
+    @classmethod
+    def get_sort_key(cls, key_str):
+
+        return current_app.config['RECORDS_REST_SORT_OPTIONS'].get(current_app.config['SEARCH_UI_SEARCH_INDEX']).get(key_str).get('fields')[0]

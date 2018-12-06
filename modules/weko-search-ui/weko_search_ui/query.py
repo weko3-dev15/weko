@@ -439,8 +439,11 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
     if not sortkwargs:
         sort_key, sort = SearchSetting.get_default_sort(current_app.config['WEKO_SEARCH_TYPE_KEYWORD'])
         sort_obj=dict()
+        key=None
         if sort=='desc':
-            sort_obj[sort_key] = dict(order='desc')
+            key = SearchSetting.get_sort_key(sort_key)
+            current_app.logger.debug(key)
+            sort_obj[key] = dict(order='desc')
             sort_key = '-'+sort_key
         else:
             sort_obj[sort_key] = dict(order='asc')
