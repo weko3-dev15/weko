@@ -261,7 +261,7 @@ class IndexSearchResource(ContentNegotiatedMethodView):
 
 
 
-def get_results_sort_list(self):
+def get_results_sort_list():
     # res = sm.get()
     # options =dict()
     # if res:
