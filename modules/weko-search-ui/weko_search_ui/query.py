@@ -608,7 +608,7 @@ def item_path_search_factory(self, search, index_id=None):
     # default sort
     if not sortkwargs:
         import weko_admin
-        sort_key, sort = SearchSetting.get_default_sort(current_app.config['WEKO_SEARCH_TYPE_KEYWORD'])
+        sort_key, sort = SearchSetting.get_default_sort(current_app.config['WEKO_SEARCH_TYPE_INDEX'])
         if sort.cmp('desc'):
             sort_key = '-'.join(sort_key)
 
