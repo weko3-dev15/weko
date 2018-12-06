@@ -20,12 +20,11 @@
 
 """Flask extension for weko-search-ui."""
 
-from flask import current_app
 from . import config
 from .views import blueprint
 from .rest import create_blueprint
 from .api import SearchSetting
-
+from flask_sqlalchemy import SQLAlchemy
 
 class WekoSearchUI(object):
     """weko-search-ui extension."""
@@ -35,8 +34,11 @@ class WekoSearchUI(object):
 
         :param app: The Flask application. (Default: ``None``)
         """
+        db = SQLAlchemy()
         if app:
             self.init_app(app)
+            db.init_app(app)
+
 
     def init_app(self, app):
         """Flask application initialization.
