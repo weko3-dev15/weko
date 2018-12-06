@@ -37,8 +37,8 @@
         <h3 class="panel-title">{{_('Index Tree')}}</h3>
     </div>
     <div id="index-height" name="index-height" hidden>{{ height }}</div>
-    {% set index_style = 'overflow: auto; ' + 'min-height:' + height + 'px;' %}
-    <div class="panel-body index-body" style="{{index_style}}">
+    <!--{% set index_style = 'overflow: auto; ' + 'min-height:' + height + 'px;' %}-->
+    <div class="panel-body index-body" style="overflow: auto;">
       <app-tree-items></app-tree-items>
     </div>
   </div>
