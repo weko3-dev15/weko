@@ -71,6 +71,6 @@ class SearchSetting(object):
 
         sort_key = sort_str[0:sort_str.rfind('_', 1)]
 
-        sort = sort_str[-1:sort_str.rfind('_', 1)]
+        sort = sort_str[sort_str.rfind('_', 1):-1]
 
         return  sort_key, sort
