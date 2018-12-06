@@ -437,7 +437,6 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
 
     # defalult sort
     if not sortkwargs:
-        import weko_admin
         sort_key, sort = SearchSetting.get_default_sort(current_app.config['WEKO_SEARCH_TYPE_KEYWORD'])
         if sort=='desc':
             sort_key = '-'+sort_key
@@ -605,17 +604,17 @@ def item_path_search_factory(self, search, index_id=None):
         # set selectbox
         urlkwargs.add(key, value)
         # defalult sort
-    # # default sort
-    # if not sortkwargs:
-    #     import weko_admin
-    #     sort_key, sort = SearchSetting.get_default_sort(current_app.config['WEKO_SEARCH_TYPE_INDEX'])
-    #     if sort == 'desc':
-    #         sort_key = '-'+ sort_key
-    #
-    #     urlkwargs.add('sort', sort_key)
+    # default sort
+    if not sortkwargs:
+        import weko_admin
+        sort_key, sort = SearchSetting.get_default_sort(current_app.config['WEKO_SEARCH_TYPE_INDEX'])
+        if sort == 'desc':
+            sort_key = '-'+ sort_key
+
+        urlkwargs.add('sort', sort_key)
 
     urlkwargs.add('q', query_q)
-    current_app.logger.debug("AAAA")
+
     return search, urlkwargs
 
 
