@@ -94,7 +94,7 @@
               </select>
             </div>
             {%- block search_sort %}
-              {%- set sort_options = config.get('RECORDS_REST_SORT_OPTIONS', {}).get(config.SEARCH_UI_SEARCH_INDEX) %}
+              {%- set sort_options = sort_option.get(config.SEARCH_UI_SEARCH_INDEX) %}
               {%- if sort_options %}
               <div class="form-group">
                 {%- block search_sort_select scoped %}
