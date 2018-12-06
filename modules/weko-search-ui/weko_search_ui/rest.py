@@ -275,4 +275,4 @@ def get_results_sort_list():
     #     current_app.logger.debug(key)
     #     val = config.RECORDS_REST_SORT_OPTIONS.get(config.SEARCH_UI_SEARCH_INDEX)
 
-    current_app.logger.debug("aaaa")
+    # current_app.logger.debug("aaaa")
