@@ -76,6 +76,13 @@
       if(height < adminHeight){
         $('.index-body').css('height',adminHeight.toString());
       }
+    }else if(detail_url != -1){
+      indexHeight = parseInt($('#detail-index').css('height'), 10);
+      itemHeight = parseInt($('#detail-item').css('height'), 10);
+      if(indexHeight > (itemHeight + 20)){
+        alert('Index Bigger!!!!');
+      }
+
     }
   })
 </script>
