@@ -42,7 +42,7 @@ class SearchSetting(object):
         #     current_app.logger.debug(key)
         #     val = config.RECORDS_REST_SORT_OPTIONS.get(config.SEARCH_UI_SEARCH_INDEX)
 
-        return 1
+        return 11111
 
 
 
