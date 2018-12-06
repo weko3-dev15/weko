@@ -41,7 +41,6 @@ class SearchSetting(object):
         #     key = key_str[0:key_str.rfind('_',1)]
         #     current_app.logger.debug(key)
         #     val = config.RECORDS_REST_SORT_OPTIONS.get(config.SEARCH_UI_SEARCH_INDEX)
-        app.lo
         return 11111
 
 
