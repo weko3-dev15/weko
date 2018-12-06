@@ -36,8 +36,42 @@
     <div class="panel-heading clearfix">
         <h3 class="panel-title">{{_('Index Tree')}}</h3>
     </div>
+    <div id="index-height" name="index-height" hidden>{{ height }}</div>
     <div class="panel-body index-body" style="overflow: auto;">
       <app-tree-items></app-tree-items>
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+    let urlArr = window.location.href.split('/');
+    let hostUrl = urlArr[0] + "//" + urlArr[2];
+
+    let search_url = window.location.href.indexOf(hostUrl+"/search?");
+    let detail_url = window.location.href.indexOf(hostUrl+"/records/");
+
+    height = parseInt($('#index-height').text(), 10);
+
+    <!--&lt;!&ndash;Search page&ndash;&gt;-->
+    <!--if(search_url != -1){-->
+      <!--let resultAreaHeight = $('#search-result-body').height();-->
+      <!--if(resultAreaHeight > height){-->
+        <!--height = resultAreaHeight;-->
+      <!--}-->
+
+    <!--&lt;!&ndash;Detail page&ndash;&gt;-->
+    <!--}else if(detail_url != -1){-->
+      <!--let detailBodyHeight = $('#detail-body').height();-->
+      <!--let detailPanelHeaderHeight = $('#detail-body-index-header').innerHeight();-->
+      <!--let detailAreaHeight = detailBodyHeight - detailPanelHeaderHeight;-->
+
+      <!--if(detailAreaHeight > height){-->
+        <!--height = detailAreaHeight;-->
+      <!--}-->
+    <!--}-->
+
+    if(search_url == -1 && detail_url == -1){
+      $('.index-body').css('height',height.toString());
+    }
+  })
+</script>
