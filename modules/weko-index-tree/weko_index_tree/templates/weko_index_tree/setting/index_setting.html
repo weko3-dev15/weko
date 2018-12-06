@@ -61,7 +61,7 @@
   $(document).ready(function() {
     $('#index_form_submit').on('click', function(){
       let height = $('#height').val();
-      if(height != undefined && height != null && (isNaN(height) || height <= 0)) {
+      if(height != null && height != '' && (isNaN(height) || height <= 0)) {
         alert("Invalid height of indextree panel.");
         return false;
       }
