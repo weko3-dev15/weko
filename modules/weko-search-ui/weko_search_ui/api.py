@@ -29,19 +29,21 @@ class SearchSetting(object):
     """About search setting"""
     @classmethod
     def get_results_sort_list(self):
-        # res = sm.get()
-        # options =dict()
-        # if res:
-        #     res = res.sort_setting.allow
-        # else:
-        #     res = config.WEKO_SEARCH_MANAGEMENT_OPTIONS.get('sort_options').get('allow')
-        #
-        # for x in res:
-        #     key_str = x.get('id')
-        #     key = key_str[0:key_str.rfind('_',1)]
-        #     current_app.logger.debug(key)
-        #     val = config.RECORDS_REST_SORT_OPTIONS.get(config.SEARCH_UI_SEARCH_INDEX)
-        return 11111
+        res = sm.get()
+        options =dict()
+        if res:
+            res = res.sort_setting.allow
+        else:
+            res = config.WEKO_SEARCH_MANAGEMENT_OPTIONS.get('sort_options').get('allow')
+
+        for x in res:
+            key_str = x.get('id')
+            key = key_str[0:key_str.rfind('_',1)]
+
+            val = config.RECORDS_REST_SORT_OPTIONS.get(config.SEARCH_UI_SEARCH_INDEX)
+            break
+
+        return key
 
 
 

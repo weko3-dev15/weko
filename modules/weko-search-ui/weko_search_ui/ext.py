@@ -85,8 +85,6 @@ class WekoSearchUI(object):
 
         app.logger.info(SearchSetting.get_results_sort_list())
 
-        current_app.logger.debug("AAAAAAA")
-
         for k in dir(config):
             if k.startswith('WEKO_SEARCH_UI_'):
                 app.config.setdefault(k, getattr(config, k))
