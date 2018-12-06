@@ -21,9 +21,8 @@
 """WEKO3 module docstring."""
 
 
-from flask import current_app
+from flask import current_app, config
 from invenio_db import db
-from weko_admin import config
 from weko_admin.models import SearchManagement as sm
 
 
