@@ -34,7 +34,7 @@ class SearchSetting(object):
         res = sm.get()
         options =dict()
         if res:
-            res = res.sort_setting.allow
+            res = res.get('sort_setting').get('allow')
         else:
             res = config.WEKO_SEARCH_MANAGEMENT_OPTIONS.get('sort_options').get('allow')
 
