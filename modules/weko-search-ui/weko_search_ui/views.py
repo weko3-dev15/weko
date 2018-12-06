@@ -64,9 +64,9 @@ def search():
 
     sort_options= current_app.config['RECORDS_REST_SORT_OPTIONS_TEST']
 
-    key = SearchSetting.get_results_sort_list()
+    options = SearchSetting.get_results_sort_list()
 
-    current_app.logger.debug(key)
+    current_app.logger.debug(str(options))
 
     if 'management' in getArgs:
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],

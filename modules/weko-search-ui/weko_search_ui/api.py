@@ -41,11 +41,13 @@ class SearchSetting(object):
         for x in res:
             key_str = x.get('id')
             key = key_str[0:key_str.rfind('_',1)]
+            val = current_app.config['RECORDS_REST_SORT_OPTIONS'].get(current_app.config['SEARCH_UI_SEARCH_INDEX']).get(key)
+            if not key in options.keys():
+                options[key]= val
 
-            val = current_app.config['RECORDS_REST_SORT_OPTIONS'].get(current_app.config['SEARCH_UI_SEARCH_INDEX'])
-            break
+        options[current_app.config['SEARCH_UI_SEARCH_INDEX']] = options
 
-        return key
+        return options
 
 
 
