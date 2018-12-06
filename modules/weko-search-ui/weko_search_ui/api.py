@@ -42,7 +42,7 @@ class SearchSetting(object):
             key_str = x.get('id')
             key = key_str[0:key_str.rfind('_',1)]
 
-            val = current_app.config['RECORDS_REST_SORT_OPTIONS'].get(current_app.config.SEARCH_UI_SEARCH_INDEX)
+            val = current_app.config['RECORDS_REST_SORT_OPTIONS'].get(current_app.config['SEARCH_UI_SEARCH_INDEX'])
             break
 
         return key
