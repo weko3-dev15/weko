@@ -51,10 +51,11 @@
     let search_url = window.location.href.indexOf(hostUrl+"/search?");
     let detail_url = window.location.href.indexOf(hostUrl+"/records/");
 
-    adminHeight = parseInt($('#index-height').text(), 10);
-    if(search_url == -1 && detail_url == -1){
-      $('.index-body').css('height',adminHeight.toString());
-    }
+    alert($('#index-height').text());
+    <!--adminHeight = parseInt($('#index-height').text(), 10);-->
+    <!--if(search_url == -1 && detail_url == -1){-->
+      <!--$('.index-body').css('height',adminHeight.toString());-->
+    <!--}-->
 
 
     <!--&lt;!&ndash;Search page&ndash;&gt;-->

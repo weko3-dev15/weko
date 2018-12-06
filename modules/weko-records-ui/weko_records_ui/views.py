@@ -262,7 +262,7 @@ def default_view_method(pid, record, template=None, **kwargs):
     # Get index style
     style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
     width = style.width if style else '3'
-    height = style.height if style else '300'
+    height = style.height if style else None
 
     return render_template(
         template,
