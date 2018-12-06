@@ -50,7 +50,7 @@
     let search_url = window.location.href.indexOf(hostUrl+"/search?");
     let detail_url = window.location.href.indexOf(hostUrl+"/records/");
 
-    height = parseInt($('#index-height').text(), 10);
+    adminHeight = parseInt($('#index-height').text(), 10);
 
     <!--&lt;!&ndash;Search page&ndash;&gt;-->
     <!--if(search_url != -1){-->
@@ -71,7 +71,10 @@
     <!--}-->
 
     if(search_url == -1 && detail_url == -1){
-      $('.index-body').css('height',height.toString());
+      height = $('.index-body').css('height')
+      if(height < adminHeight){
+        $('.index-body').css('height',adminHeight.toString());
+      }
     }
   })
 </script>
