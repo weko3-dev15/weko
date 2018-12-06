@@ -51,6 +51,7 @@
     let detail_url = window.location.href.indexOf(hostUrl+"/records/");
 
     adminHeight = parseInt($('#index-height').text(), 10);
+    $('.index-body').css('min-height',adminHeight.toString());
 
     <!--&lt;!&ndash;Search page&ndash;&gt;-->
     <!--if(search_url != -1){-->
@@ -70,19 +71,19 @@
       <!--}-->
     <!--}-->
 
-    <!--Top page-->
-    if(search_url == -1 && detail_url == -1){
-      height = parseInt($('.index-body').css('height'), 10);
-      if(height < adminHeight){
-        $('.index-body').css('height',adminHeight.toString());
-      }
-    }else if(detail_url != -1){
-      indexHeight = parseInt($('#detail-index').css('height'), 10);
-      itemHeight = parseInt($('#detail-item').css('height'), 10);
-      if(indexHeight > (itemHeight + 20)){
-        alert('Index Bigger!!!!');
-      }
+    <!--&lt;!&ndash;Top page&ndash;&gt;-->
+    <!--if(search_url == -1 && detail_url == -1){-->
+      <!--height = parseInt($('.index-body').css('height'), 10);-->
+      <!--if(height < adminHeight){-->
+        <!--$('.index-body').css('height',adminHeight.toString());-->
+      <!--}-->
+    <!--}else if(detail_url != -1){-->
+      <!--indexHeight = parseInt($('#detail-index').css('height'), 10);-->
+      <!--itemHeight = parseInt($('#detail-item').css('height'), 10);-->
+      <!--if(indexHeight > (itemHeight + 20)){-->
+        <!--alert('Index Bigger!!!!');-->
+      <!--}-->
+    <!--}-->
 
-    }
   })
 </script>
