@@ -64,7 +64,7 @@ def search():
 
     # add at 1206 for search management
     sort_options, display_number = SearchSetting.get_results_setting()
-    disply_setting =dict(page=1,size=display_number)
+    disply_setting =dict(size=display_number)
 
     current_app.logger.debug(str(sort_options))
     current_app.logger.debug(str(disply_setting))
