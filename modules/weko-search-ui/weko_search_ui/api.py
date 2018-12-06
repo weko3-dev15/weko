@@ -24,6 +24,7 @@
 from flask import current_app
 from invenio_db import db
 from weko_admin.models import SearchManagement as sm
+from weko_index_tree.api import Indexes
 
 
 class SearchSetting(object):
@@ -79,3 +80,35 @@ class SearchSetting(object):
     def get_sort_key(cls, key_str):
 
         return current_app.config['RECORDS_REST_SORT_OPTIONS'].get(current_app.config['SEARCH_UI_SEARCH_INDEX']).get(key_str).get('fields')[0]
+
+    @classmethod
+    def get_custom_sort(cls, index_id, sort_type):
+        if sort_type =="asc":
+            factor_obj = Indexes.get_item_sort(index_id)
+            script_str = {
+                "_script": {
+                    "script": "factor.get(doc[\"control_number\"].value)&&factor.get(doc[\"control_number\"].value) !=0 ? factor.get(doc[\"control_number\"].value):Integer.MAX_VALUE",
+                    "type": "number",
+                    "params": {
+                        "factor": factor_obj
+                    },
+                    "order": "asc"
+                }
+            }
+            default_sort = {'_score': {'order': 'desc'}}
+        else:
+            factor_obj = Indexes.get_item_sort(index_id)
+            script_str = {
+                "_script": {
+                    "script": "factor.get(doc[\"control_number\"].value)&&factor.get(doc[\"control_number\"].value) !=0 ? factor.get(doc[\"control_number\"].value):0",
+                    "type": "number",
+                    "params": {
+                        "factor": factor_obj
+                    },
+                    "order": "desc"
+                }
+            }
+            default_sort = {'_score': {'order': 'asc'}}
+
+        return script_str, default_sort
+
