@@ -54,8 +54,8 @@ WEKO_SEARCH_MANAGEMENT_OPTIONS = {
     ],
     'dlt_dis_num_selected': '20',
     'dlt_index_sort_options':[
-        {'id': 'title_asc', 'contents': 'Title_Asc'},
-        {'id': 'title_desc', 'contents': 'Title_Desc'},
+        {'id': 'wtl_asc', 'contents': 'Title_Asc'},
+        {'id': 'wtl_desc', 'contents': 'Title_Desc'},
         {'id': 'creator_asc', 'contents': 'Creator_Asc'},
         {'id': 'creator_desc', 'contents': 'Creator_Desc'},
         {'id': 'itemType_asc', 'contents': 'ItemType_Asc'},
@@ -73,8 +73,8 @@ WEKO_SEARCH_MANAGEMENT_OPTIONS = {
     ],
     'dlt_index_sort_selected': 'controlnumber_asc',
     'dlt_keyword_sort_options':[
-        {'id': 'title_asc', 'contents': 'Title_Asc'},
-        {'id': 'title_desc', 'contents': 'Title_Desc'},
+        {'id': 'wtl_asc', 'contents': 'Title_Asc'},
+        {'id': 'wtl_desc', 'contents': 'Title_Desc'},
         {'id': 'creator_asc', 'contents': 'Creator_Asc'},
         {'id': 'creator_desc', 'contents': 'Creator_Desc'},
         {'id': 'itemType_asc', 'contents': 'ItemType_Asc'},
@@ -94,8 +94,8 @@ WEKO_SEARCH_MANAGEMENT_OPTIONS = {
     'sort_options':{
         'deny':[],
         'allow':[
-            {'id': 'title_asc', 'contents': 'Title_Asc'},
-            {'id': 'title_desc', 'contents': 'Title_Desc'},
+            {'id': 'wtl_asc', 'contents': 'Title_Asc'},
+            {'id': 'wtl_desc', 'contents': 'Title_Desc'},
             {'id': 'creator_asc', 'contents': 'Creator_Asc'},
             {'id': 'creator_desc', 'contents': 'Creator_Desc'},
             {'id': 'itemType_asc', 'contents': 'ItemType_Asc'},

@@ -33,6 +33,7 @@ class SearchSetting(object):
     def get_results_sort_list(self):
         res = sm.get()
         options =dict()
+        sort_options=dict()
         if res:
             res = res.sort_setting.get('allow')
         else:
@@ -45,9 +46,9 @@ class SearchSetting(object):
             if not key in options.keys():
                 options[key]= val
 
-        options[current_app.config['SEARCH_UI_SEARCH_INDEX']] = options
+        sort_options[current_app.config['SEARCH_UI_SEARCH_INDEX']] = options
 
-        return options
+        return sort_options
 
 
 
