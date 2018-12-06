@@ -555,6 +555,7 @@ def item_path_search_factory(self, search, index_id=None):
 
     search, sortkwargs = default_sorter_factory(search, search_index)
 
+    current_app.logger.debug(sortkwargs.items())
     for key, value in sortkwargs.items():
         # set custom sort option
         if value == 'custom_sort':
