@@ -431,9 +431,9 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
     search, sortkwargs = default_sorter_factory(search, search_index)
     for key, value in sortkwargs.items():
         urlkwargs.add(key, value)
-
+        current_app.logger.debug(key)
     urlkwargs.add('q', query_q)
-    current_app.logger.debug("bbbb")
+
     return search, urlkwargs
 
 

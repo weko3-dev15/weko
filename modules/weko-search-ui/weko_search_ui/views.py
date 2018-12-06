@@ -66,9 +66,6 @@ def search():
     sort_options, display_number = SearchSetting.get_results_setting()
     disply_setting =dict(size=display_number)
 
-    current_app.logger.debug(str(sort_options))
-    current_app.logger.debug(str(disply_setting))
-
     if 'management' in getArgs:
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,

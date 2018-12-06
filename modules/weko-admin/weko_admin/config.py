@@ -143,3 +143,9 @@ WEKO_SEARCH_MANAGEMENT_OPTIONS = {
         {'id':'rights','contents':'Rights','useable_status':False,'mapping':['CC','BY','CC','BY-SA','CC','BY-ND','CC','BY-NC','CC','BY-NC-SA','ANY'],'default_display':False}
     ]
 }
+
+WEKO_SEARCH_TYPE_KEYWORD = "keyword"
+
+WEKO_SEARCH_TYPE_INDEX = "index"
+
+

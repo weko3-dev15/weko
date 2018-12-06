@@ -30,7 +30,8 @@ class SearchSetting(object):
     """About search setting"""
 
     @classmethod
-    def get_results_setting(self):
+    def get_results_setting(cls):
+        """Get result setting"""
         res = sm.get()
         options =dict()
         sort_options=dict()
@@ -52,5 +53,20 @@ class SearchSetting(object):
 
         return sort_options, display_number
 
+    @classmethod
+    def get_default_sort(cls, search_type):
+        """Get default sort """
+        res = sm.get()
+        sort_str=None
+        if res :
+            if search_type ==current_app.config['WEKO_SEARCH_TYPE_KEYWORD']:
+                sort_str=res.default_dis_sort_keyword
+            else:
+                sort_str = res.default_dis_sort_index
+        else:
+            if search_type ==current_app.config['WEKO_SEARCH_TYPE_KEYWORD']:
+                sort_str=current_app.config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('dlt_keyword_sort_selected')
+            else:
+                sort_str = current_app.config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('dlt_index_sort_selected')
 
-
+        return  sort_str
