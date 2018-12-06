@@ -37,7 +37,7 @@
         <h3 class="panel-title">{{_('Index Tree')}}</h3>
     </div>
     <div id="index-height" name="index-height" hidden>{{ height }}</div>
-    <div class="panel-body index-body" style="overflow: auto; min-height: 500px;">
+    <div class="panel-body index-body" style="overflow: auto;">
       <app-tree-items></app-tree-items>
     </div>
   </div>
@@ -51,7 +51,7 @@
     let detail_url = window.location.href.indexOf(hostUrl+"/records/");
 
     adminHeight = parseInt($('#index-height').text(), 10);
-    $('.index-body').css('height',adminHeight.toString());
+    $('.index-body').css('min-height',adminHeight.toString());
 
     <!--&lt;!&ndash;Search page&ndash;&gt;-->
     <!--if(search_url != -1){-->
