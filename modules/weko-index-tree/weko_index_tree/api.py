@@ -22,7 +22,7 @@
 
 from datetime import datetime
 from copy import deepcopy
-from flask import current_app, json, jsonify
+from flask import current_app, json, flash
 from flask_login import current_user
 from invenio_db import db
 from invenio_accounts.models import Role
@@ -421,6 +421,8 @@ class Indexes(object):
         from weko_deposit.api import WekoRecord
         record = WekoRecord.get_record_by_pid(pid)
         tree = cls.get_index_tree(root_node_id)
+        # TODO
+        flash(tree)
         if record.get('_oai'):
             reset_tree(tree=tree, path=record.get('path'))
         else:
