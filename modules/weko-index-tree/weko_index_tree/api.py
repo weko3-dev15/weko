@@ -418,6 +418,7 @@ class Indexes(object):
     @classmethod
     def get_contribute_tree(cls, pid,root_node_id=0):
         """"""
+        flash('get_contribute_tree!!!!')
         from weko_deposit.api import WekoRecord
         record = WekoRecord.get_record_by_pid(pid)
         tree = cls.get_index_tree(root_node_id)
@@ -426,6 +427,7 @@ class Indexes(object):
         else:
             reset_tree(tree=tree, path=[])
 
+        flash(tree)
         return tree
 
     @classmethod
