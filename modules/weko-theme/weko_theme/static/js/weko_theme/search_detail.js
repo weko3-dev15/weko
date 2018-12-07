@@ -4,6 +4,7 @@
     angular.module('searchDetail.controllers', []);
     function searchDetailCtrl($scope, $rootScope,$http,$location){
       $scope.testText ="angularjs is successfully runing !!!!";
+      alert("AAAAAAAAAAA")
     }
     // Inject depedencies
     searchDetailCtrl.$inject = [
