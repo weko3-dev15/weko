@@ -20,11 +20,9 @@
 
 """WEKO Search Serializer."""
 
-from flask import current_app, json, request, url_for
-
 import copy
 
-def get_mapping(self, item_type_mapping, mapping_type):
+def get_mapping(item_type_mapping, mapping_type):
     """
     Format itemtype mapping data. [Key:Schema, Value:ItemId]
     :param item_type_mapping:
@@ -54,7 +52,7 @@ def get_mapping(self, item_type_mapping, mapping_type):
 
     return schema
 
-def get_metadata_from_map(self, item_data, item_id):
+def get_metadata_from_map(item_data, item_id):
     """
     Get item metadata from search result.
     :param item_data:
