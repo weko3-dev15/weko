@@ -3,23 +3,6 @@
   <div class="panel-body">
     <span>[[testText]]</span>
     <div class="row">
-      <!--<form class="form-inline">-->
-        <!--<div class="form-group col-sm-1">-->
-          <!--<label>{{_('Title')}}</label>-->
-        <!--</div>-->
-        <!--<div class="col-sm-11 form-group">-->
-          <!--<label for="title1">-->
-            <!--<select class="form-control">-->
-              <!--<option>1</option>-->
-              <!--<option>2</option>-->
-              <!--<option>3</option>-->
-              <!--<option>4</option>-->
-              <!--<option>5</option>-->
-            <!--</select>-->
-          <!--</label>-->
-          <!--<input type="text" class="form-control" id="title1" name="title" placeholder="">-->
-        <!--</div>-->
-      <!--</form>-->
       <div class="col-sm-1">AND</div>
       <div class="col-sm-11">
         <form class="form-horizontal">
@@ -38,6 +21,24 @@
             </div>
           </div>
         </form>
+        <div class="row">
+          <div class="col-sm-3">
+            <input type="checkbox" id="Accepted" name="contents_property" placeholder="" value="Accepted">{{_('Accepted')}}
+            <!--分類end-->
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="Available" name="contents_property" placeholder="" value="Available">{{_('Available')}}
+            <!--分類end-->
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="Collected" name="contents_property" placeholder="" value="Collected">{{_('Collected')}}
+            <!--分類end-->
+          </div>
+          <div class="col-sm-3">
+            <input type="checkbox" id="Copyrighted" name="contents_property" placeholder="" value="Copyrighted">{{_('Copyrighted')}}
+            <!--分類end-->
+          </div>
+        </div>
     </div>
     </div>
 
