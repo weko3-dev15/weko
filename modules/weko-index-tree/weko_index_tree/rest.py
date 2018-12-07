@@ -261,7 +261,6 @@ class IndexTreeActionResource(ContentNegotiatedMethodView):
     @need_record_permission('read_permission_factory')
     def get(self, **kwargs):
         """Get tree json."""
-        flash('Rest!!!')
         try:
             action = request.values.get('action')
             comm_id = request.values.get('community')
@@ -274,6 +273,7 @@ class IndexTreeActionResource(ContentNegotiatedMethodView):
             pid = kwargs.get('pid_value')
 
             if pid:
+                flash('Rest!!!')
                 if comm_id:
                     comm = Community.get(comm_id)
                     tree = self.record_class.get_contribute_tree(pid, int(comm.root_node_id))
