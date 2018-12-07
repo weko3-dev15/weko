@@ -83,8 +83,8 @@ class RssSerializer(JSONSerializer):
         _totalResults = search_result['hits']['total']
         fg.opensearch.totalResults(str(_totalResults))
 
-        startPage = int(request.args.get('page', 1))
-        size = int(request.args.get('size', 20))
+        startPage = int(request.args.get('page_no', 1))
+        size = int(request.args.get('list_view_num', 20))
 
         # Set startIndex
         _startIndex = (startPage - 1) * size + 1
