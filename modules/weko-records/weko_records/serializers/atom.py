@@ -65,9 +65,10 @@ class AtomSerializer(JSONSerializer):
 
         if _indexId:
             index = Index.query.filter_by(id=_indexId).one_or_none()
-            _indexName = index.index_name
-            index_meta[_indexId] = _indexName if _indexName else \
-                'Nonexistent Index'
+            _indexName = 'Nonexistent Index' \
+                if index is None else index.index_name
+            index_meta[_indexId] = 'Unnamed Index' \
+                if _indexName is None else _indexName
 
             fg.title('WEKO OpenSearch: ' + str(index_meta[_indexId]))
         else:
