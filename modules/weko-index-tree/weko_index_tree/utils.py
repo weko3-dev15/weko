@@ -23,7 +23,7 @@
 from functools import wraps
 from datetime import date, datetime
 
-from flask import current_app
+from flask import current_app, flash
 from flask_login import current_user
 from invenio_cache import current_cache
 from invenio_i18n.ext import current_i18n
@@ -186,6 +186,7 @@ def check_groups(user_group, groups):
     return is_can
 
 def reduce_index_by_role(tree, roles, groups, browsing_role=True, plst=None):
+    flash(plst)
     if isinstance(tree, list):
         i = 0
         while i < len(tree):
