@@ -61,10 +61,10 @@ class AtomSerializer(JSONSerializer):
         # Set title
         index_meta = {}
         _keywords = request.args.get('q', '')
-        _indexId = request.args.get('index_id')
+        _indexId = request.args.get('index_id', type=str)
 
-        if _indexId:
-            index = Index.query.filter_by(id=_indexId).one_or_none()
+        if _indexId and _indexId.isnumeric():
+            index = Index.query.filter_by(id=int(_indexId)).one_or_none()
             _indexName = 'Nonexistent Index' \
                 if index is None else index.index_name
             index_meta[_indexId] = 'Unnamed Index' \
