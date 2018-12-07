@@ -1,52 +1,59 @@
-{# # This file is part of WEKO3. # Copyright (C) 2017 National Institute of Informatics. # # WEKO3 is free software; you can redistribute it # and/or modify it under the terms of the GNU General Public License as # published by the Free Software Foundation; either version 2 of the # License, or (at your option) any later version. # # WEKO3 is distributed in the hope that it will be # useful, but WITHOUT ANY WARRANTY; without even the implied warranty of # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU # General Public License for more details. # # You should have received a copy of the GNU General Public License # along with WEKO3; if not, write to the # Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, # MA 02111-1307, USA. #}
+{# # This file is part of WEKO3. # Copyright (C) 2017 National Institute of Informatics. # # WEKO3 is free software; you can redistribute it # and/or modify it under the terms of the GNU General Public License as # published by the Free Software Foundation;
+either version 2 of the # License, or (at your option) any later version. # # WEKO3 is distributed in the hope that it will be # useful, but WITHOUT ANY WARRANTY; without even the implied warranty of # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU # General Public License for more details. # # You should have received a copy of the GNU General Public License # along with WEKO3; if not, write to the # Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, # MA 02111-1307,
+USA. #}
 <div class="panel panel-default">
-  <div class="panel-body">
-    <span>[[testText]]</span>
-    <div class="row">
-      <div class="col-sm-1">AND</div>
-      <div class="col-sm-11">
-        <form class="form-horizontal">
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">
+    <div class="panel-body"> <span>[[testText]]</span>
+        <div class="row">
+            <div class="col-sm-1">AND</div>
+            <div class="col-sm-3">
               <select class="form-control">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-            </label>
-            <div class="col-sm-10">
-              <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
             </div>
-          </div>
-        </form>
-        <form class="form-horizontal">
-          <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">
-              <select class="form-control">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-            </label>
-            <div class="col-sm-10">
-              <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-            </div>
-          </div>
-        </form>
-    </div>
-    </div>
+            <div class="col-sm-8">
+              <div class="row">
+                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+              </div>
+              <div class="row">
 
-    <div class="row">
-      <div class="col-sm-3">
-        <button id="detail-search-btn" type="submit" class="btn btn-primary btn-block">{{_('DetailSearch')}}</button>
-      </div>
-      <div class="col-sm-3">
-        <button id="clear-search-btn" type="button" class="btn btn-secondary btn-block">{{_('Clear')}}</button>
-      </div>
+
+                <div class="col-sm-11 panel panel-default">
+                <!--分類start-->
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <input type="checkbox" id="BSH" name="sbjscheme" placeholder="" value="1">{{_('BSH')}}
+                      <!--分類end-->
+                    </div>
+                    <div class="col-sm-3">
+                      <input type="checkbox" id="DDC" name="sbjscheme" placeholder="" value="2">{{_('DDC')}}
+                      <!--分類end-->
+                    </div>
+                    <div class="col-sm-3">
+                      <input type="checkbox" id="LCC" name="sbjscheme" placeholder="" value="3">{{_('LCC')}}
+                      <!--分類end-->
+                    </div>
+                    <div class="col-sm-3">
+                      <input type="checkbox" id="LCSH" name="sbjscheme" placeholder="" value="4">{{_('LCSH')}}
+                      <!--分類end-->
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <button id="detail-search-btn" type="submit" class="btn btn-primary btn-block">{{_('DetailSearch')}}</button>
+            </div>
+            <div class="col-sm-3">
+                <button id="clear-search-btn" type="button" class="btn btn-secondary btn-block">{{_('Clear')}}</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
