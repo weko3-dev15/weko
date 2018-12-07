@@ -22,7 +22,7 @@
 
 from functools import wraps
 
-from flask import Blueprint, abort, current_app, jsonify, make_response, request, flash
+from flask import Blueprint, abort, current_app, jsonify, make_response, request
 from invenio_records_rest.utils import obj_or_import_string
 from invenio_rest import ContentNegotiatedMethodView
 from invenio_communities.models import Community
