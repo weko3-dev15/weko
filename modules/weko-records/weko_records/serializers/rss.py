@@ -65,9 +65,9 @@ class RssSerializer(JSONSerializer):
 
         if _indexId:
             index = Index.query.filter_by(id=_indexId).one_or_none()
-            _indexName = index.index_name
+            _indexName = index.index_name if index else 'Nonexistent Index'
             index_meta[_indexId] = _indexName if _indexName else \
-                'Nonexistent Index'
+                'Unnamed Index'
 
             fg.title('WEKO OpenSearch: ' + str(index_meta[_indexId]))
         else:
