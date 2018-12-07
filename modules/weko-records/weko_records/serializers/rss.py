@@ -82,12 +82,15 @@ class RssSerializer(JSONSerializer):
         _totalResults = search_result['hits']['total']
         fg.opensearch.totalResults(str(_totalResults))
 
+        startPage = int(request.args.get('page', 1))
+        size = int(request.args.get('size', 20))
+
         # Set startIndex
-        _startIndex = request.args.get('page')
+        _startIndex = (startPage - 1) * size + 1
         fg.opensearch.startIndex(str(_startIndex))
 
         # Set itemPerPage
-        _itemPerPage = request.args.get('size')
+        _itemPerPage = len(search_result['hits']['hits'])
         fg.opensearch.itemsPerPage(str(_itemPerPage))
 
         # Set Request URL
