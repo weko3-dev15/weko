@@ -113,7 +113,7 @@ WEKO_SEARCH_MANAGEMENT_OPTIONS = {
         ]
     },
     'detail_condition':[
-        {'id':'title','contents':'Title','useable_status':True,'mapping':['title'],'default_display':True},
+        {'id':'title','contents':'Title','useable_status':False,'mapping':['title'],'default_display':False},
         {'id':'author_name','contents':'Author Name','useable_status':False,'mapping':['creator'],'default_display':False},
         {'id':'subject','contents':'Subject','useable_status':False,'mapping':['BSH','DDC','LCC','LCSH','MeSH','NDC','NDLC','NDLSH','UDC','Scival','Other'],'default_display':False},
         {'id':'region','contents':'Region','useable_status':False,'mapping':['region'],'default_display':False},

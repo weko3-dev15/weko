@@ -25,6 +25,7 @@ from flask import current_app
 from invenio_db import db
 from weko_admin.models import SearchManagement as sm
 from weko_index_tree.api import Indexes
+from weko_admin import config as ad_config
 
 
 class SearchSetting(object):
@@ -83,6 +84,7 @@ class SearchSetting(object):
 
     @classmethod
     def get_custom_sort(cls, index_id, sort_type):
+        """Get custom sort"""
         if sort_type =="asc":
             factor_obj = Indexes.get_item_sort(index_id)
             script_str = {
@@ -111,4 +113,19 @@ class SearchSetting(object):
             default_sort = {'_score': {'order': 'asc'}}
 
         return script_str, default_sort
+
+    @classmethod
+    def get_search_detail_keyword(cls):
+        """Get search detail keyword"""
+        res = sm.get()
+        options=None
+        key_options = dict()
+        if res :
+            options = res.search_conditions
+        else :
+            options = ad_config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('detail_condition')
+
+        key_options['serch_key']= options
+
+        return key_options
 

@@ -46,14 +46,14 @@
       </div>
     </div>
   </div>
-<!--</form>-->
-<div id="search_detail">
-  <!--<form id="search_detail_form" action="/search">-->
-    <div class="row">
-      <div id="search_detail_metadata" class="collapse col-sm-12 col-md-11 col-lg-11">
-          {% include "weko_theme/body_search_detail.html" %}
+  <!--Detail search-->
+  <div id="search_detail">
+    <div ng-controller="searchDetailCtrl">
+      <div class="row">
+        <div id="search_detail_metadata" class="collapse col-sm-12 col-md-11 col-lg-11">
+            {% include "weko_theme/body_search_detail_new.html" %}
+        </div>
       </div>
     </div>
-  <!--</form>-->
-</div>
+  </div>
 </form>
