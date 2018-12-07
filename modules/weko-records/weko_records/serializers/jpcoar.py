@@ -61,8 +61,11 @@ class JpcoarSerializer(JSONSerializer):
         _totalResults = search_result['hits']['total']
         fg.opensearch.totalResults(str(_totalResults))
 
-        startPage = int(request.args.get('page_no', 1))
-        size = int(request.args.get('list_view_num', 20))
+        startPage = request.args.get('page_no', type=str)
+        startPage = 1 if startPage is None or not startPage.isnumeric() else int(startPage)
+
+        size = request.args.get('list_view_num', type=str)
+        size = 20 if size is None or not size.isnumeric() else int(size)
 
         # Set startIndex
         _startIndex = (startPage - 1) * size + 1
