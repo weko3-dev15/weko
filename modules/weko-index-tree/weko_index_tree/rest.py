@@ -22,7 +22,7 @@
 
 from functools import wraps
 
-from flask import Blueprint, abort, current_app, jsonify, make_response, request
+from flask import Blueprint, abort, current_app, jsonify, make_response, request, flash
 from invenio_records_rest.utils import obj_or_import_string
 from invenio_rest import ContentNegotiatedMethodView
 from invenio_communities.models import Community
@@ -261,6 +261,7 @@ class IndexTreeActionResource(ContentNegotiatedMethodView):
     @need_record_permission('read_permission_factory')
     def get(self, **kwargs):
         """Get tree json."""
+        flash('Rest!!!')
         try:
             action = request.values.get('action')
             comm_id = request.values.get('community')
