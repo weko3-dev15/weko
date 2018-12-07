@@ -234,8 +234,10 @@ class AtomSerializer(JSONSerializer):
 
                     creator_names = creator_metadata[
                         item_map[_creatorName_value]]
+
+                    _creatorName_attr_lang = item_id + '.' + 'creatorNameLang'
                     creator_name_langs = creator_metadata[
-                        item_id + '.' + 'creatorNameLang']
+                        _creatorName_attr_lang] if _creatorName_attr_lang in creator_metadata else None
 
                     if creator_name_langs:
                         if isinstance(creator_name_langs, list):
