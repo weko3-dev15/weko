@@ -186,7 +186,6 @@ def check_groups(user_group, groups):
     return is_can
 
 def reduce_index_by_role(tree, roles, groups, browsing_role=True, plst=None):
-    flash(plst)
     if isinstance(tree, list):
         i = 0
         while i < len(tree):
