@@ -65,7 +65,7 @@ class RssSerializer(JSONSerializer):
 
         if _indexId:
             index = Index.query.filter_by(id=_indexId).one_or_none()
-            _indexName = index.index_name if index else 'Nonexistent Index'
+            _indexName = 'Nonexistent Index' if index is None else index.index_name
             index_meta[_indexId] = _indexName if _indexName else \
                 'Unnamed Index'
 
