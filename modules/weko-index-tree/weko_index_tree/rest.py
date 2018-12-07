@@ -272,8 +272,9 @@ class IndexTreeActionResource(ContentNegotiatedMethodView):
 
             pid = kwargs.get('pid_value')
 
+            flash(pid)
+
             if pid:
-                flash('Rest!!!')
                 if comm_id:
                     comm = Community.get(comm_id)
                     tree = self.record_class.get_contribute_tree(pid, int(comm.root_node_id))
