@@ -272,8 +272,6 @@ class IndexTreeActionResource(ContentNegotiatedMethodView):
 
             pid = kwargs.get('pid_value')
 
-            flash(pid)
-
             if pid:
                 if comm_id:
                     comm = Community.get(comm_id)
