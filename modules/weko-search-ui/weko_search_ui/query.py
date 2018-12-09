@@ -412,7 +412,7 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
         else:
             query_q = _get_simple_search_query(qs)
 
-    src = {'_source': {'exclude': ['content']}}
+    src = {'_source': {'excludes': ['content']}}
     # extr = search._extra.copy()
     # search.update_from_dict(src)
     search._extra.update(src)
@@ -449,7 +449,7 @@ def item_path_search_factory(self, search, index_id=None):
 
         query_q = {
             "_source": {
-                "exclude": ['content']
+                "excludes": ['content']
             },
             "query": {
                 "match": {
@@ -537,7 +537,6 @@ def item_path_search_factory(self, search, index_id=None):
 
     # create a index search query
     query_q = _get_index_earch_query()
-
     urlkwargs = MultiDict()
     try:
         # Aggregations.
@@ -553,8 +552,46 @@ def item_path_search_factory(self, search, index_id=None):
 
     from invenio_records_rest.sorter import default_sorter_factory
     search_index = search._index[0]
+
     search, sortkwargs = default_sorter_factory(search, search_index)
+
     for key, value in sortkwargs.items():
+        # set custom sort option
+        if value == 'custom_sort':
+            ind_id = request.values.get('q', '')
+            factor_obj = Indexes.get_item_sort(ind_id)
+            script_str = {
+                "_script": {
+                    "script": "factor.get(doc[\"control_number\"].value)&&factor.get(doc[\"control_number\"].value) !=0 ? factor.get(doc[\"control_number\"].value):Integer.MAX_VALUE",
+                    "type": "number",
+                    "params": {
+                        "factor": factor_obj
+                    },
+                    "order": "asc"
+                }
+            }
+            default_sort = {'_score': {'order': 'desc'}}
+            search._sort=[]
+            search._sort.append(script_str)
+            search._sort.append(default_sort)
+        if value =="-custom_sort":
+            ind_id = request.values.get('q', '')
+            factor_obj = Indexes.get_item_sort(ind_id)
+            script_str = {
+                "_script": {
+                    "script": "factor.get(doc[\"control_number\"].value)&&factor.get(doc[\"control_number\"].value) !=0 ? factor.get(doc[\"control_number\"].value):0",
+                    "type": "number",
+                    "params": {
+                        "factor": factor_obj
+                    },
+                    "order": "desc"
+                }
+            }
+            default_sort = {'_score': {'order': 'asc'}}
+            search._sort = []
+            search._sort.append(script_str)
+            search._sort.append(default_sort)
+        # set selectbox
         urlkwargs.add(key, value)
 
     urlkwargs.add('q', query_q)

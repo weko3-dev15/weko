@@ -22,8 +22,7 @@
 
 from datetime import datetime
 from copy import deepcopy
-
-from flask import current_app
+from flask import current_app, json, jsonify
 from flask_login import current_user
 from invenio_db import db
 from invenio_accounts.models import Role
@@ -35,6 +34,7 @@ from weko_groups.api import Group
 from .models import Index
 from .utils import get_tree_json, cached_index_tree_json, reset_tree, get_index_id_list
 from invenio_i18n.ext import current_i18n
+from invenio_indexer.api import RecordIndexer
 
 class Indexes(object):
     """Define API for index tree creation and update."""
@@ -76,6 +76,7 @@ class Indexes(object):
                 ",".join(list(map(lambda x: str(x['id']), role)))
             data["contribute_role"] = data["browsing_role"]
 
+            data["more_check"] = False
             data["display_no"] = current_app.config['WEKO_INDEX_TREE_DEFAULT_DISPLAY_NUMBER']
 
             group_list = ''
@@ -176,6 +177,8 @@ class Indexes(object):
                             v = datetime.strptime(v, '%Y%m%d')
                         else:
                             v = None
+                    if "have_children" in k:
+                        continue
                     setattr(index, k, v)
                 index.owner_user_id = current_user.get_id()
                 db.session.merge(index)
@@ -393,7 +396,13 @@ class Indexes(object):
     @classmethod
     def get_browsing_tree(cls,pid=0):
         tree = cls.get_index_tree(pid)
-        reset_tree(tree)
+        reset_tree(tree=tree)
+        return tree
+
+    @classmethod
+    def get_more_browsing_tree(cls, pid=0, more_ids=[]):
+        tree = cls.get_index_tree(pid)
+        reset_tree(tree=tree, more_ids=more_ids)
         return tree
 
     @classmethod
@@ -413,9 +422,9 @@ class Indexes(object):
         record = WekoRecord.get_record_by_pid(pid)
         tree = cls.get_index_tree(root_node_id)
         if record.get('_oai'):
-            reset_tree(tree, record.get('path'))
+            reset_tree(tree=tree, path=record.get('path'))
         else:
-            reset_tree(tree, [])
+            reset_tree(tree=tree, path=[])
 
         return tree
 
@@ -430,7 +439,8 @@ class Indexes(object):
                     recursive_t.c.position, recursive_t.c.name,
                     recursive_t.c.public_state, recursive_t.c.public_date,
                     recursive_t.c.browsing_role, recursive_t.c.contribute_role,
-                    recursive_t.c.browsing_group, recursive_t.c.contribute_group
+                    recursive_t.c.browsing_group, recursive_t.c.contribute_group,
+                    recursive_t.c.more_check, recursive_t.c.display_no
                     ]
             obj = db.session.query(*qlst). \
                 order_by(recursive_t.c.lev,
@@ -466,8 +476,8 @@ class Indexes(object):
 
             return allow, deny
 
-
         index = dict(cls.get_index(index_id))
+
         role = cls.get_account_role()
         allow = index["browsing_role"].split(',') \
             if len(index["browsing_role"]) else None
@@ -705,6 +715,8 @@ class Indexes(object):
                 Index.contribute_role,
                 Index.browsing_group,
                 Index.contribute_group,
+                Index.more_check,
+                Index.display_no,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.parent == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -724,6 +736,8 @@ class Indexes(object):
                     test_alias.contribute_role,
                     test_alias.browsing_group,
                     test_alias.contribute_group,
+                    test_alias.more_check,
+                    test_alias.display_no,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )
@@ -740,6 +754,8 @@ class Indexes(object):
                 Index.contribute_role,
                 Index.browsing_group,
                 Index.contribute_group,
+                Index.more_check,
+                Index.display_no,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.parent == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -759,6 +775,8 @@ class Indexes(object):
                     test_alias.contribute_role,
                     test_alias.browsing_group,
                     test_alias.contribute_group,
+                    test_alias.more_check,
+                    test_alias.display_no,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )
@@ -786,6 +804,8 @@ class Indexes(object):
                 Index.contribute_role,
                 Index.browsing_group,
                 Index.contribute_group,
+                Index.more_check,
+                Index.display_no,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.id == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -805,6 +825,8 @@ class Indexes(object):
                     test_alias.contribute_role,
                     test_alias.browsing_group,
                     test_alias.contribute_group,
+                    test_alias.more_check,
+                    test_alias.display_no,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )
@@ -821,6 +843,8 @@ class Indexes(object):
                 Index.contribute_role,
                 Index.browsing_group,
                 Index.contribute_group,
+                Index.more_check,
+                Index.display_no,
                 literal_column("1", db.Integer).label("lev")).filter(
                 Index.id == pid). \
                 cte(name="recursive_t", recursive=True)
@@ -840,6 +864,8 @@ class Indexes(object):
                     test_alias.contribute_role,
                     test_alias.browsing_group,
                     test_alias.contribute_group,
+                    test_alias.more_check,
+                    test_alias.display_no,
                     rec_alias.c.lev + 1).filter(
                     test_alias.parent == rec_alias.c.cid)
             )
@@ -864,3 +890,86 @@ class Indexes(object):
         except Exception as se:
             current_app.logger.debug(se)
             return False
+
+    @classmethod
+    def set_item_sort_custom(cls, index_id, sort_json={}):
+        """Set custom sort"""
+
+        # change type of custom sort data
+        sort_dict_db = dict(sort_json)
+
+        for k,v in sort_dict_db.items():
+            if v != "":
+                sort_dict_db[k] = int(v)
+            else:
+                sort_dict_db[k] = 0
+
+        try:
+            with db.session.begin_nested():
+                index = cls.get_index(index_id)
+                if not index:
+                    return
+                index.item_custom_sort = sort_dict_db
+                db.session.merge(index)
+            db.session.commit()
+            return index
+        except Exception as ex:
+            current_app.logger.debug(ex)
+            db.session.rollback()
+        return
+
+    @classmethod
+    def update_item_sort_custom_es(cls, index_path, sort_json=[]):
+        """
+        Set custom sort
+        :param index_path selected index path
+        :param sort_json custom setted item sort
+
+        """
+        try:
+            upd_item_sort_q = {
+                "query": {
+                    "match": {
+                        "path.tree": "@index"
+                    }
+                }
+            }
+            query_q = json.dumps(upd_item_sort_q).replace("@index", index_path)
+            query_q = json.loads(query_q)
+            indexer = RecordIndexer()
+            res = indexer.client.search(index="weko", body=query_q)
+
+            for d in sort_json:
+                for h in res.get("hits").get("hits"):
+                    if int(h.get('_source').get('control_number')) == int(d.get("id")):
+                        body = {
+                            'doc': {
+                                'custom_sort': d.get('custom_sort'),
+                            }
+                        }
+                        indexer.client.update(
+                            index="weko",
+                            doc_type="item",
+                            id=h.get("_id"),
+                            body=body
+                        )
+                        break
+
+        except Exception as ex:
+            current_app.logger.debug(ex)
+        return
+
+    @classmethod
+    def get_item_sort(cls, index_id):
+        """
+        :param index_id: search index id
+        :return: sort list
+
+        """
+        item_custom_sort=db.session.query(Index.item_custom_sort).filter(Index.id == index_id).one()
+
+        return item_custom_sort[0]
+
+    @classmethod
+    def have_children(cls, index_id):
+        return Index.get_children(index_id)
