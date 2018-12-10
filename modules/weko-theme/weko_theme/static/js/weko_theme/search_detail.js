@@ -70,6 +70,7 @@
       $scope.change_search_key=function(index,search_key){
        var obj= $scope.get_search_key(search_key)
         $scope.condition_data.splice(index,1,obj);
+        $scope.update_disabled_flg();
       }
 
       // set search options
