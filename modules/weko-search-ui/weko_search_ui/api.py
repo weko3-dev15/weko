@@ -67,9 +67,9 @@ class SearchSetting(object):
                 sort_str = res.default_dis_sort_index
         else:
             if search_type == current_app.config['WEKO_SEARCH_TYPE_KEYWORD']:
-                sort_str= current_app.config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('dlt_keyword_sort_selected')
+                sort_str= current_app.config['WEKO_ADMIN_MANAGEMENT_OPTIONS'].get('dlt_keyword_sort_selected')
             else:
-                sort_str = current_app.config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('dlt_index_sort_selected')
+                sort_str = current_app.config['WEKO_ADMIN_MANAGEMENT_OPTIONS'].get('dlt_index_sort_selected')
 
         sort_key = sort_str[0:sort_str.rfind('_', 1)]
 
@@ -123,7 +123,7 @@ def get_search_detail_keyword(str):
         if res :
             options = res.search_conditions
         else :
-            options = ad_config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('detail_condition')
+            options = ad_config['WEKO_ADMIN_MANAGEMENT_OPTIONS'].get('detail_condition')
 
         key_options['condition_setting']= options
         current_app.logger.debug('CCCCCCCC')

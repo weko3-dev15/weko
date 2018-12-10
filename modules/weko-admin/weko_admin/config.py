@@ -45,7 +45,7 @@ LOGO_ALLOWED_EXTENSIONS = set(['png', 'jpeg', 'jpg'])
 
 # Search management json
 
-WEKO_SEARCH_MANAGEMENT_OPTIONS = {
+WEKO_ADMIN_MANAGEMENT_OPTIONS = {
     'dlt_dis_num_options':[
         {'id': '20', 'contents': '20'},
         {'id': '50', 'contents': '50'},

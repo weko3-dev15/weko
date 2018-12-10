@@ -90,4 +90,4 @@ def get_search_setting():
 
         return db_obj
     else:
-        return config.WEKO_SEARCH_MANAGEMENT_OPTIONS
+        return config.WEKO_ADMIN_MANAGEMENT_OPTIONS
