@@ -18,7 +18,7 @@
           key_value:{'id':'title','contents':'Title','useable_status':false,'mapping':['title'], 'sche_or_attr':[{'id':'title','contents':'title', 'checkStus':false}], 'default_display':false, 'inputType':'text', 'inputVal':'', 'mappingFlg':false, 'mappingName':''}
         },
         {
-          selected_key:"creator"
+          selected_key:"creator",
           key_options:[
                 {id:'title',contents:"title"},
                 {id:'creator',contents:"Author Name"},
@@ -30,7 +30,7 @@
           key_value:{'id':'creator','contents':'Author Name','useable_status':false,'mapping':['creator'], 'sche_or_attr':[{'id':'creator','contents':'creator', 'checkStus':false}],'default_display':false, 'inputType':'text', 'inputVal':'', 'mappingFlg':false, 'mappingName':''}
         },
         {
-          selected_key:"subject"
+          selected_key:"subject",
           key_options:[
                 {id:'title',contents:"title"},
                 {id:'creator',contents:"Author Name"},
@@ -54,7 +54,7 @@
                'default_display':false, 'inputType':'text', 'inputVal':'', 'mappingFlg':true, 'mappingName':'sbjscheme'}
         },
         {
-          selected_key:"type"
+          selected_key:"type",
           key_options:[
                 {id:'title',contents:"title"},
                 {id:'creator',contents:"Author Name"},
@@ -83,7 +83,7 @@
                                                                                       'default_display':false,'inputType':'checkbox_list', 'inputVal':'', 'mappingFlg':false, 'mappingName':''}
         },
         {
-          selected_key:"dategranted"
+          selected_key:"dategranted",
           key_options:[
                 {id:'title',contents:"title"},
                 {id:'creator',contents:"Author Name"},
@@ -95,7 +95,7 @@
           key_value:{'id':'dategranted','contents':'Academic degree date','useable_status':false,'mapping':['date'], 'default_display':false,  'inputType':'dateRange', 'inputVal_from':'', 'inputVal_to':'','mappingFlg':false, 'mappingName':''}
         },
         {
-          selected_key:"rights"
+          selected_key:"rights",
           key_options:[
                 {id:'title',contents:"title"},
                 {id:'creator',contents:"Author Name"},
