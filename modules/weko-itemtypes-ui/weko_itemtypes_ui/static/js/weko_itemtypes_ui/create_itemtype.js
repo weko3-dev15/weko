@@ -1031,6 +1031,7 @@
       url: '/itemtypes/property/list',
       async: false,
       success: function(data, status){
+      alert('/property/list!!!!');
         properties_obj = data;
         Object.keys(data).forEach(function(key) {
           select_option = select_option + '<option value="cus_'+key+'">'+data[key].name+'</option>'
