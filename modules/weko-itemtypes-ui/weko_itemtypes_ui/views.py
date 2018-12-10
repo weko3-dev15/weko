@@ -136,10 +136,12 @@ def get_property_list(property_id=0):
     props = ItemTypeProps.get_records([])
     lists = {}
     for k in props:
-        tmp = {'name': k.name, 'schema': k.schema, 'form': k.form,
-               'forms': k.forms}
-        lists[k.id] = tmp
+        # tmp = {'name': k.name, 'schema': k.schema, 'form': k.form,
+        #        'forms': k.forms}
+        tmp = {'name': k.name}
 
+        lists[k.id] = tmp
+    flash(lists)
     return jsonify(lists)
 
 

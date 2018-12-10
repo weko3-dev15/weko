@@ -1033,7 +1033,7 @@
       success: function(data, status){
         properties_obj = data;
         for (var key in data) {
-          alert(key);
+//          alert(key);
           select_option = select_option + '<option value="cus_'+key+'">'+data[key].name+'</option>';
         }
 //        Object.keys(data).forEach(function(key) {
