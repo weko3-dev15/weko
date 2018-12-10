@@ -22,7 +22,7 @@
 
 from copy import deepcopy
 
-from flask import current_app
+from flask import current_app, flash
 from flask_babelex import gettext as _
 from invenio_db import db
 from invenio_records.api import Record
@@ -813,6 +813,8 @@ class ItemTypeProps(RecordBase):
         :param ids: List of record IDs.
         :returns: A list of :class:`Record` instances.
         """
+        flash('get_records!!!!')
+        flash(ids)
         with db.session.no_autoflush:
             query = None
             if len(ids) > 0:
