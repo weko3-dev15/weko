@@ -1,3 +1,0 @@
-[submodule "modules/invenio-previewer"]
-	path = modules/invenio-previewer
-	url = https://github.com/RCOSDP/invenio-previewer.git
