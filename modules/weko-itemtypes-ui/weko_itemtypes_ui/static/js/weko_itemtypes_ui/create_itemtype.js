@@ -251,8 +251,10 @@
 //          for (var key in data) {
 //
 //          }
-//          page_global.table_row_map.schema.properties["title_ja"] = JSON.parse(JSON.stringify(data['title']['schema']['title_ja']))
-//          page_global.table_row_map.schema.properties["title_en"] = JSON.parse(JSON.stringify(data['title']['schema']['title_en']))
+          jsonData = JSON.stringify(data);
+          alert(jsonData);
+          page_global.table_row_map.schema.properties["title_ja"] = JSON.parse(JSON.stringify(data)['title']['schema']['title_ja'])
+          page_global.table_row_map.schema.properties["title_en"] = JSON.parse(JSON.stringify(data['title']['schema']['title_en']))
           page_global.table_row_map.form.push(JSON.parse(JSON.stringify(data[key]['form'])));
 
         },
