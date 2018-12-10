@@ -128,6 +128,8 @@ def get_search_detail_keyword(str):
         key_options['condition_setting']= options
 
         key_options_str = json.dumps(key_options)
+        key_options_str.replace('False','false')
+        key_options_str.replace('True', 'true')
 
         return key_options_str
 
