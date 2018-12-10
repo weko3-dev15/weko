@@ -244,7 +244,6 @@
         method: 'GET',
         url: '/itemtypes/default_property/list',
         async: false,
-        data: JSON.stringify(data),
         success: function(data, status){
 
 //          alert($.parseJSON(JSON.stringify(data['title']['schema']['title_ja'])));
