@@ -246,7 +246,7 @@
         async: false,
         success: function(data, status){
 
-          alert(data['title'].form);
+          alert(data['title'].schema);
 //          for (var key in data) {
 //
 //          }
