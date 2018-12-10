@@ -5,7 +5,8 @@ USA. #}
 <div ng-init="initData('{{setting_data}}')" class="panel panel-default">
     <div class="panel-body"> <span>[[testText]]</span>
         <div ng-repeat=" sub_data in condition_data track by $index" class="row">
-            <div class="col-sm-1">AND</div>
+            <div ng-if="!$first" class="col-sm-1">AND</div>
+            <div ng-if="$first" class="col-sm-1"></div>
             <!--<div class="col-sm-1"></div>-->
             <div class="col-sm-10">
               <form class="form-horizontal">
