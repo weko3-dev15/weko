@@ -33,7 +33,7 @@ from invenio_records.signals import (
     before_record_revert, before_record_update)
 from jsonpatch import apply_patch
 from sqlalchemy.orm.attributes import flag_modified
-from sqlalchemy.sql.expression import desc
+from sqlalchemy.sql.expression import desc, asc
 from werkzeug.local import LocalProxy
 
 from .models import (
@@ -805,7 +805,7 @@ class ItemTypeProps(RecordBase):
             if obj is None:
                 return None
             return obj
-
+# TODO
     @classmethod
     def get_records(cls, ids):
         """Retrieve multiple records by id.
@@ -820,7 +820,8 @@ class ItemTypeProps(RecordBase):
                     ItemTypeMapping.id.in_(ids))
                 query = query.filter_by(delflg=False)  # noqa
             else:
-                query = ItemTypeProperty.query.filter_by(delflg=False)
+                query = ItemTypeProperty.query.filter_by(delflg=False)\
+                    .order_by(asc(ItemTypeProperty.sort))
             return query.all()
 
     @property
