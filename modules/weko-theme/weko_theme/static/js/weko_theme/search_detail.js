@@ -117,7 +117,9 @@
 //      ]
         // page init
         $scope.initData = function(data){
-          alert(data)
+          json_obj = angular.fromjson(data)
+
+          alert(json_obj.condition_setting[0].id)
         }
     }
     // Inject depedencies
