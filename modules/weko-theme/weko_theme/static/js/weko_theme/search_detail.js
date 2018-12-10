@@ -13,20 +13,20 @@
         json_obj = angular.fromJson(data)
         db_data = json_obj.condition_setting;
         angular.forEach(db_data,function(item,index,array){
-          if(item.useable_status){
-            var obj_key={id:'',contents:'', inx:0};
-            obj_key.id=item.id;
-            obj_key.contents=item.contents;
-            obj_key.inx = index;
-            $scope.detail_search_key.push(obj_key);
-          };
           if(item.default_display){
             var default_key={id:'',contents:'', inx:0};
             default_key.id=item.id;
             default_key.contents=item.contents;
             default_key.inx = index;
             $scope.default_search_key.push(default_key);
-          }
+          };
+          if(item.useable_status){
+            var obj_key={id:'',contents:'', inx:0, disabled_flg:false};
+            obj_key.id=item.id;
+            obj_key.contents=item.contents;
+            obj_key.inx = index;
+            $scope.detail_search_key.push(obj_key);
+          };
         });
         angular.forEach($scope.default_search_key,function(item,index,array){
           var obj_of_condition ={selected_key:'',key_options:[], key_value:{}}
@@ -35,7 +35,16 @@
           obj_of_condition.key_value = db_data[item.inx];
           $scope.condition_data.push(obj_of_condition)
         });
-//        alert(json_obj.condition_setting[0].id)
+        update_disabled_flg();
+      }
+      function update_disabled_flg()={
+        for(var sub_condition of $scope.condition_data){
+          for (var sub_detail_search_key of $scope.detail_search_key){}
+            if(sub_detail_search_key.id ==sub_condition.id ){
+              sub_detail_search_key.disabled_flg = true;
+              break;
+            }
+        }
       }
     }
     // Inject depedencies
