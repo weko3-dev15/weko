@@ -15,10 +15,10 @@
         angular.forEach(db_data,function(item,index,array){
           if(item.useable_status){
             var obj_key={id:'',contents:'', inx:0};
-            obj.id=item.id;
-            obj.contents=item.contents;
-            obj.inx = index;
-            $scope.detail_search_key.push(obj);
+            obj_key.id=item.id;
+            obj_key.contents=item.contents;
+            obj_key.inx = index;
+            $scope.detail_search_key.push(obj_key);
           };
           if(item.default_display){
             var default_key={id:'',contents:'', inx:0};
