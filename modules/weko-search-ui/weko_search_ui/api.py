@@ -114,32 +114,19 @@ class SearchSetting(object):
 
         return script_str, default_sort
 
-    @classmethod
-    def get_search_detail_keyword(cls, str):
+
+def get_search_detail_keyword(str):
         """Get search detail keyword"""
-        if str =='1':
-            res = sm.get()
-            options=None
-            key_options = dict()
-            if res :
-                options = res.search_conditions
-            else :
-                options = ad_config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('detail_condition')
+        res = sm.get()
+        options=None
+        key_options = dict()
+        if res :
+            options = res.search_conditions
+        else :
+            options = ad_config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('detail_condition')
 
-            key_options['condition_setting']= options
-            current_app.logger.debug('CCCCCCCC')
+        key_options['condition_setting']= options
+        current_app.logger.debug('CCCCCCCC')
 
-            return key_options
-        else:
-            res = sm.get()
-            options = None
-            key_options = dict()
-            if res:
-                options = res.search_conditions
-            else:
-                options = ad_config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('detail_condition')
+        return key_options
 
-            key_options['condition_setting'] = options
-            current_app.logger.debug('CCCCCCCC')
-
-            return key_options
