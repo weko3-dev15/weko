@@ -246,7 +246,7 @@
         async: false,
         success: function(data, status){
 
-          alert(data['title']['schema'].toString());
+          alert(JSON.stringify(data['title']['schema']));
 //          for (var key in data) {
 //
 //          }
