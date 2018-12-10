@@ -8,24 +8,23 @@
       $scope.detail_search_key=[];
       $scope.default_search_key=[]
 
-
       // page init
       $scope.initData = function(data){
         json_obj = angular.fromJson(data)
         db_data = json_obj.condition_setting;
         angular.forEach(db_data,function(item,index,array){
           if(item.useable_status){
-            var obj_key={id:'',contents:'', inx:0}
+            var obj_key={id:'',contents:'', inx:0};
             obj.id=item.id;
             obj.contents=item.contents;
-            obj.inx = index
+            obj.inx = index;
             $scope.detail_search_key.push(obj);
-          }
+          };
           if(item.default_display){
-            var display_key={id:'',contents:'' ,inx=0}
+            var display_key={id:'',contents:'',inx=0}
             obj.id=item.id;
             obj.contents=item.contents;
-            obj.inx = index
+            obj.inx = index;
             $scope.default_search_key.push(obj);
           }
         });
