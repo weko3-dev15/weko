@@ -12,7 +12,7 @@ USA. #}
               <form class="form-horizontal">
                 <div class="form-group">
                   <label for="sele_[[$index]]" class="col-sm-2 control-label">
-                    <select ng-model="sub_data.selected_key" class="form-control" on-change="change_search_key($index,sub_data.selected_key)">
+                    <select ng-model="sub_data.selected_key" class="form-control" onchange="change_search_key($index,sub_data.selected_key)">
                       <option ng-repeat="key_option in sub_data.key_options track by $index" value="[[key_option.id]]" ng-disabled="key_option.disabled_flg">{{_('[[key_option.contents]]')}} </option>
                     </select>
                   </label>
