@@ -6,7 +6,7 @@
       $scope.testText ="angularjs is successfully runing !!!!";
       $scope.condition_data=[
         {
-          selected_key:"title"
+          selected_key:"title",
           key_options:[
                 {id:'title',contents:"title"},
                 {id:'creator',contents:"Author Name"},
