@@ -1032,10 +1032,23 @@
       async: false,
       success: function(data, status){
         properties_obj = data;
+
+        odered = {}
+        others = ''
         for (var key in data) {
-//          alert(key);
-          select_option = select_option + '<option value="cus_'+key+'">'+data[key].name+'</option>';
+          option = '<option value="cus_' + key + '">' + data[key].name + '</option>'
+          if (data[key].sort != null) {
+            odered[data[key].sort] = option;
+          } else {
+            others = others + option;
+          }
         }
+
+        Object.keys(odered).forEach(function(key) {
+          select_option = select_option + data[key];
+        });
+        select_option = select_option + others;
+
 //        Object.keys(data).forEach(function(key) {
 //          select_option = select_option + '<option value="cus_'+key+'">'+data[key].name+'</option>'
 //        });
