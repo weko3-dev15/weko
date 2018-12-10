@@ -146,7 +146,7 @@ def get_property_list(property_id=0):
 @blueprint.route('/default_property/list', methods=['GET'])
 @login_required
 @item_type_permission.require(http_exception=403)
-def get_property_list():
+def get_default_property_list():
     """Renders an primitive property view."""
     props = ItemTypeProps.get_default()
     lists = {}
