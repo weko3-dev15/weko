@@ -63,7 +63,8 @@
       }
       //
       $scope.delete_search_key=function(index){
-        alert(index)
+        $scope.condition_data.splice(index,1);
+        $scope.update_disabled_flg();
       }
 
 
