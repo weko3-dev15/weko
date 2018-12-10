@@ -35,9 +35,9 @@
           obj_of_condition.key_value = db_data[item.inx];
           $scope.condition_data.push(obj_of_condition)
         });
-        update_disabled_flg();
+        $scope.update_disabled_flg;
       };
-      function update_disabled_flg()={
+      $scope.update_disabled_flg=function(){
         for(var sub_condition of $scope.condition_data){
           for (var sub_detail_search_key of $scope.detail_search_key){}
             if(sub_detail_search_key.id ==sub_condition.id ){
