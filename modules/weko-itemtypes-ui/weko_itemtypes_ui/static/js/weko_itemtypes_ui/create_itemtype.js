@@ -1049,6 +1049,8 @@
         });
         select_option = select_option + others;
 
+        alert(select_option);
+
 //        Object.keys(data).forEach(function(key) {
 //          select_option = select_option + '<option value="cus_'+key+'">'+data[key].name+'</option>'
 //        });
