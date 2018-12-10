@@ -246,7 +246,7 @@
         async: false,
         success: function(data, status){
 
-          alert(JSON.stringify(data['title']['schema']['title_ja']));
+          alert($.parseJSON(JSON.stringify(data['title']['schema']['title_ja'])));
 //          for (var key in data) {
 //
 //          }
