@@ -117,7 +117,8 @@
 //      ]
         // page init
         $scope.initData = function(data){
-          alert(data)
+          str = angularjs.toJson(data)
+          alert(str)
         }
     }
     // Inject depedencies
