@@ -2,86 +2,70 @@
 either version 2 of the # License, or (at your option) any later version. # # WEKO3 is distributed in the hope that it will be # useful, but WITHOUT ANY WARRANTY; without even the implied warranty of # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 See the GNU # General Public License for more details. # # You should have received a copy of the GNU General Public License # along with WEKO3; if not, write to the # Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, # MA 02111-1307,
 USA. #}
-<div class="panel panel-default">
+<div ng-init="initData('{{setting_data}}')" class="panel panel-default">
     <div class="panel-body"> <span>[[testText]]</span>
-        <div class="row">
+        <div ng-repeat=" sub_data in condition_data track by $index" class="row">
             <div class="col-sm-1">AND</div>
+            <!--<div class="col-sm-1"></div>-->
             <div class="col-sm-10">
               <form class="form-horizontal">
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">
-                    <select class="form-control">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
+                  <label for="sele_[[$index]]" class="col-sm-2 control-label">
+                    <select ng-model="sub_data.selected_key" class="form-control">
+                      <option ng-repeat="key_option in sub_data.key_options track by $index" value="[[key_option.id]]">{{_('[[key_option.contents]]')}}</option>
                     </select>
                   </label>
                   <div class="col-sm-10">
-                    <!--<input type="email" class="form-control" id="inputEmail3" placeholder="Email">-->
-
-                    <!--<select id="inputEmail3" class="form-control">-->
-                          <!--<option>1</option>-->
-                          <!--<option>2</option>-->
-                          <!--<option>3</option>-->
-                          <!--<option>4</option>-->
-                          <!--<option>5</option>-->
-                    <!--</select>-->
-
-                    <!--<div id="inputEmail3" class="checkbox">-->
-                      <!--<label class="checkbox-inline">-->
-                        <!--<input type="checkbox" id="inlineCheckbox1" value="option1"> 1-->
-                      <!--</label>-->
-                      <!--<label class="checkbox-inline">-->
-                        <!--<input type="checkbox" id="inlineCheckbox2" value="option2"> 2-->
-                      <!--</label>-->
-                      <!--<label class="checkbox-inline">-->
-                        <!--<input type="checkbox" id="inlineCheckbox3" value="option3"> 3-->
-                      <!--</label>-->
-                    <!--</div>-->
-
-                    <!--<div class="radio">-->
-                      <!--<label class="radio-inline">-->
-                        <!--<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 1-->
-                      <!--</label>-->
-                      <!--<label class="radio-inline">-->
-                        <!--<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 2-->
-                      <!--</label>-->
-                      <!--<label class="radio-inline">-->
-                        <!--<input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 3-->
-                      <!--</label>-->
-                    <!--</div>-->
-
-                    <!--<div class="col-sm-3">-->
-                      <!--<div class="row input-daterange input-group">-->
-                        <!--<input type="text" class="input-sm form-control" name="dategranted_from" data-provide="datepicker" id="dategranted_from" placeholder="yyyymmdd" data-date-format="yyyymmdd"/>-->
-                        <!--<span class="input-group-addon">to</span>-->
-                        <!--<input type="text" class="input-sm form-control" name="dategranted_to" data-provide="datepicker" id="dategranted_to" placeholder="yyyymmdd" data-date-format="yyyymmdd"/>-->
-                      <!--</div>-->
-                    <!--</div>-->
-
+                    <!--input_type is text sta-->
+                    <input ng-if="sub_data.key_value.inputType=='text'" type="text" class="form-control" id="sele_[[$index]]" ng-model="sub_data.key_value.inputVal" placeholder="">
+                    <!--input_type is text end-->
+                    <!--input_type is sele sta-->
+                    <select ng-if="sub_data.key_value.inputType=='selectbox'" id="sele_[[$index]]" ng-model="sub_data.key_value.inputVal" class="form-control">
+                      <option ng-repeat="sub_sel_option in sub_data.key_value.options track by $index" value="[[sub_sel_option.id]]">{{_('[[sub_sel_option.contents]]')}}</option>
+                    </select>
+                    <!--input_type is sele end-->
+                    <!--input_type is checkbox sta-->
+                    <div ng-if="sub_data.key_value.inputType=='checkbox_list'" id="sele_[[$index]]" class="checkbox">
+                      <label ng-repeat="sub_check in sub_data.key_value.check_val track by $index" class="checkbox-inline" >
+                        <input type="checkbox" id="[[sub_data.key_value.id]]" value="[[sub_check.id]]" ng-model="sub_check.checkStus"> {{_('[[sub_check.contents]]')}}
+                      </label>
+                    </div>
+                    <!--input_type is checkbox end-->
+                    <!--input_type is radio sta-->
+                    <div ng-if="sub_data.key_value.inputType=='radio_list'" class="radio">
+                      <label ng-repeat="sub_radio in sub_data.key_value.radio_val track by $index" class="radio-inline">
+                        <input type="radio" name="sub_data.key_value.id"  value="[[sub_radio.id]]"> [[sub_radio.contents]]
+                      </label>
+                    </div>
+                    <!--input_type is radio end-->
+                    <!--input_type is daterange sta-->
+                    <div ng-if="sub_data.key_value.inputType=='dateRange'" class="col-sm-3">
+                      <div class="row input-daterange input-group">
+                        <input type="text" class="input-sm form-control" name="[[sub_data.key_value.id]]_from" data-provide="datepicker"
+                               id="[[sub_data.key_value.id]]_from" placeholder="yyyymmdd" data-date-format="yyyymmdd" ng-model="sub_data.key_value.inputVal_from"/>
+                        <span class="input-group-addon">to</span>
+                        <input type="text" class="input-sm form-control" name="[[sub_data.key_value.id]]_to" data-provide="datepicker"
+                               id="[[sub_data.key_value.id]]_to" placeholder="yyyymmdd" data-date-format="yyyymmdd" ng-model="sub_data.key_value.inputVal_to"/>
+                      </div>
+                    </div>
+                    <!--input_type is daterange end-->
                   </div>
                 </div>
-                <div class="form-group">
+                <!--input_type is schema or attribute sta-->
+                <div ng-if="sub_data.key_value.mappingFlg" class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
                     <div class="checkbox">
                       <div class="panel panel-default">
                         <div class="panel-body">
-                          <label>
-                            <input type="checkbox" id="BSH" name="sbjscheme" placeholder="" value="1">{{_('BSH')}}
-                          </label>
-                          <label>
-                            <input type="checkbox" id="BSH" name="sbjscheme" placeholder="" value="1">{{_('BSH')}}
-                          </label>
-                          <label>
-                            <input type="checkbox" id="BSH" name="sbjscheme" placeholder="" value="1">{{_('BSH')}}
+                          <label ng-repeat="sub_attr in sub_data.key_value.sche_or_attr track by $index">
+                            <input type="checkbox" id="[[sub_attr.id]]" name="[[sub_data.key_value.id]]" placeholder="" value="[[sub_attr.id]]" ng-model="sub_attr.checkStus">{{_([[sub_attr.contents]])}}
                           </label>
                          </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <!--input_type is schema or attribute end-->
               </form>
             </div>
             <div class="col-sm-1 text-center">
@@ -90,14 +74,15 @@ USA. #}
               </button>
             </div>
         </div>
+        <br>
         <div class="row">
             <div class="col-sm-11">
-
             </div>
             <div class="col-sm-1">
                 <button id="add-condition-btn" type="button" class="btn btn-primary btn-block">{{_('Add')}}</button>
             </div>
         </div>
+      <br>
         <div class="row">
             <div class="col-sm-3">
                 <button id="detail-search-btn" type="submit" class="btn btn-primary btn-block">{{_('DetailSearch')}}</button>
