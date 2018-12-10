@@ -195,6 +195,8 @@ class SearchManagement(db.Model):
         """Get setting"""
         id = db.session.query(func.max(SearchManagement.id)).first()[0]
         current_app.logger.debug(id)
+        if id is None:
+            return  None
         return cls.query.filter_by(id=id).one_or_none()
 
     @classmethod
