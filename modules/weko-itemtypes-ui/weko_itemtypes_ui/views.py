@@ -140,7 +140,7 @@ def get_property_list(property_id=0):
                'forms': k.forms}
         lists[k.id] = tmp
 
-    flash(jsonify(lists))
+    flash(tmp)
     return jsonify(lists)
 
 
