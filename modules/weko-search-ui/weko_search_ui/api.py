@@ -123,7 +123,7 @@ def get_search_detail_keyword(str):
         if res :
             options = res.search_conditions
         else :
-            options = ad_config.get('WEKO_ADMIN_MANAGEMENT_OPTIONS')
+            options = ad_config['WEKO_ADMIN_MANAGEMENT_OPTIONS']['detail_condition']
 
         key_options['condition_setting']= options
         current_app.logger.debug('CCCCCCCC')
