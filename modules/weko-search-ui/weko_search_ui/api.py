@@ -128,5 +128,5 @@ class SearchSetting(object):
 
             key_options['condition_setting']= options
             current_app.logger.debug('CCCCCCCC')
-            current_app.logger.debug(key_options)
+            
             return key_options
