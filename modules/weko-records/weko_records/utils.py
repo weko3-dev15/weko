@@ -419,7 +419,6 @@ def get_keywords_data_load(str):
     :return: dict of item type info
     """
     try:
-        current_app.logger.debug("SSSSSS")
         return [(x.name, x.id) for x in ItemTypes.get_latest()]
     except:
         pass
