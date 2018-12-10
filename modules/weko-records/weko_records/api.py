@@ -813,8 +813,6 @@ class ItemTypeProps(RecordBase):
         :param ids: List of record IDs.
         :returns: A list of :class:`Record` instances.
         """
-        flash('get_records!!!!')
-        flash(ids)
         with db.session.no_autoflush:
             query = None
             if len(ids) > 0:
@@ -824,6 +822,7 @@ class ItemTypeProps(RecordBase):
             else:
                 query = ItemTypeProperty.query.filter_by(delflg=False)\
                     .order_by(asc(ItemTypeProperty.sort))
+            flash(str(query.all()))
             return query.all()
 
     @property
