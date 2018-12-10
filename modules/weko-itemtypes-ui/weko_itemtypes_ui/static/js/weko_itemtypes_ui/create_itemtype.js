@@ -246,8 +246,8 @@
         async: false,
         success: function(data, status){
 
-          page_global.table_row_map.schema.properties["title_ja"] = data['title'].schema['title_ja']
-          page_global.table_row_map.schema.properties["title_en"] = data['title'].schema['title_en']
+          page_global.table_row_map.schema.properties["title_ja"] = data['title']['schema'}['title_ja']
+          page_global.table_row_map.schema.properties["title_en"] = data['title']['schema'}['title_en']
           page_global.table_row_map.form.push(data[key].form);
 
         },
