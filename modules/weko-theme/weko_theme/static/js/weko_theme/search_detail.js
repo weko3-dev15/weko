@@ -75,13 +75,20 @@
 
       // set search options
       $scope.update_disabled_flg=function(){
-        for(var sub_condition of $scope.condition_data){
-          for (var sub_default_key of $scope.detail_search_key ){
-            if(sub_default_key.id ==sub_condition.selected_key ){
-              sub_default_key.disabled_flg = true;
+        var update_flg = 0
+        for (var sub_default_key of $scope.detail_search_key ){
+          for(var sub_condition of $scope.condition_data){
+            if(sub_default_key.id == sub_condition.selected_key ){
+              update_flg = 1;
               break;
             }
           }
+          if(update_flg==1){
+            sub_default_key.disabled_flg = true;
+          }else{
+            sub_default_key.disabled_flg = false;
+          }
+
         }
       }
       // set search options
