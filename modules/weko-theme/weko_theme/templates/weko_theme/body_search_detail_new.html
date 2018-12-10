@@ -25,8 +25,8 @@ USA. #}
                     </select>
                     <!--input_type is sele end-->
                     <!--input_type is checkbox sta-->
-                    <div ng-if="sub_data.key_value.inputType=='checkbox_list'" id="sele_[[$index]]" class="checkbox" ng-repeat="sub_check in sub_data.key_value.check_val track by $index">
-                      <label class="checkbox-inline" >
+                    <div ng-if="sub_data.key_value.inputType=='checkbox_list'" id="sele_[[$index]]" class="checkbox">
+                      <label ng-repeat="sub_check in sub_data.key_value.check_val track by $index" >
                         <input type="checkbox" id="[[sub_data.key_value.id]]" value="[[sub_check.id]]" ng-model="sub_check.checkStus"> {{_('[[sub_check.contents]]')}}　
                       </label>
                     </div>
