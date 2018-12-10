@@ -21,7 +21,7 @@
 """WEKO3 module docstring."""
 
 
-from flask import current_app
+from flask import current_app, json
 from invenio_db import db
 from weko_admin.models import SearchManagement as sm
 from weko_index_tree.api import Indexes
@@ -126,7 +126,8 @@ def get_search_detail_keyword(str):
             options = ad_config.WEKO_ADMIN_MANAGEMENT_OPTIONS['detail_condition']
 
         key_options['condition_setting']= options
-        current_app.logger.debug('CCCCCCCC')
 
-        return key_options
+        key_options_str = json.dumps(key_options)
+
+        return key_options_str
 
