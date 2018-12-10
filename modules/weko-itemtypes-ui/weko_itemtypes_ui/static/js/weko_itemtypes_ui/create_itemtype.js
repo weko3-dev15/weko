@@ -1047,7 +1047,7 @@
         Object.keys(odered).forEach(function(key) {
           select_option = select_option + odered[key];
         });
-        select_option = select_option + others;
+//        select_option = select_option + others;
 
         alert(select_option);
 
