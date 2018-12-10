@@ -58,7 +58,7 @@ USA. #}
                       <div class="panel panel-default">
                         <div class="panel-body">
                           <label ng-repeat="sub_attr in sub_data.key_value.sche_or_attr track by $index">
-                            <input type="checkbox" id="[[sub_attr.id]]" name="[[sub_data.key_value.id]]" placeholder="" value="[[sub_attr.id]]" ng-model="sub_attr.checkStus">{{_([[sub_attr.contents]])}}
+                            <input type="checkbox" id="[[sub_attr.id]]" name="[[sub_data.key_value.id]]" placeholder="" value="[[sub_attr.id]]" ng-model="sub_attr.checkStus">{{_('[[sub_attr.contents]]')}}
                           </label>
                          </div>
                       </div>
