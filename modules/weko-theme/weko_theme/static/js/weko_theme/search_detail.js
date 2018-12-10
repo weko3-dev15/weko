@@ -38,7 +38,6 @@
         $scope.update_disabled_flg();
       };
       $scope.update_disabled_flg=function(){
-        console.log("AAA")
         for(var sub_condition of $scope.condition_data){
           for (var i=0; i< $scope.detail_search_key.length;i++){}
             if($scope.detail_search_key[i].id ==sub_condition.selected_key ){
