@@ -10,7 +10,7 @@ USA. #}
             <div class="col-sm-10">
               <form class="form-horizontal">
                 <div class="form-group">
-                  <label for="sele_[[$index]]" class="col-sm-2 control-label">
+                  <label  class="col-sm-2 control-label">
                     <select ng-model="sub_data.selected_key" class="form-control">
                       <option ng-repeat="key_option in sub_data.key_options track by $index" value="[[key_option.id]]">{{_('[[key_option.contents]]')}}</option>
                     </select>
@@ -26,7 +26,7 @@ USA. #}
                     <!--input_type is sele end-->
                     <!--input_type is checkbox sta-->
                     <div ng-if="sub_data.key_value.inputType=='checkbox_list'" id="sele_[[$index]]" class="checkbox">
-                      <label ng-repeat="sub_check in sub_data.key_value.check_val track by $index" >
+                      <label ng-repeat="sub_check in sub_data.key_value.check_val track by $index"class="checkbox-inline" >
                         <input type="checkbox" id="[[sub_data.key_value.id]]" value="[[sub_check.id]]" ng-model="sub_check.checkStus"> {{_('[[sub_check.contents]]')}}　
                       </label>
                     </div>
