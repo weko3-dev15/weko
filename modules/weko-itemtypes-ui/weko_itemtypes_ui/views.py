@@ -127,7 +127,7 @@ def custom_property(property_id=0):
         lists=lists
     )
 
-# TODO
+
 @blueprint.route('/property/list', methods=['GET'])
 @login_required
 @item_type_permission.require(http_exception=403)
@@ -138,9 +138,8 @@ def get_property_list(property_id=0):
     for k in props:
         tmp = {'name': k.name, 'schema': k.schema, 'form': k.form,
                'forms': k.forms, 'sort': k.sort}
-
         lists[k.id] = tmp
-    
+
     return jsonify(lists)
 
 

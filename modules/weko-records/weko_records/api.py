@@ -805,7 +805,7 @@ class ItemTypeProps(RecordBase):
             if obj is None:
                 return None
             return obj
-# TODO
+
     @classmethod
     def get_records(cls, ids):
         """Retrieve multiple records by id.
@@ -820,8 +820,7 @@ class ItemTypeProps(RecordBase):
                     ItemTypeMapping.id.in_(ids))
                 query = query.filter_by(delflg=False)  # noqa
             else:
-                query = ItemTypeProperty.query.filter_by(delflg=False)\
-                    .order_by(asc(ItemTypeProperty.sort))
+                query = ItemTypeProperty.query.filter_by(delflg=False)
 
             return query.all()
 
