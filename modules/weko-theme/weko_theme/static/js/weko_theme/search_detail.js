@@ -117,7 +117,7 @@
 //      ]
         // page init
         $scope.initData = function(data){
-          alert("AAAAA")
+          alert(data)
         }
     }
     // Inject depedencies
