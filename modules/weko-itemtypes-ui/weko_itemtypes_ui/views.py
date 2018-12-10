@@ -23,7 +23,7 @@
 import sys
 
 from flask import Blueprint, Flask, abort, current_app, json, jsonify, \
-    make_response, redirect, render_template, request, url_for
+    make_response, redirect, render_template, request, url_for, flash
 from flask_babelex import gettext as _
 from flask_login import login_required
 from invenio_db import db
@@ -127,7 +127,7 @@ def custom_property(property_id=0):
         lists=lists
     )
 
-
+# TODO
 @blueprint.route('/property/list', methods=['GET'])
 @login_required
 @item_type_permission.require(http_exception=403)
@@ -140,6 +140,7 @@ def get_property_list(property_id=0):
                'forms': k.forms}
         lists[k.id] = tmp
 
+    flash(jsonify(lists))
     return jsonify(lists)
 
 

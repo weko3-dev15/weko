@@ -822,7 +822,7 @@ class ItemTypeProps(RecordBase):
             else:
                 query = ItemTypeProperty.query.filter_by(delflg=False)\
                     .order_by(asc(ItemTypeProperty.sort))
-            flash(str(query.all()))
+
             return query.all()
 
     @property
