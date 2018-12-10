@@ -126,6 +126,7 @@ class SearchSetting(object):
             options = ad_config['WEKO_SEARCH_MANAGEMENT_OPTIONS'].get('detail_condition')
 
         key_options['condition_setting']= options
-
-        return key_options
+        current_app.logger.debug('CCCCCCCC')
+        # return key_options
+        return '111111'
 
