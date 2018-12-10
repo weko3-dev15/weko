@@ -61,17 +61,20 @@
         }
         $scope.update_disabled_flg();
       }
-      //
+      // delete button
       $scope.delete_search_key=function(index){
         $scope.condition_data.splice(index,1);
         $scope.update_disabled_flg();
       }
-
+      // change_searc_key
+      $scope.change_search_key=function(index,search_key){
+       var obj= $scope.get_search_key(search_key)
+        $scope.condition_data.splice(index,1,obj);
+      }
 
       // set search options
       $scope.update_disabled_flg=function(){
         for(var sub_condition of $scope.condition_data){
-//          for (var i=0; i< $scope.detail_search_key.length;i++){}
           for (var sub_default_key of $scope.detail_search_key ){
             if(sub_default_key.id ==sub_condition.selected_key ){
               sub_default_key.disabled_flg = true;
@@ -79,6 +82,19 @@
             }
           }
         }
+      }
+      // set search options
+      $scope.get_search_key=function(search_key){
+          var obj_of_condition ={selected_key:'',key_options:[], key_value:{}}
+          for (var sub_default_key of $scope.detail_search_key ){
+            if(sub_default_key.id ==search_key ){
+              obj_of_condition.selected_key=search_key;
+              obj_of_condition.key_options = $scope.detail_search_key;
+              obj_of_condition.key_value = db_data[sub_default_key.inx];
+              break;
+            }
+          }
+          return obj_of_condition;
       }
     }
     // Inject depedencies
