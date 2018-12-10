@@ -117,7 +117,7 @@ class SearchSetting(object):
     @classmethod
     def get_search_detail_keyword(cls, str):
         """Get search detail keyword"""
-        if not str:
+        if str=='':
             res = sm.get()
             options=None
             key_options = dict()
