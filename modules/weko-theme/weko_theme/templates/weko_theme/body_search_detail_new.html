@@ -54,13 +54,13 @@ USA. #}
                 <!--input_type is schema or attribute sta-->
                 <div ng-if="sub_data.key_value.mappingFlg" class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                      <div class="panel panel-default">
-                        <div class="panel-body">
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+                        <div class="checkbox">
                           <label ng-repeat="sub_attr in sub_data.key_value.sche_or_attr track by $index">
                             <input type="checkbox" id="[[sub_attr.id]]" name="[[sub_data.key_value.id]]" placeholder="" value="[[sub_attr.id]]" ng-model="sub_attr.checkStus">{{_('[[sub_attr.contents]]')}}
                           </label>
-                         </div>
+                        </div>
                       </div>
                     </div>
                   </div>
