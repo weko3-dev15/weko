@@ -252,9 +252,9 @@
 //          }
 //          jsonData = JSON.stringify(data);
           alert(data.title.schema.title_ja.type);
-          page_global.table_row_map.schema.properties["title_ja"] = JSON.parse(jsonData.title.schema.title_ja)
-          page_global.table_row_map.schema.properties["title_en"] = JSON.parse(jsonData.title.schema.title_en)
-          page_global.table_row_map.form.push(JSON.parse(jsonData.title.form));
+          page_global.table_row_map.schema.properties["title_ja"] = JSON.parse(data.title.schema.title_ja)
+          page_global.table_row_map.schema.properties["title_en"] = JSON.parse(data.title.schema.title_en)
+          page_global.table_row_map.form.push(JSON.parse(data.title.form));
 
         },
         error: function(status, error){
