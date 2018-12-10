@@ -61,6 +61,10 @@
         }
         $scope.update_disabled_flg();
       }
+      //
+      $scope.delete_search_key=function(index){
+        alert(index)
+      }
 
 
       // set search options
