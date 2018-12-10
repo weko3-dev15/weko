@@ -39,9 +39,10 @@
       };
       $scope.update_disabled_flg=function(){
         for(var sub_condition of $scope.condition_data){
-          for (var i=0; i< $scope.detail_search_key.length;i++){}
-            if($scope.detail_search_key[i].id ==sub_condition.selected_key ){
-              $scope.detail_search_key[i].disabled_flg = true;
+//          for (var i=0; i< $scope.detail_search_key.length;i++){}
+          for (var sub_default_key of $scope.detail_search_key ){}
+            if(sub_default_key.id ==sub_condition.selected_key ){
+              sub_default_key.disabled_flg = true;
               break;
             }
         }
