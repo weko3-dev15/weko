@@ -22,10 +22,10 @@
           };
           if(item.default_display){
             var display_key={id:'',contents:'',inx=0}
-            obj.id=item.id;
-            obj.contents=item.contents;
-            obj.inx = index;
-            $scope.default_search_key.push(obj);
+            display_key.id=item.id;
+            display_key.contents=item.contents;
+            display_key.inx = index;
+            $scope.default_search_key.push(display_key);
           }
         });
         angular.forEach($scope.default_search_key,function(item,index,array){
