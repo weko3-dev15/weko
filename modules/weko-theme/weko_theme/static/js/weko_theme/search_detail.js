@@ -117,7 +117,7 @@
 //      ]
         // page init
         $scope.initData = function(data){
-          json_obj = angular.fromjson(data)
+          json_obj = angular.fromJson(data)
 
           alert(json_obj.condition_setting[0].id)
         }
