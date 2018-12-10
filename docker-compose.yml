@@ -55,6 +55,8 @@ web:
     - rabbitmq
   ports:
     - "5001:5000"
+  volumes:
+    - files-data:/var/tmp
 
 postgresql:
   restart: "always"
