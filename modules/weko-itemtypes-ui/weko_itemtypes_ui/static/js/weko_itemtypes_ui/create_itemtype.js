@@ -250,8 +250,8 @@
 //          for (var key in data) {
 //
 //          }
-          jsonData = JSON.stringify(data);
-          alert(jsonData.title);
+//          jsonData = JSON.stringify(data);
+          alert(data.title);
           page_global.table_row_map.schema.properties["title_ja"] = JSON.parse(jsonData['title']['schema']['title_ja'])
           page_global.table_row_map.schema.properties["title_en"] = JSON.parse(jsonData['title']['schema']['title_en'])
           page_global.table_row_map.form.push(JSON.parse(jsonData['title']['form']));
