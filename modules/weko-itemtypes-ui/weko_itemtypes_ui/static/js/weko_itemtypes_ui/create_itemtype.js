@@ -1032,7 +1032,7 @@
       async: false,
       success: function(data, status){
         properties_obj = data;
-        alert(data);
+        alert(str(data.keys()));
         Object.keys(data).forEach(function(key) {
           select_option = select_option + '<option value="cus_'+key+'">'+data[key].name+'</option>'
         });
