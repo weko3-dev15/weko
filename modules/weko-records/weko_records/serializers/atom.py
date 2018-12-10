@@ -158,7 +158,7 @@ class AtomSerializer(JSONSerializer):
             fe.link(href=item_url, rel='alternate', type='text/xml')
 
             # Set oai
-            _oai = item_metadata['_oai']['id']
+            _oai = hit['_source']['_oai']['id']
             item_url = request.host_url + 'oai2d?verb=GetRecord&metadataPrefix=jpcoar&identifier=' + _oai
             fe.link(href=item_url, rel='alternate', type='text/xml')
 
