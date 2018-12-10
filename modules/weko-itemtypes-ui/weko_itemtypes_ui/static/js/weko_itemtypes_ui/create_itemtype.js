@@ -244,6 +244,7 @@
         method: 'GET',
         url: '/itemtypes/default_property/list',
         async: false,
+        data: JSON.stringify(data),
         success: function(data, status){
 
 //          alert($.parseJSON(JSON.stringify(data['title']['schema']['title_ja'])));
@@ -252,7 +253,7 @@
 //          }
 //          page_global.table_row_map.schema.properties["title_ja"] = JSON.parse(JSON.stringify(data['title']['schema']['title_ja']))
 //          page_global.table_row_map.schema.properties["title_en"] = JSON.parse(JSON.stringify(data['title']['schema']['title_en']))
-          page_global.table_row_map.form.push(JSON.parse(JSON.stringify(data[key].form)));
+          page_global.table_row_map.form.push(JSON.parse(JSON.stringify(data[key]['form'])));
 
         },
         error: function(status, error){
