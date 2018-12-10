@@ -13,19 +13,21 @@
         json_obj = angular.fromJson(data)
         db_data = json_obj.condition_setting;
         angular.forEach(db_data,function(item,index,array){
-          if(item.default_display){
-            var default_key={id:'',contents:'', inx:0};
-            default_key.id=item.id;
-            default_key.contents=item.contents;
-            default_key.inx = index;
-            $scope.default_search_key.push(default_key);
-          };
+           // useable
           if(item.useable_status){
             var obj_key={id:'',contents:'', inx:0, disabled_flg:false};
             obj_key.id=item.id;
             obj_key.contents=item.contents;
             obj_key.inx = index;
             $scope.detail_search_key.push(obj_key);
+          };
+           // default display
+          if(item.default_display){
+            var default_key={id:'',contents:'', inx:0};
+            default_key.id=item.id;
+            default_key.contents=item.contents;
+            default_key.inx = index;
+            $scope.default_search_key.push(default_key);
           };
         });
         angular.forEach($scope.default_search_key,function(item,index,array){
@@ -37,6 +39,30 @@
         });
         $scope.update_disabled_flg();
       };
+      // add button
+      $scope.add_search_key=function(){
+        var obj_of_condition ={selected_key:'',key_options:[], key_value:{}}
+        var flg=0
+        for(var sub_detail of $scope.detail_search_key){
+          flg=0
+          for(var sub_condition of $scope.condition_data){
+            if(sub_detail.id==sub_condition.selected_key){
+              flg = 1
+              break;
+            }
+          }
+          if(flg==0){
+            obj_of_condition.selected_key = sub_detail.id;
+            obj_of_condition.key_options = $scope.detail_search_key;
+            obj_of_condition.key_value = db_data[sub_detail.inx];
+            $scope.condition_data.push(obj_of_condition)
+          }
+        }
+        $scope.update_disabled_flg();
+      }
+
+
+      // set search options
       $scope.update_disabled_flg=function(){
         for(var sub_condition of $scope.condition_data){
 //          for (var i=0; i< $scope.detail_search_key.length;i++){}
