@@ -142,6 +142,21 @@ def get_property_list(property_id=0):
 
     return jsonify(lists)
 
+# TODO
+@blueprint.route('/default_property/list', methods=['GET'])
+@login_required
+@item_type_permission.require(http_exception=403)
+def get_property_list():
+    """Renders an primitive property view."""
+    props = ItemTypeProps.get_default()
+    lists = {}
+    for k in props:
+        tmp = {'name': k.name, 'schema': k.schema, 'form': k.form,
+               'forms': k.forms, 'sort': k.sort}
+        lists[k.name] = tmp
+
+    return jsonify(lists)
+
 
 @blueprint.route('/property/<int:property_id>', methods=['GET'])
 @login_required

@@ -437,6 +437,9 @@ class ItemTypeProperty(db.Model, Timestamp):
 
     sort = db.Column(db.Integer, nullable=True, unique=True)
     """Sort number of itemtype property."""
+# TODO
+    default = db.Column(db.Boolean(name='default'), default=False, nullable=False)
+    """site license identify."""
 
 
 class SiteLicenseInfo(db.Model, Timestamp):

@@ -823,6 +823,18 @@ class ItemTypeProps(RecordBase):
                 query = ItemTypeProperty.query.filter_by(delflg=False)
 
             return query.all()
+# TODO
+    @classmethod
+    def get_default(cls):
+        """Retrieve multiple records by id.
+
+        :param ids: List of record IDs.
+        :returns: A list of :class:`Record` instances.
+        """
+        with db.session.no_autoflush:
+            query = ItemTypeProperty.query.filter_by(default=True)
+
+            return query.all()
 
     @property
     def revisions(self):
