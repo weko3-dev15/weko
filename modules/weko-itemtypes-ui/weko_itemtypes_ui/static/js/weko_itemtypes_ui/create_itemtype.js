@@ -239,35 +239,11 @@
 //                                                            "display_lang_type": ""
 //                                                        };
       }
-//TODO
-      $.ajax({
-        method: 'GET',
-        url: '/itemtypes/default_property/list',
-        async: false,
-        success: function(data, status){
-
-//          alert($.parseJSON(JSON.stringify(data['title']['schema']['title_ja'])));
-//          for (var key in data) {JSON.parse
-//
-//          }
-//          jsonData = JSON.stringify(data);
-          alert(data.title.schema.title_ja.type);
-          page_global.table_row_map.schema.properties["title_ja"] = data.title.schema.title_ja
-          page_global.table_row_map.schema.properties["title_en"] = data.title.schema.title_en
-          page_global.table_row_map.form.push(data.title.form);
-
-        },
-        error: function(status, error){
-          console.log(error);
-        }
-      });
-
-
 
       // タイトルなどを追加する
-//      page_global.table_row_map.schema.properties["title_ja"] = {type:"string",title:"タイトル",format:"text"}
-//      page_global.table_row_map.schema.properties["title_en"] = {type:"string",title:"タイトル(英)",format:"text"}
-//      page_global.table_row_map.form.push({type:"fieldset",title:"タイトル",title_i18n:{ja:"タイトル",en:"Title"},items:[{type:"text",key:"title_ja",title:"タイトル",title_i18n:{ja:"タイトル",en:"Title"},required:true},{type:"text",key:"title_en",title:"タイトル(英)",title_i18n:{ja:"タイトル(英)",en:"Title(English)"},required:true}]});
+      page_global.table_row_map.schema.properties["title_ja"] = {type:"string",title:"タイトル",format:"text"}
+      page_global.table_row_map.schema.properties["title_en"] = {type:"string",title:"タイトル(英)",format:"text"}
+      page_global.table_row_map.form.push({type:"fieldset",title:"タイトル",title_i18n:{ja:"タイトル",en:"Title"},items:[{type:"text",key:"title_ja",title:"タイトル",title_i18n:{ja:"タイトル",en:"Title"},required:true},{type:"text",key:"title_en",title:"タイトル(英)",title_i18n:{ja:"タイトル(英)",en:"Title(English)"},required:true}]});
       page_global.table_row_map.schema.properties["lang"] = {type:"string",title:"言語",format:"select",enum:["en","ja"]}
       page_global.table_row_map.form.push({key:"lang",type:"select",title:"言語",title_i18n:{ja:"言語",en:"Language"},required: true,titleMap:{"en":"英語","ja":"日本語"}});
       page_global.table_row_map.schema.properties["pubdate"] = {type:"string",title:"公開日",format:"datetime"}
@@ -280,26 +256,6 @@
       page_global.table_row_map.schema.required.push("lang");
       page_global.table_row_map.schema.required.push("pubdate");
 
-//{"title_ja": {"type": "string", "title": "タイトル", "format": "text"},
-// "title_en": {"type": "string", "title": "タイトル(英)", "format": "text"}
-//}
-//
-//{"type": "fieldset", "title": "タイトル", "title_i18n": {"ja": "タイトル", "en": "Title"}, "items": [{"type": "text", "key": "title_ja","title": "タイトル", "title_i18n": {"ja": "タイトル", "en": "Title"}, "required": true},{"type": "text", "key": "title_en", "title": "タイトル(英)", "title_i18n": {"ja": "タイトル(英)", "en": "Title(English)"}, "required":true}]}
-//      page_global.table_row_map.mapping['title_ja'] = {
-//                                                          "oai_dc_mapping": {
-//                                                              "title": ""
-//                                                          },
-//                                                          "lom_mapping": "",
-//                                                          "jpcoar_mapping": {
-//                                                              "title": ""
-//                                                          },
-//                                                          "lido_mapping": "",
-//                                                          "spase_mapping": "",
-//                                                          "junii2_mapping": {
-//                                                              "title": ""
-//                                                          },
-//                                                          "display_lang_type": ""
-//                                                      };
       if(src_mapping.hasOwnProperty('title_ja')) {
         page_global.table_row_map.mapping['title_ja'] = src_mapping['title_ja'];
       } else {
@@ -1049,7 +1005,7 @@
         }
       });
     }
-
+//TODO
     select_option = '<option value="text" selected>テキスト</option>'
                   + '<option value="textarea">テキストエリア</option>'
                   + '<option value="checkboxes">チェックボックス</option>'
@@ -1063,6 +1019,8 @@
       async: false,
       success: function(data, status){
         properties_obj = data;
+
+        alert(JSON.stringify(data));
 
         odered = {}
         others = ''
