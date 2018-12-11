@@ -129,10 +129,7 @@ def get_search_detail_keyword(str):
         item_type_list = get_keywords_data_load('')
         check_val=[]
         for x in item_type_list:
-            sub=dict()
-            sub['id']=x[1]
-            sub['contents'] = x[0]
-            sub['checkStus']=False
+            sub=dict(id=x[1],contents=x[0],checkStus=False)
             check_val.append(sub)
 
         for k_v in options:
