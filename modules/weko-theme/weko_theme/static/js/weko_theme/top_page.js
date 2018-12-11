@@ -315,14 +315,14 @@ require([
       });
 
        //クリアボタン：入力内容を削除
-      $('#clear-search-btn').on('click', function(){
-        $('#search_detail_metadata :input:not(:checkbox)').each(function(){
-          $(this).val('');
-        })
-        $('#search_detail_metadata :input:not(:text)').each(function(){
-          $(this).attr('checked',false);
-        })
-      });
+//      $('#clear-search-btn').on('click', function(){
+//        $('#search_detail_metadata :input:not(:checkbox)').each(function(){
+//          $(this).val('');
+//        })
+//        $('#search_detail_metadata :input:not(:text)').each(function(){
+//          $(this).attr('checked',false);
+//        })
+//      });
 
       //アイテム検索結果 (search_ui/static/templates/itemlist.html)
       $('#search_detail_metadata :input:not(:checkbox), #q').on('change', function(){

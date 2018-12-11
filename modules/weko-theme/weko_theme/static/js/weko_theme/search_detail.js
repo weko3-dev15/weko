@@ -10,6 +10,7 @@
       $scope.search_q="";
       $scope.search_community=document.getElementById('community').value;
       $scope.search_type="0";
+      $scope.default_condition_data=[]
 
       // page init
       $scope.initData = function(data){
@@ -40,6 +41,7 @@
           obj_of_condition.key_value = db_data[item.inx];
           $scope.condition_data.push(obj_of_condition)
         });
+        $scope.default_condition_data = $scope.condition_data;
         if(sessionStorage.getItem('btn')=='detail-search'){
           $scope.condition_data = angular.fromJson(sessionStorage.getItem('detail_search_conditions'));
         }
@@ -121,6 +123,10 @@
         sessionStorage.setItem('detail_search_conditions',angular.toJson($scope.condition_data));
         var url = '/search?page=1' + query_str
         window.location.href=url
+      }
+      //
+      $scope.detail_search_clear=function(){
+        $scope.condition_data = $scope.default_condition_data;
       }
       // set search options
       $scope.update_disabled_flg=function(){
