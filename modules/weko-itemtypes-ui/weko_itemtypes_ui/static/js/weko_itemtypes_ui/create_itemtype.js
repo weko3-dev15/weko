@@ -1006,12 +1006,13 @@
       });
     }
 //TODO
-    select_option = '<option value="text" selected>テキスト</option>'
-                  + '<option value="textarea">テキストエリア</option>'
-                  + '<option value="checkboxes">チェックボックス</option>'
-                  + '<option value="radios">選択式(ラジオ)</option>'
-                  + '<option value="select">選択式(プルダウン)</option>'
-                  + '<option value="datetime">日付</option>';
+//    select_option = '<option value="text" selected>テキスト</option>'
+//                  + '<option value="textarea">テキストエリア</option>'
+//                  + '<option value="checkboxes">チェックボックス</option>'
+//                  + '<option value="radios">選択式(ラジオ)</option>'
+//                  + '<option value="select">選択式(プルダウン)</option>'
+//                  + '<option value="datetime">日付</option>';
+    select_option = '';
     // 作成したメタデータ項目タイプの取得
     $.ajax({
       method: 'GET',
@@ -1021,21 +1022,21 @@
         properties_obj = data;
 
         defProps = data.defaults;
-        default_option = ''
         isSelected = true;
         Object.keys(defProps).forEach(function(key) {
           if (isSelected) {
-            default_option = default_option + '<option value="' + defProps[key].value + '" selected>' + defProps[key].name + '</option>';
+            select_option = select_option + '<option value="' + defProps[key].value + '" selected>' + defProps[key].name + '</option>';
             isSelected = false;
           } else {
-            default_option = default_option + '<option value="' + defProps[key].value + '">' + defProps[key].name + '</option>';
+            select_option = select_option + '<option value="' + defProps[key].value + '">' + defProps[key].name + '</option>';
           }
         });
-        alert(default_option);
 
         odered = {}
         others = ''
         for (var key in data) {
+          if (key == 'defaults') continue;
+
           option = '<option value="cus_' + key + '">' + data[key].name + '</option>'
           if (data[key].sort != null) {
             odered[data[key].sort] = option;
@@ -1049,9 +1050,6 @@
         });
         select_option = select_option + others;
 
-//        Object.keys(data).forEach(function(key) {
-//          select_option = select_option + '<option value="cus_'+key+'">'+data[key].name+'</option>'
-//        });
       },
       error: function(status, error){
         console.log(error);
