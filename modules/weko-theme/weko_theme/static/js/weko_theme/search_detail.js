@@ -118,7 +118,6 @@
             query_str=query_str+"&"+item.key_value.mappingName+"="+schema_or_arr;
           }
         });
-        sessionStorage.setItem('detail_search_conditions',$scope.condition_data);
         var url = '/search?page=1' + query_str
         window.location.href=url
       }
