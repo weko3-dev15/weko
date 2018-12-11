@@ -133,8 +133,8 @@ def get_search_detail_keyword(str):
             check_val.append(sub)
 
         for k_v in options:
-            if k_v.id == 'itemtype':
-                k_v.check_val = check_val
+            if k_v.get('id') == 'itemtype':
+                k_v['check_val'] = check_val
                 break
 
         key_options['condition_setting']= options
