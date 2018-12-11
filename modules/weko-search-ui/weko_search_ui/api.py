@@ -126,7 +126,7 @@ def get_search_detail_keyword(str):
         else :
             options = ad_config.WEKO_ADMIN_MANAGEMENT_OPTIONS['detail_condition']
 
-        item_type_list = get_keywords_data_load()
+        item_type_list = get_keywords_data_load('')
         check_val=[]
         for x in item_type_list:
             sub = {'id': '', 'contents': '', 'checkStus': False},
