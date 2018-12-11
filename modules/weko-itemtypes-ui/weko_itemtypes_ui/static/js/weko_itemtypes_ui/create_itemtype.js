@@ -1023,7 +1023,7 @@
         alert(JSON.stringify(data.defaults));
         default_option = ''
         for (var def in data.defaults) {
-          default_option = select_option + '<option value="' + def + '">' + data.defaults.def + '</option>';
+          default_option = default_option + '<option value="' + def + '">' + data.defaults.def + '</option>';
 
         }
         alert(default_option);
