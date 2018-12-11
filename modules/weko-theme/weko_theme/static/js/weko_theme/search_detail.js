@@ -85,7 +85,7 @@
         var url = $location.path();
         url = '/search?page=1' + query_str
         dbJson = [];
-        $http.post(url, dbJson).then(function successCallback(response) {
+        $http.get(url, dbJson).then(function successCallback(response) {
            alert(response.data.message);
         }, function errorCallback(response) {
            alert(response.data.message);
