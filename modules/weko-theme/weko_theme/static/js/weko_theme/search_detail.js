@@ -84,12 +84,7 @@
         });
         var url = $location.path();
         url = '/search?page=1' + query_str
-        dbJson = [];
-        $http.get(url, dbJson).then(function successCallback(response) {
-           alert(response.data.message);
-        }, function errorCallback(response) {
-           alert(response.data.message);
-        });
+        windows.location.href=url
       }
       // set search options
       $scope.update_disabled_flg=function(){
