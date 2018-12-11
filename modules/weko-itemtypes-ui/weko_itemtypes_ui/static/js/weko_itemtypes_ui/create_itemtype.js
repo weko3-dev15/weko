@@ -1022,10 +1022,10 @@
 
         defProps = data.defaults;
         default_option = ''
-        Object.keys(defProps).forEach(function(key) {
+        for (var key in defProps) {
           default_option = default_option + '<option value="' + key + '">' + defProps[key] + '</option>';
 
-        });
+        }
         alert(default_option);
 
         odered = {}
