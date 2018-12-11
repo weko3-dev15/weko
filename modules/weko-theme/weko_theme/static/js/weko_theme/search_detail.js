@@ -12,7 +12,7 @@
       $scope.search_type="0";
 
       // page init
-      $scope.initData = function(data){
+      $scope.initData = function(data,itemType_data){
         json_obj = angular.fromJson(data)
         db_data = json_obj.condition_setting;
         angular.forEach(db_data,function(item,index,array){
@@ -40,6 +40,9 @@
           obj_of_condition.key_value = db_data[item.inx];
           $scope.condition_data.push(obj_of_condition)
         });
+        if(sessionStorage.getItem('btn')=='detail-search'){
+          $scope.condition_data = sessionStorage.getItem('detail_search_conditions');
+        }
         $scope.update_disabled_flg();
       };
       // add button
@@ -106,7 +109,7 @@
             query_str=query_str+"&"+item.key_value.id+"="+item.key_value.inputVal
           }
           if(item.key_value.mappingFlg){
-            var schema_or_arr =""
+            var schema_or_arr ="";
             angular.forEach(item.key_value.sche_or_attr,function(item,index,array){
               if(item.checkStus){
                 schema_or_arr = schema_or_arr+item.id+",";
@@ -115,7 +118,7 @@
             query_str=query_str+"&"+item.key_value.mappingName+"="+schema_or_arr;
           }
         });
-
+        sessionStorage.setItem('detail_search_conditions',$scope.condition_data);
         var url = '/search?page=1' + query_str
         window.location.href=url
       }
