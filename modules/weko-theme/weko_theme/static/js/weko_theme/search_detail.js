@@ -77,6 +77,7 @@
       $scope.update_disabled_flg=function(){
         var update_flg = 0;
         for(var sub_default_key of $scope.detail_search_key ){
+          update_flg = 0;
           for(var sub_condition of $scope.condition_data){
             if(sub_default_key.id == sub_condition.selected_key){
               update_flg = 1;
