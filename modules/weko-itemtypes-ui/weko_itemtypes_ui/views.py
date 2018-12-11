@@ -140,7 +140,7 @@ def get_property_list(property_id=0):
                'forms': k.forms, 'sort': k.sort}
         lists[k.id] = tmp
 
-    lists['defaults'] = current_app.config['WEKO_ITEMTYPES_UI_DEFAULT_PROPERTIES']
+    # lists['defaults'] = current_app.config['WEKO_ITEMTYPES_UI_DEFAULT_PROPERTIES']
 
     return jsonify(lists)
 
