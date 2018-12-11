@@ -26,6 +26,7 @@ from invenio_db import db
 from weko_admin.models import SearchManagement as sm
 from weko_index_tree.api import Indexes
 from weko_admin import config as ad_config
+from weko_records.utils import get_keywords_data_load
 
 
 class SearchSetting(object):
@@ -124,6 +125,9 @@ def get_search_detail_keyword(str):
             options = res.search_conditions
         else :
             options = ad_config.WEKO_ADMIN_MANAGEMENT_OPTIONS['detail_condition']
+
+        str = get_keywords_data_load()
+        current_app.logger.debug(str)
 
         key_options['condition_setting']= options
 
