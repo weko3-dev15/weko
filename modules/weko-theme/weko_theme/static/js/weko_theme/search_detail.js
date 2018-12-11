@@ -91,7 +91,7 @@
             query_str=query_str+"&"+item.key_value.id+"_from="+item.key_value.inputVal_from+"&"+item.key_value.id+"_to="+item.key_value.inputVal_to;
           }
           if(item.key_value.inputType=="checkbox_list"){
-            key_arr =""
+            var key_arr =""
             angular.forEach(item.key_value.check_val,function(item,index,array){
               if(item.checkStus){
                 key_arr = key_arr+item.id+",";
@@ -106,13 +106,13 @@
             query_str=query_str+"&"+item.key_value.id+"="+item.key_value.inputVal
           }
           if(item.key_value.mappingFlg){
-            schema_or_arr =""
+            var schema_or_arr =""
             angular.forEach(item.key_value.sche_or_attr,function(item,index,array){
               if(item.checkStus){
-                key_arr = key_arr+item.id+",";
+                schema_or_arr = schema_or_arr+item.id+",";
               }
             });
-            query_str=query_str+"&"+item.key_value.mappingName+"="+key_arr;
+            query_str=query_str+"&"+item.key_value.mappingName+"="+schema_or_arr;
           }
         });
 
