@@ -1020,10 +1020,10 @@
       success: function(data, status){
         properties_obj = data;
 
-        alert(JSON.stringify(data.defaults));
+        defProps = JSON.stringify(data.defaults);
         default_option = ''
-        for (var def in data.defaults) {
-          default_option = default_option + '<option value="' + def + '">' + data.defaults['def'] + '</option>';
+        for (var def in defProps) {
+          default_option = default_option + '<option value="' + def + '">' + defProps['def'] + '</option>';
 
         }
         alert(default_option);
