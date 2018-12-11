@@ -12,7 +12,7 @@
       $scope.search_type="0";
 
       // page init
-      $scope.initData = function(data,itemType_data){
+      $scope.initData = function(data){
         json_obj = angular.fromJson(data)
         db_data = json_obj.condition_setting;
         angular.forEach(db_data,function(item,index,array){
