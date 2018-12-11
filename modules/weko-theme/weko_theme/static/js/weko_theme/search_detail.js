@@ -125,10 +125,10 @@
         }
       }
       $scope.set_init_data=function(){
-         $scope.condition_data=[];
-         $scope.detail_search_key=[];
-         $scope.default_search_key=[];
-         angular.forEach(db_data,function(item,index,array){
+          $scope.condition_data=[];
+          $scope.detail_search_key=[];
+          $scope.default_search_key=[];
+          angular.forEach(db_data,function(item,index,array){
            // useable
           if(item.useable_status){
             var obj_key={id:'',contents:'', inx:0, disabled_flg:false};
