@@ -127,7 +127,6 @@ def custom_property(property_id=0):
         lists=lists
     )
 
-# TODO
 @blueprint.route('/property/list', methods=['GET'])
 @login_required
 @item_type_permission.require(http_exception=403)

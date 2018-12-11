@@ -806,7 +806,6 @@ class ItemTypeProps(RecordBase):
                 return None
             return obj
 
-# TODO
     @classmethod
     def get_records(cls, ids):
         """Retrieve multiple records by id.
