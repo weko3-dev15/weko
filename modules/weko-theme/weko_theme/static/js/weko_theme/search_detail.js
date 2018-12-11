@@ -12,7 +12,7 @@
       $scope.default_condition_data=[]
 
       // page init
-      $scope.initData = function(data){
+      $scope.initData = function(data, itemType_data){
         json_obj = angular.fromJson(data)
         db_data = json_obj.condition_setting;
         $scope.set_init_data();
