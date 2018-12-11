@@ -72,7 +72,25 @@
         $scope.condition_data.splice(index,1,obj);
         $scope.update_disabled_flg();
       }
+      // detail search
+      $scope.detail_search=function(){
+        var query_str ="";
+        angular.forEach($scope.condition_data,function(item,index,array){
 
+          if(item.key_value.inputType=="text"){
+            query_str=query_str+"&"+item.key_value.id+"="+item.key_value.inputVal
+          }
+
+        });
+        var url = $location.path();
+        url = '/search?page=1' + query_str
+        dbJson = [];
+        $http.post(url, dbJson).then(function successCallback(response) {
+           alert(response.data.message);
+        }, function errorCallback(response) {
+           alert(response.data.message);
+        });
+      }
       // set search options
       $scope.update_disabled_flg=function(){
         var update_flg = 0;
