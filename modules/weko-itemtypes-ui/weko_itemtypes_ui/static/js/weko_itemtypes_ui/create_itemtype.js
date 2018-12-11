@@ -1005,7 +1005,7 @@
         }
       });
     }
-//TODO
+
 //    select_option = '<option value="text" selected>テキスト</option>'
 //                  + '<option value="textarea">テキストエリア</option>'
 //                  + '<option value="checkboxes">チェックボックス</option>'
