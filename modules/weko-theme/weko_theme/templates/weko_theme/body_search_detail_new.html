@@ -70,7 +70,7 @@ USA. #}
               </form>
             </div>
             <div class="col-sm-1 text-center">
-              <button type="button" class="btn btn-danger" ng-click="delete_search_key($index)">
+              <button ng-if="!$first" type="button" class="btn btn-danger" ng-click="delete_search_key($index)">
                 <span class="glyphicon glyphicon-remove"></span>
               </button>
             </div>
@@ -80,7 +80,7 @@ USA. #}
             <div class="col-sm-11">
             </div>
             <div class="col-sm-1">
-                <button id="add-condition-btn" type="button" class="btn btn-primary btn-block" ng-click="add_search_key()">{{_('Add')}}</button>
+                <button id="add-condition-btn" type="button" class="btn btn-primary btn-block" ng-click="add_search_key()" ng-disabled="condition_data.length==detail_search_key.length">{{_('Add')}}</button>
             </div>
         </div>
       <br>

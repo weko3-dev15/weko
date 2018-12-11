@@ -102,7 +102,7 @@
       //
       $scope.detail_search_clear=function(){
         $scope.set_init_data();
-        $scope.update_disabled_flg();
+//        $scope.update_disabled_flg();
       }
       // set search options
       $scope.update_disabled_flg=function(){
