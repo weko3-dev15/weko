@@ -1022,9 +1022,14 @@
 
         defProps = data.defaults;
         default_option = ''
+        isSelected = true;
         Object.keys(defProps).forEach(function(key) {
-          default_option = default_option + '<option value="' + defProps[key].value + '">' + defProps[key].name + '</option>';
-
+          if (isSelected) {
+            default_option = default_option + '<option value="' + defProps[key].value + '" selected>' + defProps[key].name + '</option>';
+            isSelected = false;
+          } else {
+            default_option = default_option + '<option value="' + defProps[key].value + '">' + defProps[key].name + '</option>';
+          }
         });
         alert(default_option);
 
