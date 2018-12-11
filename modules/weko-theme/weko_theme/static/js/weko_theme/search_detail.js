@@ -41,7 +41,7 @@
           $scope.condition_data.push(obj_of_condition)
         });
         if(sessionStorage.getItem('btn')=='detail-search'){
-          $scope.condition_data = sessionStorage.getItem('detail_search_conditions');
+          $scope.condition_data = angular.fromJson(sessionStorage.getItem('detail_search_conditions'));
         }
         $scope.update_disabled_flg();
       };
@@ -118,7 +118,7 @@
             query_str=query_str+"&"+item.key_value.mappingName+"="+schema_or_arr;
           }
         });
-        sessionStorage.setItem('detail_search_conditions',$scope.condition_data);
+        sessionStorage.setItem('detail_search_conditions',angular.toJson($scope.condition_data));
         var url = '/search?page=1' + query_str
         window.location.href=url
       }
