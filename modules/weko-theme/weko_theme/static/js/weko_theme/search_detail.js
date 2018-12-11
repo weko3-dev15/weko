@@ -3,7 +3,6 @@
   angular.element(document).ready(function() {
     angular.module('searchDetail.controllers', []);
     function searchDetailCtrl($scope, $rootScope,$http,$location){
-      $scope.testText ="angularjs is successfully runing !!!!";
       $scope.condition_data=[];
       $scope.detail_search_key=[];
       $scope.default_search_key=[];
@@ -125,6 +124,9 @@
         }
       }
       $scope.set_init_data=function(){
+         $scope.condition_data=[];
+         $scope.detail_search_key=[];
+         $scope.default_search_key=[];
          angular.forEach(db_data,function(item,index,array){
            // useable
           if(item.useable_status){
