@@ -1022,8 +1022,8 @@
 
         defProps = data.defaults;
         default_option = ''
-        for (var def in defProps) {
-          default_option = default_option + '<option value="' + def + '">' + defProps.def + '</option>';
+        Object.keys(defProps).forEach(function(key, value) {
+          default_option = default_option + '<option value="' + key + '">' + value + '</option>';
 
         }
         alert(default_option);
