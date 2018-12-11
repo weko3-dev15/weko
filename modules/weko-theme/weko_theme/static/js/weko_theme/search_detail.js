@@ -75,6 +75,10 @@
       // detail search
       $scope.detail_search=function(){
         var query_str ="";
+        query_str=query_str+"&search_type="+$scope.search_type + "&q="+$scope.search_q;
+        if($scope.search_community!=""){
+          query_str=query_str+"&community="+$scope.search_community;
+        }
         angular.forEach($scope.condition_data,function(item,index,array){
 
           if(item.key_value.inputType=="text"){
