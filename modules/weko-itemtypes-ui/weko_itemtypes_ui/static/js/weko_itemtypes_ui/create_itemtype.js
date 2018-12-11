@@ -1023,7 +1023,7 @@
         defProps = data.defaults;
         default_option = ''
         Object.keys(defProps).forEach(function(key) {
-          default_option = default_option + '<option value="' + key + '">' + defProps['key'] + '</option>';
+          default_option = default_option + '<option value="' + key + '">' + defProps[key] + '</option>';
 
         });
         alert(default_option);
