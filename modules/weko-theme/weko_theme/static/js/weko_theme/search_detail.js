@@ -126,7 +126,8 @@
       }
       //
       $scope.detail_search_clear=function(){
-        $scope.condition_data = $scope.default_condition_data;
+        $scope.condition_data = angular.fromJson(angular.toJson($scope.default_condition_data));
+        $scope.update_disabled_flg();
       }
       // set search options
       $scope.update_disabled_flg=function(){
