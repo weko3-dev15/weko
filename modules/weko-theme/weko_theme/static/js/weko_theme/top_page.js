@@ -194,90 +194,90 @@ require([
           query += $('#community').serialize().replace(/\+/g,'%20') + '&';
         }
         var btn = sessionStorage.getItem('btn', '');
-        if (btn == 'detail-search'){
-          $('#search_detail_metadata :input:not(:checkbox)').each(function(){
-            if ($(this).val() !== ''){
-              query += $(this).serialize().replace(/\+/g,'%20') + '&';
-            }
-          });
-          // 件名・分類取得
-          var obj=document.getElementsByName('sbjscheme');
-          var str = "";
-          for(var data of obj){
-            if(data.checked){
-              str+= data.value + ",";
-            }
-          }
-          if(str != ""){
-            query += '&sbjscheme='+ str;
-          }
-          //
-          var obj=document.getElementsByName('id_attr');
-          var str_id_attr = "";
-          for(var data of obj){
-            if(data.checked){
-              str_id_attr+= data.value + ",";
-            }
-          }
-          if(str_id_attr != ""){
-            query += '&id_attr='+ str_id_attr;
-          }
-          // itemType
-          var obj=document.getElementsByName('itemtype');
-          var str_ite = "";
-          for(var data of obj){
-            if(data.checked){
-              str_ite+= data.value + ",";
-            }
-          }
-          if(str_ite != ""){
-            query += '&itemtype='+ str_ite;
-          }
-          //resource type
-          var obj=document.getElementsByName('resourceType');
-          var str_re = "";
-          for(var data of obj){
-            if(data.checked){
-              str_re+= data.value + ",";
-            }
-          }
-          if(str_re != ""){
-            query += '&type='+ str_re;
-          }
-          //
-          var obj=document.getElementsByName('lang');
-          var str_lang = "";
-          for(var data of obj){
-            if(data.checked){
-              str_lang+= data.value + ",";
-            }
-          }
-          if(str_lang != ""){
-            query += '&lang='+ str_lang;
-          }
-
-          var obj=document.getElementsByName('contents_property');
-          var str_contents_property = "";
-          for(var data of obj){
-            if(data.checked){
-              str_contents_property+= data.value + ",";
-            }
-          }
-          if(str_contents_property != ""){
-            query += '&fd_attr='+ str_contents_property;
-          }
-
-          var obj=document.getElementsByName('rights');
-          var str_rights = "";
-          for(var data of obj){
-            if(data.checked){
-              if(data.value =="ANY"){
-                query = query.replace("&rights=ANY","");
-              }
-            }
-          }
-        }
-        window.location.href = ('/search?page=1&' + query).slice(0,-1);
+//        if (btn == 'detail-search'){
+//          $('#search_detail_metadata :input:not(:checkbox)').each(function(){
+//            if ($(this).val() !== ''){
+//              query += $(this).serialize().replace(/\+/g,'%20') + '&';
+//            }
+//          });
+//          // 件名・分類取得
+//          var obj=document.getElementsByName('sbjscheme');
+//          var str = "";
+//          for(var data of obj){
+//            if(data.checked){
+//              str+= data.value + ",";
+//            }
+//          }
+//          if(str != ""){
+//            query += '&sbjscheme='+ str;
+//          }
+//          //
+//          var obj=document.getElementsByName('id_attr');
+//          var str_id_attr = "";
+//          for(var data of obj){
+//            if(data.checked){
+//              str_id_attr+= data.value + ",";
+//            }
+//          }
+//          if(str_id_attr != ""){
+//            query += '&id_attr='+ str_id_attr;
+//          }
+//          // itemType
+//          var obj=document.getElementsByName('itemtype');
+//          var str_ite = "";
+//          for(var data of obj){
+//            if(data.checked){
+//              str_ite+= data.value + ",";
+//            }
+//          }
+//          if(str_ite != ""){
+//            query += '&itemtype='+ str_ite;
+//          }
+//          //resource type
+//          var obj=document.getElementsByName('resourceType');
+//          var str_re = "";
+//          for(var data of obj){
+//            if(data.checked){
+//              str_re+= data.value + ",";
+//            }
+//          }
+//          if(str_re != ""){
+//            query += '&type='+ str_re;
+//          }
+//          //
+//          var obj=document.getElementsByName('lang');
+//          var str_lang = "";
+//          for(var data of obj){
+//            if(data.checked){
+//              str_lang+= data.value + ",";
+//            }
+//          }
+//          if(str_lang != ""){
+//            query += '&lang='+ str_lang;
+//          }
+//
+//          var obj=document.getElementsByName('contents_property');
+//          var str_contents_property = "";
+//          for(var data of obj){
+//            if(data.checked){
+//              str_contents_property+= data.value + ",";
+//            }
+//          }
+//          if(str_contents_property != ""){
+//            query += '&fd_attr='+ str_contents_property;
+//          }
+//
+//          var obj=document.getElementsByName('rights');
+//          var str_rights = "";
+//          for(var data of obj){
+//            if(data.checked){
+//              if(data.value =="ANY"){
+//                query = query.replace("&rights=ANY","");
+//              }
+//            }
+//          }
+//        }
+//        window.location.href = ('/search?page=1&' + query).slice(0,-1);
         // stop the form from submitting the normal way and refreshing the page
         event.preventDefault();
       })
