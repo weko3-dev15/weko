@@ -35,7 +35,7 @@ USA. #}
                     <!--input_type is radio sta-->
                     <div ng-if="sub_data.key_value.inputType=='radio_list'" class="radio">
                       <label ng-repeat="sub_radio in sub_data.key_value.radio_val track by $index" class="radio-inline">
-                        <input type="radio" name="sub_data.key_value.id"  value="[[sub_radio.id]]"> [[sub_radio.contents]]
+                        <input type="radio" name="sub_data.key_value.id"  ng-value="[[sub_radio.id]]" ng-model="sub_data.key_value.inputVal"> [[sub_radio.contents]]
                       </label>
                     </div>
                     <!--input_type is radio end-->

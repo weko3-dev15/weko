@@ -83,14 +83,40 @@
           query_str=query_str+"&community="+$scope.search_community;
         }
         angular.forEach($scope.condition_data,function(item,index,array){
-
+          //
           if(item.key_value.inputType=="text"){
             query_str=query_str+"&"+item.key_value.id+"="+item.key_value.inputVal
           }
-
+          if(item.key_value.inputType=="dateRange"){
+            query_str=query_str+"&"+item.key_value.id+"_from="+item.key_value.inputVal_from+"&"+item.key_value.id+"_to="+item.key_value.inputVal_to;
+          }
+          if(item.key_value.inputType=="checkbox_list"){
+            key_arr =""
+            angular.forEach(item.key_value.check_val,function(item,index,array){
+              if(item.checkStus){
+                key_arr = key_arr+item.id+",";
+              }
+            });
+            query_str=query_str+"&"+item.key_value.id+"="+key_arr;
+          }
+          if(item.key_value.inputType=="selectbox"){
+            query_str=query_str+"&"+item.key_value.id+"="+item.key_value.inputVal
+          }
+          if(item.key_value.inputType=="radio_list"){
+            query_str=query_str+"&"+item.key_value.id+"="+item.key_value.inputVal
+          }
+          if(item.key_value.mappingFlg){
+            schema_or_arr =""
+            angular.forEach(item.key_value.sche_or_attr,function(item,index,array){
+              if(item.checkStus){
+                key_arr = key_arr+item.id+",";
+              }
+            });
+            query_str=query_str+"&"+item.key_value.mappingName+"="+key_arr;
+          }
         });
-        var url = $location.path();
-        url = '/search?page=1' + query_str
+
+        var url = '/search?page=1' + query_str
         window.location.href=url
       }
       // set search options
