@@ -141,7 +141,6 @@ def get_property_list(property_id=0):
         lists[k.id] = tmp
 
     lists['defaults'] = current_app.config['WEKO_ITEMTYPES_UI_DEFAULT_PROPERTIES']
-    flash(current_app.config['WEKO_ITEMTYPES_UI_DEFAULT_PROPERTIES'])
 
     return jsonify(lists)
 

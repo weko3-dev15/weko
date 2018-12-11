@@ -1020,7 +1020,7 @@
       success: function(data, status){
         properties_obj = data;
 
-        alert(JSON.stringify(data));
+        alert(JSON.stringify(data.defaults));
 
         odered = {}
         others = ''
