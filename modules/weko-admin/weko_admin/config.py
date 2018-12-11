@@ -228,7 +228,7 @@ WEKO_ADMIN_MANAGEMENT_OPTIONS = {
                                                                             {'id':'CC BY','contents':'CC BY'},
                                                                             {'id':'CC BY-SA','contents':'CC BY-SA'},
                                                                             {'id':'CC BY-ND','contents':'CC BY-ND'},
-                                                                            {'id':'CC BY-ND','contents':'CC BY-NC'},
+                                                                            {'id':'CC BY-NC','contents':'CC BY-NC'},
                                                                             {'id':'CC BY-NC-SA','contents':'CC BY-NC-SA'},
                                                                             {'id':'ANY','contents':'ANY'},
                                                                           ],'default_display':False,  'inputType':'radio_list', 'inputVal':'', 'mappingFlg':False, 'mappingName':''}
