@@ -8,7 +8,7 @@
       $scope.detail_search_key=[];
       $scope.default_search_key=[];
       $scope.search_q="";
-      $scope.search_community=document.getElementById('community');
+      $scope.search_community=document.getElementById('community').value;
       $scope.search_type="0";
 
       // page init
