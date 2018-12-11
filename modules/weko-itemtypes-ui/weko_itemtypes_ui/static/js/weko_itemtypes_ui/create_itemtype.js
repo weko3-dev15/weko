@@ -1020,7 +1020,12 @@
       success: function(data, status){
         properties_obj = data;
 
-        alert(JSON.stringify(data.defaults));
+        default_option = ''
+        for (var def in data.defaults) {
+          default_option = select_option + '<option value="' + def + '">' + data.defaults.def + '</option>';
+
+        }
+        alert(default_option);
 
         odered = {}
         others = ''
