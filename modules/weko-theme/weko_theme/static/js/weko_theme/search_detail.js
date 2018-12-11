@@ -84,7 +84,7 @@
         });
         var url = $location.path();
         url = '/search?page=1' + query_str
-        $location.path(url)
+        window.location.href=url
       }
       // set search options
       $scope.update_disabled_flg=function(){
