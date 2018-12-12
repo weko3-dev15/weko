@@ -184,8 +184,8 @@
 //                });
 //                $scope.update_disabled_flg();
                   for (var sub_default_key of $scope.detail_search_key) {
-//                    sub_default_key.disabled_flg = false;
-//                }
+                    sub_default_key.disabled_flg = false;
+                  }
                   angular.forEach($scope.condition_data, function (item, index, array) {
                     //
                     if (item.key_value.inputType == "text") {
