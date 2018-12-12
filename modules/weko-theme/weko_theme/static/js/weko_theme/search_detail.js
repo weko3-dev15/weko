@@ -149,7 +149,7 @@
         angular.forEach($scope.default_search_key,function(item,index,array){
           var obj_of_condition ={selected_key:'',key_options:[], key_value:{}}
           obj_of_condition.selected_key = item.id;
-          obj_of_condition.key_options = $scope.detail_search_key;
+          obj_of_condition.key_options = angular.copy($scope.detail_search_key);
           obj_of_condition.key_value = db_data[item.inx];
           $scope.condition_data.push(obj_of_condition)
         });
