@@ -20,7 +20,7 @@
         if(sessionStorage.getItem('btn')=='detail-search'){
           $scope.condition_data = angular.fromJson(sessionStorage.getItem('detail_search_conditions'));
         }
-        $scope.update_disabled_flg();
+//        $scope.update_disabled_flg();
       };
       // add button
       $scope.add_search_key=function(){
