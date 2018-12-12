@@ -26,7 +26,7 @@ require([
         $(href).removeClass();
         $(href).addClass('collapse');
       }
-    }, 500);
+    }, 300);
   });
 
   $('#public_status_btn').on('click', function(){
