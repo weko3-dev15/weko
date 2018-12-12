@@ -107,8 +107,52 @@
             }
             //
             $scope.detail_search_clear = function () {
-                $scope.condition_data = [];
 //                $scope.set_init_data();
+
+                $scope.condition_data = [];
+                $scope.detail_search_key = [];
+                $scope.default_search_key = [];
+                angular.forEach(db_data, function (item, index, array) {
+                    // useable
+                    if (item.useable_status) {
+                        var obj_key = {
+                            id: '',
+                            contents: '',
+                            inx: 0,
+                            disabled_flg: false
+                        };
+                        obj_key.id = item.id;
+                        obj_key.contents = item.contents;
+                        obj_key.inx = index;
+                        $scope.detail_search_key.push(obj_key);
+                    };
+                    // default display
+                    if (item.default_display) {
+                        var default_key = {
+                            id: '',
+                            contents: '',
+                            inx: 0
+                        };
+                        default_key.id = item.id;
+                        default_key.contents = item.contents;
+                        default_key.inx = index;
+                        $scope.default_search_key.push(default_key);
+                    };
+                });
+                angular.forEach($scope.default_search_key, function (item, index, array) {
+                    var obj_of_condition = {
+                        selected_key: '',
+                        key_options: [],
+                        key_value: {}
+                    }
+                    obj_of_condition.selected_key = item.id;
+                    obj_of_condition.key_options = angular.copy($scope.detail_search_key);
+                    obj_of_condition.key_value = db_data[item.inx];
+                    $scope.condition_data.push(obj_of_condition)
+                });
+
+
+
                 sessionStorage.setItem('detail_search_conditions', angular.toJson($scope.condition_data));
                 $scope.update_disabled_flg();
             }
