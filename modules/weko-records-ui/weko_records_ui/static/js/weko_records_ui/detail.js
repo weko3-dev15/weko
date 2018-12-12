@@ -7,7 +7,7 @@ require([
   });
 //  TODO
   $('.panel-toggle').on('click', function(){
-    col = $(this).attr("class");
+    col = $(this).attr("href");
 //    .attr("class");
     alert(col);
   });
