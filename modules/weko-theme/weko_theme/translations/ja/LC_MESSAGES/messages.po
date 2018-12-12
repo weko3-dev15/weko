@@ -398,3 +398,6 @@ msgstr "アイテム登録"
 msgid "Author Management"
 msgstr "著者ＤＢ"
 
+msgid "Add Search Condition"
+msgstr "検索条件を追加"
+
