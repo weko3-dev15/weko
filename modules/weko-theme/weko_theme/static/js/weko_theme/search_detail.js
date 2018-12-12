@@ -156,14 +156,16 @@
                     for (var sub_condition of $scope.condition_data) {
                         if (sub_default_key.id == sub_condition.selected_key) {
                             update_flg = 1;
+                            sub_condition.key_options.disabled_flg = true;
                             break;
                         }
                     }
-                    if (update_flg == 1) {
-                        sub_default_key.disabled_flg = true;
-                    } else {
-                        sub_default_key.disabled_flg = false;
-                    }
+
+//                    if (update_flg == 1) {
+//                        sub_default_key.disabled_flg = true;
+//                    } else {
+//                        sub_default_key.disabled_flg = false;
+//                    }
                 }
             }
             //restart
