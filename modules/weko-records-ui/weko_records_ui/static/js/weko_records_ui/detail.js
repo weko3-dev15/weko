@@ -7,9 +7,9 @@ require([
   });
 //  TODO
   $('.panel-toggle').on('click', function(){
-    col = $('#previewPanel').next().className;
+    col = $(this).attr("class");
 //    .attr("class");
-//    alert(col);
+    alert(col);
   });
 
   $('#public_status_btn').on('click', function(){
