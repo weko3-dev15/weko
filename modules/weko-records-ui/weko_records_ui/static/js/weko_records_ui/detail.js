@@ -6,7 +6,8 @@ require([
     window.history.back();
   });
   $('.panel-toggle').on('click', function(){
-    alert("Collapse!!!");
+    col = $('#previewPanel').next().attr("class");
+    alert(col);
   });
 
   $('#public_status_btn').on('click', function(){

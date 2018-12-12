@@ -40,7 +40,7 @@
 {%- if selected_file -%}
   {%- set state = record.access_right|accessright_category(record.embargo_date, success='default') %}
   <div class="panel panel-{{state}}" id="preview">
-    <div class="panel-heading">
+    <div id="previewPanel" class="panel-heading">
       <a class="panel-toggle" data-toggle="collapse" href="#collapseOne">
         {{_('Preview')}}
         <span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>
@@ -75,19 +75,3 @@
     </tbody>
     </table>
   {%- endif %}
-
-{% block tail %}
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>
-<script src="{{ url_for('static', filename='js/weko_admin/quill.min.js') }}"></script>
-
-<script>
-  $(document).ready(function() {
-    alert("Ready!!!");
-    $('.panel-toggle').on('click', function(){
-      alert("Collapse!!!");
-    });
-
-  })
-</script>
-{% endblock %}
