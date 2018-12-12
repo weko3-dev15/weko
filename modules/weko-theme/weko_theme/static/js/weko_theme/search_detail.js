@@ -49,9 +49,9 @@
                         key_options: [],
                         key_value: {}
                     }
-                    obj_of_condition.selected_key = angular.copy(item.id);
-                    obj_of_condition.key_options = angular.copy($scope.detail_search_key);
-                    obj_of_condition.key_value = angular.copy(db_data[item.inx]);
+                    obj_of_condition.selected_key =item.id;
+                    obj_of_condition.key_options = $scope.detail_search_key;
+                    obj_of_condition.key_value = db_data[item.inx];
                     $scope.condition_data.push(obj_of_condition)
                 });
                 $scope.default_condition_data = angular.fromJson(angular.toJson($scope.condition_data));
@@ -145,79 +145,45 @@
             //
             $scope.detail_search_clear = function () {
                 $scope.reset_data();
-                $scope.update_disabled_flg();
                 sessionStorage.setItem('detail_search_conditions', angular.toJson($scope.condition_data));
             }
             // set search options
             $scope.update_disabled_flg = function () {
-//                var update_flg = 0;
-//                for (var sub_default_key of $scope.detail_search_key) {
-//                    update_flg = 0;
-//                    for (var sub_condition of $scope.condition_data) {
-//                        if (sub_default_key.id == sub_condition.selected_key) {
-//                            update_flg = 1;
-//                            break;
-//                        }
-//                    }
-//                    if (update_flg == 1) {
-//                        sub_default_key.disabled_flg = true;
-//                    } else {
-//                        sub_default_key.disabled_flg = false;
-//                    }
-//                }
-
                 var update_flg = 0;
-                var key_list= []
-                for (var sub_condition of $scope.condition_data) {
-                  key_list.push(sub_condition.selected_key)
-                }
-
-
-                for (var sub_condition of $scope.condition_data) {
-                    for (var sub_condition_key of sub_condition.key_options) {
-                      for (var sub_key of key_list) {
-                          if (sub_key == sub_condition_key.id) {
-                              sub_condition_key.disabled_flg = true;
-                          }else{
-                              sub_condition_key.disabled_flg = false;
-                          }
-                      }
+                for (var sub_default_key of $scope.detail_search_key) {
+                    update_flg = 0;
+                    for (var sub_condition of $scope.condition_data) {
+                        if (sub_default_key.id == sub_condition.selected_key) {
+                            update_flg = 1;
+                            break;
+                        }
+                    }
+                    if (update_flg == 1) {
+                        sub_default_key.disabled_flg = true;
+                    } else {
+                        sub_default_key.disabled_flg = false;
                     }
                 }
-
-
 
             }
             //restart
             $scope.reset_data = function () {
                 $scope.condition_data=[];
-
-                for (var sub_condition of $scope.condition_data) {
-                    for (var sub_condition_key of sub_condition.key_options) {
-                      sub_condition_key.disabled_flg = false;
-                    }
-                 }
-
-//                for (var sub_default_key of $scope.detail_search_key) {
-//                    sub_default_key.disabled_flg = false;
-//                }
+                for (var sub_default_key of $scope.detail_search_key) {
+                    sub_default_key.disabled_flg = false;
+                }
                 angular.forEach($scope.default_search_key, function (item, index, array) {
                     var obj_of_condition = {
                         selected_key: '',
                         key_options: [],
                         key_value: {}
                     }
-                    obj_of_condition.selected_key = angular.copy(item.id);
-                    obj_of_condition.key_options = angular.copy($scope.detail_search_key);
-                    obj_of_condition.key_value = angular.copy(db_data[item.inx]);
+                    obj_of_condition.selected_key = item.id;
+                    obj_of_condition.key_options = $scope.detail_search_key;
+                    obj_of_condition.key_value = db_data[item.inx];
                     $scope.condition_data.push(obj_of_condition)
                 });
                 $scope.update_disabled_flg();
-
-
-
-
-
 
 //                  angular.forEach($scope.condition_data, function (item, index, array) {
 //                    //
