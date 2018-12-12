@@ -163,30 +163,3 @@ tree-internal ul .more {
 tree-internal ul .value-container {
   font-size: 14px;
 }
-
-/* For weko preview */
-.show-on-collapsed {
-	display: none;
-}
-.panel-toggle.collapsed {
-	.hide-on-collapsed {
-		display: none;
-	}
-	.show-on-collapsed {
-		display: block;
-	}
-}
-.hide-on-collapsed {
-	display: block;
-}
-.show-on-collapsed {
-	display: none;
-}
-.panel-toggle.collapsed {
-	.hide-on-collapsed {
-		display: none;
-	}
-	.show-on-collapsed {
-		display: block;
-	}
-}
