@@ -74,6 +74,7 @@ require([
 //      $('#search_detail_metadata :input:not(:checkbox), #q, #search_type :input').each(function(){
       $('#search_detail_metadata :input:not(:checkbox), #q, #search_type :input').each(function(){
         if (IsRec){
+          alert("AAAAA")
           input = sessionStorage.getItem($(this).attr('id'));
         }else{
           if (SearchType && SearchType != '2'){
@@ -81,6 +82,7 @@ require([
               input = GetUrlParam($(this).attr('id'));
             }
           }else{
+            alert("BBB")
             sessionStorage.removeItem($(this).attr('id'));
           }
         }
@@ -88,7 +90,6 @@ require([
         if (btn){
           if (btn == 'detail-search'){
             if (IsParamKey($(this).attr('id')) || IsRec){
-              alert("AAAA:"+input)
               if (input && input !== ''){
                 //type is text
                 $(this).val(input);
@@ -129,7 +130,6 @@ require([
         if (btn){
           if (btn == 'detail-search'){
             if (true || IsRec){
-              alert("BBBB:"+input)
               if (input && input !== ''){
                 //type is checkbox
                 $(this).attr('checked',true);
