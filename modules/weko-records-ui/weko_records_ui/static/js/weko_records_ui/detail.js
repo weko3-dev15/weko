@@ -7,10 +7,18 @@ require([
   });
 //  TODO
   $('.panel-toggle').on('click', function(){
-    a = $(this).attr("href");
-    b = $(a).attr("class");
+    href = $(this).attr("href");
+    contentClass = $(href).attr("class");
+    $(href).collapse('toggle');
+//    if(contentClass === 'collapse') {
+//      $(href).collapse('show');
+//
+//    } else {
+//      $(href).collapse('toggle');
+//
+//    }
 
-    alert(b);
+//    alert(b);
   });
 
   $('#public_status_btn').on('click', function(){
