@@ -21,7 +21,7 @@
                 if (sessionStorage.getItem('btn') == 'detail-search') {
                     $scope.condition_data = angular.fromJson(sessionStorage.getItem('detail_search_conditions'));
                 }
-                //        $scope.update_disabled_flg();
+                $scope.update_disabled_flg();
             };
             // add button
             $scope.add_search_key = function () {
@@ -58,7 +58,7 @@
             $scope.change_search_key = function (index, search_key) {
                 var obj = $scope.get_search_key(search_key)
                 $scope.condition_data.splice(index, 1, obj);
-//                $scope.update_disabled_flg();
+                $scope.update_disabled_flg();
             }
             // detail search
             $scope.detail_search = function () {
@@ -109,7 +109,7 @@
             $scope.detail_search_clear = function () {
                 $scope.set_init_data();
                 sessionStorage.setItem('detail_search_conditions', angular.toJson($scope.condition_data));
-                //        $scope.update_disabled_flg();
+                $scope.update_disabled_flg();
             }
             // set search options
             $scope.update_disabled_flg = function () {
