@@ -116,24 +116,37 @@ msgid "Custom_Desc"
 msgstr "Custom (Desc)"
 
 msgid "Search Results Setting"
-msgstr ""
+msgstr "Search Results Setting"
 
 msgid "Default Display Number"
-msgstr ""
+msgstr "Default Display Number"
 
 msgid "Default Display Sort (Index Search)"
-msgstr ""
+msgstr "Default Display Sort (By Index)"
 
 msgid "Default Display Sort (Keywords Search)"
-msgstr ""
+msgstr "Default Display Sort (By Keywords)"
 
 msgid "Please set the sort of search results ."
-msgstr ""
+msgstr "Please set the sort of search results ."
 
 msgid "Deny"
-msgstr ""
+msgstr "Deny"
 
 msgid "Allow "
-msgstr ""
+msgstr "Allow"
 
+msgid "Search Item"
+msgstr "Item"
 
+msgid "Useable Item"
+msgstr "Useable Item"
+
+msgid "Condition Name"
+msgstr "Condition Name"
+
+msgid "Initial Condition"
+msgstr "Initial Condition"
+
+msgid "JuNii2 Mapping"
+msgstr "JuNii2 Mapping"
