@@ -11,10 +11,14 @@ require([
     contentClass = $(href).attr("class");
 
     if(contentClass === 'collapse') {
-      $(href).collapse('show');
+      $(href).removeClass();
+      $(href).addClass('collapse in');
 
     } else {
-      $(href).collapse('hide');
+      $(href).removeClass();
+      $(href).addClass('collapse');
+
+//      $(href).collapse('hide');
 
     }
 
