@@ -21,7 +21,7 @@
 {%- extends admin_base_template %}
 
 {%- block body %}
-<div class="container">
+<!--<div class="container">-->
   <div class="row">
     <div class="col-sm-5">
       <div class="form-horizontal">
@@ -83,73 +83,75 @@
       <button class="btn btn-primary media-heading" id="btn_pop_action" {%- if flow_id == '0' %} disabled {% endif %}>
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{_('More Action')}}</button>
 
-      <table class="table table-striped table-bordered table-hover">
-        <thead>
-          <tr>
-            <th>{{_('Order')}}</th>
-            <th class="hide">{{_('Action ID')}}</th>
-            <th>{{_('Action Name')}}</th>
-            <th>{{_('Action Role')}}</th>
-            <th>{{_('Action User')}}</th>
-            <th class="hide">{{_('Action Status')}}</th>
-            <th class="hide">{{_('Action Update')}}</th>
-            <th class="hide">{{_('Action Version')}}</th>
-            <th>{{_('Change Order')}}</th>
-          </tr>
-        </thead>
-        <tbody id="tb_action_list">
-        {%- if actions %}
-          {%- for action in actions|sort(attribute='action_order') %}
-            <tr id="row_{{action.action_id}}">
-              <th scope="row"><span class="action_order">{{loop.index}}</span></th>
-              <td class="hide action_ids">{{action.action_id}}</td>
-              <td><span id="td_action_name_{{action.action_id}}">{{action.action.action_name}}</span></td>
-              <td>
-                <div class="form-inline">
-                  <div class="hide">{{action.action_role.action_role}}</div>
-                  <div class="hide">{{action.action_role.action_role_exclude}}</div>
-                  <select class="form-control td_action_role" id="td_action_role_{{action.action_id}}" data-action-id="{{action.action_id}}">
-                    <option value="0"></option>
-                    {%- for role in roles if role %}
-                    <option value="{{role.id}}" {% if role.id == action.action_role.action_role%}selected{% endif %}>{{role.name}}</option>
-                    {%- endfor %}
-                  </select>
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" class="td_action_role_deny" id="td_action_role_deny_{{action.action_id}}" data-action-id="{{action.action_id}}" {% if action.action_role.action_role_exclude %}checked{% endif %}> {{_('Deny')}}
-                    </label>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="form-inline">
-                  <select class="form-control td_action_user" id="td_action_user_{{action.action_id}}" data-action-id="{{action.action_id}}">
-                    <option value="0"></option>
-                    {%- for user in users if user %}
-                    <option value="{{user.id}}" {% if user.id == action.action_role.action_user%}selected{% endif %}>{{user.email}}</option>
-                    {%- endfor %}
-                  </select>
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" class="td_action_user_deny" id="td_action_user_deny_{{action.action_id}}" data-action-id="{{action.action_id}}" {% if action.action_role.action_user_exclude %}checked{% endif %}> {{_('Deny')}}
-                    </label>
-                  </div>
-                </div>
-              </td>
-              <td class="hide">{{_(action.action_status.value)}}</td>
-              <td class="hide"><span id="td_action_date_{{action.action_id}}">{{action.action_date.date()}}</span></td>
-              <td class="hide"><span id="td_action_ver_{{action.action_id}}">{{action.action_version|default(action.action.action_version)}}</span></td>
-              <td>
-                <div class="btn-group" role="group" aria-label="入替">
-                  <button type="button" class="btn btn-default sortable sortable_up" {%- if loop.first %}disabled{%- endif %}>↑</button>
-                  <button type="button" class="btn btn-default sortable sortable_down" {%- if loop.last %}disabled{%- endif %}>↓</button>
-                </div>
-              </td>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>{{_('Order')}}</th>
+              <th class="hide">{{_('Action ID')}}</th>
+              <th>{{_('Action Name')}}</th>
+              <th>{{_('Action Role')}}</th>
+              <th>{{_('Action User')}}</th>
+              <th class="hide">{{_('Action Status')}}</th>
+              <th class="hide">{{_('Action Update')}}</th>
+              <th class="hide">{{_('Action Version')}}</th>
+              <th>{{_('Change Order')}}</th>
             </tr>
-          {%- endfor %}
-        {%- endif %}
-        </tbody>
-      </table>
+          </thead>
+          <tbody id="tb_action_list">
+          {%- if actions %}
+            {%- for action in actions|sort(attribute='action_order') %}
+              <tr id="row_{{action.action_id}}">
+                <th scope="row"><span class="action_order">{{loop.index}}</span></th>
+                <td class="hide action_ids">{{action.action_id}}</td>
+                <td><span id="td_action_name_{{action.action_id}}">{{action.action.action_name}}</span></td>
+                <td>
+                  <div class="form-inline">
+                    <div class="hide">{{action.action_role.action_role}}</div>
+                    <div class="hide">{{action.action_role.action_role_exclude}}</div>
+                    <select class="form-control td_action_role" id="td_action_role_{{action.action_id}}" data-action-id="{{action.action_id}}">
+                      <option value="0"></option>
+                      {%- for role in roles if role %}
+                      <option value="{{role.id}}" {% if role.id == action.action_role.action_role%}selected{% endif %}>{{role.name}}</option>
+                      {%- endfor %}
+                    </select>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" class="td_action_role_deny" id="td_action_role_deny_{{action.action_id}}" data-action-id="{{action.action_id}}" {% if action.action_role.action_role_exclude %}checked{% endif %}> {{_('Deny')}}
+                      </label>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="form-inline">
+                    <select class="form-control td_action_user" id="td_action_user_{{action.action_id}}" data-action-id="{{action.action_id}}">
+                      <option value="0"></option>
+                      {%- for user in users if user %}
+                      <option value="{{user.id}}" {% if user.id == action.action_role.action_user%}selected{% endif %}>{{user.email}}</option>
+                      {%- endfor %}
+                    </select>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" class="td_action_user_deny" id="td_action_user_deny_{{action.action_id}}" data-action-id="{{action.action_id}}" {% if action.action_role.action_user_exclude %}checked{% endif %}> {{_('Deny')}}
+                      </label>
+                    </div>
+                  </div>
+                </td>
+                <td class="hide">{{_(action.action_status.value)}}</td>
+                <td class="hide"><span id="td_action_date_{{action.action_id}}">{{action.action_date.date()}}</span></td>
+                <td class="hide"><span id="td_action_ver_{{action.action_id}}">{{action.action_version|default(action.action.action_version)}}</span></td>
+                <td>
+                  <div class="btn-group" role="group" aria-label="入替">
+                    <button type="button" class="btn btn-default sortable sortable_up" {%- if loop.first %}disabled{%- endif %}>↑</button>
+                    <button type="button" class="btn btn-default sortable sortable_down" {%- if loop.last %}disabled{%- endif %}>↓</button>
+                  </div>
+                </td>
+              </tr>
+            {%- endfor %}
+          {%- endif %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -161,7 +163,7 @@
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>{{_('Back')}}</button>
     </div>
   </div>
-</div>
+<!--</div>-->
 {%- endblock %}
 
 {%- block javascript %}
