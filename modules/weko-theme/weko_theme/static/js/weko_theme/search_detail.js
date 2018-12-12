@@ -145,6 +145,7 @@
             //
             $scope.detail_search_clear = function () {
                 $scope.reset_data();
+                $scope.update_disabled_flg();
                 sessionStorage.setItem('detail_search_conditions', angular.toJson($scope.condition_data));
             }
             // set search options
@@ -165,6 +166,7 @@
 //                    }
 //                }
 
+                var update_flg = 0;
                 var key_list= []
                 for (var sub_condition of $scope.condition_data) {
                   key_list.push(sub_condition.selected_key)
@@ -175,11 +177,13 @@
                     for (var sub_condition_key of sub_condition.key_options) {
                       for (var sub_key of key_list) {
                           if (sub_key == sub_condition_key.id) {
-                              sub_condition_key = true
+                              sub_condition_key.disabled_flg = true
                           }
                       }
                     }
                 }
+
+
 
             }
             //restart
@@ -200,9 +204,15 @@
 //                    $scope.condition_data.push(obj_of_condition)
 //                });
 //                $scope.update_disabled_flg();
-                  for (var sub_default_key of $scope.detail_search_key) {
-                    sub_default_key.disabled_flg = false;
+
+
+                  for (var sub_condition of $scope.condition_data) {
+                    for (var sub_condition_key of sub_condition.key_options) {
+                      sub_condition_key.disabled_flg = false;
+                    }
                   }
+
+
                   angular.forEach($scope.condition_data, function (item, index, array) {
                     //
                     if (item.key_value.inputType == "text") {
