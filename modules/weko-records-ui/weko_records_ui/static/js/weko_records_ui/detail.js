@@ -7,9 +7,10 @@ require([
   });
 //  TODO
   $('.panel-toggle').on('click', function(){
-    col = $(this).attr("href");
-//    .attr("class");
-    alert(col);
+    a = $(this).attr("href");
+    b = $(a).attr("class");
+
+    alert(b);
   });
 
   $('#public_status_btn').on('click', function(){
