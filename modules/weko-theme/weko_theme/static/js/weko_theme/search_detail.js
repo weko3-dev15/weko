@@ -107,7 +107,8 @@
             }
             //
             $scope.detail_search_clear = function () {
-                $scope.set_init_data();
+                $scope.condition_data = [];
+//                $scope.set_init_data();
                 sessionStorage.setItem('detail_search_conditions', angular.toJson($scope.condition_data));
                 $scope.update_disabled_flg();
             }
