@@ -118,11 +118,11 @@ msgstr "Custom (Desc)"
 msgid "Search Results Setting"
 msgstr "Search Results Setting"
 
-msgid "Default Display Number"
-msgstr "Default Display Number"
+msgid "Default Display Number :"
+msgstr "Default Display Number："
 
-msgid "Default Display Sort (Index Search)"
-msgstr "Default Display Sort (By Index)"
+msgid "Default Display Sort (Index Search) :"
+msgstr "Default Display Sort (By Index)："
 
 msgid "Default Display Sort (Keywords Search)"
 msgstr "Default Display Sort (By Keywords)"
@@ -135,6 +135,9 @@ msgstr "Deny"
 
 msgid "Allow "
 msgstr "Allow"
+
+msgid "Detail Search Conditions Setting "
+msgstr "Detail Search Conditions Setting "
 
 msgid "Search Item"
 msgstr "Item"

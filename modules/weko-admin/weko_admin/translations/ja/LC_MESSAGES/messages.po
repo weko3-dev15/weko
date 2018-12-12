@@ -143,14 +143,14 @@ msgstr "カスタム（降順）"
 msgid "Search Results Setting"
 msgstr "検索結果表示設定"
 
-msgid "Default Display Number"
-msgstr "デフォルト表示件数"
+msgid "Default Display Number :"
+msgstr "デフォルト表示件数："
 
-msgid "Default Display Sort (Index Search)"
-msgstr "デフォルトソート条件（インデクス検索）"
+msgid "Default Display Sort (Index Search) :"
+msgstr "デフォルトソート条件（インデクス検索）："
 
-msgid "Default Display Sort (Keywords Search)"
-msgstr "デフォルトソート条件（キーワード検索）"
+msgid "Default Display Sort (Keywords Search) :"
+msgstr "デフォルトソート条件（キーワード検索）："
 
 msgid "Please set the sort of search results ."
 msgstr "一覧に表示するソート条件を設定してください"
@@ -160,6 +160,9 @@ msgstr "表示しない"
 
 msgid "Allow "
 msgstr "表示する"
+
+msgid "Detail Search Conditions Setting "
+msgstr "詳細検索条件設定"
 
 msgid "Search Item"
 msgstr "項目"
