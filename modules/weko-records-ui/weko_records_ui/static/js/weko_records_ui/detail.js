@@ -5,10 +5,11 @@ require([
   $('#btn_back').on('click', function(){
     window.history.back();
   });
+//  TODO
   $('.panel-toggle').on('click', function(){
     col = $('#previewPanel').next().className;
 //    .attr("class");
-    alert(col);
+//    alert(col);
   });
 
   $('#public_status_btn').on('click', function(){
