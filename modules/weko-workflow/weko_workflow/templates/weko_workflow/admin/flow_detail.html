@@ -23,7 +23,8 @@
 {%- block body %}
 <!--<div class="container">-->
   <div class="row">
-    <div class="col-sm-5">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-4">
       <div class="form-horizontal">
         <div class="form-group" id="div_flow_name">
           <label for="txt_flow_name" class="col-sm-4 control-label">{{_('Flow Name')}}</label>
@@ -33,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-7">
+    <div class="col-sm-4">
       <div class="form-horizontal">
         <div class="form-group">
           <label class="col-sm-3 control-label">{{_('Flow Update')}}</label>
@@ -73,10 +74,12 @@
         </div>
       </div>
     </div>
+    <div class="col-sm-2"></div>
   </div>
   <hr>
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
       <label>{{_('Action List')}}</label><br>
       <a href="{{url_for('flowsetting.action')}}" class="btn btn-primary hide" id="btn_more_action">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>{{_('More Action')}}</a>
@@ -153,6 +156,7 @@
         </table>
       </div>
     </div>
+    <div class="col-sm-2"></div>
   </div>
   <div class="row">
     <div class="col-sm-10">
