@@ -5,25 +5,27 @@ require([
   $('#btn_back').on('click', function(){
     window.history.back();
   });
-//  TODO
-  $('.panel-toggle').on('click', function(){
-    href = $(this).attr("href");
-    contentClass = $(href).attr("class");
-
-    if(contentClass === 'collapse') {
-      $(href).removeClass();
-      $(href).addClass('collapse in');
-
-    } else {
-      $(href).removeClass();
-      $(href).addClass('collapse');
-
-//      $(href).collapse('hide');
-
-    }
-
-//    alert(b);
+  $('.preview-link').on('click', function(event) {
+    $('#preview').show();
+    var filename = encodeURIComponent($(event.target).data('filename'));
+    $('#preview-iframe').attr("src","{{ url_for('invenio_records_ui.recid_preview', pid_value=record.recid, filename='') }}" + filename);
   });
+//  TODO
+//  $('.panel-toggle').on('click', function(){
+//    href = $(this).attr("href");
+//    contentClass = $(href).attr("class");
+//
+//    if(contentClass === 'collapse') {
+//      $(href).removeClass();
+//      $(href).addClass('collapse in');
+//
+//    } else {
+//      $(href).removeClass();
+//      $(href).addClass('collapse');
+//
+//    }
+//
+//  });
 
   $('#public_status_btn').on('click', function(){
      var status = $(this).val();
