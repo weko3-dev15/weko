@@ -64,7 +64,7 @@ def search():
 
     # add at 1206 for search management
     sort_options, display_number = SearchSetting.get_results_setting()
-    disply_setting =dict(size=display_number)
+    disply_setting =dict(size=100)
 
     if 'management' in getArgs:
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
