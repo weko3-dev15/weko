@@ -136,8 +136,8 @@ msgstr "Deny"
 msgid "Allow "
 msgstr "Allow"
 
-msgid "Detail Search Conditions Setting "
-msgstr "Detail Search Conditions Setting "
+msgid "Detail Search Conditions Setting"
+msgstr "Detail Search Conditions Setting"
 
 msgid "Search Item"
 msgstr "Item"

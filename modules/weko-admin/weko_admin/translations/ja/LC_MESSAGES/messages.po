@@ -161,7 +161,7 @@ msgstr "表示しない"
 msgid "Allow "
 msgstr "表示する"
 
-msgid "Detail Search Conditions Setting "
+msgid "Detail Search Conditions Setting"
 msgstr "詳細検索条件設定"
 
 msgid "Search Item"
