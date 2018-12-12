@@ -158,7 +158,7 @@ msgstr "一覧に表示するソート条件を設定してください"
 msgid "Deny"
 msgstr "表示しない"
 
-msgid "Allow "
+msgid "Allow"
 msgstr "表示する"
 
 msgid "Detail Search Conditions Setting"
@@ -167,10 +167,10 @@ msgstr "詳細検索条件設定"
 msgid "Search Item"
 msgstr "項目"
 
-msgid "Useable Item "
+msgid "Useable Item"
 msgstr "使用項目"
 
-msgid "Condition Name "
+msgid "Condition Name"
 msgstr "検索条件"
 
 msgid "Initial Condition"
@@ -178,3 +178,6 @@ msgstr "初期選択"
 
 msgid "JuNii2 Mapping"
 msgstr "JuNii2 マッピング"
+
+msgid "Save"
+msgstr "保存"

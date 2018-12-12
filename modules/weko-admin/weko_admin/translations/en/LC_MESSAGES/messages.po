@@ -133,7 +133,7 @@ msgstr "Please set the sort of search results ."
 msgid "Deny"
 msgstr "Deny"
 
-msgid "Allow "
+msgid "Allow"
 msgstr "Allow"
 
 msgid "Detail Search Conditions Setting"
@@ -153,3 +153,6 @@ msgstr "Initial Condition"
 
 msgid "JuNii2 Mapping"
 msgstr "JuNii2 Mapping"
+
+msgid "Save"
+msgstr "Save"
