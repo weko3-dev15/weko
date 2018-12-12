@@ -6,7 +6,7 @@ require([
     window.history.back();
   });
   $('.panel-toggle').on('click', function(){
-    col = $('#previewPanel').nextAll("div").attr("class");
+    col = $('#previewPanel').next;
 //    .attr("class");
     alert(col);
   });
