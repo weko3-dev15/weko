@@ -88,7 +88,7 @@ require([
         if (btn){
           if (btn == 'detail-search'){
             if (IsParamKey($(this).attr('id')) || IsRec){
-              alert("AAAA")
+              alert("AAAA:"+input)
               if (input && input !== ''){
                 //type is text
                 $(this).val(input);
@@ -129,6 +129,7 @@ require([
         if (btn){
           if (btn == 'detail-search'){
             if (true || IsRec){
+              alert("BBBB:"+input)
               if (input && input !== ''){
                 //type is checkbox
                 $(this).attr('checked',true);
