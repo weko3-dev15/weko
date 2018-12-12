@@ -167,23 +167,50 @@
             }
             //restart
             $scope.reset_data = function () {
-                $scope.condition_data=[];
+//                $scope.condition_data=[];
+//                for (var sub_default_key of $scope.detail_search_key) {
+//                    sub_default_key.disabled_flg = false;
+//                }
+//                angular.forEach($scope.default_search_key, function (item, index, array) {
+//                    var obj_of_condition = {
+//                        selected_key: '',
+//                        key_options: [],
+//                        key_value: {}
+//                    }
+//                    obj_of_condition.selected_key = item.id;
+//                    obj_of_condition.key_options = $scope.detail_search_key;
+//                    obj_of_condition.key_value = db_data[item.inx];
+//                    $scope.condition_data.push(obj_of_condition)
+//                });
+//                $scope.update_disabled_flg();
 
-                for (var sub_default_key of $scope.detail_search_key) {
-                    sub_default_key.disabled_flg = false;
-                }
-                angular.forEach($scope.default_search_key, function (item, index, array) {
-                    var obj_of_condition = {
-                        selected_key: '',
-                        key_options: [],
-                        key_value: {}
+                  angular.forEach($scope.condition_data, function (item, index, array) {
+                    //
+                    if (item.key_value.inputType == "text") {
+                        item.key_value.inputVal = "";
                     }
-                    obj_of_condition.selected_key = item.id;
-                    obj_of_condition.key_options = $scope.detail_search_key;
-                    obj_of_condition.key_value = db_data[item.inx];
-                    $scope.condition_data.push(obj_of_condition)
+                    if (item.key_value.inputType == "dateRange") {
+                        item.key_value.inputVal_from = "";
+                        item.key_value.inputVal_to ="";
+                    }
+                    if (item.key_value.inputType == "checkbox_list") {
+                        angular.forEach(item.key_value.check_val, function (item, index, array) {
+                            item.checkStus = false;
+                        });
+                    }
+                    if (item.key_value.inputType == "selectbox") {
+                        item.key_value.inputVal="";
+                    }
+                    if (item.key_value.inputType == "radio_list") {
+                        item.key_value.inputVal="";
+                    }
+                    if (item.key_value.mappingFlg) {
+                        angular.forEach(item.key_value.sche_or_attr, function (item, index, array) {
+                            item.checkStus = false
+                        });
+                    }
                 });
-                $scope.update_disabled_flg();
+
             }
 
             // set search options
