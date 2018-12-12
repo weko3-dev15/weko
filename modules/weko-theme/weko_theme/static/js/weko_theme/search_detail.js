@@ -169,6 +169,10 @@
             //restart
             $scope.reset_data = function () {
                 $scope.condition_data=[];
+
+                for (var sub_default_key of $scope.detail_search_key) {
+                    sub_default_key.disabled_flg = false;
+                }
                 angular.forEach($scope.default_search_key, function (item, index, array) {
                     var obj_of_condition = {
                         selected_key: '',
@@ -182,8 +186,6 @@
                     $scope.update_disabled_flg();
                 });
             }
-
-
 
             // set search options
             $scope.get_search_key = function (search_key) {
