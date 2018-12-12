@@ -25,39 +25,47 @@
 {%- from "invenio_previewer/macros.html" import preview_file %}
 
 {% block css %}
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <!--<style>-->
-    <!--/* For weko preview */-->
-    <!--.show-on-collapsed {-->
-      <!--display: none;-->
-    <!--}-->
-    <!--.panel-toggle.collapsed {-->
-      <!--.hide-on-collapsed {-->
-        <!--display: none;-->
-      <!--}-->
-      <!--.show-on-collapsed {-->
-        <!--display: block;-->
-      <!--}-->
-    <!--}-->
-    <!--.hide-on-collapsed {-->
-      <!--display: block;-->
-    <!--}-->
-    <!--.show-on-collapsed {-->
-      <!--display: none;-->
-    <!--}-->
-    <!--.panel-toggle.collapsed {-->
-      <!--.hide-on-collapsed {-->
-        <!--display: none;-->
-      <!--}-->
-      <!--.show-on-collapsed {-->
-        <!--display: block;-->
-      <!--}-->
-    <!--}-->
-  <!--</style>-->
+  <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+  <style>
+    /* For weko preview */
+    .show-on-collapsed {
+      display: none;
+    }
+    .panel-toggle.collapsed {
+      .hide-on-collapsed {
+        display: none;
+      }
+      .show-on-collapsed {
+        display: block;
+      }
+    }
+    .hide-on-collapsed {
+      display: block;
+    }
+    .show-on-collapsed {
+      display: none;
+    }
+    .panel-toggle.collapsed {
+      .hide-on-collapsed {
+        display: none;
+      }
+      .show-on-collapsed {
+        display: block;
+      }
+    }
+    .panel-toggle.collapsed {
+      .hide-on-collapsed {
+        display: none;
+      }
+      .show-on-collapsed {
+        display: block;
+      }
+    }
+  </style>
 {% endblock %}
 
 {%- block javascript %}
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
   <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 {%- endblock javascript %}
 
@@ -69,8 +77,8 @@
     <div class="panel-heading">
       <a class="panel-toggle" data-toggle="collapse" href="#collapseOne">
         {{_('Preview')}}
-        <!--<span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>-->
-        <!--<span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>-->
+        <span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>
+        <span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>
       </a>
     </div>
     <div id="collapseOne" class="collapse in">
