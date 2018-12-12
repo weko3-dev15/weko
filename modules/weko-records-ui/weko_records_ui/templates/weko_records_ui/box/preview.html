@@ -24,6 +24,10 @@
 
 {%- from "invenio_previewer/macros.html" import preview_file %}
 
+{%- block javascript %}
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+{%- endblock javascript %}
+
 {% set selected_file = files|select_preview_file %}
 
 {%- if selected_file -%}
