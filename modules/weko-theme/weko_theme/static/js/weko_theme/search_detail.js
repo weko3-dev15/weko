@@ -209,8 +209,8 @@
                     obj_of_condition.key_options = angular.copy($scope.detail_search_key);
                     obj_of_condition.key_value = angular.copy(db_data[item.inx]);
                     $scope.condition_data.push(obj_of_condition)
-                    $scope.update_disabled_flg();
                 });
+                $scope.update_disabled_flg();
 
 
 
