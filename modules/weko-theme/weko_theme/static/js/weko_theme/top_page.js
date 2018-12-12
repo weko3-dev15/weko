@@ -88,6 +88,7 @@ require([
         if (btn){
           if (btn == 'detail-search'){
             if (IsParamKey($(this).attr('id')) || IsRec){
+              alert("AAAA")
               if (input && input !== ''){
                 //type is text
                 $(this).val(input);
