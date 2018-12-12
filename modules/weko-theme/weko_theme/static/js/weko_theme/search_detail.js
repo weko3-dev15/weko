@@ -110,7 +110,7 @@
 //                $scope.set_init_data();
 
                 $scope.condition_data = [];
-                $scope.detail_search_key = [];
+                $scope.detail_search_key_new = [];
                 $scope.default_search_key = [];
                 angular.forEach(db_data, function (item, index, array) {
                     // useable
@@ -124,7 +124,7 @@
                         obj_key.id = item.id;
                         obj_key.contents = item.contents;
                         obj_key.inx = index;
-                        $scope.detail_search_key.push(obj_key);
+                        $scope.detail_search_key_new.push(obj_key);
                     };
                     // default display
                     if (item.default_display) {
@@ -146,7 +146,7 @@
                         key_value: {}
                     }
                     obj_of_condition.selected_key = item.id;
-                    obj_of_condition.key_options = angular.copy($scope.detail_search_key);
+                    obj_of_condition.key_options = angular.copy($scope.detail_search_key_new);
                     obj_of_condition.key_value = db_data[item.inx];
                     $scope.condition_data.push(obj_of_condition)
                 });
