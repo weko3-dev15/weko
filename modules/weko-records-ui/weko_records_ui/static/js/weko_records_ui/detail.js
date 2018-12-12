@@ -9,14 +9,14 @@ require([
   $('.panel-toggle').on('click', function(){
     href = $(this).attr("href");
     contentClass = $(href).attr("class");
-    $(href).collapse('toggle');
-//    if(contentClass === 'collapse') {
-//      $(href).collapse('show');
-//
-//    } else {
-//      $(href).collapse('toggle');
-//
-//    }
+
+    if(contentClass === 'collapse') {
+      $(href).collapse('show');
+
+    } else {
+      $(href).collapse('hide');
+
+    }
 
 //    alert(b);
   });
