@@ -177,7 +177,9 @@
                     for (var sub_condition_key of sub_condition.key_options) {
                       for (var sub_key of key_list) {
                           if (sub_key == sub_condition_key.id) {
-                              sub_condition_key.disabled_flg = true
+                              sub_condition_key.disabled_flg = true;
+                          }else{
+                              sub_condition_key.disabled_flg = false;
                           }
                       }
                     }
