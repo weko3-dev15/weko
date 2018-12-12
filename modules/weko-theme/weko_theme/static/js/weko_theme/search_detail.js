@@ -146,7 +146,6 @@
             $scope.detail_search_clear = function () {
                 $scope.reset_data();
                 sessionStorage.setItem('detail_search_conditions', angular.toJson($scope.condition_data));
-                $scope.update_disabled_flg();
             }
             // set search options
             $scope.update_disabled_flg = function () {
