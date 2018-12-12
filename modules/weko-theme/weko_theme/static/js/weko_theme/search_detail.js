@@ -148,7 +148,9 @@
             //
             $scope.detail_search_clear = function () {
                 $scope.clear_flg = true;
-
+                $scope.condition_data = [];
+                $scope.detail_search_key = [];
+                $scope.default_search_key = [];
                 $scope.initData($scope.data_json_str);
 //                $scope.reset_data();
                 sessionStorage.setItem('detail_search_conditions', angular.toJson($scope.condition_data));
