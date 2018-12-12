@@ -26,11 +26,39 @@
 
 {% block css %}
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!--<style>-->
+    <!--/* For weko preview */-->
+    <!--.show-on-collapsed {-->
+      <!--display: none;-->
+    <!--}-->
+    <!--.panel-toggle.collapsed {-->
+      <!--.hide-on-collapsed {-->
+        <!--display: none;-->
+      <!--}-->
+      <!--.show-on-collapsed {-->
+        <!--display: block;-->
+      <!--}-->
+    <!--}-->
+    <!--.hide-on-collapsed {-->
+      <!--display: block;-->
+    <!--}-->
+    <!--.show-on-collapsed {-->
+      <!--display: none;-->
+    <!--}-->
+    <!--.panel-toggle.collapsed {-->
+      <!--.hide-on-collapsed {-->
+        <!--display: none;-->
+      <!--}-->
+      <!--.show-on-collapsed {-->
+        <!--display: block;-->
+      <!--}-->
+    <!--}-->
+  <!--</style>-->
 {% endblock %}
 
 {%- block javascript %}
   <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 {%- endblock javascript %}
 
 {% set selected_file = files|select_preview_file %}
