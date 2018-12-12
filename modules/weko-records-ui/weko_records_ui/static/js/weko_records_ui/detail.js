@@ -5,6 +5,9 @@ require([
   $('#btn_back').on('click', function(){
     window.history.back();
   });
+  $('.panel-toggle').on('click', function(){
+    alert("Collapse!!!");
+  });
 
   $('#public_status_btn').on('click', function(){
      var status = $(this).val();
