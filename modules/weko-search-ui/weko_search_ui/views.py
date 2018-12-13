@@ -67,7 +67,6 @@ def search():
     sort_options, display_number = SearchSetting.get_results_setting()
     disply_setting =dict(size=display_number)
 
-    current_app.logger.debug('CCCCCCCCC')
     detail_condition = get_search_detail_keyword('')
 
     if 'management' in getArgs:

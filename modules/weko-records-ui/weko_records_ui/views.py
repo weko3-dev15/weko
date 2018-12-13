@@ -264,8 +264,6 @@ def default_view_method(pid, record, template=None, **kwargs):
     style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
     width = style.width if style else '3'
 
-    current_app.logger.debug("BBBBBB")
-
     detail_condition=get_search_detail_keyword('')
 
     return render_template(

@@ -54,7 +54,7 @@
                     }
                     obj_of_condition.selected_key =item.id;
                     obj_of_condition.key_options = $scope.detail_search_key;
-                    obj_of_condition.key_value = db_data[item.inx];
+                    obj_of_condition.key_value = angular.copy(db_data[item.inx]);
                     $scope.condition_data.push(obj_of_condition)
                 });
                 $scope.default_condition_data = angular.fromJson(angular.toJson($scope.condition_data));
@@ -82,7 +82,7 @@
                     if (flg == 0) {
                         obj_of_condition.selected_key = sub_detail.id;
                         obj_of_condition.key_options = $scope.detail_search_key;
-                        obj_of_condition.key_value = db_data[sub_detail.inx];
+                        obj_of_condition.key_value = angular.copy(db_data[sub_detail.inx]);
                         $scope.condition_data.push(obj_of_condition)
                         break;
                     }
