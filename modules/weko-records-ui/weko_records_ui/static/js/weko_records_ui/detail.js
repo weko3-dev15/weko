@@ -6,6 +6,32 @@ require([
     window.history.back();
   });
 
+//TODO
+  $('.panel-toggle').on('click', function(){
+    href = $(this).attr("href");
+    contentClass = $(href).attr("class");
+    if(contentClass === 'collapse') {
+      $(href).removeClass();
+      $(href).addClass('collapse in');
+
+    } else {
+      $(href).removeClass();
+      $(href).addClass('collapse');
+
+//    var timer = 0;
+//    if (timer > 0) {clearTimeout(timer);}
+//    timer = setTimeout(function () {
+//      if(contentClass === 'collapse') {
+//        $(href).removeClass();
+//        $(href).addClass('collapse in');
+//
+//      } else {
+//        $(href).removeClass();
+//        $(href).addClass('collapse');
+//      }
+//    }, 300);
+  });
+
   $('#public_status_btn').on('click', function(){
      var status = $(this).val();
      var data = {'public_status': status};
