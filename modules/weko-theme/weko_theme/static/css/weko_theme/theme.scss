@@ -165,6 +165,12 @@ tree-internal ul .value-container {
 }
 
 /* For weko preview */
+.hide-on-collapsed {
+	display: none;
+}
+.show-on-collapsed {
+	display: block;
+}
 .panel-toggle.collapsed {
 	.hide-on-collapsed {
 		display: none;
