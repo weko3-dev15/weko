@@ -654,9 +654,16 @@ class Indexes(object):
         :param node_id: Identifier of the index.
         :return: the type of Index.
         """
-        recursive_t = cls.recs_query()
-        return db.session.query(recursive_t).filter(
-            recursive_t.c.cid == str(node_id)).one_or_none()
+        try:
+            recursive_t = cls.recs_query()
+            return db.session.query(recursive_t).filter(
+                recursive_t.c.cid == str(node_id)).one_or_none()
+        except Exception as ex:
+            current_app.logger.debug(ex)
+            db.session.rollback()
+            return False
+
+
 
     @classmethod
     def recs_query(cls, pid=0):

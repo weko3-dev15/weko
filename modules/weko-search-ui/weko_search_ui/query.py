@@ -588,7 +588,6 @@ def item_path_search_factory(self, search, index_id=None):
         # defalult sort
     # default sort
     if not sortkwargs:
-        import weko_admin
         sort_key, sort = SearchSetting.get_default_sort(current_app.config['WEKO_SEARCH_TYPE_INDEX'])
         sort_obj = dict()
         key_fileds = SearchSetting.get_sort_key(sort_key)
