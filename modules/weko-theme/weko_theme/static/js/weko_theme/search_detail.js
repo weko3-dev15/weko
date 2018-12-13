@@ -11,12 +11,9 @@
             $scope.search_community = document.getElementById('community').value;
             $scope.search_type = "0";
             $scope.default_condition_data = []
-            $scope.clear_flg = false;
-            $scope.data_json_str="";
 
             // page init
             $scope.initData = function (data) {
-                $scope.data_json_str=data
                 json_obj = angular.fromJson(data)
                 db_data = json_obj.condition_setting;
                 angular.forEach(db_data, function (item, index, array) {
@@ -147,12 +144,7 @@
             }
             //
             $scope.detail_search_clear = function () {
-                $scope.clear_flg = true;
-                $scope.condition_data = [];
-                $scope.detail_search_key = [];
-                $scope.default_search_key = [];
-                $scope.initData($scope.data_json_str);
-//                $scope.reset_data();
+                $scope.reset_data();
                 sessionStorage.setItem('detail_search_conditions', angular.toJson($scope.condition_data));
             }
             // set search options
@@ -188,41 +180,10 @@
                     }
                     obj_of_condition.selected_key = item.id;
                     obj_of_condition.key_options = $scope.detail_search_key;
-                    obj_of_condition.key_value = db_data[item.inx];
+                    obj_of_condition.key_value = angular.copy(db_data[item.inx]);
                     $scope.condition_data.push(obj_of_condition)
                 });
                 $scope.update_disabled_flg();
-
-//                  angular.forEach($scope.condition_data, function (item, index, array) {
-//                    //
-//                    if (item.key_value.inputType == "text") {
-//                        item.key_value.inputVal = "";
-//                    }
-//                    if (item.key_value.inputType == "dateRange") {
-//                        item.key_value.inputVal_from = "";
-//                        item.key_value.inputVal_to ="";
-//                    }
-//                    if (item.key_value.inputType == "checkbox_list") {
-//                        angular.forEach(item.key_value.check_val, function (item, index, array) {
-//                            item.checkStus = false;
-//                        });
-//                    }
-//                    if (item.key_value.inputType == "selectbox") {
-//                        item.key_value.inputVal="";
-//                    }
-//                    if (item.key_value.inputType == "radio_list") {
-//                        item.key_value.inputVal="";
-//                    }
-//                    if (item.key_value.mappingFlg) {
-//                        angular.forEach(item.key_value.sche_or_attr, function (item, index, array) {
-//                            item.checkStus = false
-//                        });
-//                    }
-//                });
-
-
-
-
             }
 
             // set search options
