@@ -27,6 +27,7 @@ from weko_index_tree.models import IndexStyle
 from weko_index_tree.api import Indexes
 from invenio_indexer.api import RecordIndexer
 from .api import SearchSetting
+from weko_search_ui.api import get_search_detail_keyword
 
 blueprint = Blueprint(
     'weko_search_ui',
@@ -67,6 +68,7 @@ def search():
     disply_setting =dict(size=display_number)
 
     current_app.logger.debug('CCCCCCCCC')
+    detail_condition = get_search_detail_keyword('')
 
     if 'management' in getArgs:
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
@@ -75,7 +77,7 @@ def search():
     else:
         return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
-                               sort_option=sort_options, disply_setting=disply_setting, width=width, **ctx)
+                               sort_option=sort_options, disply_setting=disply_setting, detail_condition=detail_condition, width=width, **ctx)
 
 
 @blueprint_api.route('/opensearch/description.xml', methods=['GET'])
