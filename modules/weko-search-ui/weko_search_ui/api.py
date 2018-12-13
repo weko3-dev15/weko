@@ -98,7 +98,7 @@ class SearchSetting(object):
                     "order": "asc"
                 }
             }
-            default_sort = {'_score': {'order': 'desc'}}
+            default_sort = {'_created': {'order': 'desc'}}
         else:
             factor_obj = Indexes.get_item_sort(index_id)
             script_str = {
@@ -111,7 +111,7 @@ class SearchSetting(object):
                     "order": "desc"
                 }
             }
-            default_sort = {'_score': {'order': 'asc'}}
+            default_sort = {'_created': {'order': 'asc'}}
 
         return script_str, default_sort
 
