@@ -329,7 +329,16 @@
     <!--href = $(this).attr("href").parent().next();-->
     <!--content = $(this).parent().next();-->
     contentClass = $(this).parent().next().attr("class");
-    alert(contentClass);
+    <!--alert(contentClass);-->
+    if(contentClass === 'collapse') {
+      $(href).removeClass();
+      $(href).addClass('collapse in');
+
+    } else {
+      $(href).removeClass();
+      $(href).addClass('collapse');
+    }
+
 
   });
 
