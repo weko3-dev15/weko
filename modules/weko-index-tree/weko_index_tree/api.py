@@ -22,7 +22,7 @@
 
 from datetime import datetime
 from copy import deepcopy
-from flask import current_app, json, jsonify
+from flask import current_app, json
 from flask_login import current_user
 from invenio_db import db
 from invenio_accounts.models import Role

@@ -69,14 +69,17 @@ def search():
 
     detail_condition = get_search_detail_keyword('')
 
+    height = style.height if style else None
+
     if 'management' in getArgs:
         return render_template(current_app.config['WEKO_ITEM_MANAGEMENT_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
-                               width=width, **ctx)
+                               width=width, height=height, **ctx)
     else:
         return render_template(current_app.config['SEARCH_UI_SEARCH_TEMPLATE'],
                                index_id=cur_index_id, community_id=community_id,
-                               sort_option=sort_options, disply_setting=disply_setting, detail_condition=detail_condition, width=width, **ctx)
+                               sort_option=sort_options, disply_setting=disply_setting, detail_condition=detail_condition, width=width, height=height, **ctx)
+
 
 
 @blueprint_api.route('/opensearch/description.xml', methods=['GET'])

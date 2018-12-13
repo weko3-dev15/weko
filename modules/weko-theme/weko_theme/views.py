@@ -50,12 +50,15 @@ def index():
     # Get index style
     style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
     width = style.width if style else '3'
+    height = style.height if style else None
 
     detail_condition = get_search_detail_keyword('')
 
     return render_template(
         current_app.config['THEME_FRONTPAGE_TEMPLATE'],
-        community_id =community_id, detail_condition=detail_condition, width=width, **ctx)
+        community_id =community_id, detail_condition=detail_condition, width=width,height=height, **ctx)
+
+
 
 
 @blueprint.route('/edit')
