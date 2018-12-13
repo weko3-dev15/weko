@@ -137,7 +137,7 @@
                 {%- if 'preview' in file.displaytype -%}
                 <tr >
                   <td colspan="2">
-                    <div class="panel panel-default" id="preview">
+                    <div class="panel panel-default" id="preview{{loop.index}}">
                       <div class="panel-heading">
                         <a class="panel-toggle" data-toggle="collapse" href="#{{loop.index}}">
                           {{_('Preview')}}
