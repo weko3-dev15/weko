@@ -5,10 +5,10 @@ require([
   $('#btn_back').on('click', function(){
     window.history.back();
   });
-
-  $('[data-toggle="collapse"]').click(function() {
-    $('.collapse.in').collapse('hide')
-  });
+//TODO
+    $(document).ready(function() {
+      $('#1').collapse({'toggle': false});
+    });
 
   $('#public_status_btn').on('click', function(){
      var status = $(this).val();
