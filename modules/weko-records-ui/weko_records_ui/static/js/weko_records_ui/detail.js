@@ -6,6 +6,10 @@ require([
     window.history.back();
   });
 
+  $('[data-toggle="collapse"]').click(function() {
+    $('.collapse.in').collapse('hide')
+  });
+
   $('#public_status_btn').on('click', function(){
      var status = $(this).val();
      var data = {'public_status': status};
