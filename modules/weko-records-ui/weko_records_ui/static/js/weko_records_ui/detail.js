@@ -6,22 +6,6 @@ require([
     window.history.back();
   });
 
-//TODO
-  $('.panel-toggle').on('click', function(){
-    href = $(this).attr("href");
-    contentClass = $(href).attr("class");
-    alert($('#1').get(0).tagName);
-//    if(contentClass === 'collapse') {
-//      $(href).removeClass();
-//      $(href).addClass('collapse in');
-//
-//    } else {
-//      alert(contentClass);
-//      $(href).removeClass();
-//      $(href).addClass('collapse');}
-
-  });
-
   $('#public_status_btn').on('click', function(){
      var status = $(this).val();
      var data = {'public_status': status};
