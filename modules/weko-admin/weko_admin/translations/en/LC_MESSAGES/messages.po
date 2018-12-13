@@ -151,8 +151,8 @@ msgstr "Condition Name"
 msgid "Initial Condition"
 msgstr "Initial Condition"
 
-msgid "JuNii2 Mapping"
-msgstr "JuNii2 Mapping"
+msgid "JPCOAR Mapping"
+msgstr "JPCOAR Mapping"
 
 msgid "Save"
 msgstr "Save"

@@ -176,8 +176,8 @@ msgstr "検索条件"
 msgid "Initial Condition"
 msgstr "初期選択"
 
-msgid "JuNii2 Mapping"
-msgstr "JuNii2 マッピング"
+msgid "JPCOAR Mapping"
+msgstr "JPCOAR マッピング"
 
 msgid "Save"
 msgstr "保存"
