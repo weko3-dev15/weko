@@ -327,9 +327,9 @@
 <script>
   $('.panel-toggle').on('click', function(){
     <!--href = $(this).attr("href").parent().next();-->
-    href = $(this).parent().next();
-    contentClass = $(href).attr("class");
-    alert(href.attr("class"));
+    <!--content = $(this).parent().next();-->
+    contentClass = $(this).parent().next().attr("class");
+    alert(contentClass);
 
   });
 
