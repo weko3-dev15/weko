@@ -6,9 +6,9 @@ require([
     window.history.back();
   });
 //TODO
-    $(document).ready(function() {
-      $('#1').collapse({'toggle': false});
-    });
+//    $(document).ready(function() {
+//      $('#1').collapse({'toggle': false});
+//    });
 
   $('#public_status_btn').on('click', function(){
      var status = $(this).val();
