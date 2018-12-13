@@ -15,8 +15,9 @@ require([
       $(href).addClass('collapse in');
 
     } else {
+      alert(contentClass);
       $(href).removeClass();
-      $(href).addClass('collapse');
+      $(href).addClass('collapse');}
 
 //    var timer = 0;
 //    if (timer > 0) {clearTimeout(timer);}
