@@ -10,7 +10,7 @@ require([
   $('.panel-toggle').on('click', function(){
     href = $(this).attr("href");
     contentClass = $(href).attr("class");
-    alert(href);
+    alert($(href).attr("class"));
 //    if(contentClass === 'collapse') {
 //      $(href).removeClass();
 //      $(href).addClass('collapse in');
