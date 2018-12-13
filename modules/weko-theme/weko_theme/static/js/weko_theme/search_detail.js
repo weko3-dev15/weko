@@ -49,7 +49,7 @@
                         key_options: [],
                         key_value: {}
                     }
-                    obj_of_condition.selected_key =item.id;
+                    obj_of_condition.selected_key = item.id;
                     obj_of_condition.key_options = $scope.detail_search_key;
                     obj_of_condition.key_value = angular.copy(db_data[item.inx]);
                     $scope.condition_data.push(obj_of_condition)
@@ -168,7 +168,7 @@
             }
             //restart
             $scope.reset_data = function () {
-                $scope.condition_data=[];
+                $scope.condition_data = [];
                 for (var sub_default_key of $scope.detail_search_key) {
                     sub_default_key.disabled_flg = false;
                 }
@@ -197,7 +197,7 @@
                     if (sub_default_key.id == search_key) {
                         obj_of_condition.selected_key = search_key;
                         obj_of_condition.key_options = $scope.detail_search_key;
-                        obj_of_condition.key_value = db_data[sub_default_key.inx];
+                        obj_of_condition.key_value = angular.copy(db_data[sub_default_key.inx]);
                         break;
                     }
                 }
