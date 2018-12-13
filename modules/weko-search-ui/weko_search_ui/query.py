@@ -431,7 +431,6 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
     search, urlkwargs = default_facets_factory(search, search_index)
     search, sortkwargs = default_sorter_factory(search, search_index)
 
-    current_app.logger.debug(sortkwargs)
     for key, value in sortkwargs.items():
         urlkwargs.add(key, value)
 
@@ -449,7 +448,6 @@ def default_search_factory(self, search, query_parser=None, search_type=None):
         urlkwargs.add('sort',sort_key)
 
     urlkwargs.add('q', query_q)
-    current_app.logger.debug(search._sort)
     return search, urlkwargs
 
 

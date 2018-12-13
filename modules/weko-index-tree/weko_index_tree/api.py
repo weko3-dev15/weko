@@ -650,7 +650,6 @@ class Indexes(object):
     def get_self_path(cls, node_id):
         """
         Get index view path info.
-
         :param node_id: Identifier of the index.
         :return: the type of Index.
         """
@@ -662,7 +661,6 @@ class Indexes(object):
             current_app.logger.debug(ex)
             db.session.rollback()
             return False
-
 
 
     @classmethod
