@@ -318,13 +318,16 @@
 </div>
 
 {% block tail %}
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!--<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>-->
 <!--<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js"></script>-->
 <!--<script src="{{ url_for('static', filename='js/weko_admin/quill.min.js') }}"></script>-->
 
 <script>
   $('.panel-toggle').on('click', function(){
-    href = $(this).attr("href").parent().next();
+    <!--href = $(this).attr("href").parent().next();-->
+    href = $(this).parent().next();
     contentClass = $(href).attr("class");
     alert(href);
 
