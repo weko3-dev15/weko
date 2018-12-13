@@ -326,17 +326,17 @@
 
 <script>
   $('.panel-toggle').on('click', function(){
-    <!--href = $(this).attr("href").parent().next();-->
+    href = $(this).attr("href").parent().next();
     <!--content = $(this).parent().next();-->
-    contentClass = $(this).parent().next().attr("class");
+    contentClass = href.attr("class");
     <!--alert(contentClass);-->
     if(contentClass === 'collapse') {
-      $(href).removeClass();
-      $(href).addClass('collapse in');
+      href.removeClass();
+      href.addClass('collapse in');
 
     } else {
-      $(href).removeClass();
-      $(href).addClass('collapse');
+      href.removeClass();
+      href.addClass('collapse');
     }
 
 
