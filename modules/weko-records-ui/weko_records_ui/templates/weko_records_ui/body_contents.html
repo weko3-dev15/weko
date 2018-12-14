@@ -324,13 +324,13 @@
 <script>
   $('.panel-toggle').on('click', function(){
     content = $($(this).attr("href"));
-    var offset = content.offset();
+    <!--var offset = content.offset();-->
     if(content.hasClass("in")) {
       content.removeClass("in");
     } else {
       content.addClass('in');
     }
-    content.offset(offset);
+    <!--content.offset(offset);-->
 
   });
 
