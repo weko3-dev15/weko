@@ -320,19 +320,24 @@
 {% block tail %}
 <script>
   $('.panel-toggle').on('click', function(){
-    href = $(this).parent().next();
-    contentClass = href.attr("class");
+    toggle = $(this).parent();
+    content = toggle.next();
+    contentClass = content.attr("class");
     if(contentClass === 'collapse') {
-      href.removeClass();
-      href.addClass('collapse in');
+      content.removeClass();
+      content.addClass('collapse in');
 
-      <!--$(this).parent().removeClass('collapse');-->
+      if (toggle.hasClass("collapse")) {
+        toggle.removeClass('collapse');
+      }
 
     } else {
-      href.removeClass();
-      href.addClass('collapse');
+      content.removeClass();
+      content.addClass('collapse');
 
-      <!--$(this).parent().addClass('collapse');-->
+      if (!toggle.hasClass("collapse")) {
+        toggle.addClass('collapse');
+      }
     }
   });
 
