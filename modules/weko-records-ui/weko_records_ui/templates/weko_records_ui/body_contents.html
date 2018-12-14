@@ -326,11 +326,9 @@
     content = $($(this).attr("href"));
 
     if(content.hasClass("in")) {
-      content.removeClass();
-      content.addClass('panel-collapse collapse');
+      content.removeClass("in");
     } else {
-      content.removeClass();
-      content.addClass('panel-collapse collapse in');
+      content.addClass('in');
     }
   });
 
