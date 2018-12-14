@@ -140,7 +140,7 @@
                     <div class="panel panel-default">
                       <div class="panel-heading" role="tab" id="heading{{loop.index}}">
                         {%- set targetId = '#preview' + loop.index|string -%}
-                        <a class="panel-toggle" href="#preview{{loop.index}}" onclick="alert('{{targetId}}')">
+                        <a class="panel-toggle" href="#" onclick="previewContent({{targetId}})">
                           {{_('Preview')}}
                           <!--<span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>-->
                           <!--<span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>-->
