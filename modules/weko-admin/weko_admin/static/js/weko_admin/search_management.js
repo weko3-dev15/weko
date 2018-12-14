@@ -49,6 +49,15 @@
            alert(response.data.message);
         });
       }
+      // search key setting
+      $scope.setSearchKeyOptions = function(){
+        $scope.dataJson.dlt_index_sort_options
+        $scope.dataJson.dlt_keyword_sort_options
+
+
+
+
+      }
       //
     }
     // Inject depedencies
