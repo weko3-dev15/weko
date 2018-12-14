@@ -146,7 +146,8 @@
                           <!--TODO-->
                         </a>
                       </div>
-                      <div id="preview{{loop.index}}" class="panel-collapse collapse" role="tabpanel">
+                      <!--<div id="preview{{loop.index}}" class="panel-collapse collapse" role="tabpanel">-->
+                      <div id="preview{{loop.index}}" class="hidden" role="tabpanel">
                         <div class="panel-body">
                           <div class="embed-responsive embed-responsive-16by9">
                             {%- if 'audio' in file.mimetype -%}
@@ -324,13 +325,12 @@
 <script>
   $('.panel-toggle').on('click', function(){
     content = $($(this).attr("href"));
-    <!--var offset = content.offset();-->
-    if(content.hasClass("in")) {
-      content.removeClass("in");
+
+    if(content.hasClass("hidden")) {
+      content.removeClass("hidden");
     } else {
-      content.addClass('in');
+      content.addClass('hidden');
     }
-    <!--content.offset(offset);-->
 
   });
 
