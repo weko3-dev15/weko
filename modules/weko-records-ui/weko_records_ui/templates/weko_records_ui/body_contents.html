@@ -139,14 +139,14 @@
                   <td colspan="2">
                     <div class="panel panel-default">
                       <div class="panel-heading" role="tab" id="heading{{loop.index}}">
-                        <a class="panel-toggle" href="#collapse{{loop.index}}">
+                        <a class="panel-toggle" href="#preview{{loop.index}}">
                           {{_('Preview')}}
                           <!--<span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>-->
                           <!--<span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>-->
                           <!--TODO-->
                         </a>
                       </div>
-                      <div id="collapse{{loop.index}}" class="panel-collapse collapse" role="tabpanel">
+                      <div id="preview{{loop.index}}" class="panel-collapse collapse" role="tabpanel">
                         <div class="panel-body">
                           <div class="embed-responsive embed-responsive-16by9">
                             {%- if 'audio' in file.mimetype -%}
@@ -320,9 +320,13 @@
 </div>
 </div>
 
-<!--{% block tail %}-->
-<!--<script>-->
-  <!--$('.panel-toggle').on('click', function(){-->
+{% block tail %}
+<script>
+  $('.panel-toggle').on('click', function(){
+    alert($(this).attr("href"));
+
+
+
     <!--content = $(this).parent().next();-->
     <!--contentClass = content.attr("class");-->
     <!--if(contentClass === 'collapse') {-->
@@ -341,7 +345,7 @@
         <!--&lt;!&ndash;$(this).addClass('collapse');&ndash;&gt;-->
       <!--&lt;!&ndash;}&ndash;&gt;-->
     <!--}-->
-  <!--});-->
+  });
 
-<!--</script>-->
-<!--{% endblock %}-->
+</script>
+{% endblock %}
