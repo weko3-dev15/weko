@@ -324,17 +324,16 @@
 {% block tail %}
 <script>
 
-  <!--function previewContent(sParam) {-->
-      <!--var sURL = window.location.search.substring(1);-->
-      <!--var sURLVars = sURL.split('&');-->
-      <!--for (var i = 0; i < sURLVars.length; i++) {-->
-          <!--var sParamArr = sURLVars[i].split('=');-->
-          <!--if (sParamArr[0] == sParam) {-->
-              <!--return decodeURIComponent(sParamArr[1]);-->
-          <!--}-->
-      <!--}-->
-      <!--return false;-->
-  <!--}-->
+  function previewContent(targetId) {
+    content = $(targetId);
+
+    if(content.hasClass("in")) {
+      content.removeClass("in");
+    } else {
+      content.addClass('in');
+    }
+      return false;
+  }
 
   <!--$('.panel-toggle').on('click', function(){-->
     <!--content = $($(this).attr("href"));-->
