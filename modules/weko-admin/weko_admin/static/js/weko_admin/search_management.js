@@ -38,6 +38,7 @@
             }
           }
         }
+        $scope.setSearchKeyOptions();
       }
       //
       $scope.saveData=function(){
@@ -51,9 +52,12 @@
       }
       // search key setting
       $scope.setSearchKeyOptions = function(){
-        $scope.dataJson.dlt_index_sort_options
-        $scope.dataJson.dlt_keyword_sort_options
+//        $scope.dataJson.dlt_index_sort_options
+//        $scope.dataJson.dlt_keyword_sort_options
+        angular.forEach($scope.dataJson.dlt_index_sort_options,function(item_sort_index,index,array){
+          alert(item_sort_index.id)
 
+        })
 
 
 
