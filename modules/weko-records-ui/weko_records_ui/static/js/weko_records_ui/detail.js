@@ -1,5 +1,5 @@
 require([
-  "jquery",
+//  "jquery",
   "bootstrap"
 ], function() {
   $('#btn_back').on('click', function(){
