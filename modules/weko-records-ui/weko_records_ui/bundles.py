@@ -33,7 +33,7 @@ js_dependencies = NpmBundle(
 
 js = NpmBundle(
     'node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.js',
-    'node_modules/angular/angular.js',
+    # 'node_modules/angular/angular.js',
     'js/weko_records_ui/detail.js',
     'js/weko_records_ui/app.js',
     filters='jsmin',
