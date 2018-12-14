@@ -137,31 +137,34 @@
                 {%- if 'preview' in file.displaytype -%}
                 <tr >
                   <td colspan="2">
-                    <div class="panel panel-default" id="preview">
-                      <div class="panel-heading">
-                        <a class="panel-toggle" data-toggle="collapse" href="#{{loop.index}}">
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="heading{{loop.index}}">
+                        <a data-toggle="collapse" href="#collapse{{loop.index}}" aria-controls="collapse{{loop.index}}">
                           {{_('Preview')}}
-                          <span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>
-                          <span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>
+                          <!--<span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>-->
+                          <!--<span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>-->
+                          <!--TODO-->
                         </a>
                       </div>
-                      <div id="{{loop.index}}" class="collapse">
-                        <div class="embed-responsive embed-responsive-16by9">
-                          {%- if 'audio' in file.mimetype -%}
-                            <audio controls preload="auto">
-                              <source src="{{file_url}}" type="{{file.mimetype}}">
-                            </audio>
-                          {%- elif 'video' in file.mimetype -%}
-                            <video controls>
-                              <source src="{{file_url}}" type="{{file.mimetype}}">
-                            </video>
-                          {%- elif 'text' in file.mimetype -%}
-                            <object data="{{file_url}}" type="{{file.mimetype}}"/>
-                          {%- else -%}
-                            <iframe class="preview-iframe" id="preview-iframe" width="100%" height="400"
-                                  src="{{ url_for('invenio_records_ui.recid_preview', pid_value=pid.pid_value, filename=file.key) }}">
-                            </iframe>
-                          {%- endif -%}
+                      <div id="collapse{{loop.index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{loop.index}}">
+                        <div class="panel-body">
+                          <div class="embed-responsive embed-responsive-16by9">
+                            {%- if 'audio' in file.mimetype -%}
+                              <audio controls preload="auto">
+                                <source src="{{file_url}}" type="{{file.mimetype}}">
+                              </audio>
+                            {%- elif 'video' in file.mimetype -%}
+                              <video controls>
+                                <source src="{{file_url}}" type="{{file.mimetype}}">
+                              </video>
+                            {%- elif 'text' in file.mimetype -%}
+                              <object data="{{file_url}}" type="{{file.mimetype}}"/>
+                            {%- else -%}
+                              <iframe class="preview-iframe" id="preview-iframe" width="100%" height="400"
+                                    src="{{ url_for('invenio_records_ui.recid_preview', pid_value=pid.pid_value, filename=file.key) }}">
+                              </iframe>
+                            {%- endif -%}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -317,28 +320,28 @@
 </div>
 </div>
 
-{% block tail %}
-<script>
-  $('.panel-toggle').on('click', function(){
-    content = $(this).parent().next();
-    contentClass = content.attr("class");
-    if(contentClass === 'collapse') {
-      content.removeClass();
-      content.addClass('collapse in');
+<!--{% block tail %}-->
+<!--<script>-->
+  <!--$('.panel-toggle').on('click', function(){-->
+    <!--content = $(this).parent().next();-->
+    <!--contentClass = content.attr("class");-->
+    <!--if(contentClass === 'collapse') {-->
+      <!--content.removeClass();-->
+      <!--content.addClass('collapse in');-->
 
-      <!--if ($(this).hasClass("collapse")) {-->
-        <!--$(this).removeClass('collapse');-->
-      <!--}-->
+      <!--&lt;!&ndash;if ($(this).hasClass("collapse")) {&ndash;&gt;-->
+        <!--&lt;!&ndash;$(this).removeClass('collapse');&ndash;&gt;-->
+      <!--&lt;!&ndash;}&ndash;&gt;-->
 
-    } else {
-      content.removeClass();
-      content.addClass('collapse');
+    <!--} else {-->
+      <!--content.removeClass();-->
+      <!--content.addClass('collapse');-->
 
-      <!--if (!$(this).hasClass("collapse")) {-->
-        <!--$(this).addClass('collapse');-->
-      <!--}-->
-    }
-  });
+      <!--&lt;!&ndash;if (!$(this).hasClass("collapse")) {&ndash;&gt;-->
+        <!--&lt;!&ndash;$(this).addClass('collapse');&ndash;&gt;-->
+      <!--&lt;!&ndash;}&ndash;&gt;-->
+    <!--}-->
+  <!--});-->
 
-</script>
-{% endblock %}
+<!--</script>-->
+<!--{% endblock %}-->
