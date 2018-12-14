@@ -139,7 +139,7 @@
                   <td colspan="2">
                     <div class="panel panel-default">
                       <div class="panel-heading" role="tab" id="heading{{loop.index}}">
-                        <a class="panel-toggle" href="#preview{{loop.index}}">
+                        <a class="panel-toggle" href="#preview{{loop.index}}" onclick="alert('Alert!!')">
                           {{_('Preview')}}
                           <!--<span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>-->
                           <!--<span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>-->
@@ -322,16 +322,29 @@
 
 {% block tail %}
 <script>
-  $('.panel-toggle').on('click', function(){
-    content = $($(this).attr("href"));
 
-    if(content.hasClass("in")) {
-      content.removeClass("in");
-    } else {
-      content.addClass('in');
-    }
+  <!--function previewContent(sParam) {-->
+      <!--var sURL = window.location.search.substring(1);-->
+      <!--var sURLVars = sURL.split('&');-->
+      <!--for (var i = 0; i < sURLVars.length; i++) {-->
+          <!--var sParamArr = sURLVars[i].split('=');-->
+          <!--if (sParamArr[0] == sParam) {-->
+              <!--return decodeURIComponent(sParamArr[1]);-->
+          <!--}-->
+      <!--}-->
+      <!--return false;-->
+  <!--}-->
 
-  });
+  <!--$('.panel-toggle').on('click', function(){-->
+    <!--content = $($(this).attr("href"));-->
+
+    <!--if(content.hasClass("in")) {-->
+      <!--content.removeClass("in");-->
+    <!--} else {-->
+      <!--content.addClass('in');-->
+    <!--}-->
+
+  <!--});-->
 
 </script>
 {% endblock %}
