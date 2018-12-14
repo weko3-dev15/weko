@@ -323,34 +323,13 @@
 {% block tail %}
 <script>
   $('.panel-toggle').on('click', function(){
-    href = $(this).attr("href");
+    content = $($(this).attr("href"));
 
-    preview = $($(this).attr("href"));
-    contentClass = preview.attr("class");
-
-
-    alert(contentClass);
-
-
-
-    <!--content = $(this).parent().next();-->
-    <!--contentClass = content.attr("class");-->
-    <!--if(contentClass === 'collapse') {-->
-      <!--content.removeClass();-->
-      <!--content.addClass('collapse in');-->
-
-      <!--&lt;!&ndash;if ($(this).hasClass("collapse")) {&ndash;&gt;-->
-        <!--&lt;!&ndash;$(this).removeClass('collapse');&ndash;&gt;-->
-      <!--&lt;!&ndash;}&ndash;&gt;-->
-
-    <!--} else {-->
-      <!--content.removeClass();-->
-      <!--content.addClass('collapse');-->
-
-      <!--&lt;!&ndash;if (!$(this).hasClass("collapse")) {&ndash;&gt;-->
-        <!--&lt;!&ndash;$(this).addClass('collapse');&ndash;&gt;-->
-      <!--&lt;!&ndash;}&ndash;&gt;-->
-    <!--}-->
+    if(content.hasClass("in")) {
+      content.removeClass('in');
+    } else {
+      content.addClass('in');
+    }
   });
 
 </script>
