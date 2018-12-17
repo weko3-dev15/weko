@@ -139,8 +139,8 @@
                   <td colspan="2">
                     <div class="panel panel-default">
                       <div class="panel-heading" role="tab" id="heading{{loop.index}}">
-                        {%- set targetId = '#preview' + loop.index|string -%}
-                        <a class="panel-toggle collapsed" role="button" onclick="previewContent('{{targetId}}')">
+                        <!--{%- set targetId = '#preview' + loop.index|string -%}-->
+                        <a class="panel-toggle collapsed" role="button" name="#preview{{loop.index}}">
                           {{_('Preview')}}
                           <span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>
                           <span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>
@@ -326,23 +326,36 @@
   function previewContent(targetId) {
     <!--alert(this.html());-->
 
-    content = $(targetId);
-    if(!content) return false;
+    <!--content = $(targetId);-->
+    <!--if(!content) return false;-->
 
-    if(content.hasClass("in")) {
-      content.removeClass("in");
-      $(this).addClass('collapsed');
+    <!--if(content.hasClass("in")) {-->
+      <!--content.removeClass("in");-->
+      <!--$(this).addClass('collapsed');-->
 
-    } else {
-      content.addClass('in');
-      $(this).removeClass('collapsed');
-    }
-      return false;
+    <!--} else {-->
+      <!--content.addClass('in');-->
+      <!--$(this).removeClass('collapsed');-->
+    <!--}-->
+      <!--return false;-->
   }
 
   $(document).ready(function() {
     $('.panel-toggle').on('click', function(){
-      alert($(this).attr('class'));
+      targetId = $(this).attr('name');
+
+      content = $(targetId);
+      if(!content) return false;
+
+      if(content.hasClass("in")) {
+        content.removeClass("in");
+        $(this).addClass('collapsed');
+
+      } else {
+        content.addClass('in');
+        $(this).removeClass('collapsed');
+      }
+        return false;
     });
   });
 
