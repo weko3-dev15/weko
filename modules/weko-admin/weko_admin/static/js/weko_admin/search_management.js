@@ -70,8 +70,8 @@
             item_sort_index.disableFlg = true;
           }
         })
+        $scope.dataJson.dlt_keyword_sort_options = angular.copy($scope.dataJson.dlt_index_sort_options);
       }
-      $scope.dataJson.dlt_keyword_sort_options = angular.copy($scope.dataJson.dlt_index_sort_options);
       //
     }
     // Inject depedencies
