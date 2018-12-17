@@ -79,7 +79,7 @@
         var sort_key = '';
         angular.forEach($scope.dataJson.dlt_index_sort_options,function(item,index,array){
           if(loop_flg ==0 && !item.disableFlg){
-            alert('AAAAA:'+item.id)
+            alert('BBBBB:'+item.id)
             sort_key = item.id;
             loop_flg = 1;
           }
