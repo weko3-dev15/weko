@@ -39,14 +39,14 @@
     let hideNo = 0;
     $('#1').on('show.bs.collapse', function () {
       showNo++;
-      alert('showNo:' + showNo.toString());
+      alert('[show] '+'showNo:' + showNo.toString() + ' '+ 'hideNo:' + hideNo.toString());
     });
     <!--$('#1').on('shown.bs.collapse', function () {-->
       <!--alert("shown.bs.collapse.");-->
     <!--});-->
     $('#1').on('hide.bs.collapse', function () {
       hideNo++;
-      alert('hideNo:' + hideNo.toString());
+      alert('[hide] '+'showNo:' + showNo.toString() + ' '+ 'hideNo:' + hideNo.toString());
     });
     <!--$('#1').on('hidden.bs.collapse', function () {-->
       <!--alert("hidden.bs.collapse.");-->
