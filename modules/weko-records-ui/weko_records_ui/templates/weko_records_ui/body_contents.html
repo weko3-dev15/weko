@@ -324,10 +324,10 @@
 {% block tail %}
 <script>
   function previewContent(targetId) {
+    alert($(this).attr('class'));
+
     content = $(targetId);
     if(!content) return false;
-
-    alert($(this).attr('class'));
 
     if(content.hasClass("in")) {
       content.removeClass("in");
