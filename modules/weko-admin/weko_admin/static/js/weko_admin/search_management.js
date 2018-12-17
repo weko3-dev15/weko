@@ -70,8 +70,25 @@
           }
         })
         $scope.dataJson.dlt_keyword_sort_options = angular.copy($scope.dataJson.dlt_index_sort_options);
+        $scope.setDefaultSortKey();
       }
-      //
+      // setting default sort key
+      $scope.setDefaultSortKey= function(){
+        var loop_flg = 0;
+        var sort_key = '';
+        angular.forEach($scope.dataJson.dlt_index_sort_options,function(item,index,array){
+          if(loop_flg =0 && !item.disableFlg){
+            sort_key = item.id;
+          }
+          if($scope.dataJson.dlt_index_sort_selected == item.id && item.disableFlg){
+            $scope.dataJson.dlt_index_sort_selected = sort_key;
+          }
+          if($scope.dataJson.dlt_keyword_sort_selected == item.id && item.disableFlg){
+            $scope.dataJson.dlt_keyword_sort_selected = sort_key;
+          }
+        })
+      }
+
     }
     // Inject depedencies
     searchManagementCtrl.$inject = [
