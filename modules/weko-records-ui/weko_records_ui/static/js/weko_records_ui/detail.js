@@ -29,8 +29,4 @@ require([
     };
   });
 
-	$('#1').on('click', function () {
-		alert("Show method called.");
-	});
-
 });
