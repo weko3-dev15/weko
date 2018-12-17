@@ -171,11 +171,11 @@ tree-internal ul .value-container {
 .show-on-collapsed {
     display: none;
 }
-.collapsed {
-	.hide-on-collapsed {
-		display: none;
-	}
-	.show-on-collapsed {
-		display: block;
-	}
+.panel-toggle.collapsed {
+    .hide-on-collapsed {
+        display: none;
+    }
+    .show-on-collapsed {
+        display: block;
+    }
 }
