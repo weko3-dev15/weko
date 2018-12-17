@@ -46,23 +46,4 @@ require([
       return false;
   });
 
-//  $(document).ready(function() {
-//    $('.panel-toggle').on('click', function(){
-//      targetId = $(this).attr('name');
-//
-//      content = $(targetId);
-//      if(!content) return false;
-//
-//      if(content.hasClass("in")) {
-//        content.removeClass("in");
-//        $(this).addClass('collapsed');
-//
-//      } else {
-//        content.addClass('in');
-//        $(this).removeClass('collapsed');
-//      }
-//        return false;
-//    });
-//  });
-
 });
