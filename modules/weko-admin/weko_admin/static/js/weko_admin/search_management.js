@@ -59,9 +59,8 @@
         angular.forEach($scope.dataJson.dlt_index_sort_options,function(item_sort_index,sort_index,sort_array){
           deny_flg = 0;
           angular.forEach($scope.dataJson.sort_options.deny,function(item_deny,deny_index,deny_array){
-            if(item_sort_index.id ==item_deny.id){
+            if(item_sort_index.id.split('_')[0] ==item_deny.id.split('_')[0]){
               deny_flg = 1;
-//              break;
             }
           })
           if(deny_flg == 0){
