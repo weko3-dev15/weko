@@ -29,7 +29,7 @@ require([
     };
   });
 
-	$('#1').on('hide.bs.collapse', function () {
+	$('#1').on('click', function () {
 		alert("Show method called.");
 	});
 
