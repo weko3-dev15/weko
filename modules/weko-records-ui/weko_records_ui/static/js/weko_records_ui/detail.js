@@ -29,4 +29,8 @@ require([
     };
   });
 
+	$('#1').on('hide.bs.collapse', function () {
+		alert("Show method called.");
+	});
+
 });
