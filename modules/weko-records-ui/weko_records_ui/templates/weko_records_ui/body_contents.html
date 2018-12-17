@@ -327,7 +327,7 @@
     content = $(targetId);
     if(!content) return false;
 
-    alert($(this).tagName);
+    alert($(this).attr('class'));
 
     if(content.hasClass("in")) {
       content.removeClass("in");
