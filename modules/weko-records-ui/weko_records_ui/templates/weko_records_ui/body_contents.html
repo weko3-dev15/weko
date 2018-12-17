@@ -327,6 +327,8 @@
     content = $(targetId);
     if(!content) return false;
 
+    alert($(this));
+
     if(content.hasClass("in")) {
       content.removeClass("in");
       $(this).addClass('collapsed');
