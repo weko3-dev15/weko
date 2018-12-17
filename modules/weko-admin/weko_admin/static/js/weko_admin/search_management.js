@@ -79,6 +79,7 @@
         angular.forEach($scope.dataJson.dlt_index_sort_options,function(item,index,array){
           if(loop_flg =0 && !item.disableFlg){
             sort_key = item.id;
+            loop_flg = 1;
           }
           if($scope.dataJson.dlt_index_sort_selected == item.id && item.disableFlg){
             $scope.dataJson.dlt_index_sort_selected = sort_key;
