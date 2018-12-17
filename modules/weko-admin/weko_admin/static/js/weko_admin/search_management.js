@@ -85,6 +85,7 @@
           }
           if($scope.dataJson.dlt_index_sort_selected == item.id && item.disableFlg){
             $scope.dataJson.dlt_index_sort_selected = sort_key;
+            alert($scope.dataJson.dlt_index_sort_selected)
           }
           if($scope.dataJson.dlt_keyword_sort_selected == item.id && item.disableFlg){
             $scope.dataJson.dlt_keyword_sort_selected = sort_key;
