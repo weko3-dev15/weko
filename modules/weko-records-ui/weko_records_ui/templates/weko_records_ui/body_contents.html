@@ -324,7 +324,7 @@
 {% block tail %}
 <script>
   function previewContent(targetId) {
-    alert($(this).attr('class'));
+    alert($(this).html());
 
     content = $(targetId);
     if(!content) return false;
