@@ -27,6 +27,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<script>
+  $(document).ready(function() {
+    $('#1').on('hide.bs.collapse', function () {
+      alert("Show method called.");
+    });
+  })
+</script>
+
   <!--{{ super() }}-->
   <!--{% assets "weko_theme_js_treeview" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}-->
   <!--{% assets "weko_theme_js_top_page" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}-->
@@ -89,15 +97,3 @@
     </div>
   </div>
 {%- endblock page_body_main %}
-
-<!--TODO-->
-{% block tail %}
-
-<script>
-  $(document).ready(function() {
-    $('#1').on('hide.bs.collapse', function () {
-      alert("Show method called.");
-    });
-  })
-</script>
-{% endblock %}
