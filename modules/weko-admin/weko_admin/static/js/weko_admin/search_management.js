@@ -6,6 +6,7 @@
       $scope.initData = function(data){
         $scope.dataJson = angular.fromJson(data);
         $scope.rowspanNum = $scope.dataJson.detail_condition.length+1;
+        $scope.setSearchKeyOptions();
       }
       // set selected data to allow
       $scope.setAllow=function(data){
@@ -21,6 +22,7 @@
               $scope.dataJson.sort_options.deny.splice(data[i],1)
             }
           }
+          $scope.setSearchKeyOptions();
         }
       }
       // set selected data to deny
@@ -37,8 +39,8 @@
               $scope.dataJson.sort_options.allow.splice(data[i],1)
             }
           }
+          $scope.setSearchKeyOptions();
         }
-        $scope.setSearchKeyOptions();
       }
       //
       $scope.saveData=function(){
@@ -52,16 +54,24 @@
       }
       // search key setting
       $scope.setSearchKeyOptions = function(){
-//        $scope.dataJson.dlt_index_sort_options
-//        $scope.dataJson.dlt_keyword_sort_options
+        // init
+        var deny_flg = 0;
         angular.forEach($scope.dataJson.dlt_index_sort_options,function(item_sort_index,index,array){
-          alert(item_sort_index.id)
-
+          deny_flg = 0;
+          angular.forEach($scope.dataJson.sort_options.deny,function(item_deny,index,array){
+            if(item_sort_index.id==item_deny){
+              deny_flg = 1;
+              break;
+            }
+          })
+          if(deny_flg == 0){
+            item_sort_index.disableFlg = false;
+          }else{
+            item_sort_index.disableFlg = true;
+          }
         })
-
-
-
       }
+      $scope.dataJson.dlt_keyword_sort_options = angular.copy($scope.dataJson.dlt_index_sort_options);
       //
     }
     // Inject depedencies
