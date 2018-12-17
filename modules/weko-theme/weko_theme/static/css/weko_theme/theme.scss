@@ -165,15 +165,13 @@ tree-internal ul .value-container {
 }
 
 /* For weko preview */
-.panel-toggle {
-    .hide-on-collapsed {
-        display: block;
-    }
-    .show-on-collapsed {
-        display: none;
-    }
+.hide-on-collapsed {
+    display: block;
 }
-.panel-toggle.collapsed {
+.show-on-collapsed {
+    display: none;
+}
+.collapsed {
 	.hide-on-collapsed {
 		display: none;
 	}
