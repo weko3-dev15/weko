@@ -24,6 +24,7 @@
           }
           $scope.setSearchKeyOptions();
         }
+        $scope.setDefaultSortKey();
       }
       // set selected data to deny
       $scope.setDeny=function(data){
@@ -41,6 +42,7 @@
           }
           $scope.setSearchKeyOptions();
         }
+        $scope.setDefaultSortKey();
       }
       //
       $scope.saveData=function(){
@@ -70,7 +72,6 @@
           }
         })
         $scope.dataJson.dlt_keyword_sort_options = angular.copy($scope.dataJson.dlt_index_sort_options);
-        $scope.setDefaultSortKey();
       }
       // setting default sort key
       $scope.setDefaultSortKey= function(){
