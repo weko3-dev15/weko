@@ -53,25 +53,25 @@
         });
       }
       // search key setting
-//      $scope.setSearchKeyOptions = function(){
-//        // init
-//        var deny_flg = 0;
-//        angular.forEach($scope.dataJson.dlt_index_sort_options,function(item_sort_index,index,array){
-//          deny_flg = 0;
-//          angular.forEach($scope.dataJson.sort_options.deny,function(item_deny,index,array){
-//            if(item_sort_index.id==item_deny){
-//              deny_flg = 1;
-//              break;
-//            }
-//          })
-//          if(deny_flg == 0){
-//            item_sort_index.disableFlg = false;
-//          }else{
-//            item_sort_index.disableFlg = true;
-//          }
-//        })
-//        $scope.dataJson.dlt_keyword_sort_options = angular.copy($scope.dataJson.dlt_index_sort_options);
-//      }
+      $scope.setSearchKeyOptions = function(){
+        // init
+        var deny_flg = 0;
+        angular.forEach($scope.dataJson.dlt_index_sort_options,function(item_sort_index,index,array){
+          deny_flg = 0;
+          angular.forEach($scope.dataJson.sort_options.deny,function(item_deny,index,array){
+            if(item_sort_index.id==item_deny.id){
+              deny_flg = 1;
+              break;
+            }
+          })
+          if(deny_flg == 0){
+            item_sort_index.disableFlg = false;
+          }else{
+            item_sort_index.disableFlg = true;
+          }
+        })
+        $scope.dataJson.dlt_keyword_sort_options = angular.copy($scope.dataJson.dlt_index_sort_options);
+      }
       //
     }
     // Inject depedencies
