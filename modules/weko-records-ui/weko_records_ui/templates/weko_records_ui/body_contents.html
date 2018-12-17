@@ -142,8 +142,8 @@
                         {%- set targetId = '#preview' + loop.index|string -%}
                         <a class="panel-toggle" role="button" onclick="previewContent('{{targetId}}')">
                           {{_('Preview')}}
-                          <!--<span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>-->
-                          <!--<span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>-->
+                          <span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>
+                          <span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>
                           <!--TODO-->
                         </a>
                       </div>
@@ -323,28 +323,19 @@
 
 {% block tail %}
 <script>
-
   function previewContent(targetId) {
     content = $(targetId);
+    if(!content) return false;
 
     if(content.hasClass("in")) {
       content.removeClass("in");
+      $(this).removeClass('collapsed');
     } else {
       content.addClass('in');
+      $(this).addClass('collapsed');
     }
       return false;
   }
-
-  <!--$('.panel-toggle').on('click', function(){-->
-    <!--content = $($(this).attr("href"));-->
-
-    <!--if(content.hasClass("in")) {-->
-      <!--content.removeClass("in");-->
-    <!--} else {-->
-      <!--content.addClass('in');-->
-    <!--}-->
-
-  <!--});-->
 
 </script>
 {% endblock %}
