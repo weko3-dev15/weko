@@ -20,9 +20,9 @@ msgstr ""
 "Generated-By: Babel 2.5.1\n"
 
 #: weko_search_ui/static/templates/weko_search_ui/togglebutton.html:2
-msgid "asc:"
+msgid "asc"
 msgstr "昇順"
 
 #: weko_search_ui/static/templates/weko_search_ui/togglebutton.html:3
-msgid "desc:"
+msgid "desc"
 msgstr "降順"
