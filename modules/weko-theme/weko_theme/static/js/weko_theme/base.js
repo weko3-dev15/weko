@@ -1,6 +1,6 @@
 require([
 //  "jquery",
-//  "bootstrap"
+  "bootstrap"
   ], function() {
     $(document).ready(function() {
       $('#btn_edit_start').on('click', function(){
