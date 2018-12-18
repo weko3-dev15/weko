@@ -1,6 +1,6 @@
 require([
   "jquery",
-//  "bootstrap"
+  "bootstrap"
 ], function () {
     $('body').on('load', function (event, data) {
 
