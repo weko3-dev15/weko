@@ -1,5 +1,5 @@
 require([
-//  "jquery",
+  "jquery",
 //  "bootstrap"
   ], function() {
     $(document).ready(function() {
