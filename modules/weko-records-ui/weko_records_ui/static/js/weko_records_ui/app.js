@@ -39,7 +39,9 @@ angular.module('myApp', ['ui.bootstrap'])
  ).controller('preview', function($scope) {
   $scope.isCollapsed = false;
   $scope.onclick = function() {
-    alert('Clicked!!!!!');
+//    alert('Clicked!!!!!');
+    $scope.isCollapsed = !$scope.isCollapsed;
+
   };
   });
 
