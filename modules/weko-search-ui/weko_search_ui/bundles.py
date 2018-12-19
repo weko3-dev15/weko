@@ -63,7 +63,7 @@ def catalog(domain):
 
 i18n = GlobBundle(
     catalog('messages-js'),
-    filters=AngularGettextFilter(catalog_name='invenioSearch'),
+    filters=AngularGettextFilter(catalog_name='invenioSearch.directives'),
     output='gen/translations/weko-search-ui.%(version)s.js',
 )
 
