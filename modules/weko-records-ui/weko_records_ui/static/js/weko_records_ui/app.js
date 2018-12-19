@@ -38,6 +38,7 @@ angular.module('myApp', ['ui.bootstrap'])
   }
  ).controller('preview', function($scope) {
   $scope.isCollapsed = false;
+  alert($scope.isCollapsed);
 });
 
 //angular.module('myApp', ['ui.bootstrap']).controller('preview', function($scope) {
