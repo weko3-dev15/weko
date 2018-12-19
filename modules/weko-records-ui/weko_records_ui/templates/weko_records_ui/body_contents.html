@@ -148,7 +148,7 @@
                 {%- if 'preview' in file.displaytype -%}
                 <tr >
                   <td colspan="2">
-                    <div ng-app="myApp" ng-controller="preview">
+                    <div ng-app="previewApp" ng-controller="preview">
                       <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">{{_('Preview')}}</button>
                       <div uib-collapse="isCollapsed">
                         <div class="well well-lg">Some content</div>
