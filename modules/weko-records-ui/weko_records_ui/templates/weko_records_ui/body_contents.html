@@ -139,7 +139,7 @@
                 {%- if 'preview' in file.displaytype -%}
                 <tr >
                   <td colspan="2">
-                    <div ng-controller="preview">
+                    <div ng-app="myApp" ng-controller="preview">
                       <div class="panel panel-default">
                         <div class="panel-heading" role="tab">
                           <a class="panel-toggle collapsed" role="button" ng-click="isCollapsed = !isCollapsed">
