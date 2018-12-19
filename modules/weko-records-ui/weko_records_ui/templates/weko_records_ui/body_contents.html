@@ -19,14 +19,9 @@
 # MA 02111-1307, USA.
 #}
 
-<style>
-  .horizontal-collapse {
-    height: 70px;
-  }
-  .navbar-collapse.in {
-    overflow-y: hidden;
-  }
-</style>
+{% block css %}
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
 
 <div class="panel-group">
 <div class="panel panel-default">
@@ -149,7 +144,7 @@
                 <tr >
                   <td colspan="2">
                     <div ng-controller="preview">
-                      <button type="button" class="btn btn-default" ng-click="onclick()">{{_('Preview')}}</button>
+                      <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">{{_('Preview')}}</button>
                       <div uib-collapse="isCollapsed">
                         <div class="well well-lg">Some content</div>
                       </div>
