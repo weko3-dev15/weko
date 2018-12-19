@@ -38,8 +38,10 @@ angular.module('myApp', ['ui.bootstrap'])
   }
  ).controller('preview', function($scope) {
   $scope.isCollapsed = false;
-  alert($scope.isCollapsed);
-});
+  $scope.onclick = function() {
+    alert('Clicked!!!!!');
+  };
+  });
 
 //angular.module('myApp', ['ui.bootstrap']).controller('preview', function($scope) {
 //  $scope.isCollapsed = false;
