@@ -29,8 +29,8 @@
 {%- endblock css %}
 
 {%- block javascript %}
-  {% assets "weko_search_ui_search_i18n" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {{ super() }}
+  {% assets "weko_search_ui_search_i18n" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_theme_js_treeview" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_theme_js_top_page" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_theme_js_detail_search" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
