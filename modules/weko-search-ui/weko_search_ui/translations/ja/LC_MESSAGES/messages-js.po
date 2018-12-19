@@ -19,6 +19,7 @@ msgstr ""
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+
 #: weko_search_ui/static/templates/weko_search_ui/togglebutton.html:2
 msgid "asc"
 msgstr "昇順"
