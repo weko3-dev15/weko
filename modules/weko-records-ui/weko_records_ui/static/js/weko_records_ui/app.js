@@ -35,4 +35,11 @@ angular.module('myApp', ['ui.bootstrap'])
    $scope.cancel = function() {
     $modalInstance.dismiss();
    };
-  });
+  }
+ ).controller('preview', function($scope) {
+  $scope.isCollapsed = false;
+});
+
+//angular.module('myApp', ['ui.bootstrap']).controller('preview', function($scope) {
+//  $scope.isCollapsed = false;
+//});
