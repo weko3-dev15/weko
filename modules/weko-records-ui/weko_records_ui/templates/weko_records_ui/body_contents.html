@@ -54,7 +54,7 @@
     </div>
   </div>
 </div>
-<div class="panel panel-default">
+<div class="panel panel-default" ng-app="myApp">
   <div class="panel-heading clearfix">
     <h3 class="panel-title">{{_('Item')}}</h3>
   </div>
@@ -329,7 +329,7 @@
               {% endif %}
             {%- endblock %}
 
-            <div class="text-center" ng-app="myApp" ng-controller="ItemController">
+            <div class="text-center" ng-controller="ItemController">
               <a class="btn btn-default" id="btn_back" href="#" >
                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>{{_('Back')}}</a>
               {% if record | check_permission %}
