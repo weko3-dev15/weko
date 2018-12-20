@@ -171,11 +171,12 @@ angular.module('myApp', ['ui.bootstrap'])
 
                       <div class="panel panel-default">
                         <div class="panel-heading" role="tab">
-                          <a class="panel-toggle collapsed" role="button" ng-click="isCollapsed = !isCollapsed">
-                            {{_('Preview')}}
-                            <span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>
-                            <span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>
-                          </a>
+                          <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">{{_('Preview')}}</button>
+                          <!--<a class="panel-toggle collapsed" role="button" ng-click="isCollapsed = !isCollapsed">-->
+                            <!--{{_('Preview')}}-->
+                            <!--<span class="pull-right show-on-collapsed"><i class="fa fa-chevron-right"></i></span>-->
+                            <!--<span class="pull-right hide-on-collapsed"><i class="fa fa-chevron-down"></i></span>-->
+                          <!--</a>-->
                         </div>
                         <div id="preview{{loop.index}}" class="panel-collapse collapse" role="tabpanel" uib-collapse="isCollapsed">
                           <div class="panel-body">
