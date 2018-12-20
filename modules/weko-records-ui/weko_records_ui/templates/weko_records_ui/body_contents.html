@@ -29,16 +29,16 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.js"></script>
   <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.2.5.js"></script>
 
-<!--<script>-->
-<!--angular.module('myApp', ['ui.bootstrap'])-->
- <!--.controller('preview', function($scope) {-->
-  <!--$scope.isCollapsed = false;-->
-  <!--$scope.onclick = function() {-->
-    <!--$scope.isCollapsed = !$scope.isCollapsed;-->
-    <!--alert($scope.isCollapsed);-->
-  <!--};-->
-  <!--});-->
-<!--</script>-->
+<script>
+angular.module('previewApp', ['ui.bootstrap'])
+ .controller('preview', function($scope) {
+  $scope.isCollapsed = false;
+  $scope.onclick = function() {
+    $scope.isCollapsed = !$scope.isCollapsed;
+    alert($scope.isCollapsed);
+  };
+  });
+</script>
 
 {%- endblock javascript %}
 
@@ -68,7 +68,7 @@
     </div>
   </div>
 </div>
-<div class="panel panel-default" ng-app="myApp">
+<div class="panel panel-default">
   <div class="panel-heading clearfix">
     <h3 class="panel-title">{{_('Item')}}</h3>
   </div>
@@ -161,7 +161,7 @@
                 {%- endif -%}
                 {%- if 'preview' in file.displaytype -%}
                 <tr>
-                  <td colspan="2">
+                  <td colspan="2" ng-app="previewApp">
                     <div ng-controller="preview">
                       <!--<button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">{{_('Preview')}}</button>-->
                       <!--<div uib-collapse="isCollapsed">-->
@@ -343,7 +343,7 @@
               {% endif %}
             {%- endblock %}
 
-            <div class="text-center" ng-controller="ItemController">
+            <div class="text-center" ng-app="myApp" ng-controller="ItemController">
               <a class="btn btn-default" id="btn_back" href="#" >
                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>{{_('Back')}}</a>
               {% if record | check_permission %}
