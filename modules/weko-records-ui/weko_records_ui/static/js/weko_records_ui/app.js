@@ -36,7 +36,14 @@ angular.module('myApp', ['ui.bootstrap'])
     $modalInstance.dismiss();
    };
   }
- );
+ ).controller('preview', function($scope) {
+  $scope.isCollapsed = false;
+  $scope.onclick = function() {
+
+    $scope.isCollapsed = !$scope.isCollapsed;
+    alert($scope.isCollapsed);
+  };
+  });
 
 //angular.module('myApp', ['ui.bootstrap']).controller('preview', function($scope) {
 //  $scope.isCollapsed = false;
