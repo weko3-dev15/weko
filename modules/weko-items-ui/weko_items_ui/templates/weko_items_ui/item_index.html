@@ -27,7 +27,6 @@
 
 {%- block javascript %}
   {{ super() }}
-  {% assets "weko_items_ui_js_dependencies" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_theme_js_index_tree" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
 {%- endblock javascript %}
 
@@ -41,7 +40,6 @@
     <div class="hide" id="post_url">{{ config.DEPOSIT_RECORDS_API.format(pid_value=pid_value) }}</div>
     <div class="hide" id="post_success_url"></div>
     <div class="hide" id="post_error_url"></div>
-    <!--<app-root-tree></app-root-tree>-->
     <app-tree-items inputFlg="1"></app-tree-items>
   </div>
 {%- endblock page_body_main %}
