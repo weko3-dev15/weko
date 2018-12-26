@@ -84,4 +84,12 @@ js_detail_search = Bundle(
     output="gen/weko_detail_search.%(version)s.js",
 )
 
+js_index_tree = Bundle(
+    'js/weko_theme/inline.bundle.tree.js',
+    'js/weko_theme/polyfills.bundle.tree.js',
+    'js/weko_theme/main.bundle.tree.js',
+    output="gen/index_tree_angular.js"
+)
+
+
 
