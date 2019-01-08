@@ -10,10 +10,10 @@ require([
         window.location.href = '/';
       });
 
-//      var options = {
-//        cellHeight: 80,
-//        verticalMargin: 10
-//      };
-//      $('.grid-stack').gridstack(options);
+      var options = {
+        cellHeight: 80,
+        verticalMargin: 10
+      };
+      $('.grid-stack').gridstack(options);
     });
 });
