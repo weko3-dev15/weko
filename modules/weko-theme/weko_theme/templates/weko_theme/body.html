@@ -35,41 +35,41 @@
 {%- endblock javascript %}
 {%- block page_body %}
 <div class="grid-stack">
-  <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="10">
+  <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="3" data-gs-height="4">
     <div class="grid-stack-item-content">
 
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-12 col-md-12 col-md-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                {%- block body_title %}
-                  <div class="pull-right">
-                  {%- block body_title_right %}
-                  {%- endblock body_title_right %}
-                  </div>
-                  {%- block body_title_left %}
-                    {%-if not community_id %}
-                    <h5><strong><p class="text-uppercase">{{ _(config.THEME_SITENAME) }}</p></strong></h5>
-                    {%- else%}
-                    <h5><strong><p class="">{{community.title}}</p></strong></h5>
-                    {%- endif%}
-                  {%- endblock body_title_left %}
-                {%- endblock body_title %}
-              </div>
-              <div class="panel-body">
-                {%- block body_center %}
-                  {#% include "weko_theme/body_center.html" %#}
-                {%- endblock body_center %}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!--<div class="container-fluid">-->
+        <!--<div class="row">-->
+          <!--<div class="col-sm-12 col-md-12 col-md-12">-->
+            <!--<div class="panel panel-default">-->
+              <!--<div class="panel-heading">-->
+                <!--{%- block body_title %}-->
+                  <!--<div class="pull-right">-->
+                  <!--{%- block body_title_right %}-->
+                  <!--{%- endblock body_title_right %}-->
+                  <!--</div>-->
+                  <!--{%- block body_title_left %}-->
+                    <!--{%-if not community_id %}-->
+                    <!--<h5><strong><p class="text-uppercase">{{ _(config.THEME_SITENAME) }}</p></strong></h5>-->
+                    <!--{%- else%}-->
+                    <!--<h5><strong><p class="">{{community.title}}</p></strong></h5>-->
+                    <!--{%- endif%}-->
+                  <!--{%- endblock body_title_left %}-->
+                <!--{%- endblock body_title %}-->
+              <!--</div>-->
+              <!--<div class="panel-body">-->
+                <!--{%- block body_center %}-->
+                  <!--{#% include "weko_theme/body_center.html" %#}-->
+                <!--{%- endblock body_center %}-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
 
     </div>
   </div>
-  <div class="grid-stack-item" data-gs-x="11" data-gs-y="0" data-gs-width="2" data-gs-height="4">
+  <div class="grid-stack-item" data-gs-x="6" data-gs-y="0" data-gs-width="2" data-gs-height="3">
     <div class="grid-stack-item-content"></div>
   </div>
 </div>
