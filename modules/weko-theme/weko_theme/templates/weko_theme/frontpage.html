@@ -26,6 +26,21 @@
   {{ super() }}
   {% assets "invenio_search_ui_search_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
   {% assets "weko_search_ui_css" %}<link href="{{ ASSET_URL }}" rel="stylesheet">{% endassets %}
+
+  <!--<link href="{{ url_for('static', filename='css/weko_theme/gridstack.scss') }}" rel="stylesheet" type="text/css">-->
+  <!--<link href="{{ url_for('static', filename='css/weko_theme/gridstack-extra.scss') }}" rel="stylesheet" type="text/css">-->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <style type="text/css">
+      .grid-stack {
+          background: lightgoldenrodyellow;
+      }
+      .grid-stack-item-content {
+          color: #2c3e50;
+          text-align: center;
+          background-color: #18bc9c;
+      }
+  </style>
+
 {%- endblock css %}
 
 {%- block javascript %}
@@ -36,6 +51,25 @@
   {% assets "invenio_search_ui_search_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_search_ui_dependencies_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% assets "weko_search_ui_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.0/jquery-ui.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.0/lodash.min.js"></script>
+  <script src="{{ url_for('static', filename='js/weko_theme/gridstack.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/weko_theme/gridstack.jQueryUI.js') }}"></script>
+
+  <script>
+    $(function () {
+      alert('gridstack');
+      var options = {
+          cellHeight: 80,
+          verticalMargin: 10
+      };
+      $('.grid-stack').gridstack(options);
+    });
+  </script>
+
 {%- endblock javascript %}
 
 {%- block page_body_tabs %}
@@ -86,4 +120,3 @@
     <!--</div>-->
   </div>
 {%- endblock page_body_main %}
-

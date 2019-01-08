@@ -21,20 +21,6 @@
 {%- extends "weko_theme/base.html" %}
 
 {%- block page_body %}
-<!--<link href="{{ url_for('static', filename='css/weko_theme/gridstack.scss') }}" rel="stylesheet" type="text/css">-->
-<!--<link href="{{ url_for('static', filename='css/weko_theme/gridstack-extra.scss') }}" rel="stylesheet" type="text/css">-->
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-<style type="text/css">
-    .grid-stack {
-        background: lightgoldenrodyellow;
-    }
-    .grid-stack-item-content {
-        color: #2c3e50;
-        text-align: center;
-        background-color: #18bc9c;
-    }
-</style>
-
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-8 col-md-8 col-md-8">
@@ -72,23 +58,4 @@
     </div>
   </div>
 </div>
-
-<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
-<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.0/jquery-ui.js"></script>-->
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.0/lodash.min.js"></script>
-<script src="{{ url_for('static', filename='js/weko_theme/gridstack.js') }}"></script>
-<script src="{{ url_for('static', filename='js/weko_theme/gridstack.jQueryUI.js') }}"></script>
-
-<script>
-  $(function () {
-    alert('gridstack');
-    var options = {
-        cellHeight: 80,
-        verticalMargin: 10
-    };
-    $('.grid-stack').gridstack(options);
-});
-</script>
-
 {%- endblock page_body %}
