@@ -585,9 +585,6 @@
     };
 
     var GridStack = function(el, opts) {
-
-        alert('GridStack!!!!');
-
         var self = this;
         var oneColumnMode, isAutoCellHeight;
 
@@ -1839,6 +1836,7 @@
     scope.GridStackUI.GridStackDragDropPlugin = GridStackDragDropPlugin;
 
     $.fn.gridstack = function(opts) {
+        alert('GridStack!!!!');
         return this.each(function() {
             var o = $(this);
             if (!o.data('gridstack')) {
