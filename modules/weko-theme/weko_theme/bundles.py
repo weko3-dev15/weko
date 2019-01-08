@@ -54,8 +54,8 @@ css_bootstrap = NpmBundle(
 css = Bundle(
     'css/weko_theme/theme.scss',
     'css/weko_theme/styles.bundle.css',
-    'css/weko_theme/gridstack.scss',
-    'css/weko_theme/gridstack-extra.scss',
+    # 'css/weko_theme/gridstack.scss',
+    # 'css/weko_theme/gridstack-extra.scss',
     filters='cleancssurl',
     output='gen/weko_theme.%(version)s.css',
 )
