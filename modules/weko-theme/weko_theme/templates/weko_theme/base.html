@@ -68,6 +68,15 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     {%- endblock css %}
+    {%- block javascript %}
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.0/jquery-ui.js"></script>
+      <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.0/lodash.min.js"></script>
+      <script src="{{ url_for('static', filename='js/weko_theme/gridstack.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/weko_theme/gridstack.jQueryUI.js') }}"></script>
+    {%- endblock javascript %}
+
     {%- endblock head %}
   </head>
   <body {% if body_css_classes %} class="{{ body_css_classes|join(' ') }}"{% endif %}{% if g.ln %} lang="{{ g.ln.split('_', 1)[0]|safe }}"{% if rtl_direction %} {{ rtl_direction|safe }}{% endif %}{% endif %} itemscope itemtype="http://schema.org/WebPage" data-spy="scroll" data-target=".scrollspy-target">
