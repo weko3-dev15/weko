@@ -78,6 +78,20 @@
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+    alert('gridstack');
+  });
+  $(function () {
+    alert('gridstack');
+    var options = {
+        cellHeight: 80,
+        verticalMargin: 10
+    };
+    $('.grid-stack').gridstack(options);
+});
+</script>
+
 {%- endblock page_body %}
 
 {% block tail %}
