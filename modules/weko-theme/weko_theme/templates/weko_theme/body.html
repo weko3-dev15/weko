@@ -46,8 +46,12 @@
   </div>
 </div>
 {%- endblock page_body %}
-<script>
-  $(document).ready(function() {
-    $('.grid-stack').gridstack();
-  })
+<script type="text/javascript">
+$(function () {
+    var options = {
+        cellHeight: 80,
+        verticalMargin: 10
+    };
+    $('.grid-stack').gridstack(options);
+});
 </script>
