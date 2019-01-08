@@ -585,6 +585,9 @@
     };
 
     var GridStack = function(el, opts) {
+
+        alert('GridStack!!!!');
+
         var self = this;
         var oneColumnMode, isAutoCellHeight;
 
