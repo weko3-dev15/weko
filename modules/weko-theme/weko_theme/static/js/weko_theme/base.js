@@ -10,6 +10,7 @@ require([
         window.location.href = '/';
       });
 
+      alert('gridstack!!!');
       $('.grid-stack').gridstack();
     });
 });
