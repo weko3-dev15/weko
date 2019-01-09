@@ -64,6 +64,12 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     {%- endblock css %}
+    {%- block javascript %}
+{% include config.THEME_JAVASCRIPT_TEMPLATE %}
+{% assets "weko_theme_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    {%- endblock javascript %}
+
     {%- endblock head %}
   </head>
   <body {% if body_css_classes %} class="{{ body_css_classes|join(' ') }}"{% endif %}{% if g.ln %} lang="{{ g.ln.split('_', 1)[0]|safe }}"{% if rtl_direction %} {{ rtl_direction|safe }}{% endif %}{% endif %} itemscope itemtype="http://schema.org/WebPage" data-spy="scroll" data-target=".scrollspy-target">
@@ -83,11 +89,6 @@
 {% include config.THEME_FOOTER_TEMPLATE %}
     {%- endblock page_footer %}
     {%- endblock body_inner %}
-    {%- block javascript %}
-{% include config.THEME_JAVASCRIPT_TEMPLATE %}
-{% assets "weko_theme_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    {%- endblock javascript %}
     {%- block trackingcode %}{% include config.THEME_TRACKINGCODE_TEMPLATE %}
     {%- endblock trackingcode %}
     {%- endblock body %}
