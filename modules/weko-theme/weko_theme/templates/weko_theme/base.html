@@ -74,6 +74,10 @@
     <![endif]-->
     {%- endblock browserupgrade %}
 
+    {%- block javascript %}
+      {% include config.THEME_JAVASCRIPT_TEMPLATE %}
+      {% assets "weko_theme_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+    {%- endblock javascript %}
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.css" />
     <style type="text/css">
@@ -164,10 +168,6 @@
       {%- endblock body_inner %}
     </div>
 
-    {%- block javascript %}
-      {% include config.THEME_JAVASCRIPT_TEMPLATE %}
-      {% assets "weko_theme_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
-    {%- endblock javascript %}
     {%- block trackingcode %}{% include config.THEME_TRACKINGCODE_TEMPLATE %}
     {%- endblock trackingcode %}
     {%- endblock body %}
