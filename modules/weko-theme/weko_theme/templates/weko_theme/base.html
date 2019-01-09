@@ -73,16 +73,52 @@
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     {%- endblock browserupgrade %}
-    {%- block body_inner %}
-    {%- block page_header %}
-{% include config.THEME_HEADER_TEMPLATE %}
-    {%- endblock page_header %}
-    {%- block page_body %}
-    {%- endblock page_body %}
-    {%- block page_footer %}
-{% include config.THEME_FOOTER_TEMPLATE %}
-    {%- endblock page_footer %}
-    {%- endblock body_inner %}
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.css" />
+    <style type="text/css">
+        .grid-stack-item {
+            background: lightyellow;
+        }
+    </style>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.js"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.jQueryUI.min.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        var options = {
+            cellHeight: 80,
+            verticalMargin: 10
+        };
+        $('.grid-stack').gridstack(options);
+    });
+    </script>
+
+    <div class="grid-stack">
+      <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="8" data-gs-height="6">
+        <div class="grid-stack-item-content">
+          {%- block body_inner %}
+          {%- block page_header %}
+      {% include config.THEME_HEADER_TEMPLATE %}
+          {%- endblock page_header %}
+          {%- block page_body %}
+          {%- endblock page_body %}
+          {%- block page_footer %}
+      {% include config.THEME_FOOTER_TEMPLATE %}
+          {%- endblock page_footer %}
+          {%- endblock body_inner %}
+        </div>
+      </div>
+    </div>
+
+
+
+
+
     {%- block javascript %}
     {%- endblock javascript %}
     {%- block trackingcode %}{% include config.THEME_TRACKINGCODE_TEMPLATE %}

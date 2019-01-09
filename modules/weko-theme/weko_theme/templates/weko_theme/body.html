@@ -21,64 +21,32 @@
 {%- extends "weko_theme/base.html" %}
 
 {%- block page_body %}
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.css" />
-<style type="text/css">
-    .grid-stack-item {
-        background: lightyellow;
-    }
-</style>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.js"></script>
-<!--<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>-->
-<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.jQueryUI.min.js"></script>
-<script type="text/javascript">
-$(function () {
-    var options = {
-        cellHeight: 80,
-        verticalMargin: 10
-    };
-    $('.grid-stack').gridstack(options);
-});
-</script>
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12 col-md-12 col-md-12">
-      <div class="grid-stack">
-        <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="8" data-gs-height="6">
-          <div class="grid-stack-item-content">
-
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                {%- block body_title %}
-                  <div class="pull-right">
-                  {%- block body_title_right %}
-                  {%- endblock body_title_right %}
-                  </div>
-                  {%- block body_title_left %}
-                    {%-if not community_id %}
-                    <h5><strong><p class="text-uppercase">{{ _(config.THEME_SITENAME) }}</p></strong></h5>
-                    {%- else%}
-                    <h5><strong><p class="">{{community.title}}</p></strong></h5>
-                    {%- endif%}
-                  {%- endblock body_title_left %}
-                {%- endblock body_title %}
-              </div>
-              <div class="panel-body">
-                {%- block body_center %}
-                  {#% include "weko_theme/body_center.html" %#}
-                {%- endblock body_center %}
-              </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          {%- block body_title %}
+            <div class="pull-right">
+            {%- block body_title_right %}
+            {%- endblock body_title_right %}
             </div>
-
-          </div>
+            {%- block body_title_left %}
+              {%-if not community_id %}
+              <h5><strong><p class="text-uppercase">{{ _(config.THEME_SITENAME) }}</p></strong></h5>
+              {%- else%}
+              <h5><strong><p class="">{{community.title}}</p></strong></h5>
+              {%- endif%}
+            {%- endblock body_title_left %}
+          {%- endblock body_title %}
+        </div>
+        <div class="panel-body">
+          {%- block body_center %}
+            {#% include "weko_theme/body_center.html" %#}
+          {%- endblock body_center %}
         </div>
       </div>
-
     </div>
-
   </div>
 </div>
 {%- endblock page_body %}
