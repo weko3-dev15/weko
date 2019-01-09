@@ -84,7 +84,10 @@
             background: navajowhite;
         }
         .footer {
-            background: palegreen;
+            background: aliceblue;
+        }
+        .other {
+            background: lightgoldenrodyellow;
         }
 
     </style>
@@ -102,6 +105,25 @@
             verticalMargin: 10
         };
         $('.grid-stack').gridstack(options);
+
+        this.grid = $('.grid-stack').data('gridstack');
+
+        this.saveGrid = function () {
+            this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
+                el = $(el);
+                var node = el.data('_gridstack_node');
+                return {
+                    x: node.x,
+                    y: node.y,
+                    width: node.width,
+                    height: node.height
+                };
+            });
+            alert(JSON.stringify(this.serializedData, null, '    '));
+            return false;
+        }.bind(this);
+
+
     });
     </script>
 
@@ -127,6 +149,14 @@
           {%- endblock page_footer %}
         </div>
       </div>
+      <div class="grid-stack-item other" data-gs-x="0" data-gs-y="12" data-gs-width="6" data-gs-height="3">
+        <div class="grid-stack-item-content">
+          <a class="btn btn-default" id="save-grid" href="#">Save Grid</a>
+          <a class="btn btn-default" id="load-grid" href="#">Load Grid</a>
+          <a class="btn btn-default" id="clear-grid" href="#">Clear Grid</a>
+        </div>
+      </div>
+
       {%- endblock body_inner %}
     </div>
 
