@@ -99,20 +99,28 @@
     </script>
 
     <div class="grid-stack">
-      <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="8" data-gs-height="6">
+      {%- block body_inner %}
+      <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="12" data-gs-height="3">
         <div class="grid-stack-item-content">
-          {%- block body_inner %}
           {%- block page_header %}
-      {% include config.THEME_HEADER_TEMPLATE %}
+            {% include config.THEME_HEADER_TEMPLATE %}
           {%- endblock page_header %}
-          {%- block page_body %}
-          {%- endblock page_body %}
-          {%- block page_footer %}
-      {% include config.THEME_FOOTER_TEMPLATE %}
-          {%- endblock page_footer %}
-          {%- endblock body_inner %}
         </div>
       </div>
+      <div class="grid-stack-item" data-gs-x="0" data-gs-y="4" data-gs-width="10" data-gs-height="6">
+        <div class="grid-stack-item-content">
+          {%- block page_body %}
+          {%- endblock page_body %}
+        </div>
+      </div>
+      <div class="grid-stack-item" data-gs-x="0" data-gs-y="10" data-gs-width="12" data-gs-height="3">
+        <div class="grid-stack-item-content">
+          {%- block page_footer %}
+            {% include config.THEME_FOOTER_TEMPLATE %}
+          {%- endblock page_footer %}
+        </div>
+      </div>
+      {%- endblock body_inner %}
     </div>
 
     {%- block javascript %}
