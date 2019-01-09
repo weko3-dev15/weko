@@ -80,6 +80,13 @@
         .grid-stack-item {
             background: lightyellow;
         }
+        .header {
+            background: navajowhite;
+        }
+        .footer {
+            background: greenyellow;
+        }
+
     </style>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -100,20 +107,20 @@
 
     <div class="grid-stack">
       {%- block body_inner %}
-      <div class="grid-stack-item" data-gs-x="0" data-gs-y="0" data-gs-width="10" data-gs-height="1">
+      <div class="grid-stack-item header" data-gs-x="0" data-gs-y="0" data-gs-width="8" data-gs-height="2">
         <div class="grid-stack-item-content">
           {%- block page_header %}
             {% include config.THEME_HEADER_TEMPLATE %}
           {%- endblock page_header %}
         </div>
       </div>
-      <div class="grid-stack-item" data-gs-x="0" data-gs-y="4" data-gs-width="8" data-gs-height="6">
+      <div class="grid-stack-item" data-gs-x="0" data-gs-y="4" data-gs-width="6" data-gs-height="6">
         <div class="grid-stack-item-content">
           {%- block page_body %}
           {%- endblock page_body %}
         </div>
       </div>
-      <div class="grid-stack-item" data-gs-x="0" data-gs-y="10" data-gs-width="10" data-gs-height="1">
+      <div class="grid-stack-item footer" data-gs-x="0" data-gs-y="10" data-gs-width="8" data-gs-height="2">
         <div class="grid-stack-item-content">
           {%- block page_footer %}
             {% include config.THEME_FOOTER_TEMPLATE %}
