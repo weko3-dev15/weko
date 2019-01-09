@@ -119,10 +119,11 @@
                     height: node.height
                 };
             });
-            alert(JSON.stringify(this.serializedData, null, '    '));
+            $('#saved-data').val(JSON.stringify(this.serializedData, null, '    '));
             return false;
         }.bind(this);
 
+        $('#save-grid').click(this.saveGrid);
 
     });
     </script>
@@ -151,9 +152,12 @@
       </div>
       <div class="grid-stack-item other" data-gs-x="0" data-gs-y="12" data-gs-width="6" data-gs-height="3">
         <div class="grid-stack-item-content">
-          <a class="btn btn-default" id="save-grid" href="#">Save Grid</a>
-          <a class="btn btn-default" id="load-grid" href="#">Load Grid</a>
-          <a class="btn btn-default" id="clear-grid" href="#">Clear Grid</a>
+          <div>
+            <a class="btn btn-default" id="save-grid" href="#">Save Grid</a>
+            <a class="btn btn-default" id="load-grid" href="#">Load Grid</a>
+            <a class="btn btn-default" id="clear-grid" href="#">Clear Grid</a>
+          </div>
+          <div id="saved-data"></div>
         </div>
       </div>
 
