@@ -99,6 +99,6 @@ base_js = Bundle(
         }
     ),
     filters='jsmin',
-    output='gen/packed.%(version)s.js',
+    output='gen/weko_packed.%(version)s.js',
 )
 """Default JavaScript bundle with Almond, JQuery and RequireJS."""
