@@ -90,9 +90,9 @@ js_detail_search = Bundle(
 js_gridstack = NpmBundle(
     'node_modules/jquery/jquery.min.js',
     'node_modules/jqueryui/jquery-ui.js',
-    'node_modules/lodash/lodash.js',
-    # 'node_modules/gridstack/gridstack.min.js',
-    # 'node_modules/gridstack/gridstack.jQueryUI.min.js',
+    # 'node_modules/lodash/lodash.js',
+    'node_modules/gridstack.js/gridstack.js',
+    'node_modules/gridstack.js/gridstack.jQueryUI.js',
     filters='jsmin',
     output="gen/weko_gridstack.%(version)s.js",
     npm={
