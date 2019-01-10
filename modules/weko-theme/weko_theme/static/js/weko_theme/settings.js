@@ -7,7 +7,7 @@
  */
 
 require.config({
-  baseUrl: "js",
+  baseUrl: "/static/",
   paths: {
 //    jquery: "node_modules/jquery/jquery",
 //    bootstrap: "node_modules/bootstrap-sass/assets/javascripts/bootstrap",
