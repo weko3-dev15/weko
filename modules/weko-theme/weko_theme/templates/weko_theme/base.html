@@ -200,7 +200,8 @@
 
       });
       </script>
-
+      {% include config.THEME_JAVASCRIPT_TEMPLATE %}
+      {% assets "weko_theme_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
     {%- endblock javascript %}
 
     {%- block trackingcode %}{% include config.THEME_TRACKINGCODE_TEMPLATE %}
