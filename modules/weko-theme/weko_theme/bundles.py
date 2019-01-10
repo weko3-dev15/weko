@@ -95,7 +95,7 @@ base_js = Bundle(
         npm={
             'almond': '~0.3.1',
             'angular': '~1.4.9',
-            'jquery': '~1.9.1',
+            'jquery': '~3.2.1',
         }
     ),
     filters='jsmin',
