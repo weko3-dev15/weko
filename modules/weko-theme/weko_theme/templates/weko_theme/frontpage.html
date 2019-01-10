@@ -45,32 +45,12 @@
 
 {%- block javascript %}
   {{ super() }}
-  <!--{% assets "weko_theme_js_treeview" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}-->
+  {% assets "weko_theme_js_treeview" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   <!--{% assets "weko_theme_js_top_page" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}-->
   <!--{% assets "weko_theme_js_detail_search" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}-->
   <!--{% assets "invenio_search_ui_search_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}-->
   <!--{% assets "weko_search_ui_dependencies_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}-->
   <!--{% assets "weko_search_ui_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}-->
-
-  <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
-  <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.js"></script>-->
-  <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
-  <!--<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>-->
-  <!--<script src="{{ url_for('static', filename='js/weko_theme/gridstack.js') }}"></script>-->
-  <!--<script src="{{ url_for('static', filename='js/weko_theme/gridstack.jQueryUI.js') }}"></script>-->
-  <!--<script type="text/javascript" src='//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.js'></script>-->
-  <!--<script type="text/javascript" src='//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.jQueryUI.min.js'></script>-->
-
-  <!--<script>-->
-    <!--$(function () {-->
-      <!--alert('gridstack');-->
-      <!--var options = {-->
-          <!--cellHeight: 80,-->
-          <!--verticalMargin: 10-->
-      <!--};-->
-      <!--$('.grid-stack').gridstack(options);-->
-    <!--});-->
-  <!--</script>-->
 
 {%- endblock javascript %}
 
