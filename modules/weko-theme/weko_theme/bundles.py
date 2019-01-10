@@ -90,7 +90,7 @@ js_detail_search = Bundle(
 base_js = Bundle(
     NpmBundle(
         'node_modules/almond/almond.js',
-        'js/settings.js',
+        'js/weko_theme/settings.js',
         filters='uglifyjs',
         npm={
             'almond': '~0.3.1',

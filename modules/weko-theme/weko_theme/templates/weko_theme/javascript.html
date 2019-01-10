@@ -6,3 +6,7 @@
   Invenio is free software; you can redistribute it and/or modify it
   under the terms of the MIT License; see LICENSE file for more details.
 #}
+{% assets "weko_theme_base_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+{%- if config.I18N_LANGUAGES %}
+  {% assets "invenio_i18n_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
+{%- endif %}
