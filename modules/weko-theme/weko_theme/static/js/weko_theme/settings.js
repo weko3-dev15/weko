@@ -7,11 +7,12 @@
  */
 
 require.config({
-  baseUrl: "/static/",
+  baseUrl: "js",
   paths: {
-    jquery: "node_modules/jquery/jquery",
-    bootstrap: "node_modules/bootstrap-sass/assets/javascripts/bootstrap",
-    select2: "node_modules/select2/dist/js/select2",
+//    jquery: "node_modules/jquery/jquery",
+//    bootstrap: "node_modules/bootstrap-sass/assets/javascripts/bootstrap",
+//    select2: "node_modules/select2/dist/js/select2",
+    jquery: '//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min',
 //    'jquery.ui': '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min',
 //    lodash: '//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min',
 //    gridstack: '//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.3.0/gridstack.min',
