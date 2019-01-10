@@ -1,7 +1,7 @@
 require([
   "jquery",
   "bootstrap",
-  "jquery.ui",
+//  "jquery.ui",
   "lodash",
   "gridstack",
   "gridstack.jqueryui"
