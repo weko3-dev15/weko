@@ -90,13 +90,17 @@ js_detail_search = Bundle(
 base_js = Bundle(
     NpmBundle(
         'node_modules/almond/almond.js',
-        'js/weko_theme/settings.js',
+        'js/settings.js',
         filters='uglifyjs',
         npm={
             'almond': '~0.3.1',
             'angular': '~1.4.9',
             'jquery': '~3.2.1',
         }
+    ),
+    Bundle(
+        'js/base.js',
+        filters='requirejs',
     ),
     filters='jsmin',
     output='gen/packed.%(version)s.js',
