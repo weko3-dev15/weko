@@ -87,16 +87,18 @@ js_detail_search = Bundle(
 )
 
 # TODO
-# js_gridstack = NpmBundle(
-#     'node_modules/angular-ui-bootstrap/ui-bootstrap-tpls.js',
-#     'node_modules/angular/angular.js',
-#     'js/weko_records_ui/detail.js',
-#     'js/weko_records_ui/app.js',
-#     filters='jsmin',
-#     output="gen/packed.%(version)s.js",
-#     npm={
-#         'jquery-ui': '~1.12.0',
-#         'lodash': '~4.17.10',
-#         'gridstack': '~0.4.0',
-#     },
-# )
+js_gridstack = NpmBundle(
+    'node_modules/jquery/jquery.min.js',
+    'node_modules/jqueryui/jquery-ui.js',
+    'node_modules/lodash/lodash.js',
+    'node_modules/gridstack/gridstack.min.js',
+    'node_modules/gridstack/gridstack.jQueryUI.min.js',
+    filters='jsmin',
+    output="gen/weko_gridstack.%(version)s.js",
+    npm={
+        'jquery': '~3.2.1',
+        'jquery-ui': '~1.12.0',
+        'lodash': '~4.17.10',
+        'gridstack': '~0.4.0',
+    },
+)
