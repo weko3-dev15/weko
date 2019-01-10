@@ -1,6 +1,10 @@
 require([
   "jquery",
-  "bootstrap"
+  "bootstrap",
+  "jquery.ui",
+  "lodash",
+  "gridstack",
+  "gridstack.jqueryui"
   ], function() {
     $(document).ready(function() {
       $('#btn_edit_start').on('click', function(){
