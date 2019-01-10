@@ -9,7 +9,7 @@
 require.config({
   baseUrl: "",
   paths: {
-    jquery: "node_modules/jquery/src/jquery",
+    jquery: "node_modules/jquery/jquery",
     bootstrap: "node_modules/bootstrap-sass/assets/javascripts/bootstrap",
     select2: "node_modules/select2/dist/js/select2",
     jquery: '//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min',

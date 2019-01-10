@@ -95,7 +95,9 @@ base_js = Bundle(
         npm={
             'almond': '~0.3.1',
             'angular': '~1.4.9',
-            'jquery': '~3.2.1',
+            'jquery': '~1.9.1',
+            'lodash': '~4.17.10',
+            'gridstack': '~0.4.0'
         }
     ),
     filters='jsmin',
