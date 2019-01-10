@@ -96,35 +96,35 @@
     <!--<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>-->
     <!--<script src="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.js"></script>-->
     <!--<script src="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.jQueryUI.min.js"></script>-->
-    <script type="text/javascript">
-    $(function () {
-        var options = {
-            cellHeight: 80,
-            verticalMargin: 10
-        };
-        $('.grid-stack').gridstack(options);
+    <!--<script type="text/javascript">-->
+    <!--$(function () {-->
+        <!--var options = {-->
+            <!--cellHeight: 80,-->
+            <!--verticalMargin: 10-->
+        <!--};-->
+        <!--$('.grid-stack').gridstack(options);-->
 
-        this.grid = $('.grid-stack').data('gridstack');
+        <!--this.grid = $('.grid-stack').data('gridstack');-->
 
-        this.saveGrid = function () {
-            this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
-                el = $(el);
-                var node = el.data('_gridstack_node');
-                return {
-                    x: node.x,
-                    y: node.y,
-                    width: node.width,
-                    height: node.height
-                };
-            });
-            $('#saved-data').val(JSON.stringify(this.serializedData, null, '    '));
-            return false;
-        }.bind(this);
+        <!--this.saveGrid = function () {-->
+            <!--this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {-->
+                <!--el = $(el);-->
+                <!--var node = el.data('_gridstack_node');-->
+                <!--return {-->
+                    <!--x: node.x,-->
+                    <!--y: node.y,-->
+                    <!--width: node.width,-->
+                    <!--height: node.height-->
+                <!--};-->
+            <!--});-->
+            <!--$('#saved-data').val(JSON.stringify(this.serializedData, null, '    '));-->
+            <!--return false;-->
+        <!--}.bind(this);-->
 
-        $('#save-grid').click(this.saveGrid);
+        <!--$('#save-grid').click(this.saveGrid);-->
 
-    });
-    </script>
+    <!--});-->
+    <!--</script>-->
 
     <div class="grid-stack">
       {%- block body_inner %}
@@ -170,6 +170,36 @@
       <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.jQueryUI.min.js"></script>
+
+      <script type="text/javascript">
+      $(function () {
+          var options = {
+              cellHeight: 80,
+              verticalMargin: 10
+          };
+          $('.grid-stack').gridstack(options);
+
+          this.grid = $('.grid-stack').data('gridstack');
+
+          this.saveGrid = function () {
+              this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
+                  el = $(el);
+                  var node = el.data('_gridstack_node');
+                  return {
+                      x: node.x,
+                      y: node.y,
+                      width: node.width,
+                      height: node.height
+                  };
+              });
+              $('#saved-data').val(JSON.stringify(this.serializedData, null, '    '));
+              return false;
+          }.bind(this);
+
+          $('#save-grid').click(this.saveGrid);
+
+      });
+      </script>
 
     {%- endblock javascript %}
 
