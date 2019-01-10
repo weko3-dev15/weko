@@ -75,3 +75,11 @@ WEKO_ITEM_MANAGEMENT_TEMPLATE = 'weko_theme/item_management_display.html'
 
 WEKO_ITEM_MANAGEMENT_INIT_TEMPLATE = 'weko_theme/item_management_init.html'
 """Template for Item Management."""
+
+WEKO_THEME_JAVASCRIPT_TEMPLATE = 'weko_theme/javascript.html'
+"""Javascript assets template, normally included in :data:`BASE_TEMPLATE`.
+
+The default template just includes the Invenio-Theme JavaScript bundle.
+Set a new template if you would like to customize which JavaScript assets are
+included on all pages.
+"""
