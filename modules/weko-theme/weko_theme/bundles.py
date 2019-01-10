@@ -93,6 +93,7 @@ js_gridstack = NpmBundle(
     # 'node_modules/lodash/lodash.js',
     'node_modules/gridstack.js/src/gridstack.js',
     'node_modules/gridstack.js/src/gridstack.jQueryUI.js',
+    'js/weko_theme/weko_gridstack.js',
     filters='jsmin',
     output="gen/weko_gridstack.%(version)s.js",
     npm={
