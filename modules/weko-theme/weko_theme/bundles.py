@@ -98,10 +98,6 @@ base_js = Bundle(
             'jquery': '~3.2.1',
         }
     ),
-    Bundle(
-        'js/base.js',
-        filters='requirejs',
-    ),
     filters='jsmin',
     output='gen/packed.%(version)s.js',
 )
