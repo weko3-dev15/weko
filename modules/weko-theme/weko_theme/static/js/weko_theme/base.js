@@ -2,7 +2,7 @@ require([
   "jquery",
   "bootstrap",
 //  "jquery.ui",
-//  "lodash",
+  "lodash",
 //  "gridstack",
 //  "gridstack.jqueryui"
   ], function() {
