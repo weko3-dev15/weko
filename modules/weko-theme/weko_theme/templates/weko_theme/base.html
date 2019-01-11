@@ -73,16 +73,95 @@
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     {%- endblock browserupgrade %}
-    {%- block body_inner %}
-    {%- block page_header %}
-{% include config.THEME_HEADER_TEMPLATE %}
-    {%- endblock page_header %}
-    {%- block page_body %}
-    {%- endblock page_body %}
-    {%- block page_footer %}
-{% include config.THEME_FOOTER_TEMPLATE %}
-    {%- endblock page_footer %}
-    {%- endblock body_inner %}
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.css" />
+    <style type="text/css">
+        .grid-stack-item {
+            background: lightyellow;
+        }
+        .header {
+            background: navajowhite;
+        }
+        .footer {
+            background: aliceblue;
+        }
+        .other {
+            background: lightgoldenrodyellow;
+        }
+
+    </style>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.jQueryUI.min.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        var options = {
+            cellHeight: 80,
+            verticalMargin: 10
+        };
+        $('.grid-stack').gridstack(options);
+
+        this.grid = $('.grid-stack').data('gridstack');
+
+        this.saveGrid = function () {
+            this.serializedData = _.map($('.grid-stack > .grid-stack-item:visible'), function (el) {
+                el = $(el);
+                var node = el.data('_gridstack_node');
+                return {
+                    x: node.x,
+                    y: node.y,
+                    width: node.width,
+                    height: node.height
+                };
+            });
+            $('#saved-data').val(JSON.stringify(this.serializedData, null, '    '));
+            return false;
+        }.bind(this);
+
+        $('#save-grid').click(this.saveGrid);
+
+    });
+    </script>
+
+    <div class="grid-stack">
+      {%- block body_inner %}
+      <div class="grid-stack-item header" data-gs-x="0" data-gs-y="0" data-gs-width="8" data-gs-height="2">
+        <div class="grid-stack-item-content">
+          {%- block page_header %}
+            {% include config.THEME_HEADER_TEMPLATE %}
+          {%- endblock page_header %}
+        </div>
+      </div>
+      <div class="grid-stack-item" data-gs-x="0" data-gs-y="4" data-gs-width="6" data-gs-height="4">
+        <div class="grid-stack-item-content">
+          {%- block page_body %}
+          {%- endblock page_body %}
+        </div>
+      </div>
+      <div class="grid-stack-item footer" data-gs-x="0" data-gs-y="10" data-gs-width="8" data-gs-height="2">
+        <div class="grid-stack-item-content">
+          {%- block page_footer %}
+            {% include config.THEME_FOOTER_TEMPLATE %}
+          {%- endblock page_footer %}
+        </div>
+      </div>
+      <div class="grid-stack-item other" data-gs-x="0" data-gs-y="12" data-gs-width="6" data-gs-height="3">
+        <div class="grid-stack-item-content">
+          <div>
+            <a class="btn btn-default" id="save-grid" href="#">Save Grid</a>
+            <a class="btn btn-default" id="load-grid" href="#">Load Grid</a>
+            <a class="btn btn-default" id="clear-grid" href="#">Clear Grid</a>
+            <hr/>
+            <textarea id="saved-data" cols="100" rows="8" readonly="readonly"></textarea>
+          </div>
+        </div>
+      </div>
+
+      {%- endblock body_inner %}
+    </div>
     {%- block javascript %}
 {% include config.THEME_JAVASCRIPT_TEMPLATE %}
 {% assets "weko_theme_js" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
