@@ -46,7 +46,9 @@ css_bootstrap = NpmBundle(
         'almond': '~0.3.1',
         'bootstrap-sass': '~3.3.5',
         'font-awesome': '~4.4.0',
-        'jquery': '~1.9.1'
+        'jquery': '~1.9.1',
+        'lodash': '~4.17.10',
+        'gridstack': '~0.4.0'
     }
 )
 """Default CSS bundle with Bootstrap and Font-Awesome."""
