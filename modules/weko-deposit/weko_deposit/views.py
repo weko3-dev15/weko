@@ -28,3 +28,7 @@ blueprint = Blueprint(
     template_folder='templates',
     static_folder='static',
 )
+
+@blueprint.route('/prototype_pd', methods=['GET'])
+def download_pdf():
+    print("hogehoge")
