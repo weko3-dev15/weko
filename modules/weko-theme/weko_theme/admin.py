@@ -68,7 +68,7 @@ chunk_designview = {
     'kwargs': {
         'category': _('Setting'),
         'name': _('Chunk Design'),
-        'endpoint': 'chunk/design'
+        'endpoint': 'chunk-design'
     }
 }
 
