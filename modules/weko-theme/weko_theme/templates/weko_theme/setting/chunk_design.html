@@ -28,6 +28,8 @@
 {%- block body %}
 {%- set cur_lifetime = current_lifetime %}
 {%- set lifetime_map = map_lifetime %}
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.css" />
 <style type="text/css">
     .list {
         background: #FFFFBB;
@@ -41,23 +43,59 @@
         border: 1px solid gray;
     }
 </style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.jQueryUI.min.js"></script>
+<body>
+  <div class="row">
+    <div class="col-md-12">
 
-<div class="row">
-  <div class="col-sm-12">
-    <div class="list col-sm-3"></div>
-    <div class="design col-sm-8"></div>
+      <div class="list col-md-3">
+        <div class="grid-stack grid-stack-3" id="grid1"></div>
+
+      </div>
+
+      <div class="design col-md-8">
+        <div class="grid-stack grid-stack-8" id="grid2"></div>
+      </div>
+    </div>
   </div>
-</div>
+</body>
 {%- endblock body %}
 {% block tail %}
 <script>
   $(document).ready(function() {
-    $('#index_form_submit').on('click', function(){
-      let height = $('#height').val();
-      if(height != null && height != '' && (isNaN(height) || height <= 0)) {
-        alert("Invalid height of indextree panel.");
-        return false;
-      }
+    var options = {
+        width: 3,
+        float: false,
+        removable: '.trash',
+        removeTimeout: 100,
+        acceptWidgets: '.grid-stack-item'
+    };
+    $('#grid1').gridstack(options);
+    $('#grid2').gridstack(_.defaults({
+        float: true
+    }, options));
+    var items = [
+        {x: 0, y: 0, width: 2, height: 2},
+        {x: 0, y: 2, width: 2, height: 2},
+        {x: 0, y: 3, width: 2, height: 2},
+        {x: 0, y: 4, width: 2, height: 2}
+    ];
+    $('.grid-stack').each(function () {
+        var grid = $(this).data('gridstack');
+        _.each(items, function (node) {
+            grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
+                node.x, node.y, node.width, node.height);
+        });
+    });
+    $('.sidebar .grid-stack-item').draggable({
+        revert: 'invalid',
+        handle: '.grid-stack-item-content',
+        scroll: false,
+        appendTo: 'body'
     });
   })
 </script>
