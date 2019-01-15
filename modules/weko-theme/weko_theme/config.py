@@ -78,3 +78,14 @@ WEKO_ITEM_MANAGEMENT_TEMPLATE = 'weko_theme/item_management_display.html'
 
 WEKO_ITEM_MANAGEMENT_INIT_TEMPLATE = 'weko_theme/item_management_init.html'
 """Template for Item Management."""
+
+WEKO_ADMIN_BASE_TEMPLATE = 'weko_theme/page_admin.html'
+"""Base template for the administration interface.
+
+The template changes the administration interface from using a standard
+Bootstrap interface to using
+`AdminLTE 2 <https://almsaeedstudio.com/themes/AdminLTE/index2.html>`_.
+
+The variable is defined in Invenio-Admin which will use the value defined here
+if Invenio-Theme is installed.
+"""
