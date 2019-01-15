@@ -59,14 +59,15 @@
 <body>
   <div class="row">
     <div class="col-md-12">
+      <div class="grid-stack">
+        <div class="list col-md-3">
+          <div class="grid-stack grid-stack-3" id="grid1"></div>
 
-      <div class="list col-md-3">
-        <div class="grid-stack grid-stack-3" id="grid1"></div>
+        </div>
 
-      </div>
-
-      <div class="design col-md-8">
-        <div class="grid-stack grid-stack-8" id="grid2"></div>
+        <div class="design col-md-8">
+          <div class="grid-stack grid-stack-8" id="grid2"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -77,9 +78,7 @@
   $(document).ready(function() {
     var options = {
         width: 3,
-        float: false,
-        removable: '.trash',
-        removeTimeout: 100,
+        <!--float: false,-->
         acceptWidgets: '.grid-stack-item'
     };
     $('#grid1').gridstack(options);
@@ -89,8 +88,7 @@
     var items = [
         {x: 0, y: 0, width: 2, height: 2},
         {x: 0, y: 2, width: 2, height: 2},
-        {x: 0, y: 3, width: 2, height: 2},
-        {x: 0, y: 4, width: 2, height: 2}
+        {x: 0, y: 3, width: 2, height: 2}
     ];
     $('.grid-stack').each(function () {
         var grid = $(this).data('gridstack');
