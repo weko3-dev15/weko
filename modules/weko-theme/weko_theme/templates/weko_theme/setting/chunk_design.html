@@ -78,15 +78,23 @@
 {% block tail %}
 <script>
   $(document).ready(function() {
-    var options = {
+    var options1 = {
         width: 3,
         <!--float: false,-->
         acceptWidgets: '.grid-stack-item'
     };
-    $('#grid1').gridstack(options);
-    $('#grid2').gridstack(_.defaults({
+    $('#grid1').gridstack(options1);
+
+    var options2 = {
+        width: 8,
+        <!--float: false,-->
+        acceptWidgets: '.grid-stack-item'
+    };
+    $('#grid1').gridstack(options2);
+
+    <!--$('#grid2').gridstack(_.defaults({-->
         <!--float: true-->
-    }, options));
+    <!--}, options));-->
     var items = [
         {x: 0, y: 0, width: 2, height: 2},
         {x: 0, y: 2, width: 2, height: 2},
