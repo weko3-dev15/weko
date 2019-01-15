@@ -25,7 +25,7 @@ import sys
 from flask import abort, current_app, flash, request
 from flask_admin import BaseView, expose
 from flask_babelex import gettext as _
-from .models import IndexStyle
+from weko_index_tree.models import IndexStyle
 
 class ChunkDesignView(BaseView):
 
