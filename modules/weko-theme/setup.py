@@ -93,6 +93,9 @@ setup(
         'invenio_base.apps': [
             'weko_theme = weko_theme:WekoTheme',
         ],
+        'invenio_admin.views': [
+            'weko_theme_chunk_design = weko_theme.admin:chunk_designview',
+        ],
         'invenio_i18n.translations': [
             'messages = weko_theme',
         ],

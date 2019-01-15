@@ -40,6 +40,9 @@ THEME_HEADER_EDITOR_TEMPLATE = 'weko_theme/header_editor.html'
 THEME_HEADER_WYSIWYG_TEMPLATE = 'weko_theme/header_wysiwyg.html'
 """Header wysiwyg template."""
 
+THEME_CHUNK_DESIGN_ADMIN_TEMPLATE = 'weko_theme/setting/chunk_design.html'
+"""Thunk design setting page."""
+
 THEME_HEADER_LOGIN_TEMPLATE = 'weko_theme/header_login.html'
 """Header login template, included in :data:`THEME_HEADER_TEMPLATE`."""
 
