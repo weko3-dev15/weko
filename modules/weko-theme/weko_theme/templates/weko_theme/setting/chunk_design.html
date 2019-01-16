@@ -172,6 +172,12 @@
 
     $('#save-grid').click(this.saveGrid);
 
+    $('.grid-stack').on('dragstart', function(event, ui) {
+        alert('dragstart');
+        var grid = this;
+        var element = event.target;
+    });
+
 
 
   })
