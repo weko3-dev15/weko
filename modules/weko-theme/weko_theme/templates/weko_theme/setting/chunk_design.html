@@ -175,7 +175,7 @@
     $('.grid-stack').on('dragstart', function(event, ui) {
         var grid = this;
         var element = event.target;
-        alert(element.html());
+        alert(element.prop('outerHTML'));
     });
 
 
