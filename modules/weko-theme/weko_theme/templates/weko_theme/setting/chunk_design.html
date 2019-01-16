@@ -95,7 +95,7 @@
 {% block tail %}
 <script>
   $(document).ready(function() {
-    contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">title</div></div>'
+    var contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">title</div></div>'
 
     var options1 = {
         width: 2,
@@ -173,7 +173,8 @@
     $('#save-grid').click(this.saveGrid);
 
     $('#grid1').on('added', function(event, items) {
-      alert(items.length);
+      items.id = 'new';
+      <!--alert(items.length);-->
         <!--for (var i = 0; i < items.length; i++) {-->
           <!--alert(items[i].x);-->
         <!--}-->
