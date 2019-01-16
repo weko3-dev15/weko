@@ -172,15 +172,11 @@
 
     $('#save-grid').click(this.saveGrid);
 
-    <!--$('#grid1').on('change', function(event, items) {-->
-        <!--for (var i = 0; i < items.length; i++) {-->
-          <!--alert(items[i].id);-->
-        <!--}-->
+    $('#grid1').on('added', function(event, items) {
+        for (var i = 0; i < items.length; i++) {
+          alert(items[i]);
+        }
 
-    <!--});-->
-    $('#grid2').on('dropped', function(event, previousWidget, newWidget) {
-        alert(previousWidget.id);
-        alert(newWidget.id);
     });
 
   })
