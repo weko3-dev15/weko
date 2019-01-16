@@ -133,9 +133,13 @@
     });
 
     var items2 = [
-      {x: 0, y: 0, width: 2, height: 2, id: 'header'},
-      {x: 0, y: 2, width: 2, height: 2, id: 'footer'},
-      {x: 0, y: 4, width: 2, height: 2, id: 'main'}
+      {x: 0, y: 0, width: 8, height: 1, id: 'header'},
+      {x: 5, y: 1, width: 2, height: 2, id: 'footer'},
+      {x: 0, y: 1, width: 5, height: 3, id: 'main'}
+
+      <!--{x: 0, y: 0, width: 2, height: 2, id: 'header'},-->
+      <!--{x: 0, y: 2, width: 2, height: 2, id: 'footer'},-->
+      <!--{x: 0, y: 4, width: 2, height: 2, id: 'main'}-->
     ];
     $('#grid2').each(function () {
       var grid2 = $(this).data('gridstack');
@@ -157,6 +161,7 @@
             el = $(el);
             var node = el.data('_gridstack_node');
             return {
+                id: node.id,
                 x: node.x,
                 y: node.y,
                 width: node.width,
