@@ -133,14 +133,11 @@
     });
 
     var items2 = [
-      {x: 0, y: 0, width: 8, height: 1, id: 'header'},
-      {x: 0, y: 1, width: 5, height: 3, id: 'main'},
-      {x: 5, y: 1, width: 2, height: 2, id: 'footer'}
-
-      <!--{x: 0, y: 0, width: 2, height: 2, id: 'header'},-->
-      <!--{x: 0, y: 2, width: 2, height: 2, id: 'footer'},-->
-      <!--{x: 0, y: 4, width: 2, height: 2, id: 'main'}-->
+      {x: 0, y: 0, width: 2, height: 2, id: 'header'},
+      {x: 0, y: 2, width: 2, height: 2, id: 'footer'},
+      {x: 0, y: 4, width: 2, height: 2, id: 'main'}
     ];
+    items2 = GridStackUI.Utils.sort(items2, 1);
     $('#grid2').each(function () {
       var grid2 = $(this).data('gridstack');
       _.each(items2, function (node) {
