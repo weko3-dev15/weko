@@ -98,8 +98,8 @@
     contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">title</div></div>'
 
     var options1 = {
-        <!--width: 2,-->
-        <!--height: 10,-->
+        width: 2,
+        height: 10,
         disableResize: true,
         <!--float: false,-->
         acceptWidgets: '.grid-stack-item'
@@ -107,8 +107,8 @@
     $('#grid1').gridstack(options1);
 
     var options2 = {
-        <!--width: 9,-->
-        <!--float: false,-->
+        width: 9,
+        height: 10,
         acceptWidgets: '.grid-stack-item'
     };
     $('#grid2').gridstack(options2);
@@ -155,7 +155,7 @@
     });
 
     this.saveGrid = function () {
-        this.serializedData = _.map($('#grid2 > .grid-stack-item:visible'), function (el) {
+        this.serializedData = _.map($('#grid1 > .grid-stack-item:visible'), function (el) {
             el = $(el);
             var node = el.data('_gridstack_node');
             return {
