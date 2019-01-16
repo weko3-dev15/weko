@@ -101,23 +101,30 @@
     <!--$('#grid2').gridstack(_.defaults({-->
         <!--float: true-->
     <!--}, options));-->
-    var items = [
-        {x: 0, y: 0, width: 2, height: 2},
-        {x: 0, y: 2, width: 2, height: 2},
-        {x: 0, y: 4, width: 2, height: 2}
+    var items1 = [
+      {x: 0, y: 0, width: 2, height: 2, id: 'chunk1'},
+      {x: 0, y: 2, width: 2, height: 2, id: 'chunk2'},
+      {x: 0, y: 4, width: 2, height: 2, id: 'chunk3'}
     ];
-    $('.grid-stack').each(function () {
-        var grid = $(this).data('gridstack');
-        _.each(items, function (node) {
-            grid.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
-                node.x, node.y, node.width, node.height);
-        });
+    $('#grid1').each(function () {
+      var grid1 = $(this).data('gridstack');
+      _.each(items1, function (node) {
+          grid1.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
+              node.x, node.y, node.width, node.height);
+      });
     });
-    $('.sidebar .grid-stack-item').draggable({
-        revert: 'invalid',
-        handle: '.grid-stack-item-content',
-        scroll: false,
-        appendTo: 'body'
+
+    var items2 = [
+      {x: 0, y: 0, width: 2, height: 2, id: 'header'},
+      {x: 0, y: 2, width: 2, height: 2, id: 'footer'},
+      {x: 0, y: 4, width: 2, height: 2, id: 'main'}
+    ];
+    $('#grid2').each(function () {
+      var grid2 = $(this).data('gridstack');
+      _.each(items2, function (node) {
+          grid2.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
+              node.x, node.y, node.width, node.height);
+      });
     });
   })
 </script>
