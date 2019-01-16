@@ -20,7 +20,12 @@
 
 """Blueprint for weko-deposit."""
 
-from flask import Blueprint
+from flask import Flask, Blueprint, current_app, render_template, make_response
+from reportlab.pdfgen import canvas
+from reportlab.pdfbase.cidfonts import UnicodeCIDFont
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+import io
 
 blueprint = Blueprint(
     'weko_deposit',
@@ -29,6 +34,22 @@ blueprint = Blueprint(
     static_folder='static',
 )
 
-@blueprint.route('/prototype_pd', methods=['GET'])
-def download_pdf():
-    print("hogehoge")
+@blueprint.route('/pdf_test', methods=['GET'])
+
+def pdf():
+    output = io.BytesIO()
+    fontname = "HeiseiMin-W3"
+    pdfmetrics.registerFont(UnicodeCIDFont(fontname))
+    p = canvas.Canvas(output)
+    p.setFont(fontname, 30)
+    p.drawString(10, 10, 'こんにちは、ReportLab!!')
+    p.showPage()
+    p.save()
+    
+    pdf_out = output.getvalue()
+    output.close()
+
+    response = make_response(pdf_out)
+    response.headers['Content-Disposition'] = "attachment; filename='sakulaci.pdf"
+    response.mimetype = 'application/pdf'
+    return response
