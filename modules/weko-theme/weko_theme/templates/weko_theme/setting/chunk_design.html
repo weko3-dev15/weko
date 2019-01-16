@@ -173,7 +173,10 @@
     $('#save-grid').click(this.saveGrid);
 
     $('#grid1').on('change', function(event, items) {
-        alert(items);
+        for (var i = 0; i < items.length; i++) {
+          alert(items[i].id);
+        }
+
     });
 
 
