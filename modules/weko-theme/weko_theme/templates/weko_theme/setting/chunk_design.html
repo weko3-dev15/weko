@@ -122,7 +122,8 @@
     $('#grid2').each(function () {
       var grid2 = $(this).data('gridstack');
       _.each(items2, function (node) {
-        grid2.addWidget($('<div class="grid-stack-item"><div class="grid-stack-item-content"><p>Chunk</p></div></div>'),
+        var content = '<div class="grid-stack-item"><div class="grid-stack-item-content">title</div></div>'.replace('title', '<p>'+ node.id +'</p>')
+        grid2.addWidget($(content),
             node.x, node.y, node.width, node.height, true, null, null, null, null, node.id);
       });
     });
