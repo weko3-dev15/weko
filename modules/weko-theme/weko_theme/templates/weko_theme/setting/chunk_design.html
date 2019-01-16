@@ -83,6 +83,8 @@
 {% block tail %}
 <script>
   $(document).ready(function() {
+    contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">title</div></div>'
+
     var options1 = {
         width: 2,
         height: 10,
@@ -98,9 +100,6 @@
     };
     $('#grid2').gridstack(options2);
 
-    <!--$('#grid2').gridstack(_.defaults({-->
-        <!--float: true-->
-    <!--}, options));-->
     var items1 = [
       {x: 0, y: 0, width: 2, height: 2, id: 'chunk1'},
       {x: 0, y: 2, width: 2, height: 2, id: 'chunk2'},
@@ -109,8 +108,15 @@
     $('#grid1').each(function () {
       var grid1 = $(this).data('gridstack');
       _.each(items1, function (node) {
-          grid1.addWidget($('<div><div class="grid-stack-item-content" /><div/>'),
-              node.x, node.y, node.width, node.height, true, null, null, null, null, node.id);
+        var content = contentBase.replace('title', '<h3>'+ node.id +'</h3>')
+        grid1.addWidget($(content),
+                        node.x,
+                        node.y,
+                        node.width,
+                        node.height,
+                        true,
+                        null, null, null, null,
+                        node.id);
       });
     });
 
@@ -122,11 +128,19 @@
     $('#grid2').each(function () {
       var grid2 = $(this).data('gridstack');
       _.each(items2, function (node) {
-        var content = '<div class="grid-stack-item"><div class="grid-stack-item-content">title</div></div>'.replace('title', '<p>'+ node.id +'</p>')
+        var content = contentBase.replace('title', '<h3>'+ node.id +'</h3>')
         grid2.addWidget($(content),
-            node.x, node.y, node.width, node.height, true, null, null, null, null, node.id);
+                        node.x,
+                        node.y,
+                        node.width,
+                        node.height,
+                        true,
+                        null, null, null, null,
+                        node.id);
       });
     });
+
+
   })
 </script>
 {% endblock %}
