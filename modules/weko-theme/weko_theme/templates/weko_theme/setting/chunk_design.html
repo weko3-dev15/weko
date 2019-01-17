@@ -157,7 +157,7 @@
     this.saveGrid = function () {
         this.serializedData = _.map($('#grid2 > .grid-stack-item:visible'), function (el) {
             el = $(el);
-            alert(el.innerHTML);
+            alert(el.toString());
 
             var node = el.data('_gridstack_node');
             return {
