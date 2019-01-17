@@ -178,6 +178,7 @@
 
     $('#grid1').on('added', function(event, items) {
       alert('id: ' + items[0].id + ', x: ' + items[0].x + ', y: ' + items[0].y + ', width: ' + items[0].width + ', height: ' + items[0].height);
+      items[0].height = 2;
     });
 
   })
