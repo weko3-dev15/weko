@@ -118,7 +118,7 @@
       {x: 0, y: 2, width: 2, height: 2, id: 'chunk2'},
       {x: 0, y: 4, width: 2, height: 2, id: 'chunk3'}
     ];
-    $('#grid1').each(function () {
+    $('#grid2').each(function () {
       var grid1 = $(this).data('gridstack');
       _.each(items1, function (node) {
         var content = contentBase.replace('title', '<h3>'+ node.id +'</h3>')
@@ -172,15 +172,10 @@
 
     $('#save-grid').click(this.saveGrid);
 
-    $('#grid1').on('added', function(event, items) {
-      <!--items[0].data-gs-height = 2;-->
+    $('#grid2').on('added', function(event, items) {
       alert(items[0].id);
       alert(items[0].width);
       alert(items[0].height);
-      alert(items[0].x);
-        <!--for (var i = 0; i < items.length; i++) {-->
-          <!--alert(items[i].x);-->
-        <!--}-->
 
     });
 
