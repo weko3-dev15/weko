@@ -30,7 +30,7 @@ from flask_babelex import gettext as _
 
 from .permissions import admin_permission_factory
 from .utils import allowed_file
-
+from weko_index_tree.models import IndexStyle
 
 class StyleSettingView(BaseView):
     @expose('/', methods=['GET', 'POST'])
@@ -205,6 +205,42 @@ class StyleSettingView(BaseView):
         return checksum1 == checksum2
 
 
+class ChunkDesignView(BaseView):
+
+    @expose('/', methods=['GET', 'POST'])
+    def index(self):
+        try:
+            # Get record
+            style = IndexStyle.get(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'])
+            width = style.width if style else '3'
+            height = style.height if style else None
+
+            # Post
+            if request.method == 'POST':
+                # Get form
+                form = request.form.get('submit', None)
+                if form == 'index_form':
+                    width = request.form.get('width', '3')
+                    height = request.form.get('height', None)
+
+                    if style:
+                        IndexStyle.update(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'],
+                                          width=width, height=height)
+                    else:
+                        IndexStyle.create(current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['id'],
+                                          width=width, height=height)
+
+                    flash(_('The information was updated.'), category='success')
+
+            return self.render(current_app.config['WEKO_ADMIN_CHUNK_DESIGN_TEMPLATE'],
+                               widths=current_app.config['WEKO_INDEX_TREE_STYLE_OPTIONS']['widths'],
+                               width_selected=width, height=height)
+
+        except:
+            current_app.logger.error('Unexpected error: ', sys.exc_info()[0])
+        return abort(400)
+
+
 style_adminview = {
     'view_class': StyleSettingView,
     'kwargs': {
@@ -214,7 +250,18 @@ style_adminview = {
     }
 }
 
+chunk_designview = {
+    'view_class': ChunkDesignView,
+    'kwargs': {
+        'category': _('Setting'),
+        'name': _('Chunk Design'),
+        'endpoint': 'chunk-design'
+    }
+}
+
 __all__ = (
     'style_adminview',
     'StyleSettingView',
+    'chunk_designview',
+    'ChunkDesignView',
 )
