@@ -95,7 +95,10 @@
 {% block tail %}
 <script>
   $(document).ready(function() {
-    var contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">title</div></div>'
+    var contentBase = '<div class="grid-stack-item">
+                         <div class="grid-stack-item-content">widgetTitle</div>
+                         <div class="widget-id" hidden>widgetId</div>
+                       </div>'
 
     var options1 = {
         width: 2,
@@ -158,7 +161,7 @@
         this.serializedData = _.map($('#grid2 > .grid-stack-item:visible'), function (el) {
             el = $(el);
             var node = el.data('_gridstack_node');
-            alert(el.attr('data-custom-id'));
+            alert(JSON.stringify(node));
             return {
                 id: node.id,
                 x: node.x,
