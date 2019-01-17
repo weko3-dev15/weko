@@ -1,0 +1,188 @@
+{# -*- coding: utf-8 -*-
+#
+# This file is part of WEKO3.
+# Copyright (C) 2017 National Institute of Informatics.
+#
+# WEKO3 is free software; you can redistribute it
+# and/or modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# WEKO3 is distributed in the hope that it will be
+# useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with WEKO3; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA 02111-1307, USA.
+#}
+{%- extends "weko_admin/chunk_admin.html" %}
+
+{% from "weko_admin/settings/_macros.html" import render_field, form_errors %}
+
+{% set panel_title = _("Life Time") %}
+{% set panel_icon = "fa fa-user" %}
+
+{%- block body %}
+{%- set cur_lifetime = current_lifetime %}
+{%- set lifetime_map = map_lifetime %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack-extra.min.css" />
+<!--<link href="{{ url_for('static', filename='css/weko_theme/gridstack.scss') }}" rel="stylesheet">-->
+<!--<link href="{{ url_for('static', filename='css/weko_theme/gridstack-extra.scss') }}" rel="stylesheet">-->
+<style type="text/css">
+    .list {
+        <!--background: #FFFFBB;-->
+        height: 500px;
+        text-align: center;
+        padding: 10px;
+        border: 1px solid gray;
+    }
+    .design {
+        <!--background: #CCFFFF;-->
+        height: 500px;
+        padding: 10px;
+        margin-left: 30px;
+        border: 1px solid gray;
+    }
+    .grid-stack-item-content {
+        color: #2c3e50;
+        text-align: center;
+        background-color: #BBBBBB;
+    }
+    #grid2 .grid-stack-item-content {
+        background-color: #98FB98;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gridstack.js/0.4.0/gridstack.jQueryUI.min.js"></script>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="list col-md-2">
+          <div class="grid-stack grid-stack-2" id="grid1"></div>
+
+        </div>
+
+        <div class="design col-md-9">
+          <div class="grid-stack grid-stack-9" id="grid2"></div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+    <div class="row">
+      <div class="col-md-12">
+        <div>
+          <a class="btn btn-default" id="save-grid" href="#">Save Grid</a>
+          <a class="btn btn-default" id="load-grid" href="#">Load Grid</a>
+          <a class="btn btn-default" id="clear-grid" href="#">Clear Grid</a>
+          <br>
+          <textarea id="saved-data" cols="100" rows="15" readonly="readonly"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+{%- endblock body %}
+{% block tail %}
+<script>
+  $(document).ready(function() {
+    var contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">widgetTitle</div></div>'
+
+    var options1 = {
+        width: 2,
+        height: 10,
+        disableResize: true,
+        <!--float: false,-->
+        acceptWidgets: true
+    };
+    $('#grid1').gridstack(options1);
+
+    var options2 = {
+        width: 9,
+        height: 10,
+        acceptWidgets: true
+    };
+    $('#grid2').gridstack(options2);
+
+    var items1 = [
+      {x: 0, y: 0, width: 2, height: 2, id: 'chunk1'},
+      {x: 0, y: 2, width: 2, height: 2, id: 'chunk2'},
+      {x: 0, y: 4, width: 2, height: 2, id: 'chunk3'}
+    ];
+    $('#grid1').each(function () {
+      var grid1 = $(this).data('gridstack');
+      _.each(items1, function (node) {
+        var content = contentBase.replace('widgetTitle', '<h3>'+ node.id +'</h3>')
+        grid1.addWidget($(content),
+                        node.x,
+                        node.y,
+                        node.width,
+                        node.height,
+                        true,
+                        null, null, null, null,
+                        node.id);
+      });
+    });
+
+    var items2 = [
+      {x: 4, y: 2, width: 2, height: 2, id: 'footer'},
+      {x: 0, y: 2, width: 4, height: 4, id: 'main'},
+      {x: 0, y: 0, width: 9, height: 2, id: 'header'}
+    ];
+    items2 = GridStackUI.Utils.sort(items2, 1);
+    $('#grid2').each(function () {
+      var grid2 = $(this).data('gridstack');
+      _.each(items2, function (node) {
+        var content = contentBase.replace('widgetTitle', '<h3>'+ node.id +'</h3>')
+        grid2.addWidget($(content),
+                        node.x,
+                        node.y,
+                        node.width,
+                        node.height,
+                        true,
+                        null, null, null, null,
+                        node.id);
+      });
+    });
+
+    this.saveGrid = function () {
+        this.serializedData = _.map($('#grid2 > .grid-stack-item:visible'), function (el) {
+            el = $(el);
+            var node = el.data('_gridstack_node');
+            alert(el);
+            return {
+                id: node.id,
+                x: node.x,
+                y: node.y,
+                width: node.width,
+                height: node.height
+            };
+        });
+        $('#saved-data').val(JSON.stringify(this.serializedData, null, '    '));
+        return false;
+    }.bind(this);
+
+    $('#save-grid').click(this.saveGrid);
+
+    this.loadGrid = function () {
+      $('#grid2 > .grid-stack-item:visible').each(function(index) {
+        alert($(this).attr("data-gs-width"));
+      });
+
+    }.bind(this);
+
+    $('#load-grid').click(this.loadGrid);
+
+
+  })
+</script>
+{% endblock %}
