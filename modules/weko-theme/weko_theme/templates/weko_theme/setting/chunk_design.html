@@ -95,10 +95,7 @@
 {% block tail %}
 <script>
   $(document).ready(function() {
-    var contentBase = '<div class="grid-stack-item">
-                         <div class="grid-stack-item-content">widgetTitle</div>
-                         <div class="widget-id" hidden>widgetId</div>
-                       </div>'
+    var contentBase = '<div class="grid-stack-item"><div class="grid-stack-item-content">widgetTitle</div></div>'
 
     var options1 = {
         width: 2,
@@ -124,7 +121,7 @@
     $('#grid1').each(function () {
       var grid1 = $(this).data('gridstack');
       _.each(items1, function (node) {
-        var content = contentBase.replace('title', '<h3>'+ node.id +'</h3>')
+        var content = contentBase.replace('widgetTitle', '<h3>'+ node.id +'</h3>')
         grid1.addWidget($(content),
                         node.x,
                         node.y,
@@ -145,7 +142,7 @@
     $('#grid2').each(function () {
       var grid2 = $(this).data('gridstack');
       _.each(items2, function (node) {
-        var content = contentBase.replace('title', '<h3>'+ node.id +'</h3>')
+        var content = contentBase.replace('widgetTitle', '<h3>'+ node.id +'</h3>')
         grid2.addWidget($(content),
                         node.x,
                         node.y,
