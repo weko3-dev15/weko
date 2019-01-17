@@ -118,7 +118,7 @@
       {x: 0, y: 2, width: 2, height: 2, id: 'chunk2'},
       {x: 0, y: 4, width: 2, height: 2, id: 'chunk3'}
     ];
-    $('#grid2').each(function () {
+    $('#grid1').each(function () {
       var grid1 = $(this).data('gridstack');
       _.each(items1, function (node) {
         var content = contentBase.replace('title', '<h3>'+ node.id +'</h3>')
@@ -155,7 +155,7 @@
     });
 
     this.saveGrid = function () {
-        this.serializedData = _.map($('#grid1 > .grid-stack-item:visible'), function (el) {
+        this.serializedData = _.map($('#grid2 > .grid-stack-item:visible'), function (el) {
             el = $(el);
             var node = el.data('_gridstack_node');
             return {
