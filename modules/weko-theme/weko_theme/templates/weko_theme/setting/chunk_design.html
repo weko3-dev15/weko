@@ -174,12 +174,12 @@
     $('#save-grid').click(this.saveGrid);
 
     $('#grid2').on('added', function(event, items) {
-      alert('id: ' + items[0].el.context.id + ', x: ' + items[0].x + ', y: ' + items[0].y + ', width: ' + items[0].width + ', height: ' + items[0].height);
+      alert('id: ' + items[0] + ', x: ' + items[0].x + ', y: ' + items[0].y + ', width: ' + items[0].width + ', height: ' + items[0].height);
     });
 
     $('#grid1').on('added', function(event, items) {
       alert('id: ' + items[0].id + ', x: ' + items[0].x + ', y: ' + items[0].y + ', width: ' + items[0].width + ', height: ' + items[0].height);
-      items[0].resize(2, 2);
+      <!--items[0].resize(2, 2);-->
     });
 
     $('.grid-stack').on('dragstop', function(event, ui) {
