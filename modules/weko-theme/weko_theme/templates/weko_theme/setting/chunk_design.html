@@ -161,7 +161,7 @@
         this.serializedData = _.map($('#grid2 > .grid-stack-item:visible'), function (el) {
             el = $(el);
             var node = el.data('_gridstack_node');
-            alert(JSON.stringify(node));
+            alert(el.innerHTML);
             return {
                 id: node.id,
                 x: node.x,
