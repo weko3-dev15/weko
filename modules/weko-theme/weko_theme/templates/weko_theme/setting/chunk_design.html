@@ -173,6 +173,15 @@
 
     $('#save-grid').click(this.saveGrid);
 
+    this.loadGrid = function () {
+      $('#grid2 > .grid-stack-item:visible').each(function(index) {
+        alert($(this).getAttribute("data-gs-id"));
+      });
+
+    }.bind(this);
+
+    $('#load-grid').click(this.loadGrid);
+
     $('#grid2').on('added', function(event, items) {
       alert('id: ' + items[0] + ', x: ' + items[0].x + ', y: ' + items[0].y + ', width: ' + items[0].width + ', height: ' + items[0].height);
     });
@@ -186,9 +195,10 @@
         <!--alert('dragstop');-->
         var grid = this;
         var element = event.target;
+
         <!--alert(grid.innerHTML);-->
         <!--alert(element.getAttribute("data-gs-id"));-->
-        alert('id: ' + element.id + ', x: ' + element.x + ', y: ' + element.y + ', width: ' + element.width + ', height: ' + element.height);
+        <!--alert('id: ' + element.id + ', x: ' + element.x + ', y: ' + element.y + ', width: ' + element.width + ', height: ' + element.height);-->
     });
 
   })
