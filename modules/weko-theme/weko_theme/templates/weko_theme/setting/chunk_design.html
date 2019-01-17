@@ -182,11 +182,11 @@
     });
 
     $('.grid-stack').on('dragstop', function(event, ui) {
-        alert('dragstop');
+        <!--alert('dragstop');-->
         var grid = this;
         var element = event.target;
-        alert(grid.innerHTML);
-        alert(element.outerHTML);
+        <!--alert(grid.innerHTML);-->
+        alert(element.attr('data-gs-id'));
     });
 
   })
