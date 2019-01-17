@@ -187,7 +187,8 @@
         var grid = this;
         var element = event.target;
         <!--alert(grid.innerHTML);-->
-        alert(element.getAttribute("data-gs-id"));
+        <!--alert(element.getAttribute("data-gs-id"));-->
+        alert('id: ' + element.id + ', x: ' + element.x + ', y: ' + element.y + ', width: ' + element.width + ', height: ' + element.height);
     });
 
   })
